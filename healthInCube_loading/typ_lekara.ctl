@@ -1,0 +1,9 @@
+LOAD DATA
+INFILE 'typ_lekara.unl'
+INTO TABLE typ_lekara
+FIELDS TERMINATED BY ';'
+(
+ID_TYP,
+NAZOV,
+POPIS
+)
