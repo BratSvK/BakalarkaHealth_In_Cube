@@ -1,0 +1,14 @@
+Web-aplikácia
+-prihlasovacie údaje
+username: c##admin
+password: admin
+------------------------------------DATABAZA---------------------s
+1.Datábáza(Oracle SQL server)
+- vytovorenie entít
+- loading dát 
+- pacient a lekar sa vytvoria pomocou FE Indentity 
+2.Back-End(C#)
+ - vytvorenie controllerov a api callov 
+3.Front-End(Angular)
+4.Testing 
+5.Pisanie práce(Word)

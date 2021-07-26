@@ -1,0 +1,12 @@
+LOAD DATA
+INFILE 'os_udaje.unl'
+INTO TABLE os_udaje
+FIELDS TERMINATED BY ';'
+(
+ ROD_CISLO,
+ MENO,
+ PRIEZVISKO,
+ EMAIL,
+ MOBIL
+)
+
