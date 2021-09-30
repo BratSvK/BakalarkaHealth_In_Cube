@@ -4,8 +4,8 @@ INFILE 'okres.unl'
 INTO TABLE okres
 FIELDS TERMINATED BY ';'
 (
- KOD,
- NAZOV,
- NAZOV_SK
+ ID_OKRES,
+ ID_KRAJ,
+ NAZOV
 )
 

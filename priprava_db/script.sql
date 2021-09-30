@@ -1,4 +1,4 @@
-﻿/*
+/*
 Created: 28. 6. 2021
 Modified: 24. 9. 2021
 Model: Oracle 19c
@@ -866,7 +866,6 @@ ALTER TABLE liek_aplikacia ADD CONSTRAINT Relationship75 FOREIGN KEY (id_liek) R
 
 ALTER TABLE liek_aplikacia ADD CONSTRAINT Relationship76 FOREIGN KEY (id_oblast) REFERENCES oblast_urcenia (id_oblast)
 /
-
 
 
 
