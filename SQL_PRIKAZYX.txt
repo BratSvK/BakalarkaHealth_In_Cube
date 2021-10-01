@@ -1,0 +1,2 @@
+1.sql plus loader 
+-> host sqlldr userid='system/HealthInCube1' control='x.ctl'
