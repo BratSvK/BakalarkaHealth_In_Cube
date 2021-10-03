@@ -16,6 +16,8 @@ namespace HealthInCube_BackEnd
 {
     public class Startup
     {
+
+        // dependency injeciton to startup class 
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -24,6 +26,7 @@ namespace HealthInCube_BackEnd
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        // DI container for all application along 
         public void ConfigureServices(IServiceCollection services)
         {
 
@@ -52,6 +55,7 @@ namespace HealthInCube_BackEnd
 
             app.UseEndpoints(endpoints =>
             {
+                // map all controller with endPoints inside to our page 
                 endpoints.MapControllers();
             });
         }
