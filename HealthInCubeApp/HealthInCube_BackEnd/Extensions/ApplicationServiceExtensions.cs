@@ -15,6 +15,8 @@ namespace HealthInCube_BackEnd.Extensions
         {
 
             services.AddScoped<INemocnicaRepistory, NemocnicaRepository>();
+            services.AddScoped<IPouzivatelRepository, PouzivatelRepository>();
+
 
 
             // this is container for DB context 

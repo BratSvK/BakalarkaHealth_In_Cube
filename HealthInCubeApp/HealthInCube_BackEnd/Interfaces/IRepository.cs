@@ -7,11 +7,11 @@ namespace HealthInCube_BackEnd.Interfaces
     {
         Task<IEnumerable<U>> GetItemsAsync();
 
-        Task<U> GetItemAsync(int itemId);
+        Task<U> GetItemAsync(decimal itemId);
 
         Task<T> InsertItem(T item);
 
-        Task<bool> DeleteItem(int itemId);
+        Task<bool> DeleteItem(decimal itemId);
 
         void UpdateItem(T item);
 

@@ -23,14 +23,19 @@ namespace HealthInCube_BackEnd.Data
         }
 
 
-        public Task<bool> DeleteItem(int itemId)
+        public async Task<bool> DeleteItem(decimal itemId)
         {
-            throw new System.NotImplementedException();
+            var nemocnica = await _context.Nemocnica.FindAsync(itemId);
+            if (nemocnica == null) return false;
+
+            _context.Nemocnica.Remove(nemocnica);
+            return true; 
         }
 
-        public Task<NemocnicaDto> GetItemAsync(int itemId)
+        public async Task<NemocnicaDto> GetItemAsync(decimal itemId)
         {
-            throw new System.NotImplementedException();
+            var nemocnica = await _context.Nemocnica.ProjectTo<NemocnicaDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(n => n.Id_nem == itemId);
+            return nemocnica;
         }
 
         public async Task<IEnumerable<NemocnicaDto>> GetItemsAsync()
@@ -40,19 +45,21 @@ namespace HealthInCube_BackEnd.Data
             return await query.ProjectTo<NemocnicaDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
         }
 
-        public Task<Nemocnica> InsertItem(Nemocnica item)
+        public async Task<Nemocnica> InsertItem(Nemocnica item)
         {
-            throw new System.NotImplementedException();
+            await _context.Nemocnica.AddAsync(item);
+            return item;
         }
 
-        public Task<bool> SaveAllAsync()
+        public async Task<bool> SaveAllAsync()
         {
-            throw new System.NotImplementedException();
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public void UpdateItem(Nemocnica item)
         {
-            throw new System.NotImplementedException();
+            // only mark it for update to db 
+            _context.Entry(item).State = EntityState.Modified;
         }
 
        

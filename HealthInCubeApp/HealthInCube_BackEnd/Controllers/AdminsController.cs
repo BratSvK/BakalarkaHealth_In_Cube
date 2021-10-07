@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthInCube_BackEnd.Controllers
 {
-    public class AdminsController : BaseApiController
+    public class AdminController : BaseApiController
     {
         private readonly INemocnicaRepistory _nemocnicaRepository;
 
-        public AdminsController(INemocnicaRepistory nemocnicaRepository)
+        public AdminController(INemocnicaRepistory nemocnicaRepository)
         {
             this._nemocnicaRepository = nemocnicaRepository;
         }

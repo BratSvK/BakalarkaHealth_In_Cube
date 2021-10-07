@@ -9,6 +9,10 @@ namespace HealthInCube_BackEnd.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<Nemocnica,NemocnicaDto>();
+            CreateMap<Pouzivatel,RegisterPouzivatelDto>();
+            CreateMap<RegisterPouzivatelDto,Pouzivatel>();
+
+
             
         }
         
