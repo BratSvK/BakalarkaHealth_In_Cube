@@ -1,13 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
 
+#nullable disable
 
-namespace HealthInCubeModel
+namespace HealthInCube_BackEnd.Entities
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class KRAJ
+    public partial class Kraj
     {
-        public decimal ID_KRAJ { get; set; }
-        public string NAZOV { get; set; }
+        public decimal IdKraj { get; set; }
+        public string Nazov { get; set; }
     }
 }

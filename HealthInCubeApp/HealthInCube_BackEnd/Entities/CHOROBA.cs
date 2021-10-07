@@ -1,28 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
 
+#nullable disable
 
-namespace HealthInCubeModel
+namespace HealthInCube_BackEnd.Entities
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class CHOROBA 
+    public partial class Choroba
     {
-        public CHOROBA()
+        public Choroba()
         {
-            this.ZAP_CHOROBY = new HashSet<ZAP_CHOROBY>();
+            ZapChorobies = new HashSet<ZapChoroby>();
         }
-    
-        public string CIS_CHOROBA { get; set; }
-        public string NAZOV { get; set; }
-        public string SK_OCHORENI { get; set; }
-        public Nullable<short> OBM_VEK_OD { get; set; }
-        public Nullable<short> OBM_VEK_DO { get; set; }
-        public string OBM_POHLAVIE { get; set; }
-        public System.DateTime VALID_OD { get; set; }
-        public Nullable<System.DateTime> VALID_DO { get; set; }
-        public string DOPL_INFO_PATRI { get; set; }
-        public string DOPL_INFO_NEPATRI { get; set; }
-    
-        public virtual ICollection<ZAP_CHOROBY> ZAP_CHOROBY { get; set; }
+
+        public string CisChoroba { get; set; }
+        public string Nazov { get; set; }
+        public string SkOchoreni { get; set; }
+        public byte? ObmVekOd { get; set; }
+        public byte? ObmVekDo { get; set; }
+        public string ObmPohlavie { get; set; }
+        public DateTime ValidOd { get; set; }
+        public DateTime? ValidDo { get; set; }
+        public string DoplInfoPatri { get; set; }
+        public string DoplInfoNepatri { get; set; }
+
+        public virtual ICollection<ZapChoroby> ZapChorobies { get; set; }
     }
 }

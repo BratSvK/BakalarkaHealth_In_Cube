@@ -1,32 +1,32 @@
+﻿using System;
+using System.Collections.Generic;
 
+#nullable disable
 
-namespace HealthInCubeModel
+namespace HealthInCube_BackEnd.Entities
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class LEKAR
+    public partial class Lekar
     {
-        public LEKAR()
+        public Lekar()
         {
-            this.ATESTACIE_LEKAR = new HashSet<ATESTACIE_LEKAR>();
-            this.VYK_VYSETRENIA = new HashSet<VYK_VYSETRENIA>();
-            this.PACIENTs = new HashSet<PACIENT>();
-            this.ZDRAV_KARTA_POVOLENIA = new HashSet<ZDRAV_KARTA_POVOLENIA>();
-            this.ODDELENIEs = new HashSet<ODDELENIE>();
+            AtestacieLekars = new HashSet<AtestacieLekar>();
+            Oddelenies = new HashSet<Oddelenie>();
+            Pacients = new HashSet<Pacient>();
+            VykVysetrenia = new HashSet<VykVysetrenium>();
+            ZdravKartaPovolenia = new HashSet<ZdravKartaPovolenium>();
         }
-    
-        public decimal ID_LEKAR { get; set; }
-        public decimal ID_POUZIVATEL { get; set; }
-        public Nullable<decimal> ID_ODDEL { get; set; }
-        public Nullable<System.DateTime> DO { get; set; }
-    
-        public virtual ICollection<ATESTACIE_LEKAR> ATESTACIE_LEKAR { get; set; }
-        public virtual POUZIVATEL POUZIVATEL { get; set; }
-        public virtual ICollection<VYK_VYSETRENIA> VYK_VYSETRENIA { get; set; }
-        public virtual ICollection<PACIENT> PACIENTs { get; set; }
-        // public virtual ODDELENIE ODDELENIE { get; set; }
-        public virtual ICollection<ZDRAV_KARTA_POVOLENIA> ZDRAV_KARTA_POVOLENIA { get; set; }
-        public virtual ICollection<ODDELENIE> ODDELENIEs { get; set; }
+
+        public decimal IdLekar { get; set; }
+        public decimal IdPouzivatel { get; set; }
+        public decimal? IdOddel { get; set; }
+        public DateTime? Do { get; set; }
+
+        public virtual Oddelenie IdOddelNavigation { get; set; }
+        public virtual Pouzivatel IdPouzivatelNavigation { get; set; }
+        public virtual ICollection<AtestacieLekar> AtestacieLekars { get; set; }
+        public virtual ICollection<Oddelenie> Oddelenies { get; set; }
+        public virtual ICollection<Pacient> Pacients { get; set; }
+        public virtual ICollection<VykVysetrenium> VykVysetrenia { get; set; }
+        public virtual ICollection<ZdravKartaPovolenium> ZdravKartaPovolenia { get; set; }
     }
 }

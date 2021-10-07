@@ -1,25 +1,26 @@
+﻿using System;
+using System.Collections.Generic;
 
-namespace HealthInCubeModel
+#nullable disable
+
+namespace HealthInCube_BackEnd.Entities
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class MESTO
+    public partial class Mesto
     {
-        public MESTO()
+        public Mesto()
         {
-            this.BYDLISKA = new HashSet<BYDLISKO>();
-            this.NEMOCNICE = new HashSet<NEMOCNICA>();
-            this.ZDRAVOTNA_KARTA = new HashSet<ZDRAVOTNA_KARTA>();
+            Bydliskos = new HashSet<Bydlisko>();
+            Nemocnicas = new HashSet<Nemocnica>();
+            ZdravotnaKarta = new HashSet<ZdravotnaKartum>();
         }
-    
-        public decimal ID_OKRES { get; set; }
-        public string NAZOV { get; set; }
-        public decimal ID_MESTO { get; set; }
-    
-        public virtual ICollection<BYDLISKO> BYDLISKA { get; set; }
-        public virtual ICollection<NEMOCNICA> NEMOCNICE { get; set; }
-        public virtual ICollection<ZDRAVOTNA_KARTA> ZDRAVOTNA_KARTA { get; set; }
-        public virtual OKRES OKRES { get; set; }
+
+        public decimal IdOkres { get; set; }
+        public string Nazov { get; set; }
+        public decimal IdMesto { get; set; }
+
+        public virtual Okres IdOkresNavigation { get; set; }
+        public virtual ICollection<Bydlisko> Bydliskos { get; set; }
+        public virtual ICollection<Nemocnica> Nemocnicas { get; set; }
+        public virtual ICollection<ZdravotnaKartum> ZdravotnaKarta { get; set; }
     }
 }

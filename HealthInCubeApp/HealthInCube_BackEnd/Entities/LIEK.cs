@@ -1,30 +1,30 @@
+﻿using System;
+using System.Collections.Generic;
 
+#nullable disable
 
-namespace HealthInCubeModel
+namespace HealthInCube_BackEnd.Entities
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class LIEK
+    public partial class Liek
     {
-        public LIEK()
+        public Liek()
         {
-            this.L_BALENIE = new HashSet<L_BALENIE>();
-            this.RECEPTs = new HashSet<RECEPT>();
-            this.PREDP_LIECBA = new HashSet<PREDP_LIECBA>();
-            this.OBLAST_URCENIA = new HashSet<OBLAST_URCENIA>();
-            this.UCINNA_LATKA = new HashSet<UCINNA_LATKA>();
+            LBalenies = new HashSet<LBalenie>();
+            LiekAplikacia = new HashSet<LiekAplikacium>();
+            LiekUcinnaLatkas = new HashSet<LiekUcinnaLatka>();
+            PredpLiecbas = new HashSet<PredpLiecba>();
+            Recepts = new HashSet<Recept>();
         }
-    
-        public decimal ID_LIEK { get; set; }
-        public string NAZOV { get; set; }
-        public string REZIM_VYDAJA { get; set; }
-        public string LIEK_FORMA { get; set; }
-    
-        public virtual ICollection<L_BALENIE> L_BALENIE { get; set; }
-        public virtual ICollection<RECEPT> RECEPTs { get; set; }
-        public virtual ICollection<PREDP_LIECBA> PREDP_LIECBA { get; set; }
-        public virtual ICollection<OBLAST_URCENIA> OBLAST_URCENIA { get; set; }
-        public virtual ICollection<UCINNA_LATKA> UCINNA_LATKA { get; set; }
+
+        public decimal IdLiek { get; set; }
+        public string Nazov { get; set; }
+        public string RezimVydaja { get; set; }
+        public string LiekForma { get; set; }
+
+        public virtual ICollection<LBalenie> LBalenies { get; set; }
+        public virtual ICollection<LiekAplikacium> LiekAplikacia { get; set; }
+        public virtual ICollection<LiekUcinnaLatka> LiekUcinnaLatkas { get; set; }
+        public virtual ICollection<PredpLiecba> PredpLiecbas { get; set; }
+        public virtual ICollection<Recept> Recepts { get; set; }
     }
 }

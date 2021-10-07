@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthInCube_BackEnd.Interfaces;
@@ -36,7 +35,7 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<IEnumerable<NemocnicaDto>> GetItemsAsync()
         {
-            var query = _context.NEMOCNICA.Include(x => x.ODDELENIA).AsQueryable();
+            var query = _context.Nemocnica.Include(x => x.Oddelenies).AsQueryable();
 
             return await query.ProjectTo<NemocnicaDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
         }

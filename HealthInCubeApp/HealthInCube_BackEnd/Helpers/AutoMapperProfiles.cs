@@ -1,6 +1,6 @@
 using AutoMapper;
 using HealthInCube_BackEnd.DTOs;
-using HealthInCubeModel;
+using HealthInCube_BackEnd.Entities;
 
 namespace HealthInCube_BackEnd.Helpers
 {
@@ -8,7 +8,7 @@ namespace HealthInCube_BackEnd.Helpers
     {
         public AutoMapperProfiles()
         {
-            CreateMap<NEMOCNICA,NemocnicaDto>();
+            CreateMap<Nemocnica,NemocnicaDto>();
             
         }
         

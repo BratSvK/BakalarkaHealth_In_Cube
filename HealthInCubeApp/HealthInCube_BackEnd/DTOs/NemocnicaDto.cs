@@ -2,11 +2,11 @@ namespace HealthInCube_BackEnd.DTOs
 {
     public class NemocnicaDto
     {
-        public decimal ID_NEM { get; set; }
-        public string NAZOV { get; set; }
-        public string MOBIL { get; set; }
-        public string ULICA { get; set; }
-        public string URL_STRANKA { get; set; }
-        public decimal ID_MESTO { get; set; }
+        public decimal Id_nem { get; set; }
+        public string Nazov{ get; set; }
+        public string Mobil { get; set; }
+        public string Ulica { get; set; }
+        public string Url_Stranka{ get; set; }
+        public decimal Id_mesto { get; set; }
     }
 }
