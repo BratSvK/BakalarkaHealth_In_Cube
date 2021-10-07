@@ -12,7 +12,7 @@ namespace HealthInCubeModel
     using System;
     using System.Collections.Generic;
     
-    public partial class BYDLISKO
+    public partial class BYDLISKO 
     {
         public decimal ID_BYDLISKA { get; set; }
         public Nullable<decimal> ID_POUZIVATEL { get; set; }

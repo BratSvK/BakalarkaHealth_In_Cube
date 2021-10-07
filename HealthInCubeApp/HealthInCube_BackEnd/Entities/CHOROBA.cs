@@ -5,7 +5,7 @@ namespace HealthInCubeModel
     using System;
     using System.Collections.Generic;
     
-    public partial class CHOROBA
+    public partial class CHOROBA 
     {
         public CHOROBA()
         {

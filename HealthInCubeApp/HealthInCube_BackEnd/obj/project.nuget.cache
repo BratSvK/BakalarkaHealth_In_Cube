@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "zeK93FKk+Fu7Zr+HG7fNbKtFPzJq+YVZ2649eIfrC5BQSgLVc/OeAJq2OymKF5Dt14DjKd49RnYCEA1KDC8CEQ==",
+  "dgSpecHash": "zPcM1JF3KTSz0bH/9WWNj5SmzuqTsHidv6/sdzTl0ZVYV9DBijKaDog8RDvs66noFW5Y54D1AWd1ZYECaN/5bQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\marti\\Desktop\\HealthInCube\\HealthInCubeApp\\HealthInCube_BackEnd\\HealthInCube_BackEnd.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\marti\\.nuget\\packages\\automapper\\10.1.1\\automapper.10.1.1.nupkg.sha512",
+    "C:\\Users\\marti\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\8.1.1\\automapper.extensions.microsoft.dependencyinjection.8.1.1.nupkg.sha512",
     "C:\\Users\\marti\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\marti\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\marti\\.nuget\\packages\\microsoft.entityframeworkcore\\5.0.8\\microsoft.entityframeworkcore.5.0.8.nupkg.sha512",
@@ -45,6 +47,7 @@
     "C:\\Users\\marti\\.nuget\\packages\\system.directoryservices.protocols\\5.0.0\\system.directoryservices.protocols.5.0.0.nupkg.sha512",
     "C:\\Users\\marti\\.nuget\\packages\\system.drawing.common\\5.0.0\\system.drawing.common.5.0.0.nupkg.sha512",
     "C:\\Users\\marti\\.nuget\\packages\\system.io.filesystem.accesscontrol\\5.0.0\\system.io.filesystem.accesscontrol.5.0.0.nupkg.sha512",
+    "C:\\Users\\marti\\.nuget\\packages\\system.reflection.emit\\4.7.0\\system.reflection.emit.4.7.0.nupkg.sha512",
     "C:\\Users\\marti\\.nuget\\packages\\system.security.accesscontrol\\5.0.0\\system.security.accesscontrol.5.0.0.nupkg.sha512",
     "C:\\Users\\marti\\.nuget\\packages\\system.security.cryptography.protecteddata\\5.0.0\\system.security.cryptography.protecteddata.5.0.0.nupkg.sha512",
     "C:\\Users\\marti\\.nuget\\packages\\system.security.permissions\\5.0.0\\system.security.permissions.5.0.0.nupkg.sha512",

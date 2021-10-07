@@ -25,7 +25,7 @@ namespace HealthInCubeModel
         public virtual POUZIVATEL POUZIVATEL { get; set; }
         public virtual ICollection<VYK_VYSETRENIA> VYK_VYSETRENIA { get; set; }
         public virtual ICollection<PACIENT> PACIENTs { get; set; }
-        public virtual ODDELENIE ODDELENIE { get; set; }
+        // public virtual ODDELENIE ODDELENIE { get; set; }
         public virtual ICollection<ZDRAV_KARTA_POVOLENIA> ZDRAV_KARTA_POVOLENIA { get; set; }
         public virtual ICollection<ODDELENIE> ODDELENIEs { get; set; }
     }
