@@ -1,9 +1,9 @@
 using HealthInCube_BackEnd.DTOs;
-using HealthInCubeModel;
+using HealthInCube_BackEnd.Entities;
 
 namespace HealthInCube_BackEnd.Interfaces
 {
-    public interface INemocnicaRepistory : IRepository<NEMOCNICA,NemocnicaDto>
+    public interface INemocnicaRepistory : IRepository<Nemocnica,NemocnicaDto>
     {
 
     }

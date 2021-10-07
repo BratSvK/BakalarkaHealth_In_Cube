@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthInCube_BackEnd.Interfaces;
-using HealthInCubeModel;
 using Microsoft.EntityFrameworkCore;
 
 using System.Linq;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using HealthInCube_BackEnd.DTOs;
+using HealthInCube_BackEnd.Entities;
 
 namespace HealthInCube_BackEnd.Data
 {
@@ -40,7 +40,7 @@ namespace HealthInCube_BackEnd.Data
             return await query.ProjectTo<NemocnicaDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
         }
 
-        public Task<NEMOCNICA> InsertItem(NEMOCNICA item)
+        public Task<Nemocnica> InsertItem(Nemocnica item)
         {
             throw new System.NotImplementedException();
         }
@@ -50,7 +50,7 @@ namespace HealthInCube_BackEnd.Data
             throw new System.NotImplementedException();
         }
 
-        public void UpdateItem(NEMOCNICA item)
+        public void UpdateItem(Nemocnica item)
         {
             throw new System.NotImplementedException();
         }

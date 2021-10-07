@@ -1,7 +1,6 @@
 using HealthInCube_BackEnd.Data;
 using HealthInCube_BackEnd.Helpers;
 using HealthInCube_BackEnd.Interfaces;
-using HealthInCubeModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
