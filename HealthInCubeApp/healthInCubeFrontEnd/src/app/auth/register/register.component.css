@@ -1,0 +1,45 @@
+
+/* .container {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 40px;
+    
+  } */
+
+input.ng-touched.ng-invalid {
+    border: 2px solid red;
+}
+
+@media (min-width: 768px){
+    .registerWrapper {
+        width: 50%;
+        
+    }
+
+      
+}
+
+@media (max-width: 576px){
+    .container {
+        border: none
+    }
+}
+
+
+
+.myCssAnimation {
+
+    padding: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    position: absolute !important;
+    background: linear-gradient(270deg, #e922e9, #f75d21, #5543f7, #00dbff, #92db32);
+    background-size: 600% 600%;
+    animation: borderAnimation 4s ease infinite;
+}
+ 
+@keyframes borderAnimation {
+  0% { background-position: 0 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}

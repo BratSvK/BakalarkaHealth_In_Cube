@@ -1,0 +1,42 @@
+
+
+
+body {
+  text-align: center!important;
+  align-items: center;
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+}
+
+.bgImageWrapper {
+  /* The image used */
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: 50px auto ;
+}
+
+
+
+.nav-link {
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: none;
+    background-color: transparent;
+}
+
+.nav-link:hover {
+  text-decoration: underline;
+}
+
