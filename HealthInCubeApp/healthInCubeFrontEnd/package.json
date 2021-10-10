@@ -21,6 +21,7 @@
     "@angular/router": "~12.2.0",
     "bootstrap": "^4.5.3",
     "font-awesome": "^4.7.0",
+    "moment": "^2.29.1",
     "ng-animated-border": "^2.0.0",
     "ngx-bootstrap": "^7.1.0",
     "rxjs": "~6.6.0",

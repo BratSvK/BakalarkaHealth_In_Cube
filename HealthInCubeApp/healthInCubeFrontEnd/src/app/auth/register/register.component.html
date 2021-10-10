@@ -34,9 +34,20 @@
                         <label for="BID">Birth Identifictaion Number</label>
                         <input type="text" class="form-control" id="BID" placeholder="etc. 981124/4168"
                             formControlName="birthIDNumber">
+                            <div
+                                
+                                *ngIf="this.registerForm.get('birthIDNumber')?.touched && this.registerForm.get('birthIDNumber')?.value != null && this.registerForm.get('birthIDNumber')?.value !== '' &&  !this.registerForm.get('birthIDNumber')?.errors; then calculate">
+                            </div>
                         <div class="invalid-feedback">
                             Valid first name is required.
                         </div>
+                        <ng-template #calculate >
+                                <div class="col-md mt-3">
+                                    <button class="btn btn-info" (click)="onCalculateFromBIDToBirthDate()">Calculate date</button>
+                                </div>
+                        </ng-template>
+
+                        
                     </div>
                     <div class="col-md-2 mt-4 pl-4" *ngFor="let gender of genders">
                         <div class="radio">
@@ -61,6 +72,7 @@
                         
                     </div>
                 </div>
+
 
 
                 <div class="mb-3">
