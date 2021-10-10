@@ -6,6 +6,23 @@
     
   } */
 
+  .bgImageWrapper {
+    /* The image used */
+    background-image: url('../../../assets/pozadie.jpg');
+   
+    height: 100%;
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  
+  
+  }
+
+
+
+
 input.ng-touched.ng-invalid {
     border: 2px solid red;
 }
