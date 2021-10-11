@@ -1,6 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as moment from 'moment';
 import { Subscription } from 'rxjs';
@@ -30,7 +31,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   registerForm: FormGroup;
 
-  constructor(private store: Store<AppState>) { 
+  constructor(private store: Store<AppState>, private router: Router, private route: ActivatedRoute) { 
     if (this.okresy.length === 0 || this.role.length === 0) {
       this.store.dispatch(new RegisterBundleActions.FetchRole);
       this.store.dispatch(new RegisterBundleActions.FetchOkresy);
@@ -62,6 +63,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     // this.calculateFromBIDToBirthDate();
+  }
+
+  onReturn() {
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
 

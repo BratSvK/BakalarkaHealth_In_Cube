@@ -5,8 +5,13 @@
             [abBackgroundColor]="'#f5f5f5'">
 
             <form [formGroup]="registerForm" autocomplete="off" bg-light (ngSubmit)="onSubmit()">
-            
-                        <h4 class="mb-3"><i class="fa fa-user mr-2"></i>Create an account </h4>
+                
+                <div class="d-flex rightCorner justify-content-end">
+                    <button class="btn btn-warning" type="button" (click)="onReturn()">Return to login</button>
+                </div>
+
+                <h4 class="mb-3"><i class="fa fa-user mr-2"></i>Create an account </h4>
+
                  <div class="row">
                     <div class="col-md mb-3 justify-content-center">
                         <label for="accTypo" class="mb-3">Account type*</label>

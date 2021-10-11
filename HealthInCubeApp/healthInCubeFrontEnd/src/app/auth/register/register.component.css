@@ -20,6 +20,10 @@
   
   }
 
+.rightCorner {
+    transform: translate(30px, -30px);
+}
+
 .errorHlaska {
     text-decoration: underline;
     font-weight: bold;
@@ -45,6 +49,10 @@ input.ng-touched.ng-invalid {
 @media (max-width: 576px){
     .container {
         border: none
+    }
+
+    .rightCorner {
+        transform: translate(-60%, -30px);
     }
 }
 
