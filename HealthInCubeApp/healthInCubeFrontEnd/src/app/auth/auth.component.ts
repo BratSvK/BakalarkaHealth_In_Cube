@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AppState } from '../_store/models/AppState';
+import * as RegisterAcitonsBundle from './register/store/register.actions';
 
 @Component({
   selector: 'app-auth',
@@ -18,7 +21,9 @@ export class AuthComponent implements OnInit {
 
 
   onRegisterPage() {
-    console.log("som tu ")
+
+    
+
     this.router.navigate(['register'], {relativeTo: this.route});
   }
 

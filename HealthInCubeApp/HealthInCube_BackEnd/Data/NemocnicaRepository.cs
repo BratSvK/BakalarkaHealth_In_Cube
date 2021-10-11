@@ -18,8 +18,8 @@ namespace HealthInCube_BackEnd.Data
 
         public NemocnicaRepository(HealthInCubeContext context, IMapper mapper)
         {
-            this._mapper = mapper;
-            this._context = context;
+            _mapper = mapper;
+            _context = context;
         }
 
 

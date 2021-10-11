@@ -28,7 +28,7 @@ namespace HealthInCube_BackEnd.Data
         public virtual DbSet<Nemocnica> Nemocnica { get; set; }
         public virtual DbSet<OblastUrcenia> OblastUrcenia { get; set; }
         public virtual DbSet<Oddelenie> Oddelenie { get; set; }
-        public virtual DbSet<Okres> Okre { get; set; }
+        public virtual DbSet<Okres> Okres { get; set; }
         public virtual DbSet<Pacient> Pacient { get; set; }
         public virtual DbSet<Poistovna> Poistovna { get; set; }
         public virtual DbSet<Pouzivatel> Pouzivatel { get; set; }

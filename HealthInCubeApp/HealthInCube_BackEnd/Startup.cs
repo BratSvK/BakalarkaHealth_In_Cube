@@ -56,6 +56,10 @@ namespace HealthInCube_BackEnd
 
             app.UseRouting();
 
+            // there is right place where to put corse 
+            // we need set a policy to our app x=> policy 
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

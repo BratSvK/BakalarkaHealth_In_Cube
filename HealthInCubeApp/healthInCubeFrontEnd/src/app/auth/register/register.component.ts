@@ -1,24 +1,56 @@
 import { formatDate } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import * as moment from 'moment';
+import { Subscription } from 'rxjs';
+import { Mesto } from 'src/app/models/mesto';
+import { Okres } from 'src/app/models/okres';
+import { Rola } from 'src/app/models/rola';
+import { AppState } from 'src/app/_store/models/AppState';
+
+import * as RegisterBundleActions from './store/register.actions';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
 
 
-  genders: string[] = ["male", "female"];
+  genders: string[] = ["M", "F"];
+
+  okresy: Okres[] = [];
+  mesta: Mesto[] = [];
+  role: Rola[] = [];
+
+
+  registerSub: Subscription;
 
   registerForm: FormGroup;
 
-  constructor() { }
+  constructor(private store: Store<AppState>) { 
+    this.store.dispatch(new RegisterBundleActions.FetchOkresy);
+  }
+ 
 
   ngOnInit(): void {
+
+    this.registerSub = this.store.select('register').subscribe(registerFormData => {
+      this.okresy = registerFormData.okresy;
+      this.mesta = registerFormData.mesta;
+      this.role = registerFormData.role;
+    });
+
+
     this.initForm();
+  }
+
+
+  onChangeCites(idOkres: number) {
+    console.log(this.registerForm.get('district').value);
+    // this.store.dispatch(new RegisterBundleActions.FetchMesta(idOkres));
   }
 
 
@@ -28,12 +60,20 @@ export class RegisterComponent implements OnInit {
   }
 
 
+  getNazovOfDistrict(district: Okres) {
+    if (district !== undefined) {
+      return district.nazov;
+    }
+
+    return "";
+  }
+
+
 
   onCalculateFromBIDToBirthDate() {
   
     let BID: string = this.registerForm.get('birthIDNumber')?.value;
 
-    const regex = new RegExp('/');
     if ( BID != undefined || BID != null)
     {
       // console.log(BID.replace(regex, ''));
@@ -46,15 +86,18 @@ export class RegisterComponent implements OnInit {
 
       let dateStr = `19${BID.substr(0,2)}-${BID.substr(2,2)}-${BID.substr(4,2)}}`;
       
-      let dateToSet = moment(dateStr,"YYYY-MM-DD").toDate();
-      let dateTest = new Date(dateToSet.getFullYear(), dateToSet.getMonth(), dateToSet.getDate() + 1 );
-      let dateToReturn = dateTest.toISOString().substr(0,10);
-      console.log(dateToReturn);
       //985124/4168
       
-      this.registerForm.get('birthDate')?.setValue(dateToReturn);
+      this.registerForm.get('birthDate')?.setValue(this.getDateByBID(dateStr));
       this.registerForm.get('gender')?.setValue(this.genders[pohlavie]);
     }
+  }
+
+
+  private getDateByBID(dateString: string): string{
+    let dateToSet = moment(dateString,"YYYY-MM-DD").toDate();
+    let dateTest = new Date(dateToSet.getFullYear(), dateToSet.getMonth(), dateToSet.getDate() + 1 );
+    return dateTest.toISOString().substr(0,10);
   }
 
   private chceckPohlavie(mesiac: string): boolean {
@@ -63,6 +106,7 @@ export class RegisterComponent implements OnInit {
 
   private initForm() {
     this.registerForm = new FormGroup({
+      accTypo: new FormControl(null, Validators.required),
       firstName: new FormControl("", Validators.required),
       lastName: new FormControl("", Validators.required),
       familyName: new FormControl(""),
@@ -77,6 +121,13 @@ export class RegisterComponent implements OnInit {
       street: new FormControl("", Validators.required),
       isPernamentAddress: new FormControl(null),
     });
+  }
+
+
+  ngOnDestroy(): void {
+    if(this.registerSub) {
+      this.registerSub.unsubscribe();
+    }
   }
 
 }

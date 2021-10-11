@@ -1,9 +1,13 @@
+using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace HealthInCube_BackEnd.Data
 {
@@ -15,16 +19,27 @@ namespace HealthInCube_BackEnd.Data
 
         public PouzivatelRepository(HealthInCubeContext context, IMapper mapper)
         {
-            this._mapper = mapper;
-            this._context = context;
+            _mapper = mapper;
+            _context = context;
 
         }
 
 
 
-        public Task<bool> DeleteItem(decimal itemId)
+        public async Task<bool> DeleteItem(decimal itemId)
         {
-            throw new System.NotImplementedException();
+             var user = await _context.Pouzivatel.FindAsync(itemId);
+            if (user == null) return false;
+
+            _context.Pouzivatel.Remove(user);
+            return true; 
+        }
+
+        public async Task<IEnumerable<RolaDTO>> GetAllRoles()
+        {
+            var query =  _context.Rola.AsQueryable();
+
+            return await query.ProjectTo<RolaDTO>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
         public async Task<RegisterPouzivatelDto> GetItemAsync(decimal itemId)
@@ -35,9 +50,11 @@ namespace HealthInCube_BackEnd.Data
             return uzivatelToSend; 
         }
 
-        public Task<IEnumerable<RegisterPouzivatelDto>> GetItemsAsync()
+        public async Task<IEnumerable<RegisterPouzivatelDto>> GetItemsAsync()
         {
-            throw new System.NotImplementedException();
+            var query = _context.Pouzivatel.Include(x => x.Bydliskos).AsQueryable();
+
+            return await query.ProjectTo<RegisterPouzivatelDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
         }
 
         public async Task<Pouzivatel> InsertItem(Pouzivatel item)
@@ -53,7 +70,8 @@ namespace HealthInCube_BackEnd.Data
 
         public void UpdateItem(Pouzivatel item)
         {
-            throw new System.NotImplementedException();
+            // only mark it for update to db 
+            _context.Entry(item).State = EntityState.Modified;
         }
     }
 }
