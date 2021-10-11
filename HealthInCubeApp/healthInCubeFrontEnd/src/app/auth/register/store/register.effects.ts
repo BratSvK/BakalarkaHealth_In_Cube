@@ -9,6 +9,7 @@ import * as RegisterAcitonsBundle from './register.actions';
 import { map, switchMap, withLatestFrom } from "rxjs/operators";
 import { Okres } from "src/app/models/okres";
 import { Mesto } from "src/app/models/mesto";
+import { Rola } from "src/app/models/rola";
 
 
 
@@ -48,6 +49,23 @@ export class RegisterEffects {
         })
     )
 );
+
+
+fetchRole = createEffect(() => 
+    this.actions$.pipe(
+    ofType(RegisterAcitonsBundle.FETCH_ROLE),
+    switchMap(() => {
+        return this.http.get<Rola[]>(fetchUrl + 'pouzivatel/roles');
+    }),
+    map(role => {
+        return new RegisterAcitonsBundle.SetRole(role);
+    })
+)
+);
+
+
+
+
 
 
 

@@ -31,7 +31,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
 
   constructor(private store: Store<AppState>) { 
-    this.store.dispatch(new RegisterBundleActions.FetchOkresy);
+    if (this.okresy.length === 0 || this.role.length === 0) {
+      this.store.dispatch(new RegisterBundleActions.FetchRole);
+      this.store.dispatch(new RegisterBundleActions.FetchOkresy);
+    }
+    
   }
  
 
@@ -48,9 +52,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
 
-  onChangeCites(idOkres: number) {
-    console.log(this.registerForm.get('district').value);
-    // this.store.dispatch(new RegisterBundleActions.FetchMesta(idOkres));
+  onChangeCites() {
+    var okresStr : string = this.registerForm.get('district').value;
+    var idOkres = +okresStr.trim().split('-')[1];
+    this.store.dispatch(new RegisterBundleActions.FetchMesta(idOkres));
   }
 
 
@@ -60,13 +65,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
 
-  getNazovOfDistrict(district: Okres) {
-    if (district !== undefined) {
-      return district.nazov;
-    }
-
-    return "";
-  }
 
 
 
