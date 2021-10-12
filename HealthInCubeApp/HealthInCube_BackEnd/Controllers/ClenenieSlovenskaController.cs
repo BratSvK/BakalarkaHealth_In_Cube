@@ -2,10 +2,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthInCube_BackEnd.Controllers
 {
+    // treba byt prihlaseny do systému 
+    // [Authorize]
     public class ClenenieSlovenskaController : BaseApiController
     {
         private readonly IClenenieSlovenskaRepository _clenenieSlovenskaRepository;
@@ -17,7 +20,7 @@ namespace HealthInCube_BackEnd.Controllers
 
 
         // get all derelict 
-
+        
         [HttpGet("okresy")]
         public async Task<ActionResult<IEnumerable<RolaDTO>>> GetAllDistricts()
         {
