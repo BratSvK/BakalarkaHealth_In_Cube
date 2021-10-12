@@ -20,6 +20,40 @@ namespace HealthInCube_BackEnd.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.AppPouzivatelRola", b =>
+                {
+                    b.Property<decimal>("RoleId")
+                        .HasColumnType("DECIMAL(18, 2)");
+
+                    b.Property<decimal>("UserId")
+                        .HasColumnType("DECIMAL(18, 2)");
+
+                    b.HasKey("RoleId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserRoles");
+                });
+
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.AppRola", b =>
+                {
+                    b.Property<decimal>("Id")
+                        .HasColumnType("DECIMAL(18, 2)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Roles");
+                });
+
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.AtestacieLekar", b =>
                 {
                     b.Property<decimal>("IdAtestacia")
@@ -547,77 +581,81 @@ namespace HealthInCube_BackEnd.Migrations
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.Pouzivatel", b =>
                 {
-                    b.Property<decimal>("IdPouzivatel")
-                        .HasColumnType("NUMBER(38)")
-                        .HasColumnName("ID_POUZIVATEL");
+                    b.Property<decimal>("Id")
+                        .HasColumnType("DECIMAL(18, 2)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<DateTime?>("DatNarodenia")
-                        .HasColumnType("DATE")
-                        .HasColumnName("DAT_NARODENIA");
+                        .HasColumnType("TIMESTAMP(7)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .IsUnicode(false)
-                        .HasColumnType("VARCHAR2(255)")
-                        .HasColumnName("EMAIL");
+                        .HasColumnType("NVARCHAR2(2000)");
 
-                    b.Property<decimal>("IdTyp")
-                        .HasColumnType("DECIMAL(18,2)");
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("NUMBER(1)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("NUMBER(1)");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
 
                     b.Property<string>("Meno")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .IsUnicode(false)
-                        .HasColumnType("VARCHAR2(15)")
-                        .HasColumnName("MENO");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("Mobil")
-                        .HasMaxLength(12)
-                        .IsUnicode(false)
-                        .HasColumnType("VARCHAR2(12)")
-                        .HasColumnName("MOBIL");
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("NUMBER(1)");
 
                     b.Property<string>("Pohlavie")
-                        .HasMaxLength(1)
-                        .IsUnicode(false)
-                        .HasColumnType("CHAR(1)")
-                        .HasColumnName("POHLAVIE")
-                        .IsFixedLength(true);
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<DateTime?>("PoslednePrihlasenie")
-                        .HasColumnType("DATE")
-                        .HasColumnName("POSLEDNE_PRIHLASENIE");
+                        .HasColumnType("TIMESTAMP(7)");
 
                     b.Property<string>("Priezvisko")
-                        .IsRequired()
-                        .HasMaxLength(15)
-                        .IsUnicode(false)
-                        .HasColumnType("VARCHAR2(15)")
-                        .HasColumnName("PRIEZVISKO");
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<DateTime>("Registrovany")
-                        .HasColumnType("DATE")
-                        .HasColumnName("REGISTROVANY");
+                        .HasColumnType("TIMESTAMP(7)");
 
                     b.Property<string>("RodCislo")
-                        .HasMaxLength(11)
-                        .IsUnicode(false)
-                        .HasColumnType("CHAR(11)")
-                        .HasColumnName("ROD_CISLO")
-                        .IsFixedLength(true);
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.Property<string>("RodPriezvisko")
-                        .HasMaxLength(15)
-                        .IsUnicode(false)
-                        .HasColumnType("VARCHAR2(15)")
-                        .HasColumnName("ROD_PRIEZVISKO");
+                        .HasColumnType("NVARCHAR2(2000)");
 
-                    b.HasKey("IdPouzivatel");
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("NVARCHAR2(2000)");
 
-                    b.HasIndex(new[] { "IdTyp" }, "IX_RELATIONSHIP52");
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("NUMBER(1)");
 
-                    b.ToTable("POUZIVATEL");
+                    b.Property<string>("UserName")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.PredpLiecba", b =>
@@ -933,6 +971,105 @@ namespace HealthInCube_BackEnd.Migrations
                     b.HasIndex(new[] { "IdMestoNarodenia" }, "IX_RELATIONSHIP104");
 
                     b.ToTable("ZDRAVOTNA_KARTA");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<decimal>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(10)")
+                        .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<decimal>("RoleId")
+                        .HasColumnType("DECIMAL(18, 2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoleClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<decimal>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(10)")
+                        .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<decimal>("UserId")
+                        .HasColumnType("DECIMAL(18, 2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserClaims");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<decimal>", b =>
+                {
+                    b.Property<decimal>("UserId")
+                        .HasColumnType("DECIMAL(18, 2)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("UserLogins");
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<decimal>", b =>
+                {
+                    b.Property<decimal>("UserId")
+                        .HasColumnType("DECIMAL(18, 2)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("NVARCHAR2(2000)");
+
+                    b.HasKey("UserId");
+
+                    b.ToTable("UserTokens");
+                });
+
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.AppPouzivatelRola", b =>
+                {
+                    b.HasOne("HealthInCube_BackEnd.Entities.AppRola", "PouzivatelRola")
+                        .WithMany("PouzivatelRole")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HealthInCube_BackEnd.Entities.Pouzivatel", "Pouzivatel")
+                        .WithMany("PouzivatelRole")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Pouzivatel");
+
+                    b.Navigation("PouzivatelRola");
                 });
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.AtestacieLekar", b =>
@@ -1266,6 +1403,11 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Navigation("IdPacientNavigation");
                 });
 
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.AppRola", b =>
+                {
+                    b.Navigation("PouzivatelRole");
+                });
+
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.Choroba", b =>
                 {
                     b.Navigation("ZapChorobies");
@@ -1347,6 +1489,8 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Navigation("Lekars");
 
                     b.Navigation("Pacients");
+
+                    b.Navigation("PouzivatelRole");
                 });
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.TypLekara", b =>

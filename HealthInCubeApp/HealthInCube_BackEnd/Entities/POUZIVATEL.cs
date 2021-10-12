@@ -16,8 +16,7 @@ namespace HealthInCube_BackEnd.Entities
             Pacients = new HashSet<Pacient>();
         }
 
-        [Key]
-        public decimal IdPouzivatel { get; set; }
+       
         public DateTime Registrovany { get; set; } = DateTime.Now;
         public string Meno { get; set; }
         public string Priezvisko { get; set; }

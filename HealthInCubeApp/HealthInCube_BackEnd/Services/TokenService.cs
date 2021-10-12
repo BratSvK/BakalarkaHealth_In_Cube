@@ -32,7 +32,7 @@ namespace HealthInCube_BackEnd.Services
             {
                 // safe place to place a roles
                 // we cannot modify a token 
-                new Claim(JwtRegisteredClaimNames.NameId, user.IdPouzivatel.ToString()),          // userID
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),          // userID
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),                              // Email
 
             };
