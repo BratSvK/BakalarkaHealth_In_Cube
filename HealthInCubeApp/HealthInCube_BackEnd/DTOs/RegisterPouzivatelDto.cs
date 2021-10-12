@@ -17,7 +17,6 @@ namespace HealthInCube_BackEnd.DTOs
 
         public string Email { get; set; }
         public string Mobil { get; set; }
-        public DateTime? PoslednePrihlasenie { get; set; }
         [Required]
         public string Pohlavie { get; set; }
 

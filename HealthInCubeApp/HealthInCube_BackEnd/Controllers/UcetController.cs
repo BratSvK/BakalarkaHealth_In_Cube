@@ -45,20 +45,21 @@ namespace HealthInCube_BackEnd.Controllers
             user.Email = registeredUser.Email.ToLower();
 
             //EF uses 
-            var result = await _userManager.CreateAsync(user, registeredUser.Password);
+            var result = await _userManager.CreateAsync(user, registeredUser.Password);     // create user and save changes to DB 
 
             if (!result.Succeeded) return BadRequest(result.Errors);
 
             // adding a member role to  new user 
-            var roleResult = await _userManager.AddToRoleAsync(user, "Member");
+            // var roleResult = await _userManager.AddToRoleAsync(user, "Member");
 
-            if (!roleResult.Succeeded) return BadRequest(result.Errors);
+            // if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
             return new PouzivatelDto
             {
                 Email = user.Email,
                 Token =  await _tokenService.CreateToken(user),
-                Pohlavie = user.Pohlavie
+                Pohlavie = user.Pohlavie,
+                Bydliskos = user.Bydliskos
 
             };
         }
@@ -83,7 +84,8 @@ namespace HealthInCube_BackEnd.Controllers
             {
                 Email = user.Email,
                 Token = await _tokenService.CreateToken(user),
-                Pohlavie = user.Pohlavie
+                Pohlavie = user.Pohlavie,
+                Bydliskos = user.Bydliskos
             };
         }
 
