@@ -26,11 +26,6 @@ export function registerReducer(
         mesta: [...action.payload],
       };
 
-    case RegisterAcitonsBundle.SET_ROLE:
-      return {
-        ...state,
-        role: [...action.payload],
-      };
 
     default:
       return state;

@@ -7,7 +7,6 @@ import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { Mesto } from 'src/app/models/mesto';
 import { Okres } from 'src/app/models/okres';
-import { Rola } from 'src/app/models/rola';
 import { AppState } from 'src/app/_store/models/AppState';
 
 import * as RegisterBundleActions from './store/register.actions';
@@ -24,7 +23,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   okresy: Okres[] = [];
   mesta: Mesto[] = [];
-  role: Rola[] = [];
 
 
   registerSub: Subscription;
@@ -32,8 +30,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
 
   constructor(private store: Store<AppState>, private router: Router, private route: ActivatedRoute) { 
-    if (this.okresy.length === 0 || this.role.length === 0) {
-      this.store.dispatch(new RegisterBundleActions.FetchRole);
+    if (this.okresy.length === 0) {
       this.store.dispatch(new RegisterBundleActions.FetchOkresy);
     }
     
@@ -45,7 +42,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.registerSub = this.store.select('register').subscribe(registerFormData => {
       this.okresy = registerFormData.okresy;
       this.mesta = registerFormData.mesta;
-      this.role = registerFormData.role;
     });
 
 
@@ -63,6 +59,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     // this.calculateFromBIDToBirthDate();
+    console.log(this.registerForm.value);
   }
 
   onReturn() {
@@ -109,7 +106,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   private initForm() {
     this.registerForm = new FormGroup({
-      accTypo: new FormControl(null, Validators.required),
       firstName: new FormControl("", Validators.required),
       lastName: new FormControl("", Validators.required),
       familyName: new FormControl(""),

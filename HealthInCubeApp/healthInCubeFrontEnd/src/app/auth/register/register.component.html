@@ -12,16 +12,6 @@
 
                 <h4 class="mb-3"><i class="fa fa-user mr-2"></i>Create an account </h4>
 
-                 <div class="row">
-                    <div class="col-md mb-3 justify-content-center">
-                        <label for="accTypo" class="mb-3">Account type*</label>
-                        <select class="form-control d-block w-100" id="accTypo" formControlName="accTypo">
-                            <option [disabled]="true" [selected]="true" value="">Choose Account Type</option>
-                            <option *ngFor="let rola of role">{{rola.nazov}}</option>
-                        </select>
-                    </div>
-                 </div>
-               
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label for="firstName">First name*</label>

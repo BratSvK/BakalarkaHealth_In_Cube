@@ -6,8 +6,6 @@ namespace HealthInCube_BackEnd.DTOs
     public class RegisterPouzivatelDto
     {
         [Required]
-        public decimal  Id { get; set; }
-        [Required]
         public string Meno { get; set; }
         [Required]
 

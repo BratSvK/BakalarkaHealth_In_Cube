@@ -9,8 +9,7 @@ export const SET_OKRESY = '[Register] Set okresy';        // sync
 export const FETCH_MESTA = '[Register] Fetch mesta';
 export const SET_MESTA = '[Register] Set mesta';
 
-export const FETCH_ROLE = '[Register] Fetch role';
-export const SET_ROLE = '[Register] Set role';
+
 
 
 
@@ -49,29 +48,13 @@ export class SetMesta implements Action {
 
 
 
-export class FetchRole implements Action {
-    readonly type = FETCH_ROLE;
-
-}
-
-
-export class SetRole implements Action {
-    readonly type = SET_ROLE;
-
-    constructor(public payload: Rola[]) {}
-
-}
-
-
 
 export type RegisterActions =
   | FetchOkresy
   | SetOkresy
   | FetchMesta
-  | SetMesta
-  | FetchRole
-  | SetRole;
-
+  | SetMesta;
+ 
 
 
 

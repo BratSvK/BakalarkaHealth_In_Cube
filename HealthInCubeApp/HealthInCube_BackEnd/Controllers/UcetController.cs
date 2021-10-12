@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using HealthInCube_BackEnd.DTOs;
@@ -43,6 +44,7 @@ namespace HealthInCube_BackEnd.Controllers
 
             user.Email = registeredUser.Email.ToLower();
             user.UserName = user.Email.Split('@')[0];
+            user.Id = await this.PridelIdToNewUserAsync();
             
 
             //EF uses 
@@ -51,7 +53,7 @@ namespace HealthInCube_BackEnd.Controllers
             if (!result.Succeeded) return BadRequest(result.Errors);
 
             // adding a member role to  new user -> registration is only for pacient
-            var roleResult = await _userManager.AddToRoleAsync(user, "Spravca");
+            var roleResult = await _userManager.AddToRoleAsync(user, "Pacient");
 
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
@@ -63,6 +65,11 @@ namespace HealthInCube_BackEnd.Controllers
                 Bydliskos = user.Bydliskos
 
             };
+        }
+
+        private async Task<decimal> PridelIdToNewUserAsync()
+        {
+            return await _userManager.Users.CountAsync() + 1;
         }
 
         [HttpPost("login")]
