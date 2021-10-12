@@ -40,6 +40,8 @@ namespace HealthInCube_BackEnd
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HealthInCube_BackEnd", Version = "v1" });
             });
+            services.AddIdentityService(_configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,6 +61,9 @@ namespace HealthInCube_BackEnd
             // there is right place where to put corse 
             // we need set a policy to our app x=> policy 
             app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
+
+            // using middleware
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

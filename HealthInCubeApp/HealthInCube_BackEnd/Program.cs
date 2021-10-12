@@ -29,6 +29,10 @@ namespace HealthInCube_BackEnd
                 var userManager = services.GetRequiredService<UserManager<Pouzivatel>>();
                 var roleManager = services.GetRequiredService<RoleManager<AppRola>>();
                 await context.Database.MigrateAsync();
+
+
+                // await Seed.SeedUsers(userManager, roleManager);
+                
             }
             catch (Exception ex) 
             {

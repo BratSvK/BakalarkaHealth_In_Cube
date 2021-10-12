@@ -11,8 +11,6 @@ namespace HealthInCube_BackEnd.Controllers
 {
     public class UcetController : BaseApiController
     {
-        
-
 
         private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
@@ -30,6 +28,7 @@ namespace HealthInCube_BackEnd.Controllers
         // for registration of new user 
         // async becouse of manipulation with db 
         // api controller is smart enough to figere out where the parameter comming from 
+        
         [HttpPost("register")]
         public async Task<ActionResult<PouzivatelDto>> Register(RegisterPouzivatelDto registeredUser)             // reason to failing we need to send a json object -> for now string username is null
         {
@@ -43,16 +42,18 @@ namespace HealthInCube_BackEnd.Controllers
 
 
             user.Email = registeredUser.Email.ToLower();
+            user.UserName = user.Email.Split('@')[0];
+            
 
             //EF uses 
             var result = await _userManager.CreateAsync(user, registeredUser.Password);     // create user and save changes to DB 
 
             if (!result.Succeeded) return BadRequest(result.Errors);
 
-            // adding a member role to  new user 
-            // var roleResult = await _userManager.AddToRoleAsync(user, "Member");
+            // adding a member role to  new user -> registration is only for pacient
+            var roleResult = await _userManager.AddToRoleAsync(user, "Spravca");
 
-            // if (!roleResult.Succeeded) return BadRequest(result.Errors);
+            if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
             return new PouzivatelDto
             {

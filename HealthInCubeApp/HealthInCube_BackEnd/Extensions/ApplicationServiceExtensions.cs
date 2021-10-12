@@ -1,6 +1,7 @@
 using HealthInCube_BackEnd.Data;
 using HealthInCube_BackEnd.Helpers;
 using HealthInCube_BackEnd.Interfaces;
+using HealthInCube_BackEnd.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +14,9 @@ namespace HealthInCube_BackEnd.Extensions
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
-
+            
+            services.AddScoped<ITokenService, TokenService>();
+            
             services.AddScoped<INemocnicaRepistory, NemocnicaRepository>();
             services.AddScoped<IPouzivatelRepository, PouzivatelRepository>();
 

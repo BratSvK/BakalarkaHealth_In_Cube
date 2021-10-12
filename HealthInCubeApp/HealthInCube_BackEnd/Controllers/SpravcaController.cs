@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthInCube_BackEnd.Controllers
@@ -17,7 +18,7 @@ namespace HealthInCube_BackEnd.Controllers
 
 
 
-
+        [Authorize(Roles="Spravca")]
         [HttpGet("nemocnice")]
         public async Task<ActionResult<IEnumerable<NemocnicaDto>>> GetNemocnice()
         {

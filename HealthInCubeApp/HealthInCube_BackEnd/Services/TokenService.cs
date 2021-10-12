@@ -25,15 +25,15 @@ namespace HealthInCube_BackEnd.Services
             _key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(congig["TokenKey"]));
         }
 
-
+        // trust a token on the server
         public async Task<string> CreateToken(Pouzivatel user)
         {
             var claims = new List<Claim>
             {
                 // safe place to place a roles
                 // we cannot modify a token 
-                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),          // userID
-                new Claim(JwtRegisteredClaimNames.Email, user.Email),                              // Email
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),                      // userID
+                new Claim(JwtRegisteredClaimNames.Email, user.Email),                               //  Email
 
             };
 
