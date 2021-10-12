@@ -1,5 +1,8 @@
-﻿using System;
+﻿using System.Collections.Immutable;
+using System;
 using HealthInCube_BackEnd.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
@@ -7,7 +10,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace HealthInCube_BackEnd.Data
 {
-    public partial class HealthInCubeContext : DbContext
+    public partial class HealthInCubeContext : IdentityDbContext<Pouzivatel, AppRola, decimal
+        ,IdentityUserClaim<decimal>, AppPouzivatelRola, IdentityUserLogin<decimal>, IdentityRoleClaim<decimal>, IdentityUserToken<decimal>>
     {
         public HealthInCubeContext(DbContextOptions options) : base(options)
         {
@@ -31,7 +35,7 @@ namespace HealthInCube_BackEnd.Data
         public virtual DbSet<Okres> Okres { get; set; }
         public virtual DbSet<Pacient> Pacient { get; set; }
         public virtual DbSet<Poistovna> Poistovna { get; set; }
-        public virtual DbSet<Pouzivatel> Pouzivatel { get; set; }
+        // public virtual DbSet<Pouzivatel> Pouzivatel { get; set; }
         public virtual DbSet<PredpLiecba> PredpLiecba { get; set; }
         public virtual DbSet<Priznaky> Priznakie { get; set; }
         public virtual DbSet<Recept> Recept { get; set; }
@@ -50,6 +54,37 @@ namespace HealthInCube_BackEnd.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "USING_NLS_COMP");
+
+            modelBuilder.Entity<Pouzivatel>()
+                .HasMany(p => p.PouzivatelRole)
+                .WithOne(r => r.Pouzivatel)
+                .HasForeignKey(r => r.UserId)
+                .IsRequired();
+
+
+
+                modelBuilder.Entity<AppRola>()
+                .HasMany(r => r.PouzivatelRole)
+                .WithOne(u => u.PouzivatelRola)
+                .HasForeignKey(r => r.RoleId)
+                .IsRequired();
+
+
+            modelBuilder.Entity<AppPouzivatelRola>(entity => {
+                entity.HasKey(r => new {r.RoleId, r.UserId});
+            });
+
+             modelBuilder.Entity<IdentityUserLogin<decimal>>(entity => {
+                entity.HasKey(r => r.UserId);
+            });
+
+             modelBuilder.Entity<IdentityUserToken<decimal>>(entity => {
+                entity.HasKey(r => r.UserId);
+            });
+
+
+
+
 
             modelBuilder.Entity<AtestacieLekar>(entity =>
             {
@@ -643,73 +678,72 @@ namespace HealthInCube_BackEnd.Data
                     .HasColumnName("ODKAZ_URL");
             });
 
-            modelBuilder.Entity<Pouzivatel>(entity =>
-            {
-                entity.HasKey(e => e.IdPouzivatel);
+            // modelBuilder.Entity<Pouzivatel>(entity =>
+            // {
+            //     entity.HasKey(e => e.IdPouzivatel);
 
-                entity.ToTable("POUZIVATEL");
+            //     entity.ToTable("POUZIVATEL");
 
-                entity.HasIndex(e => e.IdTyp, "IX_RELATIONSHIP52");
 
-                entity.Property(e => e.IdPouzivatel)
-                    .HasColumnType("NUMBER(38)")
-                    .HasColumnName("ID_POUZIVATEL");
+            //     entity.Property(e => e.IdPouzivatel)
+            //         .HasColumnType("NUMBER(38)")
+            //         .HasColumnName("ID_POUZIVATEL");
 
-                entity.Property(e => e.DatNarodenia)
-                    .HasColumnType("DATE")
-                    .HasColumnName("DAT_NARODENIA");
+            //     entity.Property(e => e.DatNarodenia)
+            //         .HasColumnType("DATE")
+            //         .HasColumnName("DAT_NARODENIA");
 
-                entity.Property(e => e.Email)
-                    .IsRequired()
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
-                    .HasColumnName("EMAIL");
-
-                
-                entity.Property(e => e.Meno)
-                    .IsRequired()
-                    .HasMaxLength(15)
-                    .IsUnicode(false)
-                    .HasColumnName("MENO");
-
-                entity.Property(e => e.Mobil)
-                    .HasMaxLength(12)
-                    .IsUnicode(false)
-                    .HasColumnName("MOBIL");
-
-                entity.Property(e => e.Pohlavie)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("POHLAVIE")
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.PoslednePrihlasenie)
-                    .HasColumnType("DATE")
-                    .HasColumnName("POSLEDNE_PRIHLASENIE");
-
-                entity.Property(e => e.Priezvisko)
-                    .IsRequired()
-                    .HasMaxLength(15)
-                    .IsUnicode(false)
-                    .HasColumnName("PRIEZVISKO");
-
-                entity.Property(e => e.Registrovany)
-                    .HasColumnType("DATE")
-                    .HasColumnName("REGISTROVANY");
-
-                entity.Property(e => e.RodCislo)
-                    .HasMaxLength(11)
-                    .IsUnicode(false)
-                    .HasColumnName("ROD_CISLO")
-                    .IsFixedLength(true);
-
-                entity.Property(e => e.RodPriezvisko)
-                    .HasMaxLength(15)
-                    .IsUnicode(false)
-                    .HasColumnName("ROD_PRIEZVISKO");
+            //     entity.Property(e => e.Email)
+            //         .IsRequired()
+            //         .HasMaxLength(255)
+            //         .IsUnicode(false)
+            //         .HasColumnName("EMAIL");
 
                 
-            });
+            //     entity.Property(e => e.Meno)
+            //         .IsRequired()
+            //         .HasMaxLength(15)
+            //         .IsUnicode(false)
+            //         .HasColumnName("MENO");
+
+            //     entity.Property(e => e.Mobil)
+            //         .HasMaxLength(12)
+            //         .IsUnicode(false)
+            //         .HasColumnName("MOBIL");
+
+            //     entity.Property(e => e.Pohlavie)
+            //         .HasMaxLength(1)
+            //         .IsUnicode(false)
+            //         .HasColumnName("POHLAVIE")
+            //         .IsFixedLength(true);
+
+            //     entity.Property(e => e.PoslednePrihlasenie)
+            //         .HasColumnType("DATE")
+            //         .HasColumnName("POSLEDNE_PRIHLASENIE");
+
+            //     entity.Property(e => e.Priezvisko)
+            //         .IsRequired()
+            //         .HasMaxLength(15)
+            //         .IsUnicode(false)
+            //         .HasColumnName("PRIEZVISKO");
+
+            //     entity.Property(e => e.Registrovany)
+            //         .HasColumnType("DATE")
+            //         .HasColumnName("REGISTROVANY");
+
+            //     entity.Property(e => e.RodCislo)
+            //         .HasMaxLength(11)
+            //         .IsUnicode(false)
+            //         .HasColumnName("ROD_CISLO")
+            //         .IsFixedLength(true);
+
+            //     entity.Property(e => e.RodPriezvisko)
+            //         .HasMaxLength(15)
+            //         .IsUnicode(false)
+            //         .HasColumnName("ROD_PRIEZVISKO");
+
+                
+            // });
 
             modelBuilder.Entity<PredpLiecba>(entity =>
             {

@@ -28,10 +28,10 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<bool> DeleteItem(decimal itemId)
         {
-             var user = await _context.Pouzivatel.FindAsync(itemId);
+             var user = await _context.Users.FindAsync(itemId);
             if (user == null) return false;
 
-            _context.Pouzivatel.Remove(user);
+            _context.Users.Remove(user);
             return true; 
         }
 
@@ -44,7 +44,7 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<RegisterPouzivatelDto> GetItemAsync(decimal itemId)
         {
-            var uzivatel = await _context.Pouzivatel.FindAsync(itemId);
+            var uzivatel = await _context.Users.FindAsync(itemId);
             var uzivatelToSend = _mapper.Map<RegisterPouzivatelDto>(uzivatel);
             
             return uzivatelToSend; 
@@ -52,7 +52,7 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<IEnumerable<RegisterPouzivatelDto>> GetItemsAsync()
         {
-            var query = _context.Pouzivatel.Include(x => x.Bydliskos).AsQueryable();
+            var query = _context.Users.Include(x => x.Bydliskos).AsQueryable();
 
             return await query.ProjectTo<RegisterPouzivatelDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
         }
@@ -60,7 +60,7 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<Pouzivatel> InsertItem(Pouzivatel item)
         {
-            await _context.Pouzivatel.AddAsync(item);
+            await _context.Users.AddAsync(item);
             return item;
         }
 

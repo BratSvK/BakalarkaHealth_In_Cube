@@ -563,7 +563,7 @@ namespace HealthInCube_BackEnd.Migrations
                         .HasColumnName("EMAIL");
 
                     b.Property<decimal>("IdTyp")
-                        .HasColumnType("DECIMAL(18, 2)");
+                        .HasColumnType("DECIMAL(18,2)");
 
                     b.Property<string>("Meno")
                         .IsRequired()
