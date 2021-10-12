@@ -9,6 +9,8 @@ namespace HealthInCube_BackEnd.Interfaces
     {
          
         // Task<IEnumerable<RolaDTO>> GetAllRoles();
+    
+
 
     }
 }

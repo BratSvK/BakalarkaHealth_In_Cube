@@ -32,19 +32,6 @@ namespace HealthInCube_BackEnd.Controllers
 
 
 
-        [HttpPost("registerUser")]
-        public async Task<ActionResult<RegisterPouzivatelDto>> RegisterPouzivatel(RegisterPouzivatelDto registerPouzivatel)
-        {
-            var pouzivatel = await _pouzivatelRepository.GetItemAsync(registerPouzivatel.IdPouzivatel);
-
-            if (pouzivatel != null && pouzivatel.Email.Equals(registerPouzivatel.Email)) return BadRequest("User with this email already exists");
-            var pouzivatelToInsert = await _pouzivatelRepository.InsertItem(_mapper.Map<Pouzivatel>(registerPouzivatel));
-
-            if (await _pouzivatelRepository.SaveAllAsync()) return Ok("pouzivatel registered");
-
-            return BadRequest("Failed to register pouzivatel");
-
-        }
 
 
 

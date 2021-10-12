@@ -57,6 +57,7 @@ namespace HealthInCube_BackEnd.Data
             return await query.ProjectTo<RegisterPouzivatelDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
         }
 
+
         public async Task<Pouzivatel> InsertItem(Pouzivatel item)
         {
             await _context.Pouzivatel.AddAsync(item);
