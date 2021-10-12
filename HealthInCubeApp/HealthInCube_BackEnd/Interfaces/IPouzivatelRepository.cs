@@ -8,7 +8,7 @@ namespace HealthInCube_BackEnd.Interfaces
     public interface IPouzivatelRepository : IRepository<Pouzivatel,RegisterPouzivatelDto>
     {
          
-        Task<IEnumerable<RolaDTO>> GetAllRoles();
+        // Task<IEnumerable<RolaDTO>> GetAllRoles();
 
     }
 }

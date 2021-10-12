@@ -35,7 +35,6 @@ namespace HealthInCube_BackEnd.Data
         public virtual DbSet<PredpLiecba> PredpLiecba { get; set; }
         public virtual DbSet<Priznaky> Priznakie { get; set; }
         public virtual DbSet<Recept> Recept { get; set; }
-        public virtual DbSet<Rola> Rola { get; set; }
 
         public virtual DbSet<TypLekara> TypLekara { get; set; }
         public virtual DbSet<TypSymptom> TypSymptom { get; set; }
@@ -666,10 +665,7 @@ namespace HealthInCube_BackEnd.Data
                     .IsUnicode(false)
                     .HasColumnName("EMAIL");
 
-                entity.Property(e => e.IdTyp)
-                    .HasColumnType("NUMBER(38)")
-                    .HasColumnName("ID_TYP");
-
+                
                 entity.Property(e => e.Meno)
                     .IsRequired()
                     .HasMaxLength(15)
@@ -712,11 +708,7 @@ namespace HealthInCube_BackEnd.Data
                     .IsUnicode(false)
                     .HasColumnName("ROD_PRIEZVISKO");
 
-                entity.HasOne(d => d.IdTypNavigation)
-                    .WithMany(p => p.Pouzivatels)
-                    .HasForeignKey(d => d.IdTyp)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("RELATIONSHIP52");
+                
             });
 
             modelBuilder.Entity<PredpLiecba>(entity =>
@@ -848,23 +840,7 @@ namespace HealthInCube_BackEnd.Data
                     .HasConstraintName("RELATIONSHIP35");
             });
 
-            modelBuilder.Entity<Rola>(entity =>
-            {
-                entity.HasKey(e => e.IdTyp);
-
-                entity.ToTable("ROLA");
-
-                entity.Property(e => e.IdTyp)
-                    .HasColumnType("NUMBER(38)")
-                    .HasColumnName("ID_TYP");
-
-                entity.Property(e => e.Nazov)
-                    .IsRequired()
-                    .HasMaxLength(40)
-                    .IsUnicode(false)
-                    .HasColumnName("NAZOV");
-            });
-
+           
 
             modelBuilder.Entity<TypLekara>(entity =>
             {

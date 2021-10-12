@@ -35,12 +35,12 @@ namespace HealthInCube_BackEnd.Data
             return true; 
         }
 
-        public async Task<IEnumerable<RolaDTO>> GetAllRoles()
-        {
-            var query =  _context.Rola.AsQueryable();
+        // public async Task<IEnumerable<RolaDTO>> GetAllRoles()
+        // {
+        //     var query =  _context.Rola.AsQueryable();
 
-            return await query.ProjectTo<RolaDTO>(_mapper.ConfigurationProvider).ToListAsync();
-        }
+        //     return await query.ProjectTo<RolaDTO>(_mapper.ConfigurationProvider).ToListAsync();
+        // }
 
         public async Task<RegisterPouzivatelDto> GetItemAsync(decimal itemId)
         {

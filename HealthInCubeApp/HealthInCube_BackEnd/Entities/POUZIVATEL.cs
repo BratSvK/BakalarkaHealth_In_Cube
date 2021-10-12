@@ -27,7 +27,6 @@ namespace HealthInCube_BackEnd.Entities
         public DateTime? PoslednePrihlasenie { get; set; }
         public string Pohlavie { get; set; }
 
-        public virtual Rola IdTypNavigation { get; set; }
         public virtual FotkaPouzivatel FotkaPouzivatel { get; set; }
         public virtual ICollection<Bydlisko> Bydliskos { get; set; }
         public virtual ICollection<Lekar> Lekars { get; set; }

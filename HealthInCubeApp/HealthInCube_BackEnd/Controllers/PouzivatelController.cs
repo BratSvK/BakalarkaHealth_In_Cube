@@ -21,14 +21,14 @@ namespace HealthInCube_BackEnd.Controllers
 
 
 
-        [HttpGet("roles")]
-        public async Task<ActionResult<IEnumerable<RolaDTO>>> GetAllRoles()
-        {
-            var role = await _pouzivatelRepository.GetAllRoles();
-            if (role == null) return NotFound("Nothing find");
+        // [HttpGet("roles")]
+        // public async Task<ActionResult<IEnumerable<RolaDTO>>> GetAllRoles()
+        // {
+        //     var role = await _pouzivatelRepository.GetAllRoles();
+        //     if (role == null) return NotFound("Nothing find");
 
-            return Ok(role);
-        }
+        //     return Ok(role);
+        // }
 
 
 

@@ -13,7 +13,6 @@ namespace HealthInCube_BackEnd.Helpers
             CreateMap<RegisterPouzivatelDto,Pouzivatel>();
 
 
-            CreateMap<Rola,RolaDTO>();
 
 
             CreateMap<Okres,OkresDto>();
