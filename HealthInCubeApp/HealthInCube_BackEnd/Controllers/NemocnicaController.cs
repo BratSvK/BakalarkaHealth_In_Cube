@@ -35,7 +35,7 @@ namespace HealthInCube_BackEnd.Controllers
             var lekari = await _nemocnicaRepository.GetAllPractitionersByCityAsync(registerPacientAgeAndCity.IdCity);
             var lekariByPacientAge = new List<LekarDto>();
 
-            if (lekari.Count() == 0) return NotFound("Nothing found");
+            if (lekari.Count() == 0 ) return NotFound("Nothing found");
 
             if(registerPacientAgeAndCity.Age > 0 && registerPacientAgeAndCity.Age <= 25)
             {
@@ -51,6 +51,33 @@ namespace HealthInCube_BackEnd.Controllers
         }
 
 
+        //  [AllowAnonymous]
+        // [HttpGet("oddelenia")]
+        // public async Task<ActionResult<IEnumerable<LekarDto>>> GetAllGeneralPractitionersAsync([FromQuery] RegisterPacientAgeAndCityDto registerPacientAgeAndCity)
+        // {   
+
+        //     var lekari = await _nemocnicaRepository.GetAllPractitionersByCityAsync(registerPacientAgeAndCity.IdCity);
+        //     var lekariByPacientAge = new List<LekarDto>();
+
+        //     if (lekari.Count() == 0) return NotFound("Nothing found");
+
+        //     if(registerPacientAgeAndCity.Age > 0 && registerPacientAgeAndCity.Age <= 25)
+        //     {
+        //         lekariByPacientAge = GetLekariByAge(lekari, (int)TypVseobecnyLekar.Detsky);
+                
+        //     }
+        //     else 
+        //     {
+        //         lekariByPacientAge = GetLekariByAge(lekari, (int)TypVseobecnyLekar.Dospely);
+        //     }
+
+        //     return Ok(lekariByPacientAge);
+        // }
+
+
+
+
+
 
 
         
@@ -58,7 +85,7 @@ namespace HealthInCube_BackEnd.Controllers
 
         private List<LekarDto> GetLekariByAge(IEnumerable<LekarDto> lekary , int typVseobecny)
         {
-            return lekary.Where(l => l.AtestacieLekars.Any(atestacia => atestacia.IdTyp == typVseobecny)).ToList();
+            return lekary.Where(l => l.Atestacie.Any(atestacia => atestacia.IdTyp == typVseobecny)).ToList();
 
         }
 

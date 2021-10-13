@@ -1,0 +1,7304 @@
+--------------------------------------------------------
+--  File created - Streda-oktÛbra-13-2021   
+--------------------------------------------------------
+DROP TABLE "SYSTEM"."__EFMigrationsHistory";
+DROP TABLE "SYSTEM"."ATESTACIE_LEKAR";
+DROP TABLE "SYSTEM"."BYDLISKO";
+DROP TABLE "SYSTEM"."FOTKA_POUZIVATEL";
+DROP TABLE "SYSTEM"."CHOROBA";
+DROP TABLE "SYSTEM"."KRAJ";
+DROP TABLE "SYSTEM"."L_BALENIE";
+DROP TABLE "SYSTEM"."LEKAR";
+DROP TABLE "SYSTEM"."LIEK";
+DROP TABLE "SYSTEM"."LIEK_APLIKACIA";
+DROP TABLE "SYSTEM"."LIEK_UCINNA_LATKA";
+DROP TABLE "SYSTEM"."MESTO";
+DROP TABLE "SYSTEM"."NEMOCNICA";
+DROP TABLE "SYSTEM"."OBLAST_URCENIA";
+DROP TABLE "SYSTEM"."ODDELENIE";
+DROP TABLE "SYSTEM"."OKRES";
+DROP TABLE "SYSTEM"."PACIENT";
+DROP TABLE "SYSTEM"."POISTOVNA";
+DROP TABLE "SYSTEM"."PREDP_LIECBA";
+DROP TABLE "SYSTEM"."PRIZNAKY";
+DROP TABLE "SYSTEM"."RECEPT";
+DROP TABLE "SYSTEM"."RoleClaims";
+DROP TABLE "SYSTEM"."Roles";
+DROP TABLE "SYSTEM"."SQLPLUS_PRODUCT_PROFILE";
+DROP TABLE "SYSTEM"."TYP_LEKARA";
+DROP TABLE "SYSTEM"."TYP_SYMPTOM";
+DROP TABLE "SYSTEM"."UCINNA_LATKA";
+DROP TABLE "SYSTEM"."UserClaims";
+DROP TABLE "SYSTEM"."UserLogins";
+DROP TABLE "SYSTEM"."UserRoles";
+DROP TABLE "SYSTEM"."Users";
+DROP TABLE "SYSTEM"."UserTokens";
+DROP TABLE "SYSTEM"."VYK_VYSETRENIA";
+DROP TABLE "SYSTEM"."ZAP_CHOROBY";
+DROP TABLE "SYSTEM"."ZDRAV_KARTA_POVOLENIA";
+DROP TABLE "SYSTEM"."ZDRAV_POISTENIE";
+DROP TABLE "SYSTEM"."ZDRAVOTNA_KARTA";
+--------------------------------------------------------
+--  DDL for Table __EFMigrationsHistory
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."__EFMigrationsHistory" 
+   (	"MigrationId" NVARCHAR2(150), 
+	"ProductVersion" NVARCHAR2(32)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table ATESTACIE_LEKAR
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."ATESTACIE_LEKAR" 
+   (	"ID_LEKAR" NUMBER(*,0), 
+	"ID_TYP" NUMBER(*,0), 
+	"ID_ATESTACIA" NUMBER(*,0), 
+	"ATESTACIA_OD" DATE
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table BYDLISKO
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."BYDLISKO" 
+   (	"ID_BYDLISKA" NUMBER(*,0), 
+	"ID_POUZIVATEL" NUMBER(*,0), 
+	"ULICA" VARCHAR2(100 BYTE), 
+	"ADRESA_OD" DATE, 
+	"ADRESA_DO" DATE, 
+	"TRVALE" CHAR(1 BYTE), 
+	"ID_MESTO" NUMBER(*,0), 
+	"PSC_BYDLISKO" CHAR(5 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."BYDLISKO"."TRVALE" IS 'T-true 
+F-false';
+--------------------------------------------------------
+--  DDL for Table FOTKA_POUZIVATEL
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."FOTKA_POUZIVATEL" 
+   (	"ID_POUZIVATEL" NUMBER(*,0), 
+	"FOTKA" BLOB
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" 
+ LOB ("FOTKA") STORE AS BASICFILE (
+  TABLESPACE "SYSTEM" ENABLE STORAGE IN ROW CHUNK 8192 RETENTION 
+  NOCACHE LOGGING 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)) ;
+--------------------------------------------------------
+--  DDL for Table CHOROBA
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."CHOROBA" 
+   (	"CIS_CHOROBA" CHAR(4 BYTE), 
+	"NAZOV" VARCHAR2(255 BYTE), 
+	"SK_OCHORENI" VARCHAR2(150 BYTE), 
+	"OBM_VEK_OD" NUMBER(2,0), 
+	"OBM_VEK_DO" NUMBER(2,0), 
+	"OBM_POHLAVIE" CHAR(1 BYTE), 
+	"VALID_OD" DATE, 
+	"VALID_DO" DATE, 
+	"DOPL_INFO_PATRI" VARCHAR2(320 BYTE), 
+	"DOPL_INFO_NEPATRI" VARCHAR2(320 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."CHOROBA"."CIS_CHOROBA" IS 'A00-B99
+InfekËnÈ a parazitovÈ choroby
+A00- Cholera ';
+--------------------------------------------------------
+--  DDL for Table KRAJ
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."KRAJ" 
+   (	"ID_KRAJ" NUMBER(*,0), 
+	"NAZOV" VARCHAR2(25 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table L_BALENIE
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."L_BALENIE" 
+   (	"KOD_BALENIA" CHAR(5 BYTE), 
+	"ID_LIEK" NUMBER(*,0), 
+	"SPOSOB_UHRADY" CHAR(1 BYTE), 
+	"CENA" NUMBER(10,2), 
+	"DOPLATOK" NUMBER(10,2), 
+	"POCET_KS" NUMBER(3,0)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."L_BALENIE"."KOD_BALENIA" IS '00643';
+--------------------------------------------------------
+--  DDL for Table LEKAR
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."LEKAR" 
+   (	"ID_LEKAR" NUMBER(*,0), 
+	"ID_POUZIVATEL" NUMBER(*,0), 
+	"ID_ODDEL" NUMBER(*,0), 
+	"DO" DATE
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table LIEK
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."LIEK" 
+   (	"ID_LIEK" NUMBER(*,0), 
+	"NAZOV" VARCHAR2(255 BYTE), 
+	"REZIM_VYDAJA" CHAR(2 BYTE), 
+	"LIEK_FORMA" VARCHAR2(30 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table LIEK_APLIKACIA
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."LIEK_APLIKACIA" 
+   (	"ID_LIEK" NUMBER(*,0), 
+	"ID_OBLAST" NUMBER(*,0)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table LIEK_UCINNA_LATKA
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."LIEK_UCINNA_LATKA" 
+   (	"ID_LIEK" NUMBER(*,0), 
+	"ID_LATKA" NUMBER(*,0)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table MESTO
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."MESTO" 
+   (	"ID_OKRES" NUMBER(*,0), 
+	"NAZOV" VARCHAR2(150 BYTE), 
+	"ID_MESTO" NUMBER(*,0)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table NEMOCNICA
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."NEMOCNICA" 
+   (	"ID_NEM" NUMBER(*,0), 
+	"NAZOV" VARCHAR2(150 BYTE), 
+	"MOBIL" VARCHAR2(12 BYTE), 
+	"ULICA" VARCHAR2(50 BYTE) DEFAULT 100, 
+	"URL_STRANKA" VARCHAR2(300 BYTE), 
+	"ID_MESTO" NUMBER(*,0)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table OBLAST_URCENIA
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."OBLAST_URCENIA" 
+   (	"ID_OBLAST" NUMBER(*,0), 
+	"NAZOV" VARCHAR2(100 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table ODDELENIE
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."ODDELENIE" 
+   (	"ID_ODDEL" NUMBER(*,0), 
+	"ID_NEM" NUMBER(*,0), 
+	"ID_PRIMAR" NUMBER(*,0), 
+	"NAZOV_ODD" VARCHAR2(200 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table OKRES
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."OKRES" 
+   (	"ID_OKRES" NUMBER(*,0), 
+	"ID_KRAJ" NUMBER(*,0), 
+	"NAZOV" VARCHAR2(150 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table PACIENT
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."PACIENT" 
+   (	"ID_PACIENT" NUMBER(*,0), 
+	"ID_POUZIVATEL" NUMBER(*,0), 
+	"ID_VSEOBECNY_LEKAR" NUMBER(*,0), 
+	"OD" DATE, 
+	"DO" DATE
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table POISTOVNA
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."POISTOVNA" 
+   (	"ID_POISTOVNA" NUMBER(*,0), 
+	"NAZOV" VARCHAR2(50 BYTE), 
+	"KONTAKT_MOBIL" VARCHAR2(12 BYTE), 
+	"LOGO_URL" VARCHAR2(50 BYTE), 
+	"ODKAZ_URL" VARCHAR2(50 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table PREDP_LIECBA
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."PREDP_LIECBA" 
+   (	"ID_LIEK" NUMBER(*,0), 
+	"ID_VYSETRENIE" NUMBER(*,0), 
+	"OD" DATE, 
+	"DAVKOVANIE_POCET" NUMBER(3,0), 
+	"DO" DATE
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."PREDP_LIECBA"."DAVKOVANIE_POCET" IS '101
+rano,poobede,vecer ';
+--------------------------------------------------------
+--  DDL for Table PRIZNAKY
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."PRIZNAKY" 
+   (	"CIS_CHOROBA" CHAR(4 BYTE), 
+	"ID_ZDRAVOTNA_KARTA" NUMBER(*,0), 
+	"ID_SYMPTOM" NUMBER(*,0), 
+	"OD" DATE
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table RECEPT
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."RECEPT" 
+   (	"ID_RECEPT" NUMBER(*,0), 
+	"ID_VYSETRENIE" NUMBER(*,0), 
+	"ID_LIEK" NUMBER(*,0), 
+	"BALENIE_KS" NUMBER(2,0), 
+	"VYSTAVENIE" DATE, 
+	"CENA" NUMBER(10,2), 
+	"VYBRANIE" DATE
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table RoleClaims
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."RoleClaims" 
+   (	"Id" NUMBER(10,0) GENERATED BY DEFAULT ON NULL AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE , 
+	"RoleId" NUMBER(38,0), 
+	"ClaimType" NVARCHAR2(2000), 
+	"ClaimValue" NVARCHAR2(2000)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table Roles
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."Roles" 
+   (	"Id" NUMBER(38,0), 
+	"Name" NVARCHAR2(2000), 
+	"NormalizedName" NVARCHAR2(2000), 
+	"ConcurrencyStamp" NVARCHAR2(2000)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table SQLPLUS_PRODUCT_PROFILE
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."SQLPLUS_PRODUCT_PROFILE" SHARING=METADATA 
+   (	"PRODUCT" VARCHAR2(30 BYTE), 
+	"USERID" VARCHAR2(128 BYTE), 
+	"ATTRIBUTE" VARCHAR2(240 BYTE), 
+	"SCOPE" VARCHAR2(240 BYTE), 
+	"NUMERIC_VALUE" NUMBER(15,2), 
+	"CHAR_VALUE" VARCHAR2(240 BYTE), 
+	"DATE_VALUE" DATE, 
+	"LONG_VALUE" LONG
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table TYP_LEKARA
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."TYP_LEKARA" 
+   (	"ID_TYP" NUMBER(*,0), 
+	"NAZOV" VARCHAR2(40 BYTE), 
+	"POPIS" VARCHAR2(255 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table TYP_SYMPTOM
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."TYP_SYMPTOM" 
+   (	"ID_SYMPTOM" NUMBER(*,0), 
+	"NAZOV" VARCHAR2(100 BYTE)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table UCINNA_LATKA
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."UCINNA_LATKA" 
+   (	"ID_LATKA" NUMBER(*,0), 
+	"ID_LIEK" NUMBER(*,0), 
+	"UCINNA_LATKA" VARCHAR2(30 BYTE), 
+	"UCINNA_LATKA_GRAMAZ" NUMBER(6,0)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."UCINNA_LATKA"."UCINNA_LATKA_GRAMAZ" IS 'vsetko bude v mg';
+--------------------------------------------------------
+--  DDL for Table UserClaims
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."UserClaims" 
+   (	"Id" NUMBER(10,0) GENERATED BY DEFAULT ON NULL AS IDENTITY MINVALUE 1 MAXVALUE 9999999999999999999999999999 INCREMENT BY 1 START WITH 1 CACHE 20 NOORDER  NOCYCLE  NOKEEP  NOSCALE , 
+	"UserId" NUMBER(38,0), 
+	"ClaimType" NVARCHAR2(2000), 
+	"ClaimValue" NVARCHAR2(2000)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table UserLogins
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."UserLogins" 
+   (	"UserId" NUMBER(38,0), 
+	"LoginProvider" NVARCHAR2(2000), 
+	"ProviderKey" NVARCHAR2(2000), 
+	"ProviderDisplayName" NVARCHAR2(2000)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table UserRoles
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."UserRoles" 
+   (	"UserId" NUMBER(38,0), 
+	"RoleId" NUMBER(38,0)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table Users
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."Users" 
+   (	"Registrovany" TIMESTAMP (7), 
+	"Meno" VARCHAR2(15 BYTE), 
+	"Priezvisko" VARCHAR2(15 BYTE), 
+	"RodPriezvisko" VARCHAR2(15 BYTE), 
+	"RodCislo" CHAR(11 BYTE), 
+	"DatNarodenia" DATE, 
+	"Email" VARCHAR2(255 BYTE), 
+	"Mobil" VARCHAR2(12 BYTE), 
+	"PoslednePrihlasenie" TIMESTAMP (7), 
+	"Pohlavie" CHAR(1 BYTE), 
+	"Id" NUMBER(38,0) DEFAULT 0.0, 
+	"AccessFailedCount" NUMBER(10,0) DEFAULT 0, 
+	"ConcurrencyStamp" NVARCHAR2(2000), 
+	"EmailConfirmed" NUMBER(1,0) DEFAULT 0, 
+	"LockoutEnabled" NUMBER(1,0) DEFAULT 0, 
+	"LockoutEnd" TIMESTAMP (7) WITH TIME ZONE, 
+	"NormalizedEmail" NVARCHAR2(2000), 
+	"NormalizedUserName" NVARCHAR2(2000), 
+	"PhoneNumber" NVARCHAR2(2000), 
+	"PhoneNumberConfirmed" NUMBER(1,0) DEFAULT 0, 
+	"SecurityStamp" NVARCHAR2(2000), 
+	"TwoFactorEnabled" NUMBER(1,0) DEFAULT 0, 
+	"UserName" NVARCHAR2(100), 
+	"PasswordHash" NVARCHAR2(2000)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."Users"."Pohlavie" IS 'M-muz
+Z-zena';
+--------------------------------------------------------
+--  DDL for Table UserTokens
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."UserTokens" 
+   (	"UserId" NUMBER(38,0), 
+	"LoginProvider" NVARCHAR2(2000), 
+	"Name" NVARCHAR2(2000), 
+	"Value" NVARCHAR2(2000)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table VYK_VYSETRENIA
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."VYK_VYSETRENIA" 
+   (	"ID_VYSETRENIE" NUMBER(*,0), 
+	"ID_PACIENT" NUMBER(*,0), 
+	"ID_LEKAR" NUMBER(*,0), 
+	"DATUM_VYS" DATE, 
+	"VYSLEDOK" VARCHAR2(150 BYTE), 
+	"PRILOHA" BLOB
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" 
+ LOB ("PRILOHA") STORE AS BASICFILE (
+  TABLESPACE "SYSTEM" ENABLE STORAGE IN ROW CHUNK 8192 RETENTION 
+  NOCACHE LOGGING 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)) ;
+--------------------------------------------------------
+--  DDL for Table ZAP_CHOROBY
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."ZAP_CHOROBY" 
+   (	"ID_ZDRAVOTNA_KARTA" NUMBER(*,0), 
+	"CIS_CHOROBA" CHAR(4 BYTE), 
+	"OD" DATE, 
+	"ID_VYSETRENIE" NUMBER(*,0), 
+	"DO" DATE
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table ZDRAV_KARTA_POVOLENIA
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."ZDRAV_KARTA_POVOLENIA" 
+   (	"ID_LEKAR" NUMBER(*,0), 
+	"ID_PACIENT" NUMBER(*,0), 
+	"OD" DATE, 
+	"DO" DATE
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+
+   COMMENT ON COLUMN "SYSTEM"."ZDRAV_KARTA_POVOLENIA"."DO" IS 'Vseobecny lekar -> pacientov lekar -> neobmedzeny pristup ku karte 
+ostatni sa musi nastavit -> podla vybrania uzivatela ';
+--------------------------------------------------------
+--  DDL for Table ZDRAV_POISTENIE
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."ZDRAV_POISTENIE" 
+   (	"ID_POISTOVNA" NUMBER(*,0), 
+	"ID_PACIENT" NUMBER(*,0), 
+	"OD" DATE, 
+	"DO" DATE
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Table ZDRAVOTNA_KARTA
+--------------------------------------------------------
+
+  CREATE TABLE "SYSTEM"."ZDRAVOTNA_KARTA" 
+   (	"ID_PACIENT" NUMBER(*,0), 
+	"KRV_SKUPINA" VARCHAR2(3 BYTE), 
+	"ID_MESTO_NARODENIA" NUMBER(*,0)
+   ) PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 
+ NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+REM INSERTING into SYSTEM."__EFMigrationsHistory"
+SET DEFINE OFF;
+Insert into SYSTEM."__EFMigrationsHistory" ("MigrationId","ProductVersion") values ('20211012101709_IdentityAdded','5.0.10');
+Insert into SYSTEM."__EFMigrationsHistory" ("MigrationId","ProductVersion") values ('20211012090856_InitMigration','5.0.10');
+Insert into SYSTEM."__EFMigrationsHistory" ("MigrationId","ProductVersion") values ('20211012091347_AlterTable','5.0.10');
+REM INSERTING into SYSTEM.ATESTACIE_LEKAR
+SET DEFINE OFF;
+Insert into SYSTEM.ATESTACIE_LEKAR (ID_LEKAR,ID_TYP,ID_ATESTACIA,ATESTACIA_OD) values ('1','66','1',to_date('13.10.21','DD.MM.RR'));
+REM INSERTING into SYSTEM.BYDLISKO
+SET DEFINE OFF;
+REM INSERTING into SYSTEM.FOTKA_POUZIVATEL
+SET DEFINE OFF;
+REM INSERTING into SYSTEM.CHOROBA
+SET DEFINE OFF;
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C520','Zhubn˝ n·dor poövy','InÈ zhubnÈ n·dory ûensk˝ch pohlavn˝ch org·nov',null,null,'Z',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C530','Zhubn˝ n·dor krËka maternice','ZhubnÈ n·dory krËka maternice',null,null,'Z',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C540','Zhubn˝ n·dor tela maternice','ZhubnÈ n·dory in˝ch a bliûöie neurËen˝ch ËastÌ maternice',null,null,'Z',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C550','Zhubn˝ n·dor bliûöie neurËenej Ëasti maternice','ZhubnÈ n·dory in˝ch a bliûöie neurËen˝ch ËastÌ maternice',null,null,'Z',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C560','Zhubn˝ n·dor vajeËnÌka','InÈ zhubnÈ n·dory ûensk˝ch pohlavn˝ch org·nov',null,null,'Z',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C570','Zhubn˝ n·dor in˝ch a bliûöie neurËen˝ch ûensk˝ch pohlavn˝ch org·nov','InÈ zhubnÈ n·dory ûensk˝ch pohlavn˝ch org·nov',null,null,'Z',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C580','Zhubn˝ n·dor placenty','InÈ zhubnÈ n·dory ûensk˝ch pohlavn˝ch org·nov','12','55','Z',to_date('01.01.94','DD.MM.RR'),null,'ChorioepiteliÛm, bliûöie neurËen˝','Deötruuj˙ci chorioadenÛm (D39.2)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C600','Zhubn˝ n·dor penisu','InÈ zhubnÈ n·dory muûsk˝ch pohlavn˝ch org·nov',null,null,'M',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C610','Zhubn˝ n·dor prostaty','ZhubnÈ n·dory predstojnice (prostaty)','24','30','M',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C620','Zhubn˝ n·dor semennÌka','InÈ zhubnÈ n·dory muûsk˝ch pohlavn˝ch org·nov',null,null,'M',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C630','Zhubn˝ n·dor in˝ch a bliûöie neurËen˝ch muûsk˝ch pohlavn˝ch org·nov','InÈ zhubnÈ n·dory muûsk˝ch pohlavn˝ch org·nov',null,null,'M',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C640','Zhubn˝ n·dor obliËky okrem obliËkovej panviËky','InÈ zhubnÈ n·dory moËov˝ch org·nov',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor obliËkovej panviËky (C65), Zhubn˝ n·dor kalichov obliËkovej panviËky (C65)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C650','Zhubn˝ n·dor obliËkovej panviËky','InÈ zhubnÈ n·dory moËov˝ch org·nov',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Zhubn˝ n·dor spojenia obliËkovej panviËky a moËovodu',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C660','Zhubn˝ n·dor moËovodu','InÈ zhubnÈ n·dory moËov˝ch org·nov',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor ˙stia moËovodu (C67.6)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C670','Zhubn˝ n·dor moËovÈho mech˙ra','ZhubnÈ n·dory moËovÈho mech˙ra',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C680','Zhubn˝ n·dor in˝ch a bliûöie neurËen˝ch moËov˝ch org·nov','InÈ zhubnÈ n·dory moËov˝ch org·nov',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor moËovopohlavnÈho systÈmu bez bliûöieho urËenia');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C690','Zhubn˝ n·dor oka a oËn˝ch adnexov','ZhubnÈ n·dory oka a jeho adnexov',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor mihalnice (koûe) (C43.1, C44.1), Zhubn˝ n·dor spojivovÈho tkaniva mihalnice (C49.0), Zhubn˝ n·dor oËnÈho nervu (C72.3)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C700','Zhubn˝ n·dor  mozgovomiechov˝ch obalov','ZhubnÈ n·dory in˝ch ËastÌ centr·lneho nervovÈho systÈmu',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C710','Zhubn˝ n·dor mozgu','ZhubnÈ n·dory mozgu',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor hlavov˝ch nervov (C72.2 ñ C72.5), Zhubn˝ n·dor retrobulb·rneho tkaniva (C69.6)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C720','Zhubn˝ n·dor miechy, hlavov˝ch nervov a in˝ch ËastÌ centr·lnej nervovej s˙stavy','ZhubnÈ n·dory in˝ch ËastÌ centr·lneho nervovÈho systÈmu',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor mozgov˝ch plien (C70.-), Zhubn˝ n·dor perifÈrnych nervov a autonÛmnej nervovej s˙stavy (C47.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C730','Zhubn˝ n·dor ötÌtnej ûæazy','ZhubnÈ n·dory in˝ch bliûöie neurËen˝ch sekund·rnych a mnohopoËetn˝ch miest',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C740','Zhubn˝ n·dor nadobliËky','ZhubnÈ n·dory in˝ch bliûöie neurËen˝ch sekund·rnych a mnohopoËetn˝ch miest',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C750','Zhubn˝ n·dor in˝ch ûliaz s vn˙torn˝m vyluËovanÌm a blÌzkych ötrukt˙r','ZhubnÈ n·dory in˝ch bliûöie neurËen˝ch sekund·rnych a mnohopoËetn˝ch miest',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor endokrinnej Ëasti pankreasu (C25.4), Zhubn˝ n·dor semennÌka (C62.-), Zhubn˝ n·dor nadobliËky (C74.-), Zhubn˝ n·dor vajeËnÌka (C56), Zhubn˝ n·dor ötÌtnej ûæazy (C73), Zhubn˝ n·dor t˝musu (C37)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C760','Zhubn˝ n·dor na in˝ch a nepresne urËen˝ch miestach','ZhubnÈ n·dory in˝ch bliûöie neurËen˝ch sekund·rnych a mnohopoËetn˝ch miest',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C770','Sekund·rny a  bliûöie neurËen˝ zhubn˝ n·dor lymfatick˝ch uzlÌn','ZhubnÈ n·dory in˝ch bliûöie neurËen˝ch sekund·rnych a mnohopoËetn˝ch miest',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor lymfatick˝ch uzlÌn oznaËen˝ ako prim·rny (C81 ñ 85, C96.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C780','Sekund·rny zhubn˝ n·dor d˝chacÌch a tr·viacich org·nov','ZhubnÈ n·dory in˝ch bliûöie neurËen˝ch sekund·rnych a mnohopoËetn˝ch miest',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C790','Sekund·rny zhubn˝ n·dor na in˝ch a bliûöie neurËen˝ch miestach','ZhubnÈ n·dory in˝ch bliûöie neurËen˝ch sekund·rnych a mnohopoËetn˝ch miest',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C800','Zhubn˝ n·dor bez ˙dajov o mieste','ZhubnÈ n·dory in˝ch bliûöie neurËen˝ch sekund·rnych a mnohopoËetn˝ch miest',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C810','Hodgkinov lymfÛm','Hodgkinova choroba',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C820','Folikulov˝ lymfÛm','Nehodgkinovsk˝ lymfÛm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Folikulov˝ lymfÛm s dif˙znymi oblasùami alebo bez nich, LymfÛm zo zrel˝ch T/NK-buniek (C84.-)',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C830','Nefolikulov˝ lymfÛm','Nehodgkinovsk˝ lymfÛm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C840','LymfÛm zo zrel˝ch T/NK-buniek','Nehodgkinovsk˝ lymfÛm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C850','In˝ a bliûöie neurËen˝ typ non-Hodgkinovho lymfÛmu','Nehodgkinovsk˝ lymfÛm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Anaplastick˝ veækobunkov˝ lymfÛm - ALK-negatÌvny (C84.7), Anaplastick˝ veækobunkov˝ lymfÛm - ALK-pozitÌvny (C84.6)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C880','Zhubn· imunoproliferatÌvna choroba','InÈ zhubnÈ n·dory lymfatickÈho, hematopoetickÈho a prÌbuznÈho tkaniva',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C900','MnohopoËetn˝ myelÛm a zhubnÈ n·dory z plazmatick˝ch buniek','InÈ zhubnÈ n·dory lymfatickÈho, hematopoetickÈho a prÌbuznÈho tkaniva',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C910','Lymfocytov· leukÈmia','LeukÈmia',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C920','Myeloick· leukÈmia','LeukÈmia',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'LeukÈmia:- Granulocytov· - MyelogÈnna',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C930','Monocytov· leukÈmia','LeukÈmia',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Monocytoidn· leukÈmia',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C940','In· leukÈmia z bliûöie urËen˝ch buniek','LeukÈmia',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Leukemick· retikuloendoteliÛza (C91.4-), Plazmocytov· leukÈmia (C90.1-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C950','LeukÈmia z bliûöie neurËen˝ch buniek','LeukÈmia',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C960','In˝ a bliûöie neurËen˝ zhubn˝ n·dor lymfatickÈho, krvotvornÈho a prÌbuznÈho tkaniva','InÈ zhubnÈ n·dory lymfatickÈho, hematopoetickÈho a prÌbuznÈho tkaniva',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C970','ZhubnÈ n·dory mnohopoËetnÈ na viacer˝ch nez·visl˝ch prim·rnych miestach','ZhubnÈ n·dory in˝ch bliûöie neurËen˝ch sekund·rnych a mnohopoËetn˝ch miest',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D000','KarcinÛm in situ ˙stnej dutiny, paûer·ka a ûal˙dka','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Melanoma in situ (D03.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D010','KarcinÛm in situ in˝ch a bliûöie neurËen˝ch tr·viacich org·nov','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Melanoma in situ (D03.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D020','KarcinÛm in situ strednÈho ucha a d˝chacej s˙stavy','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Melanoma in situ (D03.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D030','MelanÛm in situ','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Morfologick˝ kÛd M872 ñ M879 so stupÚom malignity 2',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D040','KarcinÛm koûe in situ','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Melanoma in situ (D03.-), Queyratovu erytropl·ziu penisu bez bliûöieho urËenia (D07.4)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C010','Zhubn˝ n·dor koreÚa jazyka','ZhubnÈ n·dory pery, ˙stnej dutiny a hltana',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Horn· (dorz·lna) strana koreÚa jazyka, Bliûöie neurËen· nehybn· Ëasù jazyka, Zadn· tretina jazyka',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C020','Zhubn˝ n·dor in˝ch a bliûöie neurËen˝ch ËastÌ jazyka','ZhubnÈ n·dory pery, ˙stnej dutiny a hltana',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C030','Zhubn˝ n·dor Ôasna','ZhubnÈ n·dory pery, ˙stnej dutiny a hltana',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Alveol·rna sliznica (hrebeÚ), œasno','ZhubnÈ n·dory kostÌ a klbovej chrupky (C41.02 ñ C41.1)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C040','Zhubn˝ n·dor ˙stnej spodiny','ZhubnÈ n·dory pery, ˙stnej dutiny a hltana',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C050','Zhubn˝ n·dor podnebia','ZhubnÈ n·dory pery, ˙stnej dutiny a hltana',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C060','Zhubn˝ n·dor in˝ch a bliûöie neurËen˝ch ËastÌ ˙st','ZhubnÈ n·dory pery, ˙stnej dutiny a hltana',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C070','Zhubn˝ n·dor prÌuönej ûæazy','ZhubnÈ n·dory pery, ˙stnej dutiny a hltana',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C080','Zhubn˝ n·dor in˝ch a bliûöie neurËen˝ch veæk˝ch slinn˝ch ûliaz','ZhubnÈ n·dory pery, ˙stnej dutiny a hltana',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor mal˝ch slinn˝ch ûliaz - ktorÈ s˙ zatriedenÈ podæa ich anatomickej lokaliz·cie, Zhubn˝ n·dor mal˝ch slinn˝ch ûliaz bez bliûöieho urËenia (C06.9), Zhubn˝ n·dor prÌuönej ûæazy [glandula parotis] (C07)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C090','Zhubn˝ n·dor mandle','ZhubnÈ n·dory pery, ˙stnej dutiny a hltana',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor hltanovej mandle (tonzily) (C11.1), Zhubn˝ n·dor jazykovej mandle (tonzily) (C02.4)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C100','Zhubn˝ n·dor ofaryngu','ZhubnÈ n·dory pery, ˙stnej dutiny a hltana',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor mandle (tonzily) (C09.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C110','Zhubn˝ n·dor  nazofaryngu','ZhubnÈ n·dory pery, ˙stnej dutiny a hltana',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C120','Zhubn˝ n·dor recessus piriformis','ZhubnÈ n·dory pery, ˙stnej dutiny a hltana',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Zhubn˝ n·dor fossa piriformis',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C130','Zhubn˝ n·dor hypofaryngu','ZhubnÈ n·dory pery, ˙stnej dutiny a hltana',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor recessus piriformis (C12)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C140','Zhubn˝ n·dor pery, ˙stnej dutiny a faryngu na inom a nepresne urËenom mieste','ZhubnÈ n·dory pery, ˙stnej dutiny a hltana',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor ˙st, bliûöie neurËen˝ (C06.9)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C150','Zhubn˝ n·dor paûer·ka','ZhubnÈ n·dory paûer·ka',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C160','Zhubn˝ n·dor ûal˙dka','ZhubnÈ n·dory ûal˙dka',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C170','Zhubn˝ n·dor tenkÈho Ëreva','InÈ zhubnÈ n·dory tr·viacich org·nov',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C180','Zhubn˝ n·dor hrubÈho Ëreva','ZhubnÈ n·dory hrubÈho Ëreva',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C190','Zhubn˝ n·dor rektosigmoidovÈho spojenia hrubÈho Ëreva','ZhubnÈ n·dory rektosigmoid·lneho spojenia, rekta, anusu a an·lneho kan·la',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Zhubn˝ n·dor hrubÈho Ëreva a rekta, Zhubn˝ n·dor spojenia rekta a colon sigmoideum',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C200','Zhubn˝ n·dor koneËnÌka','ZhubnÈ n·dory rektosigmoid·lneho spojenia, rekta, anusu a an·lneho kan·la',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Zhubn˝ n·dor ampuly rekta',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C210','Zhubn˝ n·dor anusu a an·lneho kan·la','ZhubnÈ n·dory rektosigmoid·lneho spojenia, rekta, anusu a an·lneho kan·la',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C220','Zhubn˝ n·dor peËene a vn˙tropeËeÚov˝ch ûlËov˝ch ciest','ZhubnÈ n·dory peËene a vn˙tropeËeÚov˝ch ûlËov˝ch v˝vodov',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor ûlËov˝ch ciest - bliûöie neurËen˝ (C24.9), Sekund·rny zhubn˝ n·dor peËene a vn˙tropeËeÚov˝ch ûlËovodov (C78.7)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C230','Zhubn˝ n·dor ûlËnÌka','InÈ zhubnÈ n·dory tr·viacich org·nov',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C240','Zhubn˝ n·dor in˝ch a bliûöie neurËen˝ch ËastÌ ûlËov˝ch ciest','InÈ zhubnÈ n·dory tr·viacich org·nov',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'KarcinÛm vn˙tropeËeÚov˝ch ûlËov˝ch ciest (C22.1)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C250','Zhubn˝ n·dor podûal˙dkovej ûæazy','ZhubnÈ n·dory pankreasu',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C260','Zhubn˝ n·dor in˝ch a nepresne urËen˝ch tr·viacich org·nov','InÈ zhubnÈ n·dory tr·viacich org·nov',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor pobruönice a retroperitonea (C48.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C300','Zhubn˝ n·dor nosovej dutiny a strednÈho ucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C310','Zhubn˝ n·dor prinosov˝ch dutÌn','InÈ zhubnÈ n·dory d˝chacÌch a vn˙trohrudnÌkov˝ch org·nov',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C320','Zhubn˝ n·dor hrtana','ZhubnÈ n·dory hrtana',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C330','Zhubn˝ n·dor prieduönice','ZhubnÈ n·dory prieduönice, prieduöiek a pæ˙c',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C340','Zhubn˝ n·dor prieduöiek a pæ˙c','ZhubnÈ n·dory prieduönice, prieduöiek a pæ˙c',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C370','Zhubn˝ n·dor t˝musu','InÈ zhubnÈ n·dory d˝chacÌch a vn˙trohrudnÌkov˝ch org·nov',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C380','Zhubn˝ n·dor srdca, medzihrudia (mediastÌna) a pohrudnice','InÈ zhubnÈ n·dory d˝chacÌch a vn˙trohrudnÌkov˝ch org·nov',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'MezoteliÛm (C45.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C390','Zhubn˝ n·dor in˝ch a nepresne urËen˝ch miest d˝chacej s˙stavy a vn˙trohrudnÌkov˝ch org·nov','InÈ zhubnÈ n·dory d˝chacÌch a vn˙trohrudnÌkov˝ch org·nov',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor bliûöie neurËenej Ëasti vn˙trohrudnÈho priestoru (C76.1), Zhubn˝ n·dor bliûöie neurËenej Ëasti hrudnÌka (C76.1)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C400','Zhubn˝ n·dor kosti a kÂbovej chrupky konËatÌn','ZhubnÈ n·dory kosti a kÂbovej chrupky',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C410','Zhubn˝ n·dor kosti a kÂbovej chrupky na in˝ch a bliûöie neurËen˝ch miestach','ZhubnÈ n·dory kosti a kÂbovej chrupky',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor kosti konËatÌn (C40.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C430','MalÌgny melanÛm koûe','MalÌgny melanÛm koûe',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'MorfologickÈ kÛdy M872 ñ M879 so stupÚom malignity /3','MalÌgny melanÛm koûe pohlavn˝ch org·nov (C51 ñ C52, C60.-, C63.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C440','In˝ zhubn˝ n·dor koûe','InÈ zhubnÈ n·dory koûe',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Zhubn˝ n·dor: - potn˝ch ûliaz - mazov˝ch ûliaz','MalÌgny melanÛm koûe (C43.-), Zhubn˝ n·dor koûe pohlavn˝ch org·nov (C51 ñ C52, C60.-, C63.-), Kaposiho sarkÛm (C46.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C450','MezoteliÛm','ZhubnÈ n·dory mezotelu a m‰kk˝ch tkanÌv',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Morfologick˝ kÛd M905 so stupÚom malignity /3',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C460','Kaposiho sarkÛm','ZhubnÈ n·dory mezotelu a m‰kk˝ch tkanÌv',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'MorfologickÈ kÛdy M9140 so stupÚom malignity /3',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C470','Zhubn˝ n·dor perifÈrnych nervov a autonÛmnej nervovej s˙stavy','ZhubnÈ n·dory mezotelu a m‰kk˝ch tkanÌ',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Zhubn˝ n·dor sympatikov˝ch a parasympatikov˝ch','Zhubn˝ n·dor mozgov˝ch nervov (C72.2 ñ C72.5');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C480','Zhubn˝ n·dor retroperitonea a peritonea','ZhubnÈ n·dory mezotelu a m‰kk˝ch tkanÌv',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Kaposiho sarkÛm (C46.1), MezoteliÛm (C45.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C490','Zhubn˝ n·dor inÈho spojivovÈho a m‰kkÈho tkaniva','ZhubnÈ n·dory mezotelu a m‰kk˝ch tkanÌv',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Zhubn˝ n·dor krvnej cievy, Zhubn˝ n·dor burzy, Zhubn˝ n·dor fascie. Zhubn˝ n·dor tukovÈho tkaniva, Zhubn˝ n·dor chrupky, Zhubn˝ n·dor v‰zov okrem v‰zov maternice, Zhubn˝ n·dor lymfatickej cievy, Zhubn˝ n·dor svalu, Zhubn˝ n·dor öæachy (öæachovÈho puzdra), Zhubn˝ n·dor synovi·lnej blany','Zhubn˝ n·dor spojivovÈho tkaniva prsnÌka (C50.-), Kaposiho sarkÛm (C46.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C500','Zhubn˝ n·dor prsnÌka','ZhubnÈ n·dory prsnÌka',null,null,'Z',to_date('01.01.94','DD.MM.RR'),null,'Zhubn˝ n·dor spojivovÈho tkaniva prsnÌka','Zhubn˝ n·dor koûe prsnÌka (C43.5, C44.5)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C510','Zhubn˝ n·dor vulvy','InÈ zhubnÈ n·dory ûensk˝ch pohlavn˝ch org·nov',null,null,'Z',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B250','CytomegalovÌrusov· choroba','InÈ vÌrusovÈ choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Vroden· cytomegalovÌrusov· choroba (P35.1), MononukleÛza zaprÌËinen· cytomegalovÌrusom (B27.1)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B260','Mumps [Parotitis epidemica]','Mumps - parotitis epidemica',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'InfekËn· parotitÌda, Epidemick· parotitÌda',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B270','InfekËn· mononukleÛza','InÈ vÌrusovÈ choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'InfekËn· mononukleÛza, Monocytov· angÌna, Pfeifferova choroba ûliaz',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B300','VÌrusov˝ z·pal spojoviek','InÈ vÌrusovÈ choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Choroby oka - zaprÌËinenÈ herpetick˝m vÌrusom [herpes simplex] (B00.5) - pri herpes zoster (B02.3)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B330','In· vÌrusov· choroba, nezatrieden· inde','InÈ vÌrusovÈ choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B340','VÌrusov· infekcia bez bliûöieho urËenia miesta','InÈ vÌrusovÈ choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Infekcia zaprÌËinen· herpetick˝m vÌrusom [herpes simplex], bliûöie neurËen· (B00.9), Infekcia zaprÌËinen· retrovÌrusmi, bliûöie neurËen· (B33.3),VÌrusy ako prÌËina chorÙb, ktorÈ s˙ zatriedenÈ inde (B97),CytomegalovÌrusov· choroba, bliûöie neurËen· (B25.9)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B350','DermatofytÛza [Tinea]','MykÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Favus, Infekcie zaprÌËinenÈ epidermophyton - microsporum a trichophyton',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B360','In· povrchov· mykÛza','MykÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B370','KandidÛza','MykÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Kandidov· mykÛza, MoniliÛza','KandidÛza u novorodenca (P37.5)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B380','KokcidioidomykÛza','MykÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B390','HistoplazmÛza','MykÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B400','BlastomykÛza','MykÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Juhoamerick· blastomykÛza (B41.-), Keloidov· blastomykÛza (B48.0)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B410','ParakokcidioidomykÛza','MykÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Lutzova choroba, Juhoamerick· blastomykÛza',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B420','SporotrichÛza','MykÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B430','ChromomykÛza a chromomykotick˝ absces','MykÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B440','AspergilÛza','MykÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'AspergilÛm',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B450','KryptokokÛza','MykÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B460','ZygomykÛza','MykÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B470','MycetÛm','MykÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B480','In· mykÛza, nezatrieden· inde','MykÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B490','MykÛza, bliûöie neurËen·','MykÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'FungÈmia, bliûöie neurËen·',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B500','Mal·ria zaprÌËinen· Plasmodium falciparum','Mal·ria',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'ZmieöanÈ infekcie zaprÌËinenÈ, Plasmodium falciparum s in˝mi druhmi plazmÛdiÌ',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B510','Mal·ria zaprÌËinen· Plasmodium vivax','Mal·ria',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'ZmieöanÈ infekcie zaprÌËinenÈ, Plasmodium vivax s in˝mi druhmi plazmÛdiÌ okrem Plasmodium falciparum','Ako zmieöan· infekcia s Plasmodium falciparum (B50.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B520','Mal·ria zaprÌËinen· Plasmodium malariae','Mal·ria',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'ZmieöanÈ infekcie plasmodium malariae s in˝mi druhmi plazmÛdiÌ okrem Plasmodium falciparum a Plasmodium vivax',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B530','In· parazitologicky potvrden· mal·ria','Mal·ria',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B540','Mal·ria, bliûöie neurËen·','Mal·ria',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Klinicky diagnostikovan· mal·ria bez parazitologickÈho potvrdenia',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B550','LeiömaniÛza','LeiömaniÛza',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B560','Africk· trypanozomÛza','TrypanosomÛza',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Spav· choroba',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B570','Chagasova choroba','TrypanosomÛza',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Americk· trypanozomÛza, Infekcia zaprÌËinen· Trypanosoma cruzi',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B580','ToxoplazmÛza','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Infekcia zaprÌËinen· Toxoplazma gondii','Vroden· toxoplazmÛza (P37.1)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B590','PneumocystÛza (J17.3*)','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Plazmocelul·rna interstici·lna pneumÛnia',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B600','In· protozo·rna choroba, nezatrieden· inde','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Intestin·lna mikrosporidiÛza (A07.8), IzosporÛza (A07.3), KryptosporidiÛza (A07.2)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B640','Protozo·rna choroba, bliûöie neurËen·','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B650','SchistozomÛza [BilharziÛza]','SchistosomÛza - bilharziÛza',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'SlimaËia hor˙Ëka (snail fever)',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B660','In· trematodÛza','InÈ trematodÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B670','EchinokokÛza','HydatidÛza - echinokÛza',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'HydatidÛza',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B680','TeniÛza','InÈ helmintÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'CysticerkÛza (B69.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B690','CysticerkÛza','InÈ helmintÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Infekcia zaprÌËinen· larvami prasaËej p·somnice',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B700','DifylobotriÛza a sparganÛza','InÈ helmintÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B710','In· infekcia ploch˝mi Ëervami','InÈ helmintÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B720','DrakunkulÛza','DrakunkulÛza',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Infekcia zaprÌËinen· Dracunculus medinensis, Infekcia zaprÌËinen· quinejsk˝m Ëervom',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B730','OnchocerkÛza','OnchocerkÛza',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'RieËna slepota, Infekcia zaprÌËinen· Onchocerca volvulus, OnchocerkÛza',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B740','FilariÛza','FilariÛza',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'OnchocerkÛza (B73), Tropick· (pulmon·lna) eozinofÌlia, bliûöie neurËen· (J82)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B750','TrichinelÛza','InÈ helmintÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Infekcia zaprÌËinen· druhom Trichinela, TrichinÛza',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B760','AnkylostomÛza a nekatorÛza','AnkylostomÛza a nekatoriÛza',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Uncinari·za',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B770','AskaridÛza','InÈ helmintÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Askari·za, Askaridi·za, äkrkavkov· infekcia',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B780','StrongyloidÛza','InÈ helmintÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'TrichostrongylÛza (B81.2)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B790','TrichuridÛza','InÈ helmintÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'(infekcia)biËÌkov˝m Ëervom, Trichocefali·za',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B800','EnterobiÛza','InÈ helmintÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'HlÌstov· infekcia, Infekcia zaprÌËinen· mræou detskou, Oxyuri·za',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B810','In· Ërevn· helmintÛza, nezatrieden· inde','InÈ helmintÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'AngiostrongylÛza zaprÌËinen· Angiostrongylus cantonensis (B83.2), AngiostrongylÛza zaprÌËinen· Parastrongylus cantonensis (B83.2)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B820','»revn· parazitÛza, bliûöie neurËen·','InÈ helmintÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B830','In· helmintÛza','InÈ helmintÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'KapilariÛza - Ërevn· (B81.1) - bliûöie neurËen· (B81.1)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B850','Zavöivenie [PedikulÛza a FtiriÛza]','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B860','Scabies','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Svrab',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B870','MyiÛza','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Napadnutie muöÌmi larvami',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B880','InÈ zamorenie','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B890','Parazitov· choroba, bliûöie neurËen·','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B900','N·sledky tuberkulÛzy','N·sledky tuberkulÛzy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B910','N·sledky poliomyelitÌdy','N·sledky poliomyelitÌdy','15','24','V',to_date('01.01.94','DD.MM.RR'),null,null,'Postpoliomyelitick˝ syndrÛm (G14)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B920','N·sledky lepry','N·sledky lepry','24','30','V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B940','N·sledky in˝ch a bliûöie neurËen˝ch infekËn˝ch a parazitov˝ch chorÙb','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B950','Streptokok a stafylokok ako prÌËina chorÙb zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B960','InÈ baktÈre ako prÌËina chorÙb zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B970','VÌrus ako prÌËina chorÙb zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B990','In· infekËn· choroba, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C000','Zhubn˝ n·dor pery','ZhubnÈ n·dory pery, ˙stnej dutiny a hltana',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Zhubn˝ n·dor koûe pery (C43.0, C44.0)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A660','FrambÈzia','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Framboesia (tropica), Pian, Yaws',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A670','Pinta [carate]','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A680','N·vratn· hor˙Ëka','N·vratnÈ hor˙Ëky',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Rekurentn· hor˙Ëka','Lymsk· choroba (A69.2)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A690','In· infekcia zaprÌËinen· spirochÈtami','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A700','Infekcia zaprÌËinen· Chlamydia psittaci','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'OrnitÛza, Papag·ja choroba, PsitakÛza',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A710','TrachÛm','TrachÛm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'N·sledky trachÛmu (B94.0)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A740','In· choroba zaprÌËinen· chlam˝diami','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'pohlavne prenosnÈ choroby (A55 ñ A56), pneumÛnia (J16.0)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A750','äkvrnit˝ t˝fus','äkvrnit˝ t˝fus - typhus exanthematicus',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'RiketsiÛza zaprÌËinen· Ehrlichia sennetsu (A79.8)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A760','Endemick˝ ökvrnit˝ t˝fus (myöÌ)','äkvrnit˝ t˝fus',null,null,'V',to_date('01.01.04','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A770','äkvrnitÈ hor˙Ëky [RiketsiÛzy pren·öanÈ klieöùami]','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A780','Q-hor˙Ëka','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Balk·nska chrÌpka, Infekcia zaprÌËinen· Rickettsia burnetii (Coxiela burnetii), Queryho hor˙Ëka',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A790','InÈ riketsiÛzy','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A800','Ak˙tna poliomyelitÌda','Ak˙tna poliomyelitÌda',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A810','Pomal· vÌrusov· infekcia centr·lnej nervovej s˙stavy','InÈ vÌrusovÈ choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'PriÛnovÈ choroby centr·lnej nervovej s˙stavy',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A820','Besnota [rabies, lyssa]','Besnota - rabies',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A830','VÌrusov· encefalitÌda, pren·öan· kom·rmi','VÌrusov· encefalitÌda',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'VÌrusov· meningoencefalitÌda pren·öan· kom·rmi','Venezuelsk· konsk· encefalitÌda (A92.2)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A840','VÌrusov· encefalitÌda pren·öan· klieöùami','VÌrusov· encefalitÌda',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'VÌrusov· meningoencefalitÌda pren·öan· klieöùami',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A850','In· vÌrusov· encefalitÌda, nezatrieden· inde','VÌrusov· encefalitÌda',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'VÌrusov· meningoencefalitÌda zaprÌËinen· bliûöie urËen˝mi vÌrusmi','BenÌgna myalgick· encefalomyelitÌda (G93.3), Lymfocytov· choriomeningitÌda (A87.2)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A860','VÌrusov· encefalitÌda, bliûöie neurËen·','VÌrusov· encefalitÌda',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'VÌrusov· encefalomyelitÌda, bliûöie neurËen·, VÌrusov· meningoencefalitÌda, bliûöie neurËen·',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A870','VÌrusov· meningitÌda','InÈ vÌrusovÈ choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'MenigitÌda - herpetick˝m vÌrusom [herpes simplex] (B00.3) -  vÌrusom os˝pok (B05.1) - vÌrusom parotitÌdy (B26.1) ');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A880','In· vÌrusov· infekcia centr·lnej nervovej s˙stavy, nezatrieden· inde','InÈ vÌrusovÈ choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'VÌrusov· encefalitÌda, bliûöie neurËen· (A86), VÌrusov· meningitÌda, bliûöie neurËen· (A87.9)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A890','VÌrusov· infekcia centr·lnej nervovej s˙stavy, bliûöie neurËen·','InÈ vÌrusovÈ choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A900','Hor˙Ëka dengue [klasick· dengue]','InÈ vÌrusovÈ hor˙Ëky a vÌrusovÈ hemoragickÈ hor˙Ëky',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Hemoragick· hor˙Ëka dengue (A91)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A910','Hemoragick· hor˙Ëka dengue','InÈ vÌrusovÈ hor˙Ëky a vÌrusovÈ hemoragickÈ hor˙Ëky',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A920','In· vÌrusov· hor˙Ëka pren·öan· kom·rmi','InÈ vÌrusovÈ hor˙Ëky a vÌrusovÈ hemoragickÈ hor˙Ëky',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Choroba Ross River (B33.1)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A930','In· vÌrusov· hor˙Ëka pren·öan· Ël·nkonoûcami, nezatrieden· inde','InÈ vÌrusovÈ hor˙Ëky a vÌrusovÈ hemoragickÈ hor˙Ëky',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A940','VÌrusov· hor˙Ëka pren·öan· Ël·nkonoûcami, bliûöie neurËen·','InÈ vÌrusovÈ hor˙Ëky a vÌrusovÈ hemoragickÈ hor˙Ëky',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'ArbovÌrusov· infekcia, bliûöie neurËen·, ArbovÌrusov· choroba, bliûöie neurËen·',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A950','élt· zimnica','élt· zimnica',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A960','ArenavÌrusov· hemoragick· hor˙Ëka','InÈ vÌrusovÈ hor˙Ëky a vÌrusovÈ hemoragickÈ hor˙Ëky',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A980','In· vÌrusov· hemoragick· hor˙Ëka, nezatrieden· inde','InÈ vÌrusovÈ hor˙Ëky a vÌrusovÈ hemoragickÈ hor˙Ëky',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Hemoragick· hor˙Ëka Chikungunya (A92.0), Hemoragick· hor˙Ëka dengue (A91)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A990','VÌrusov· hemoragick· hor˙Ëka, bliûöie neurËen·','InÈ vÌrusovÈ hor˙Ëky a vÌrusovÈ hemoragickÈ hor˙Ëky',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B000','Infekcia herpetick˝m vÌrusom [Herpes simplex]','Infekcie herpesov˝mi vÌrusmi pren·öanÈ Ël·nkonoûcami',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Vroden· infekcia zaprÌËinen· herpetick˝mi vÌrusmi (P35.2) ,HerpangÌna (B08.5), Infekcie anogenit·lnej oblasti zaprÌËinen· herpetick˝mi vÌrusmi (A60.-), MononukleÛza zaprÌËinen· gama herpetick˝mi vÌrusmi (B27.0)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B010','OvËie kiahne [Varicella]','OvËie kiahne - varicella',null,null,null,to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B020','P·sov˝ opar  [Herpes zoster, Zoster]','OvËie kiahne - varicella',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Herpes zoster, P·sov˝ opar',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B030','Kiahne [Variola]','InÈ vÌrusovÈ choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B040','OpiËie kiahne','InÈ vÌrusovÈ choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B050','Os˝pky [Morbilli]','Os˝pky - morbilli',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Morbilli','Subak˙tna sklerotizuj˙ca panencefalitÌda (A81.1)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B060','Ruûienka  [Rubeola]','Ruûienka - rubeola',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Vroden· ruûienka (P35.0)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B070','VÌrusovÈ bradavice [Verrucae]','InÈ vÌrusovÈ choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Verruca - simplex - vulgaris ',' Anogenit·lne (venerickÈ) bradavice (A63.0), PapilÛm -  hrtana (D14.1) - moËovÈho mech˙ra (D41.4) - krËka maternice (D26.0)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B080','In· vÌrusovÈ infekcie charakterizovanÈ postihnutÌm koûe a sliznÌc, nezatriedenÈ inde','InÈ vÌrusovÈ choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B090','VÌrusov· infekcia charakterizovan· postihnutÌm koûe a sliznÌc, bliûöie neurËen·','InÈ vÌrusovÈ choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'VÌrusov˝ enantÈm, bliûöie neurËen˝, VÌrusov˝ exantÈm, bliûöie neurËen˝',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B150','Ak˙tna hepatitÌda A','InÈ vÌrusovÈ hepatitÌdy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B160','Ak˙tna hepatitÌda B','Ak˙tna hepatitÌda B',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B170','In· ak˙tna vÌrusov· hepatitÌda','InÈ vÌrusovÈ hepatitÌdy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B180','Chronick· vÌrusov· hepatitÌda','InÈ vÌrusovÈ hepatitÌdy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B190','VÌrusov· hepatitÌda, bliûöie neurËen·','InÈ vÌrusovÈ hepatitÌdy',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B200','Choroba HIV s n·sledn˝mi infekËn˝mi a parazitov˝mi chorobami','Choroba vyvolan· vÌrusom æudskej imunitnej nedostatoËnosti [HIV]',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Ak˙tny infekËn˝ syndrÛm HIV (B23.0)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B210','Choroba HIV s n·sledn˝mi zhubn˝mi n·dormi','Choroba vyvolan· vÌrusom æudskej imunitnej nedostatoËnosti [HIV]',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B220','Choroba HIV s in˝mi n·sledn˝mi chorobami, bliûöie urËen˝mi','Choroba vyvolan· vÌrusom æudskej imunitnej nedostatoËnosti [HIV]',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B230','Choroba HIV s in˝mi n·sledn˝mi stavmi','Choroba vyvolan· vÌrusom æudskej imunitnej nedostatoËnosti [HIV]',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B240','Choroba HIV, bliûöie neurËen·','Choroba vyvolan· vÌrusom æudskej imunitnej nedostatoËnosti [HIV]',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'AIDS-related complex [ARC], bliûöie neurËen˝, ZÌskan˝ syndrÛm imunitnej nedostatoËnosti [AIDS]',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A400','Streptokokov· sepsa','SeptikÈmia',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Streptokokov· sepsa u novorodenca (P36.0 ñ P36.1), Puerper·lna streptokokov· sepsa (O85), Streptokokov· sepsa poËas pÙrodu (O75.3)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A410','In· sepsa','SeptikÈmia',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Bliûöie neurËen· baktÈriov· infekcia bez bliûöieho urËenia miesta (A49.9), SyndrÛm toxickÈho öoku (A48.3), Sepsa aktinomykotick·');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A420','AktinomykÛza','InÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'AktinomycetÛm (B47.1)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A430','NokardiÛza','InÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A440','BartonelÛza','InÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A460','Eryzipel [Erysipelas, Ruûa]','InÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Postpart·lny alebo puerper·lny eryzipel (O86.8)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A480','In· baktÈriov· choroba, nezatrieden· inde','InÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'AktinomycetÛm (B47.1)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A490','BaktÈriov· infekcia bez bliûöieho urËenia miesta','InÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'BaktÈrie ako prÌËina chorÙb uveden˝ch v in˝ch kapitol·ch (B95 ñ B96), Chlam˝diov· infekcia, bliûöie neurËen· (A74.9), Meningokokov· infekcia, bliûöie neurËen· (A39.9), Riketsiov· infekcia, bliûöie neurËen· (A79.9), SpirochÈtov· infekcia, bliûöie neurËen· (A69.9)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A500','Vroden˝ syfilis [Lues congenita]','Vroden˝ syfilis',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A510','VËasn˝ syfilis','VËasn˝ syfilis',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A520','Neskor˝ syfilis','In˝ syfilis',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A530','In˝ a bliûöie neurËen˝ syfilis','In˝ syfilis',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A540','Gonokokov· infekcia','GonokokovÈ infekcie',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A550','Lymphogranuloma venereum (chlam˝diov˝)','Sexu·lne prenosnÈ chlam˝diovÈ choroby','15','24','V',to_date('01.01.94','DD.MM.RR'),null,'Durandova-Nicolasova-Favreova choroba, Esthiomene, Lymphogranuloma inguinale, KlimatickÈ alebo tropickÈ bubo',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A560','In· pohlavne prenosn· chlam˝diov· choroba','Sexu·lne prenosnÈ chlam˝diovÈ choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Choroby s pohlavn˝m prenosom zaprÌËinenÈ, Chlamydia trachomatis','Chlam˝diov· konjunktivitÌda novorodenca');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A570','M‰kk˝ vred [ulcus molle]','InÈ infekcie s prevaûne sexu·lnym spÙsobom prenosu','15','24','V',to_date('01.01.94','DD.MM.RR'),null,'Chancroid',' ');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A580','Granuloma venereum (inguinale)','InÈ infekcie s prevaûne sexu·lnym spÙsobom prenosu','15','24','V',to_date('01.01.94','DD.MM.RR'),null,'DonovanÛza',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A590','TrichomonÛza','InÈ infekcie s prevaûne sexu·lnym spÙsobom prenosu',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'»revn· trichomonÛza (A07.8)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A600','Anogenit·lna infekcia herpetick˝m vÌrusom [Herpes simplex]','InÈ infekcie s prevaûne sexu·lnym spÙsobom prenosu',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A630','In· prevaûne pohlavne prenosn· choroba, nezatrieden· inde','InÈ infekcie s prevaûne sexu·lnym spÙsobom prenosu',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A640','Pohlavne prenosn· choroba, bliûöie neurËen·','InÈ infekcie s prevaûne sexu·lnym spÙsobom prenosu','15','24','V',to_date('01.01.94','DD.MM.RR'),null,'PohlavnÈ choroby, bliûöie neurËenÈ',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A650','Nevenerick˝ syfilis','InÈ infekËnÈ a parazit·rne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Bejel, Endemick˝ syfilis, Njovera',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A000','Cholera','Cholera',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A010','Bruön˝ t˝fus a parat˝fus','Bruön˝ t˝fus a parat˝fus',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A020','InÈ salmonelovÈ infekcie','InÈ ËrevnÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'InfekËn· enetritÌda zaprÌËinen· salmonelou',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A030','äigelÛza [baktÈriov· Ëervienka, dyzentÈria]','Bacilov· Ëervienka (dyzentÈria)',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A040','InÈ baktÈriovÈ ËrevnÈ infekcie','InÈ ËrevnÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Potravinov· otrava zatrieden· inde (A05.-), TuberkulÛzna enteritÌda (A18.3)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A050','In· baktÈriov· potravinov· otrava','InÈ ËrevnÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Infekcia zaprÌËinen· Escherichia coli (A04.0 ñ A04.4),Infekcia alebo potravinov· oprava zaprÌËinen· salmonelou (A02.-), Infekcia alebo potravinov· oprava zaprÌËinen· Clostridium difficile (A04.7),ListeriÛza (A32.-), Toxick˝ ˙Ëinok ökodliv˝ch (pokazen˝ch) potravÌn (T61 ñ T62)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A060','AmÈbov· Ëervienka - amebÛza','AmÈbov· Ëervienka - amebi·za',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Infekcia zaprÌËinen· Entamoeba histolytica','InÈ ËrevnÈ choroby zaprÌËinenÈ protozoami (A07.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A070','InÈ protozo·rne ËrevnÈ choroby','InÈ ËrevnÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A080','VÌrusovÈ  a inÈ, bliûöie urËenÈ ËrevnÈ infekcie','InÈ ËrevnÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'ChrÌpka s postihnutÌm tr·viacej trubice (J09, J10.8, J11.8)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A090','In· gastroenteritÌda a kolitÌda infekËnÈho a bliûöie neurËenÈho pÙvodu','HnaËka a gastroenteritÌda pravdepodobne infekËnÈho pÙvodu',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'In· kolitÌda zaprÌËinen· baktÈriami - protozoami - vÌrusmi a in˝mi bliûöie urËen˝mi infekËn˝mi patogÈnmi (A00 ñ A08), NeinfekËn· hnaËka (K52.9),NeinfekËn· hnaËka u novorodenca (P78.3)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A150','TuberkulÛza d˝chacej s˙stavy bakteriologicky, molekulovobiologicky alebo histologicky potvrden·','RespiraËn· tuberkulÛza',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A160','TuberkulÛza d˝chacej s˙stavy nepotvrden· bakteriologicky, molekulovobiologicky alebo histologicky','RespiraËn· tuberkulÛza',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A170','TuberkulÛza nervovej s˙stavy','In· tuberkulÛza',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A180','TuberkulÛza in˝ch org·nov','In· tuberkulÛza',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A190','Mili·rna tuberkulÛza','In· tuberkulÛza',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'TuberkulÛzna polyserozitÌda, TuberkulÛza diseminovan·,TuberkulÛza generalizovan·',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A200','Mor','Mor - pestis',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Infekcie zaprÌËinenÈ Yersinia pestis',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A210','TularÈmia','InÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'ZajaËÌ mor, TularÈmia, Infekcia - zaprÌËinen· Franciscella tularensis',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A220','Antrax','InÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Infekcia zaprÌËinen· Bacillus antracis',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A230','BrucelÛza','BrucelÛza',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Maltsk· hor˙Ëka, Stredozemn· hor˙Ëka, Unduluj˙ca hor˙Ëka',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A240','Sopæavka [malleus] a melioidÛza [pseudomalleus]','InÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A250','Hor˙Ëka po uhryznutÌ potkanom','InÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A260','Eryzipeloid','InÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A270','LeptospirÛza','InÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A280','In· baktÈriov· zoonÛza, nezatrieden· inde','InÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A300','Lepra [malomocenstvo, Hansenova choroba]','Lepra',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Infekcia zaprÌËinen· Mycobacterium leprae','N·sledky lepry (B92)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A310','Infekcia zaprÌËinen· inou mykobaktÈriou','InÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Lepra (A30.-), TuberkulÛza (A15 ñ A19)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A320','ListeriÛza','InÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Potravinov· infekcia zaprÌËinen· listÈriou','ListeriÛza novorodenca (diseminovan·) (P37.2)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A330','Tetanus novorodencov','Tetanus novorodencov','0','1','D',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A340','Tetanus poËas gravidity, pÙrodu a v öestonedelÌ','In˝ tetanus - st‡pnutosù','12','55','Z',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A350','In˝ tetanus','In˝ tetanus - st‡pnutosù',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Tetanus, bliûöie neurËen˝','Tetanus neonatorum (A33), Tetanus v gravidite, poËas pÙrodu a v öestonedelÌ (A34)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A360','DiftÈria  [ Z·ökrt ]','DiftÈria',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A370','Pertussis  [»ierny kaöeæ, Div˝ kaöeæ]','Div˝ kaöeæ - pertussis',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A380','Scarlatina [äarlach]','InÈ bakteri·lne choroby',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Streptokokov˝ z·pal hltana (J02.0)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('A390','Meningokokov· infekcia','Meningokokov· infekcia',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z590','ProblÈmy s˙visiace s b˝vanÌm alebo ekonomickou situ·ciou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z600','ProblÈmy s˙visiace so soci·lnym prostredÌm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z610','ProblÈmy s˙visiace s negatÌvnymi udalosùami v detstve',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z620','InÈ problÈmy s˙visiace s v˝chovou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z630','InÈ problÈmy s˙visiace so skupinou prim·rnej starostlivosti vr·tane rodinnej situ·cie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z640','ProblÈmy s˙visiace s urËit˝mi psychosoci·lnymi okolnosùami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z650','ProblÈmy s˙visiace s in˝mi psychosoci·lnymi okolnosùami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z700','Poradenstvo s˙visiace so vzùahom k sexualite, sexu·lnym spr·vanÌm a orient·ciou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z710','Osoby, ktorÈ vyhæadali zdravotnÌcke sluûby kvÙli inÈmu poradenstvu, nezatriedenÈmu inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z720','ProblÈmy s˙visiace so spÙsobom ûivota',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z730','ProblÈmy s˙visiace s ùaûkosùami so zvl·dnutÌm ûivota',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z740','ProblÈmy s˙visiace so z·vislosùou od opatrovateæa',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z750','ProblÈmy s˙visiace so zdravotnÌckymi zariadeniami a inou zdravotnou starostlivosùou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z760','Osoba, ktor· navötÌvila zdravotnÌcke sluûby za in˝ch okolnostÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z800','Zhubn˝ n·dor v rodinnej anamnÈze',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z810','Poruchy psychiky a spr·vania v rodinnej anamnÈze',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z820','NiektorÈ postihnutia a chronickÈ choroby ved˙ce k invalidite v rodinnej anamnÈze',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z830','InÈ urËenÈ choroby v rodinnej anamnÈze',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z840','InÈ choroby v rodinnej anamnÈze',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z850','Zhubn˝ n·dor v osobnej anamnÈze',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z860','NiektorÈ inÈ choroby v osobnej anamnÈze',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z870','InÈ choroby a stavy v osobnej anamnÈze',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z880','Alergia na lieËiv·, lieky a biologickÈ l·tky v osobnej anamnÈze',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z890','ZÌskanÈ ch˝banie konËatiny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z900','ZÌskanÈ ch˝banie org·nov, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z910','RizikovÈ faktory v osobnej anamnÈze, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z920','Predch·dzaj˙ca lieËba v osobnej anamnÈze',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z930','Stav s predt˝m umelo vytvoren˝m vy˙stenÌm (stÛmiou)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z940','Stav po transplant·cii org·nu a tkaniva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z950','Stav po implant·cii srdcovÈho alebo cievneho implant·tu alebo ötepu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z960','Stav po implant·cii in˝ch funkËn˝ch implant·tov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z970','Stav po implant·cii in˝ch zdravotn˝ch pomÙcok',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z980','InÈ pooperaËnÈ stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z990','Dlhodob· z·vislosù od pomocn˝ch prÌstrojov alebo pomÙcok, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W460','Kontakt s injekËnou ihlou',null,null,null,'V',to_date('01.01.19','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('U070','Potvrden· Infekcia/Podozrenie z Infekcie COVID-19',null,null,null,'V',to_date('01.01.20','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y650','InÈ poökodenia poËas lek·rskej starostlivosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y660','Neposkytnutie lek·rskej starostlivosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y690','Poökodenie poËas lek·rskej starostlivosti, (bliûöie neurËenÈ)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y700','NepriaznivÈ prÌhody s˙visiace s pouûitÌm anestetick˝ch prÌstrojov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y710','NepriaznivÈ prÌhody s˙visiace s pouûitÌm srdcovocievnych prÌstrojov (pomÙcok)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y720','NepriaznivÈ prÌhody s˙visiace s pouûitÌm zariadenÌ a pomÙcok v otorinolaryngolÛgii',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y730','NepriaznivÈ prÌhody s˙visiace s pouûitÌm zariadenÌ a pomÙcok v gastroenterolÛgii a v urolÛgii',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y740','NepriaznivÈ prÌhody s˙visiace so zariadeniami a pomÙckami na vöeobecnÈ nemocniËnÈ a osobnÈ pouûitie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y750','NepriaznivÈ prÌhody s˙visiace s pouûitÌm zariadenÌ a pomÙcok v neurolÛgii',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y760','NepriaznivÈ prÌhody s˙visiace s pouûitÌm zariadenÌ a pomÙcok v gynekolÛgii a pÙrodnÌctve',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y770','NepriaznivÈ prÌhody s˙visiace s pouûitÌm zariadenÌ a pomÙcok v oftalmolÛgii',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y780','NepriaznivÈ prÌhody s˙visiace s pouûitÌm zariadenÌ a pomÙcok v r·diolÛgii',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y790','NepriaznivÈ prÌhody s˙visiace s pouûitÌm zariadenÌ a pomÙcok v ortopÈdii',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y800','NepriaznivÈ prÌhody s˙visiace s pouûitÌm pomÙcok pri fyzik·lnej lieËbe',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y810','NepriaznivÈ prÌhody s˙visiace s pouûitÌm zariadenÌ a pomÙcok vo vöeobecnej a plastickej chirurgii',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y820','NepriaznivÈ prÌhody s˙visiace s pouûitÌm in˝ch a bliûöie neurËen˝ch lek·rskych pomÙcok',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y830','Chirurgick˝ v˝kon ako prÌËina abnorm·lnej reakcie pacienta alebo neskoröej komplik·cie, bez  nehody v Ëase v˝konu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y840','In˝ lek·rsky v˝kon ako prÌËina abnorm·lnej reakcie pacienta alebo neskoröej komplik·cie, bez  nehody v Ëase v˝konu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y850','NeskorÈ n·sledky dopravn˝ch nehÙd',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y860','NeskorÈ n·sledky in˝ch nehÙd',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y870','NeskorÈ n·sledky ˙myselnÈho sebapoökodenia, napadnutia a udalostÌ s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y880','NeskorÈ n·sledky chirurgickej a inej lek·rskej starostlivosti ako vonkajöej prÌËiny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y890','NeskorÈ n·sledky in˝ch vonkajöÌch prÌËin',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y900','DÙkaz vplyvu alkoholu podæa koncentr·cie alkoholu v krvi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y910','DÙkaz vplyvu alkoholu podæa stupÚa intoxik·cie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y950','Nozokomi·lna choroba',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y960','Choroba z povolania',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y970','Choroba s˙visiaca so zneËisten˝m ûivotn˝m prostredÌm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y980','Choroba s˙visiaca so spÙsobom ûivota',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('B980','In˝ infekËn˝ pÙvodca, bliûöie urËen˝, ako prÌËina chorÙb zatrieden˝ch inde',null,null,null,'V',to_date('01.01.16','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('C860','In˝ lymfÛm z T/NK-buniek, bliûöie urËen˝',null,null,null,'V',to_date('01.01.16','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D900','Imunodeficit po oûiarenÌ, po chemoterapii a po in˝ch imunosupresÌvnych v˝konoch',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F740','Disoci·cia inteligencie',null,null,null,'V',to_date('01.01.16','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G140','Postpoliomyelitick˝ syndrÛm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K640','Hemoroidy a perian·lna ûilov· trombÛza',null,null,null,'V',to_date('01.01.16','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O090','Trvanie gravidity',null,null,null,'V',to_date('01.01.16','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O940','N·sledky komplik·ciÌ gravidity, pÙrodu a öestonedelia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R650','SyndrÛm systÈmovej z·palovej odpovede  [SIRS]',null,null,null,'V',to_date('01.01.16','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T890','In· komplik·cia ˙razu, bliûöie urËen·',null,null,null,'V',to_date('01.01.16','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z000','VöeobecnÈ vyöetrenie a prehliadka osÙb bez ùaûkostÌ a bez uvedenej diagnÛzy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z010','äpeci·lne vyöetrenie a prehliadka osÙb bez ùaûkostÌ a bez uvedenej diagnÛzy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z020','Vyöetrenie a n·vöteva na administratÌvne ˙Ëely',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z030','Lek·rske pozorovanie a vyöetrenie pre podozrenie z choroby a chorobnÈho stavu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z040','Vyöetrenie a pozorovanie pre inÈ prÌËiny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z080','Sledovanie po lieËbe zhubnÈho n·doru',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z090','Sledovanie po lieËbe inej choroby ako zhubnÈho n·doru',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z100','Rutinn· vöeobecn· zdravotn· kontrola definovanej skupiny obyvateæstva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z110','äpeci·lne skrÌningovÈ vyöetrenie, zameranÈ na infekËnÈ a parazitovÈ choroby',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z120','äpeci·lne skrÌningovÈ vyöetrenie, zameranÈ na n·dorovÈ choroby',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z130','äpeci·lne skrÌningovÈ vyöetrenie, zameranÈ na inÈ choroby a poruchy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z200','Kontakt a vystavenie prenosn˝m chorob·m',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z210','BezprÌznakov˝ stav infekcie HIV (vÌrusom æudskÈho imunodeficitu)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z220','NosiËstvo pÙvodcu infekËnej choroby',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z230','Potreba imuniz·cie proti jednotliv˝m baktÈriov˝m chorob·m',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z240','Potreba imuniz·cie proti urËit˝m jednotliv˝m vÌrusov˝m chorob·m',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z250','Potreba imuniz·cie proti in˝m jednotliv˝m vÌrusov˝m chorob·m',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z260','Potreba imuniz·cie proti in˝m jednotliv˝m infekËn˝m chorob·m',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z270','Potreba imuniz·cie proti kombin·cii infekËn˝ch chorÙb',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z280','Nevykonan· imuniz·cia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z290','Potreba in˝ch preventÌvnych postupov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z300','Riadenie antikoncepcie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z310','Vyöetrenie a lieËenie por˙ch fertility',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z320','Vyöetrenie a testy, zameranÈ na zistenie gravidity',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z330','Gravidita ako vedæajöÌ n·lez',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z340','Dohæad nad priebehom norm·lnej gravidity',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z350','Dohæad nad priebehom rizikovej gravidity',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z360','Prenat·lny skrÌning',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z370','V˝sledok pÙrodu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z380','éivonarodenÈ deti podæa miesta narodenia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z390','PopÙrodn· starostlivosù a vyöetrenie matky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z400','Profylaktick˝ chirurgick˝ v˝kon',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z410','V˝kony z in˝ch dÙvodov ako zo zdravotnej indik·cie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z420','N·sledn· starostlivosù v plastickej chirurgii',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z430','Oöetrovanie umelo vytvoren˝ch telesn˝ch otvorov (stÛmii)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z440','Sk˙öanie a prispÙsobovanie vonkajöej protetickej pomÙcky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z450','PrispÙsobovanie a ˙drûba implantovanej pomÙcky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z460','Sk˙öanie a prispÙsobovanie inÈho prÌstroja alebo zdravotnÌckej pomÙcky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z470','In· n·sledn· ortopedick· starostlivosù',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z480','In· n·sledn· chirurgick· starostlivosù',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z490','Starostlivosù pri dial˝ze',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z500','Starostlivosù s pouûitÌm rehabilitaËn˝ch v˝konov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z510','In· zdravotn· starostlivosù',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z520','Darcovia org·nov a tkanÌv',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z530','Osoby, ktorÈ navötÌvili zdravotnÌcke sluûby kvÙli urËit˝m neuskutoËnen˝m v˝konom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z540','Rekonvalescencia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z550','ProblÈmy s˙visiace so vzdel·vanÌm a gramotnosùou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z560','ProblÈmy s˙visiace so zamestnanÌm a nezamestnanosùou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z570','Profesion·lne vystavenie rizikov˝m faktorom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Z580','ProblÈmy s˙visiace so ûivotn˝m prostredÌm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X940','Napadnutie v˝strelom z guæovnice, brokovnice a dlhej strelnej zbrane',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X950','Napadnutie v˝strelom z inej a bliûöie neurËenej strelnej zbrane',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X960','Napadnutie v˝buön˝mi l·tkami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X970','Napadnutie dymom, poûiarom a plameÚmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X980','Napadnutie parou, hor˙cimi v˝parmi a hor˙cimi predmetmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X990','Napadnutie ostr˝m predmetom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y000','Napadnutie tup˝m predmetom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y010','Napadnutie zhodenÌm z v˝öky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y020','Napadnutie sotenÌm alebo umiestnenÌm obete pred pohybuj˙ci sa predmet',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y030','Napadnutie z·mern˝m havarovanÌm s motorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y040','Napadnutie s pouûitÌm fyzickej sily',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y050','Sexu·lne napadnutie s pouûitÌm fyzickej sily',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y060','Zanedbanie starostlivosti a opustenie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y070','In˝ syndrÛm t˝rania',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y080','Napadnutie in˝m bliûöie urËen˝m spÙsobom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y090','N·siln˝ ˙tok',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y100','Otrava a priotr·venie neopioidov˝mi analgetikami, antipyretikami a antireumatikami a vystavenie t˝mto l·tkam, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y110','Otrava antiepileptikami, sedatÌvami, hypnotikami, antiparkinsonikami a psychotropn˝mi liekmi, nezatrieden˝mi inde, a vystavenie t˝mto l·tkam, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y120','Otrava opioidov˝mi analgetikami a halucinogÈnmi (psychodysleptikami), nezatrieden· inde, a vystavenie t˝mto l·tkam, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y130','Otrava in˝mi liekmi, ˙Ëinkuj˙cimi na autonÛmnu nervov˙ s˙stavu a vystavenie t˝mto l·tkam, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y140','Otrava in˝mi a bliûöie neurËen˝mi lieËivami, liekmi a biologick˝mi l·tkami a vystavenie t˝mto l·tkam, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y150','Otrava alkoholom a vystavenie (expozÌcia) alkoholu, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y160','Otrava organick˝mi rozp˙öùadlami, halogÈnovan˝mi uhæovodÌkmi a ich v˝parmi a vystavenie t˝mto l·tkam, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y170','Otrava in˝mi plynmi a v˝parmi a vystavenie t˝mto l·tkam, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y180','Otrava pesticÌdmi a vystavenie t˝mto l·tkam, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y190','Otrava in˝mi a bliûöie neurËen˝mi chemik·liami a ökodliv˝mi l·tkami a vystavenie t˝mto l·tkam, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y200','Obesenie, zaökrtenie a udusenie, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y210','Utopenie a topenie, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y220','Z·sah v˝strelom z ruËnej zbrane, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y230','Z·sah v˝strelom z puöky (guæovnice), brokovnice a dlhej strelnej zbrane, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y240','Z·sah v˝strelom z inej a bliûöie neurËenej strelnej zbrane, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y250','Kontakt s v˝buönou l·tkou, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y260','Vystavenie dymu, poûiaru a plameÚom, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y270','Kontakt s parou, hor˙cimi v˝parmi a hor˙cimi predmetmi, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y280','Kontakt s ostr˝m predmetom, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y290','Kontakt s tup˝m predmetom, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y300','P·d, skok alebo sotenie z v˝öky s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y310','P·d, æahnutie si alebo vbehnutie pred pohybuj˙ci sa predmet alebo do neho, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y320','Nehoda motorovÈho vozidla, s neurËen˝m ˙myslom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y330','In· udalosù s neurËen˝m ˙myslom, bliûöie urËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y340','Udalosù s neurËen˝m ˙myslom, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y350','Poranenia pri z·konnom z·sahu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y360','Poranenia pri vojnovej oper·cii',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y400','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: celkovo ˙Ëinkuj˙ce antibiotik·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y410','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: inÈ celkovo ˙Ëinkuj˙ce protiinfekËnÈ a antiparazitovÈ lieky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y420','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: hormÛny, ich syntetickÈ n·hrady a antagonisti, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y430','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: l·tky s prim·rne celkov˝m ˙Ëinkom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y440','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: l·tky s prim·rnym ˙Ëinkom na zloûky krvi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y450','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: analgetik·, antipyretik· a protiz·palovÈ lieky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y460','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: antiepileptik· a antiparkinsonik·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y470','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: sedatÌva, hypnotik· a anxiolytik·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y480','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: anestetik· a lieËebnÈ plyny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y490','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: psychotropnÈ lieky, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y500','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: stimulanci· centr·lnej nervovej s˙stavy, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y510','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: lieËiv·, ˙Ëinkuj˙ce najm‰ na autonÛmnu nervov˙ s˙stavu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y520','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: l·tky, ˙Ëinkuj˙ce prim·rne na srdcovocievnu s˙stavu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y530','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: l·tky, ˙Ëinkuj˙ce prim·rne na tr·viacu s˙stavu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y540','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: l·tky, prim·rne ˙Ëinkuj˙ce na vodn˙ rovnov·hu a na metabolizmus miner·lov a kyseliny moËovej',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y550','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: l·tky, ˙Ëinkuj˙ce prim·rne na hladkÈ a kostrovÈ svaly a na d˝chaciu s˙stavu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y560','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: l·tky na lok·lne pouûitie, ˙Ëinkuj˙ce prim·rne na koûu a sliznicu a lieky pouûÌvanÈ v oftalmolÛgii, otorinolaryngolÛgii a stomatolÛgii',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y570','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ liekov a lieËiv: inÈ a bliûöie neurËenÈ lieky a lieËiv·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y580','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: baktÈriov· oËkovacia l·tka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y590','Neûiaduce vedæajöie ˙Ëinky pri lieËebnom pouûitÌ: inÈ a bliûöie neurËenÈ oËkovacie l·tky a biologicky aktÌvne l·tky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y600','Ne˙myselnÈ porezanie, pichnutie, prederavenie alebo krv·canie poËas chirurgickej a lek·rskej starostlivosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y610','N·hodne ponechan˝ cudzÌ predmet v tele poËas chirurgickej a lek·rskej starostlivosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y620','Nedodrûanie z·sad sterility poËas chirurgickej a lek·rskej starostlivosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y630','Nedodrûanie d·vkovania poËas chirurgickej a lek·rskej starostlivosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Y640','KontaminovanÈ lieËivo alebo biologicky aktÌvna l·tka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X050','Vystavenie zap·leniu alebo roztopeniu noËnÈho obleËenia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X060','Vystavenie zap·leniu alebo roztopeniu inÈho obleËenia a öiat',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X080','Vystavenie inÈmu bliûöie urËenÈmu dymu, ohÚu a plameÚu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X090','Vystavenie bliûöie neurËenÈmu dymu, ohÚu a plameÚu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X100','Kontakt s hor˙cim n·pojom, potravinami, tukom a olejom na varenie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X110','Kontakt s hor˙cou vodovodnou vodou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X120','Kontakt s inou hor˙cou tekutinou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X130','Kontakt s vodnou parou a hor˙cimi v˝parmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X140','Kontakt s hor˙cim vzduchom a plynom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X150','Kontakt s hor˙cimi n·dobami a prÌstrojmi v dom·cnosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X160','Kontakt s hor˙cimi variËmi, radi·tormi a r˙rami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X170','Kontakt s hor˙cimi motormi, strojov˝m zariadenÌm a n·strojmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X180','Kontakt s in˝mi hor˙cimi kovmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X190','Kontakt s inou a bliûöie neurËenou hor˙Ëavou alebo hor˙cou l·tkou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X200','Kontakt s jedovat˝m hadom alebo jaötericou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X210','Kontakt s jedovat˝m pav˙kom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X220','Kontakt so ökorpiÛnom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X230','Kontakt so sröÚom, osou alebo vËelou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X240','Kontakt so stonoûkou a jedovatou tropickou mnohonoûkou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X250','Kontakt s in˝m bliûöie urËen˝m jedovat˝m Ël·nkonoûcom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X260','Kontakt s jedovat˝m morsk˝m zvieraùom alebo rastlinou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X270','Kontakt s in˝m bliûöie urËen˝m jedovat˝m zvieraùom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X280','Kontakt s inou bliûöie urËenou jedovatou rastlinou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X290','Kontakt s bliûöie neurËen˝m jedovat˝m zvieraùom a rastlinou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X300','Vystavenie nadmernej prirodzenej hor˙Ëave',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X310','Vystavenie nadmernÈmu prirodzenÈmu chladu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X320','Vystavenie slneËnÈmu svetlu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X330','Obeù blesku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X340','Obeù zemetrasenia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X350','Obeù v˝buchu sopky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X360','Obeù lavÌny, zosuvu pÙdy a in˝ch pohybov zeme',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X370','Obeù niËivej vÌchrice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X380','Obeù z·plavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X390','Poökodenie ˙Ëinkami in˝ch a bliûöie neurËen˝ch prÌrodn˝ch sÌl',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X400','N·hodn· otrava a priotr·venie neopioidov˝mi analgetikami, antipyretikami a antireumatikami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X410','N·hodn· otrava a priotr·venie antiepileptikami, sedatÌvami, hypnotikami, antiparkinsonikami a psychotropn˝mi liekmi, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X420','N·hodn· otrava a priotr·venie opioidov˝mi analgetikami a psychodysleptikami (halucinogÈnmi), nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X430','N·hodn· otrava a priotr·venie in˝mi lieËivami, ˙Ëinkuj˙cimi na autonÛmnu nervov˙ s˙stavu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X440','N·hodn· otrava a priotr·venie in˝mi a bliûöie neurËen˝mi lieËivami, liekmi a biologick˝mi l·tkami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X450','N·hodn· otrava a priotr·venie alkoholom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X460','N·hodn· otrava a priotr·venie organick˝mi rozp˙öùadlami, halogÈnovan˝mi uhæovodÌkmi a ich v˝parmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X470','N·hodn· otrava a priotr·venie in˝mi plynmi a v˝parmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X480','N·hodn· otrava a priotr·venie pesticÌdmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X490','N·hodn· otrava a priotr·venie in˝mi a bliûöie neurËen˝mi chemik·liami a ökodliv˝mi l·tkami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X500','Preùaûenie a nam·havÈ alebo opakovanÈ pohyby',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X510','Cestovanie a pohyb',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X520','DlhöÌ pobyt v beztiaûovom prostredÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X530','Nedostatok potravy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X540','Nedostatok vody',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X570','Bliûöie neurËen˝ nedostatok',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X580','Vystavenie inÈmu bliûöie urËenÈmu vplyvu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X590','Vystavenie bliûöie neurËenÈmu vplyvu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X600','⁄myselnÈ samopoökodenie otravou a priotr·venÌm neopioidov˝mi analgetikami, antipyretikami a antireumatikami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X610','⁄myselnÈ samopoökodenie otravou a priotr·venÌm antiepileptikami, sedatÌvami, hypnotikami, antiparkinsonikami a psychotropn˝mi liekmi, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X620','⁄myselnÈ samopoökodenie otravou a priotr·venÌm opioidov˝mi analgetikami a psychodysleptikami (halucinogÈnmi), nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X630','⁄myselnÈ samopoökodenie otravou a priotr·venÌm liekmi, ˙Ëinkuj˙cimi na autonÛmnu nervov˙ s˙stavu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X640','⁄myselnÈ samopoökodenie otravou a priotr·venÌm in˝mi a bliûöie neurËen˝mi liekmi, lieËivami a biologicky aktÌvnymi l·tkami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X650','⁄myselnÈ samopoökodenie otravou a priotr·venÌm alkoholom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X660','⁄myselnÈ samopoökodenie otravou a priotr·venÌm organick˝mi rozp˙öùadlami, halogÈnovan˝mi uhæovodÌkmi a ich v˝parmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X670','⁄myselnÈ samopoökodenie otravou a priotr·venÌm in˝mi plynmi a v˝parmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X680','⁄myselnÈ samopoökodenie otravou a priotr·venÌm pesticÌdmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X690','⁄myselnÈ samopoökodenie otravou a priotr·venÌm in˝mi a bliûöie neurËen˝mi chemick˝mi a ökodliv˝mi l·tkami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X700','⁄myselnÈ samopoökodenie obesenÌm, zaökrtenÌm a zadusenÌm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X710','⁄myselnÈ samopoökodenie utopenÌm a topenÌm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X720','⁄myselnÈ samopoökodenie v˝strelom z ruËnej zbrane',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X730','⁄myselnÈ samopoökodenie v˝strelom z guæovnice, brokovnice a dlhej strelnej zbrane',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X740','⁄myselnÈ samopoökodenie v˝strelom z inej a bliûöie neurËenej strelnej zbrane',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X750','⁄myselnÈ samopoökodenie v˝buönou l·tkou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X760','⁄myselnÈ samopoökodenie dymom, poûiarom a plameÚmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X770','⁄myselnÈ samopoökodenie parou, hor˙cimi v˝parmi a hor˙cimi predmetmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X780','⁄myselnÈ samopoökodenie ostr˝m predmetom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X790','⁄myselnÈ samopoökodenie tup˝m predmetom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X800','⁄myselnÈ samopoökodenie skokom z v˝öky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X810','⁄myselnÈ samopoökodenie skoËenÌm alebo æahnutÌm pred pohybuj˙ci sa predmet',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X820','⁄myselnÈ samopoökodenie havarovanÌm s motorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X830','⁄myselnÈ samopoökodenie in˝mi bliûöie urËen˝mi prostriedkami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X840','⁄myselnÈ samopoökodenie bliûöie neurËen˝mi prostriedkami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X850','Napadnutie liekmi, lieËivami a biologicky aktÌvnymi l·tkami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X860','Napadnutie ûieravinami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X870','Napadnutie pesticÌdmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X880','Napadnutie plynmi a v˝parmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X890','Napadnutie in˝mi bliûöie urËen˝mi chemik·liami a ökodliv˝mi l·tkami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X900','Naopadnutie bliûöie neurËen˝mi chemik·liami alebo ökodliv˝mi l·tkami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X910','Napadnutie obesenÌm, zaökrtenÌm a zahrd˙senÌm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X920','Napadnutie utopenÌm a topenÌm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X930','Napadnutie v˝strelom z ruËnej strelnej zbrane',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X040','Vystavenie zap·leniu veæmi horæavÈho materi·lu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V940','In· a bliûöie neurËen· nehoda pri vodnej doprave',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V950','Nehoda motorovÈho lietadla ako prÌËina zranenia Ëlena pos·dky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V960','Nehoda bezmotorovÈho lietadla ako prÌËina zranenia Ëlena pos·dky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V970','InÈ bliûöie urËenÈ dopravnÈ leteckÈ nehody',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V980','In· dopravn· nehoda, bliûöie urËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V990','Dopravn· nehoda, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W000','P·d na tej istej ˙rovni na æade a snehu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W010','P·d na tej istej ˙rovni n·sledkom poömyknutia, potknutia a zakopnutia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W020','P·d pri korËuæovanÌ, lyûovanÌ, korËuæovanÌ na kolieskov˝ch korËuliach alebo jazde na skateboarde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W030','In˝ p·d na tej istej rovine, zaprÌËinen˝ zr·ûkou s inou osobou alebo sotenÌm inou osobou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W040','P·d pri nesenÌ alebo podopieranÌ in˝mi osobami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W050','P·d z invalidnÈho vozÌka (kolieskovej stoliËky)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W060','P·d z postele',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W070','P·d zo stoliËky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W080','P·d z inÈho n·bytku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W090','P·d z n·radia ihriska',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W100','P·d na schody a zo schodov alebo stupÚov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W110','P·d na rebrÌk a z rebrÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W120','P·d na leöenie a z leöenia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W130','P·d z budovy alebo konötrukcie alebo prepadnutie nimi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W140','P·d zo stromu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W150','P·d z brala (skaly)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W160','Pon·ranie alebo sk·kanie do vody ako prÌËina poranenia inÈho, ako je utopenie alebo topenie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W170','In˝ p·d z jednej ˙rovne na druh˙',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W180','In˝ p·d na tej istej ˙rovni',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W190','P·d, bliûöie neurËen˝',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W200','Zasiahnutie hoden˝m, vrhnut˝m alebo padaj˙cim telesom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W210','Narazenie do öportovÈho n·radia alebo zasiahnutie n·radÌm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W220','Narazenie do in˝ch predmetov alebo zasiahnutie t˝mito predmetmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W230','Zachytenie, pomliaûdenie, zaklieötenie alebo privrznutie medzi predmetmi alebo v nich',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W240','Zachytenie zdvÌhacÌmi a prenosov˝mi zariadeniami, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W250','Poranenie (kontakt) ostr˝m sklom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W260','Poranenie (kontakt s) noûom, meËom alebo d˝kou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W270','Poranenie (kontakt s) ruËn˝m n·radÌm bez pohonu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W280','Poranenie (kontakt s) motorov˝m strihaËom tr·vnika',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W290','Poranenie (kontakt) in˝m motorov˝m n·radÌm a prÌstrojmi pre dom·cnosù',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W300','Poranenie (kontakt s) poænohospod·rskymi mechanizmami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W310','Poranenie (kontakt s) in˝mi a bliûöie neurËen˝mi mechanizmami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W320','Z·sah v˝strelom z kr·tkej (ruËnej) strelnej zbrane',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W330','Z·sah v˝strelom z guæovnice, brokovnice alebo dlhej strelnej zbrane',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W340','Z·sah v˝strelom z inej a bliûöie neurËenej strelnej zbrane',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W350','Z·sah v˝buchom a puknutie n·drûe bojlera',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W360','Z·sah v˝buchom a puknutie plynovÈho valca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W370','Z·sah v˝buchom a puknutie naf˙kanej pneumatiky, r˙ry alebo hadice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W380','Z·sah v˝buchom a puknutie in˝ch bliûöie urËen˝ch zariadenÌ pod tlakom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W390','Z·sah v˝strelom z ohÚostroja',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W400','Z·sah v˝buchom in˝ch materi·lov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W410','Vystavenie ˙Ëinku pr˙denia pod vysok˝m tlakom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W420','Vystavenie hluku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W430','Vystavenie vibr·ci·m',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W440','Cudzie teleso vnikaj˙ce do oka, cez oko alebo in˝ prirodzen˝ otvor tela',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W450','Cudzie teleso alebo predmet prenikaj˙ci cez koûu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W490','Vystavenie inej a bliûöie neurËenej neûivej mechanickej sile',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W500','Udretie, bitie, kopnutie, vykr˙tenie, uötipnutie, alebo poökriabanie inou osobou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W510','Sotenie alebo narazenie sotenÌm do inej osoby',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W520','Pomliaûdenie, pritisnutie alebo poöliapanie v dave alebo pri panike',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W530','Uhryznutie potkanom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W540','Uhryznutie alebo udretie psom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W550','Uhryznutie alebo udretie in˝m cicavcom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W560','Poranenie morsk˝m zvieraùom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W570','Uhryznutie alebo uötipnutie nejedovat˝m hmyzom a in˝m nejedovat˝m Ël·nkonoûcom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W580','Uhryznutie alebo udretie krokodÌlom alebo alig·torom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W590','Uhryznutie alebo pomliaûdenie in˝m plazom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W600','Kontakt s rastlinn˝mi t‡Úmi, pichliaËmi a ostr˝mi listami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W640','Vystavenie bliûöie neurËenej ûivej mechanickej sile',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W650','Utopenie a topenie vo vani',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W660','Utopenie a topenie po p·de do vane',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W670','Utopenie a topenie v plaveckom bazÈne',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W680','Utopenie a topenie po p·de do plaveckÈho bazÈna',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W690','Utopenie a topenie v prÌrodn˝ch vod·ch',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W700','Utopenie a topenie pri p·de do vody v prÌrodn˝ch vod·ch',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W730','InÈ utopenie a topenie, bliûöie urËenÈ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W740','Utopenie a topenie, bliûöie neurËenÈ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W750','N·hodnÈ udusenie a zaökrtenie v posteli',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W760','InÈ n·hodnÈ obesenie a zaökrtenie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W770','Udusenie zaprÌËinenÈ prepadnutÌm zeme, zavalenÌm zemou a in˝mi materi·lmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W780','Vd˝chnutie obsahu ûal˙dka (v˝vratkov)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W790','Vd˝chnutie a prehltnutie potravy, zaprÌËiÚuj˙ce zapchatie d˝chacÌch ciest',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W800','Vd˝chnutie a prehltnutie in˝ch predmetov, zaprÌËiÚuj˙ce zapchatie d˝chacÌch ciest',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W810','Zatvorenie alebo uviaznutie v prostredÌ s nedostatkom kyslÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W830','InÈ bliûöie urËenÈ ohrozenie d˝chania',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W840','Bliûöie neurËenÈ ohrozenie d˝chania',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W850','Vystavenie elektrickÈmu vedeniu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W860','Vystavenie inÈmu bliûöie urËenÈmu elektrickÈmu pr˙du',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W870','Vystavenie bliûöie neurËenÈmu elektrickÈmu pr˙du',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W880','Vystavenie ionizuj˙cemu ûiareniu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W890','Vystavenie umelÈmu viditeænÈmu a ultrafialovÈmu svetlu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W900','Vystavenie inÈmu neionizuj˙cemu ûiareniu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W910','Vystavenie bliûöie neurËenÈmu ûiareniu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W920','Vystavenie nadmernej hor˙Ëave umelÈho pÙvodu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W930','Vystavenie nadmernÈmu chladu umelÈho pÙvodu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W940','Vystavenie vysokÈmu alebo nÌzkemu tlaku vzduchu, alebo zmen·m tlaku vzduchu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('W990','Vystavenie inÈmu a bliûöie neurËenÈmu umelÈmu Ëiniteæovi prostredia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X000','Vystavenie nekontrolovanÈmu ohÚu v budove alebo stavbe',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X010','Vystavenie nekontrolovanÈmu ohÚu mimo budovy alebo stavby',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X020','Vystavenie kontrolovanÈmu ohÚu v budove alebo stavbe',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('X030','Vystavenie kontrolovanÈmu ohÚu mimo budovy alebo stavby',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V310','Poranenie Ëlena pos·dky trojkolesovÈho motorovÈho vozidla pri zr·ûke s bicyklistom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V320','Poranenie Ëlena pos·dky trojkolesovÈho motorovÈho vozidla pri zr·ûke s in˝m dvojkolesov˝m alebo trojkolesov˝m motorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V330','Poranenie Ëlena pos·dky trojkolesovÈho motorovÈho vozidla pri zr·ûke s osobn˝m, dod·vkov˝m alebo n·kladn˝m autom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V340','Poranenie Ëlena pos·dky trojkolesovÈho motorovÈho vozidla pri zr·ûke s kamiÛnom alebo autobusom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V350','Poranenie Ëlena pos·dky trojkolesovÈho motorovÈho vozidla pri zr·ûke s vlakom alebo koæajov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V360','Poranenie Ëlena pos·dky trojkolesovÈho motorovÈho vozidla pri zr·ûke s in˝m nemotorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V370','Poranenie Ëlena pos·dky trojkolesovÈho motorovÈho vozidla pri zr·ûke s pevn˝m alebo nepohybliv˝m predmetom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V380','Poranenie Ëlena pos·dky trojkolesovÈho motorovÈho vozidla pri dopravnej nehode bez zr·ûky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V390','Poranenie Ëlena pos·dky trojkolesovÈho motorovÈho vozidla pri in˝ch a bliûöie neurËen˝ch dopravn˝ch nehod·ch',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V400','Poranenie Ëlena pos·dky osobnÈho auta pri zr·ûke s chodcom alebo zvieraùom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V410','Poranenie Ëlena pos·dky osobnÈho auta pri zr·ûke s bicyklistom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V420','Poranenie Ëlena pos·dky osobnÈho auta pri zr·ûke s dvojkolesov˝m alebo trojkolesov˝m motorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V430','Poranenie Ëlena pos·dky osobnÈho auta pri zr·ûke s osobn˝m, dod·vkov˝m alebo n·kladn˝m autom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V440','Poranenie Ëlena pos·dky osobnÈho auta pri zr·ûke s kamiÛnom alebo autobusom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V450','Poranenie Ëlena pos·dky osobnÈho auta pri zr·ûke s vlakom alebo koæajov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V460','Poranenie Ëlena pos·dky osobnÈho auta pri zr·ûke s in˝m nemotorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V470','Poranenie Ëlena pos·dky osobnÈho auta pri zr·ûke s pevn˝m alebo nepohybliv˝m predmetom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V480','Poranenie Ëlena pos·dky osobnÈho auta pri dopravnej nehode bez zr·ûky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V490','Poranenie Ëlena pos·dky osobnÈho auta pri in˝ch a bliûöie neurËen˝ch dopravn˝ch nehod·ch',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V500','Poranenie cestuj˙ceho v n·kladnom alebo dod·vkovom aute pri zr·ûke s chodcom alebo zvieraùom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V510','Poranenie Ëlena pos·dky dod·vky alebo n·kladnÈho auta pri zr·ûke s bicyklistom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V520','Poranenie Ëlena pos·dky dod·vky alebo n·kladnÈho auta pri zr·ûke s dvojkolesov˝m alebo trojkolesov˝m motorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V530','Poranenie Ëlena pos·dky dod·vky alebo n·kladnÈho auta pri zr·ûke s osobn˝m, dod·vkov˝m alebo n·kladn˝m autom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V540','Poranenie cestuj˙ceho v n·kladnom alebo dod·vkovom aute pri zr·ûke s kamiÛnom alebo s autobusom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V550','Poranenie Ëlena pos·dky dod·vky alebo n·kladnÈho auta pri zr·ûke s vlakom alebo koæajov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V560','Poranenie Ëlena pos·dky dod·vky alebo n·kladnÈho auta pri zr·ûke s in˝m nemotorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V570','Poranenie Ëlena pos·dky dod·vky alebo n·kladnÈho auta pri zr·ûke s pevn˝m alebo nepohybliv˝m predmetom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V580','Poranenie Ëlena pos·dky dod·vky alebo n·kladnÈho auta pri dopravnej nehode bez zr·ûky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V590','Poranenie Ëlena pos·dky dod·vky alebo n·kladnÈho auta pri inej a bliûöie neurËenej dopravnej nehode',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V600','Poranenie cestuj˙ceho v kamiÛne pri zr·ûke s chodcom alebo so zvieraùom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V610','Poranenie Ëlena pos·dky kamiÛna pri zr·ûke s bicyklistom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V620','Poranenie Ëlena pos·dky kamiÛna pri zr·ûke s dvojkolesov˝m alebo trojkolesov˝m motorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V630','Poranenie Ëlena pos·dky kamiÛna pri zr·ûke s osobn˝m, dod·vkov˝m alebo n·kladn˝m autom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V640','Poranenie Ëlena pos·dky kamiÛna pri zr·ûke s kamiÛnom alebo autobusom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V650','Poranenie Ëlena pos·dky kamiÛna pri zr·ûke s vlakom alebo koæajov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V660','Poranenie Ëlena pos·dky kamiÛna pri zr·ûke s in˝m nemotorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V670','Poranenie Ëlena pos·dky kamiÛna pri zr·ûke s pevn˝m alebo nepohybliv˝m predmetom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V680','Poranenie Ëlena pos·dky kamiÛna pri dopravnej nehode bez zr·ûky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V690','Poranenie Ëlena pos·dky kamiÛna pri inej a bliûöie neurËenej dopravnej nehode',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V700','Poranenie Ëlena pos·dky autobusu pri zr·ûke s chodcom alebo zvieraùom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V710','Poranenie Ëlena pos·dky autobusu pri zr·ûke s bicyklistom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V720','Poranenie Ëlena pos·dky autobusu pri zr·ûke s dvojkolesov˝m alebo trojkolesov˝m motorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V730','Poranenie Ëlena pos·dky autobusu pri zr·ûke s osobn˝m, dod·vkov˝m alebo n·kladn˝m autom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V740','Poranenie Ëlena pos·dky autobusu pri zr·ûke s kamiÛnom alebo autobusom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V750','Poranenie Ëlena pos·dky autobusu pri zr·ûke s vlakom alebo koæajov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V760','Poranenie Ëlena pos·dky autobusu pri zr·ûke s in˝m nemotorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V770','Poranenie Ëlena pos·dky autobusu pri zr·ûke s pevn˝m alebo nepohybliv˝m predmetom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V780','Poranenie Ëlena pos·dky autobusu pri dopravnej nehode bez zr·ûky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V790','Poranenie Ëlena pos·dky autobusu pri in˝ch a bliûöie neurËen˝ch dopravn˝ch nehod·ch',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V800','Poranenie jazdca alebo Ëlena pos·dky vozidla ùahanÈho zvieraùom pri dopravnej nehode',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V810','Poranenie Ëlena pos·dky vlaku alebo koæajovÈho vozidla pri dopravnej nehode',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V820','Poranenie Ëlena pos·dky vozidla miestnej dopravy pri dopravnej nehode',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V830','Poranenie cestuj˙ceho v öpeci·lnom vozidle pouûÌvanom najm‰ v priemyseln˝ch objektoch pri dopravnej nehode',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V840','Poranenie Ëlena pos·dky v öpeci·lnom vozidle pouûÌvanom najm‰ v poænohospod·rstve pri dopravnej nehode',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V850','Poranenie Ëlena pos·dky öpeci·lneho stavebnÈho vozidla pri dopravnej nehode',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V860','Poranenie Ëlena pos·dky v öpeci·lnom terÈnnom vozidle, alebo inak upravenom motorovom vozidle na pouûitie mimo ciest pri dopravnej nehode',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V870','Presne urËen˝ typ dopravnej nehody, ale spÙsob dopravy poranenÈho nezn·my',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V880','Presne urËen˝ typ nedopravnej nehody, ale spÙsob dopravy poranenÈho nezn·my',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V890','Dopravn· nehoda motorovÈho alebo nemotorovÈho vozidla bez bliûöieho urËenia typu vozidla',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V900','Nehoda plavidla ako prÌËina utopenia a ponorenia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V910','Nehoda plavidla ako prÌËina inÈho poranenia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V920','Utopenie a ponorenie pri vodnej doprave bez nehody plavidla',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V930','Nehoda na palube plavidla bez nehody plavidla nezaprÌËiÚuj˙ca utopenie a ponorenie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T400','Otrava opi·tmi a psychodysleptikami [halucinogÈnmi]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T410','Otrava anestetikami a lieËebn˝mi plynmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T420','Otrava antiepileptikami, sedatÌvami, hypnotikami a antiparkinsonikami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T430','Otrava psychotropn˝mi l·tkami, nezatrieden˝mi inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T440','Otrava lieËivami, ˙Ëinkuj˙cimi najm‰ na autonÛmnu nervov˙ s˙stavu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T450','Otrava prostriedkami, ˙Ëinkuj˙cimi najm‰ celkovo a na zloûky krvi, nezatrieden˝mi inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T460','Otrava prostriedkami, ˙Ëinkuj˙cimi najm‰ na obehov˙ s˙stavu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T470','Otrava prostriedkami, ˙Ëinkuj˙cimi najm‰ na tr·viacu s˙stavu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T480','Otrava prostriedkami, ˙Ëinkuj˙cimi prim·rne na hladkÈ a kostrovÈ svaly a na d˝chaciu s˙stavu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T490','Otrava prostriedkami na lok·lne pouûitie ˙Ëinkuj˙cimi, prim·rne na koûu a sliznice a prostriedkami pouûÌvan˝mi v oftalmolÛgii, otorinolaryngolÛgii a stomatolÛgii',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T500','Otrava diuretikami a in˝mi bliûöie neurËen˝mi liekmi, lieËivami a biologick˝mi l·tkami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T510','Toxick˝ ˙Ëinok alkoholu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T520','Toxick˝ ˙Ëinok organick˝ch rozp˙öùadiel',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T530','Toxick˝ ˙Ëinok halogÈnov˝ch deriv·tov alifatick˝ch a aromatick˝ch uhæovodÌkov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T540','Toxick˝ ˙Ëinok leptavej l·tky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T550','Toxick˝ ˙Ëinok mydla a detergencia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T560','Toxick˝ ˙Ëinok kovu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T570','Toxick˝ ˙Ëinok inej anorganickej l·tky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T580','Toxick˝ ˙Ëinok oxidu uhoænatÈho (CO)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T590','Toxick˝ ˙Ëinok inÈho plynu, dymu a v˝parov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T600','Toxick˝ ˙Ëinok pesticÌdu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T610','Toxick˝ ˙Ëinok ökodliv˝ch l·tok poûit˝ch ako morsk· potrava',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T620','Toxick˝ ˙Ëinok in˝ch ökodliv˝ch l·tok poûit˝ch ako potrava',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T630','Toxick˝ ˙Ëinok kontaktu s jedovat˝mi zvieratami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T640','Toxick˝ ˙Ëinok aflatoxÌnu a in˝ch mykotoxÌnov, zneËisùuj˙cich potravu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T650','Toxick˝ ˙Ëinok inej a bliûöie neurËenej l·tky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T660','Bliûöie neurËenÈ ˙Ëinky ûiarenia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T670','⁄Ëinky tepla a svetla',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T680','Podchladenie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T690','InÈ ˙Ëinky znÌûenej teploty',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T700','⁄Ëinok tlaku vzduchu a tlaku vody',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T710','Zadusenie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T730','⁄Ëinky in˝ch nedostatkov [depriv·ciÌ]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T740','SyndrÛm, zaprÌËinen˝ zl˝m zaobch·dzanÌm [t˝ranÌm]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T750','⁄Ëinky in˝ch vonkajöÌch prÌËin',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T780','Neûiaduci ˙Ëinok, nezatrieden˝ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T790','UrËitÈ vËasnÈ komplik·cie ˙razu, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T800','Komplik·cia po inf˙zii, transf˙zii a lieËebnej injekcii',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T810','Komplik·cia po v˝kone, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T820','Komplik·cia zaprÌËinen· srdcovou a cievnou protÈzou, implant·tom a transplant·tom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T830','Komplik·cia zaprÌËinen· moËovopohlavnou protÈzou, implant·tom a transplant·tom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T840','Komplik·cia zaprÌËinen· vn˙tornou ortopedickou protÈzou, implant·tom a transplant·tom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T850','Komplik·cia zaprÌËinen· inou vn˙tornou protÈzou, implant·tom a ötepom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T860','Zlyh·vanie a odvrhnutie transplantovan˝ch org·nov a tkanÌv',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T870','Komplik·cia charakteristick· pre replant·ciu a amput·ciu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T880','In· komplik·cia lek·rskej a zdravotnÌckej starostlivosti, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T900','NeskorÈ n·sledky poranenia hlavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T910','NeskorÈ n·sledky poranenia krku a trupu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T920','NeskorÈ n·sledky poranenia hornej konËatiny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T930','NeskorÈ n·sledky poranenia dolnej konËatiny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T940','NeskorÈ n·sledky poranenia viacer˝ch a bliûöie neurËen˝ch oblastÌ tela',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T950','NeskorÈ n·sledky pop·lenia, poleptania a omrzlÌn',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T960','NeskorÈ n·sledky otravy liekmi, lieËivami a biologicky aktÌvnymi l·tkami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T970','NeskorÈ n·sledky toxick˝ch ˙Ëinkov l·tky pouûÌvanej najm‰ mimo lek·rstva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T980','NeskorÈ n·sledky in˝ch a bliûöie neurËen˝ch ˙Ëinkov vonkajöÌch prÌËin',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V010','Poranenie chodca pri zr·ûke s bicyklom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V020','Poranenie chodca pri zr·ûke s dvojkolesov˝m alebo trojkolesov˝m motorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V030','Poranenie chodca pri zr·ûke s osobn˝m, dod·vkov˝m alebo æahk˝m n·kladn˝m autom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V040','Poranenie chodca pri zr·ûke s kamiÛnom alebo autobusom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V050','Poranenie chodca pri zr·ûke s vlakom alebo koæajov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V060','Poranenie chodca pri zr·ûke s in˝m nemotorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V090','Poranenie chodca pri inej a bliûöie neurËenej dopravnej nehode',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V100','Poranenie bicyklistu pri zr·ûke s chodcom alebo so zvieraùom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V110','Poranenie bicyklistu pri zr·ûke s in˝m bicyklom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V120','Poranenie bicyklistu pri zr·ûke s dvojkolesov˝m alebo trojkolesov˝m motorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V130','Poranenie bicyklistu pri zr·ûke s osobn˝m, dod·vkov˝m alebo n·kladn˝m autom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V140','Poranenie bicyklistu pri zr·ûke s kamiÛnom alebo autobusom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V150','Poranenie bicyklistu pri zr·ûke s vlakom alebo koæajov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V160','Poranenie bicyklistu pri zr·ûke s in˝m nemotorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V170','Poranenie bicyklistu pri zr·ûke s pevn˝m alebo nepohybliv˝m predmetom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V180','Poranenie bicyklistu pri dopravnej nehode bez zr·ûky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V190','Poranenie bicyklistu pri in˝ch a bliûöie neurËen˝ch dopravn˝ch nehod·ch',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V200','Poranenie jazdca na motocykli pri zr·ûke s chodcom alebo so zvieraùom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V210','Poranenie jazdca na motocykli pri zr·ûke bicyklistom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V220','Poranenie jazdca na motocykli pri zr·ûke s dvojkolesov˝m alebo trojkolesov˝m motorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V230','Poranenie jazdca na motocykli pri zr·ûke s osobn˝m, dod·vkov˝m alebo n·kladn˝m autom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V240','Poranenie jazdca na motocykli pri zr·ûke s kamiÛnom alebo autobusom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V250','Poranenie jazdca na motocykli pri zr·ûke s vlakom alebo koæajov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V260','Poranenie jazdca na motocykli pri zr·ûke s in˝m nemotorov˝m vozidlom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V270','Poranenie jazdca na motocykli pri zr·ûke s pevn˝m alebo nepohybliv˝m predmetom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V280','Poranenie jazdca na motocykli pri dopravnej nehode bez zr·ûky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V290','Poranenie jazdca na motocykli pri in˝ch a bliûöie neurËen˝ch dopravn˝ch nehod·ch',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('V300','Poranenie Ëlena pos·dky trojkolesovÈho motorovÈho vozidla pri zr·ûke s chodcom alebo so zvieraùom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S370','Poranenie moËov˝ch org·nov a panvov˝ch org·nov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S380','DrvivÈ poranenie a ˙razov· amput·cia Ëasti brucha, drieku a panvy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S390','InÈ a bliûöie neurËenÈ poranenie brucha, drieku a panvy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S400','PovrchovÈ poranenie pleca a ramena',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S410','Otvoren· rana pleca a ramena',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S420','Zlomenina pleca a ramena',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S430','VykÂbenie, vyvrtnutie a natiahnutie kÂbov a v‰zov plecovÈho pletenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S440','Poranenie nervov v ˙rovni pleca a ramena',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S450','Poranenie krvn˝ch ciev v ˙rovni pleca a ramena',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S460','Poranenie svalu a öæachy v ˙rovni pleca a ramena',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S470','DrvivÈ poranenie pleca a ramena',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S480','⁄razov· amput·cia pleca a ramena',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S490','InÈ a bliûöie neurËenÈ poranenie pleca a ramena',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S500','PovrchovÈ poranenie lakùa a predlaktia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S510','Otvoren· rana predlaktia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S520','Zlomenina predlaktia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S530','VykÂbenie, vyvrtnutie a natiahnutie kÂbov a v‰zov lakùa',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S540','Poranenie nervov v ˙rovni predlaktia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S550','Poranenie krvn˝ch ciev v ˙rovni predlaktia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S560','Poranenie svalu a öæachy v ˙rovni predlaktia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S570','DrvivÈ poranenie predlaktia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S580','⁄razov· amput·cia lakùa a predlaktia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S590','InÈ a bliûöie neurËenÈ poranenia predlaktia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S600','PovrchovÈ poranenie z·p‰stia a ruky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S610','Otvoren· rana z·p‰stia a ruky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S620','Zlomenina v ˙rovni z·p‰stia a ruky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S630','VykÂbenie, vyvrtnutie a natiahnutie kÂbov a v‰zov v ˙rovni z·p‰stia a ruky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S640','Poranenie nervov v ˙rovni z·p‰stia a ruky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S650','Poranenie krvn˝ch ciev v ˙rovni z·p‰stia a ruky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S660','Poranenie svalu a öæachy v ˙rovni z·p‰stia a ruky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S670','DrvivÈ poranenie z·p‰stia a ruky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S680','⁄razov· amput·cia z·p‰stia a ruky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S690','InÈ a bliûöie neurËenÈ poranenia z·p‰stia a ruky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S700','PovrchovÈ poranenie bedra a stehna',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S710','Otvoren· rana bedra a stehna',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S720','Zlomenina stehnovej kosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S730','VykÂbenie, vyvrtnutie a natiahnutie kÂbu a v‰zov bedra',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S740','Poranenie nervu v ˙rovni bedra a stehna',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S750','Poranenie krvn˝ch ciev v ˙rovni bedra a stehna',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S760','Poranenie svalu a öæachy v ˙rovni bedra a stehna',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S770','DrvivÈ poranenie bedra a stehna',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S780','⁄razov· amput·cia bedra a stehna',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S790','InÈ a bliûöie neurËenÈ poranenie bedra a stehna',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S800','PovrchovÈ poranenie predkolenia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S810','Otvoren· rana predkolenia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S820','Zlomenina predkolenia vr·tane Ëlenka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S830','VykÂbenie, vyvrtnutie a natiahnutie kÂbov a v‰zov kolena',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S840','Poranenie nervu v ˙rovni predkolenia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S850','Poranenie krvn˝ch ciev v ˙rovni predkolenia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S860','Poranenie svalu a öæachy v ˙rovni predkolenia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S870','DrvivÈ poranenie predkolenia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S880','⁄razov· amput·cia predkolenia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S890','InÈ a bliûöie neurËenÈ poranenie predkolenia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S900','PovrchovÈ poranenie Ëlenka a nohy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S910','Otvoren· rana Ëlenka a nohy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S920','Zlomenina nohy [okrem Ëlenka]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S930','VykÂbenie, vyvrtnutie a natiahnutie kÂbu a v‰zu v ˙rovni Ëlenka a nohy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S940','Poranenie nervov v ˙rovni Ëlenka a nohy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S950','Poranenie krvn˝ch ciev v ˙rovni Ëlenka a nohy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S960','Poranenie svalu a öæachy v ˙rovni Ëlenka a nohy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S970','DrvivÈ poranenie Ëlenka a nohy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S980','⁄razov· amput·cia Ëlenka a nohy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S990','InÈ a bliûöie neurËenÈ poranenie Ëlenka a nohy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T000','PovrchovÈ poranenie viacer˝ch oblastÌ tela',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T010','Otvoren· rana postihuj˙ca viacerÈ oblasti tela',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T020','Zlomeniny postihuj˙ce viacerÈ oblasti tela',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T030','VykÂbenia, vyvrtnutia a natiahnutia postihuj˙ce viacerÈ oblasti tela',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T040','DrvivÈ poranenie postihuj˙ce viacerÈ oblasti tela',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T050','⁄razov· amput·cia postihuj˙ca viacerÈ oblasti tela',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T060','InÈ poranenia postihuj˙ce viacerÈ oblasti tela, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T070','ViacerÈ poranenia, bliûöie neurËenÈ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T080','Zlomenina chrbtice v bliûöie neurËenej ˙rovni',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T090','InÈ poranenia chrbtice a trupu v bliûöie neurËenej ˙rovni',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T100','Zlomenina hornej konËatiny v bliûöie neurËenej ˙rovni',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T110','InÈ poranenie hornej konËatiny v bliûöie neurËenej ˙rovni',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T120','Zlomenina dolnej konËatiny, v bliûöie neurËenej ˙rovni',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T130','InÈ poranenie dolnej konËatiny, v bliûöie neurËenej ˙rovni',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T140','Poranenie: oblasù bliûöie neurËen· tela',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T150','Cudzie teleso vo vonkajöom oku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T160','Cudzie teleso v uchu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T170','Cudzie teleso v d˝chacej s˙stave',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T180','Cudzie teleso v tr·viacej s˙stave',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T190','Cudzie teleso v moËovopohlavnej s˙stave',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T200','Pop·lenina a poleptanie hlavy a krku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T210','Pop·lenina a poleptanie trupu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T220','Pop·lenina a poleptanie pleca a hornej konËatiny okrem z·p‰stia a ruky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T230','Pop·lenina a poleptanie z·p‰stia a ruky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T240','Pop·lenina a poleptanie bedra a dolnej konËatiny okrem Ëlenka a nohy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T250','Pop·lenina a poleptanie Ëlenka a nohy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T260','Pop·lenina a poleptanie obmedzenÈ na oko a oËnÈ adnexy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T270','Pop·lenina a poleptanie d˝chacÌch org·nov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T280','Pop·lenina a poleptanie in˝ch vn˙torn˝ch org·nov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T290','Pop·lenina a poleptania viacer˝ch ËastÌ tela',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T300','Pop·lenina a poleptanie: oblasù bliûöie neurËen· tela',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T310','Pop·leniny zatriedenÈ podæa rozsahu postihnutÈho povrchu tela',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T320','Poleptania zatriedenÈ podæa rozsahu postihnutÈho povrchu tela',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T330','Povrchov· omrzlina',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T340','Omrzlina s nekrÛzou tkaniva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T350','Omrzlina postihuj˙ca viacerÈ Ëasti tela a bliûöie neurËen· omrzlina',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T360','Otrava celkovo ˙Ëinkuj˙cimi antibiotikami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T370','Otrava in˝mi systÈmovo ˙Ëinkuj˙cimi protiinfekËn˝mi a antiparazitov˝mi prostriedkami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T380','Otrava hormÛnmi, ich syntetick˝mi n·hradami a antagonistami, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('T390','Otrava neopioidov˝mi analgetikami, antipyretikami a antireumatikami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R180','Ascites',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R190','InÈ subjektÌvne a objektÌvne prÌznaky postihnutia tr·viacej s˙stavy a brucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R200','Porucha koûnej citlivosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R210','Raö a inÈ neöpecifickÈ koûnÈ vyr·ûky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R220','LokalizovanÈ zdurenie, ˙tvar, hrËa koûe a podkoûnÈho tkaniva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R230','InÈ koûnÈ zmeny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R250','Abnorm·lne mimovÙæovÈ pohyby',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R260','Porucha chÙdze a pohyblivosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R270','In· porucha koordin·cie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R290','In˝ subjektÌvny a objektÌvny prÌznak postihnutia nervovej, svalovej a kostrovej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R300','Bolesù pri moËenÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R310','Hemat˙ria, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R320','Inkontinencia moËu, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R330','Retencia moËu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R340','An˙ria a olig˙ria',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R350','Poly˙ria',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R360','V˝tok z uretry',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R390','In˝ subjektÌvny a objektÌvny prÌznak poruchy moËovej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R400','Somnolencia, sopor a kÛma',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R410','InÈ subjektÌvne a objektÌvne prÌznaky por˙ch pozn·vacÌch funkciÌ a vedomia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R420','Z·vrat [vertigo]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R430','Poruchy Ëuchu a chuti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R440','InÈ subjektÌvne a objektÌvne prÌznaky por˙ch celkovej citlivosti a zmyslovÈho vnÌmania',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R450','SubjektÌvne a objektÌvne prÌznaky por˙ch emoËnÈho stavu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R460','SubjektÌvne a objektÌvne prÌznaky s˙visiace s v˝zorom a spr·vanÌm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R470','Poruchy reËi, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R480','Dyslexia a inÈ symbolickÈ dysfunkcie, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R490','Poruchy hlasu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R500','Hor˙Ëka inÈho a nezn·meho pÙvodu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R510','Bolesù hlavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R520','Bolesù, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R530','Mal·tnosù a ˙nava',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R540','Senilita',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R550','Synkopa a kolaps',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R560','K‡Ëe, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R570','äok, nezatrieden˝ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R580','Krv·canie, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R590','Zv‰Ëöenie lymfatick˝ch uzlÌn',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R600','Opuch, nezatrieden˝ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R610','HyperhidrÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R620','Zaost·vanie v oËak·vanom fyziologickom v˝vine',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R630','SubjektÌvne a objektÌvne prÌznaky s˙visiace s prijÌmanÌm potravy a tekutÌn',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R640','Kachexia (vycivenosù)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R680','InÈ celkovÈ subjektÌvne a objektÌvne prÌznaky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R690','Nezn·me a bliûöie neurËenÈ prÌËiny chorobnosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R700','Zr˝chlen· sediment·cia erytrocytov a abnorm·lna viskozita plazmy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R710','Abnormality Ëerven˝ch krviniek',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R720','Abnormality bielych krviniek, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R730','Zv˝öen· koncentr·cia glukÛzy v krvnom sÈre',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R740','Abnorm·lna aktivita enz˝mov v krvnom sÈre',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R750','LaboratÛrny dÙkaz vÌrusu æudskej imunodeficiencie (HIV)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R760','In˝ abnorm·lny imunologick˝ n·lez v krvnom sÈre',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R770','InÈ abnormality bielkovÌn plazmy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R780','N·lezy liekov a in˝ch l·tok, ktorÈ sa norm·lne v krvi nenach·dzaj˙',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R790','InÈ abnorm·lne n·lezy v chemickom zloûenÌ krvi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R800','Izolovan· protein˙ria',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R810','Glykoz˙ria',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R820','InÈ abnorm·lne n·lezy v moËi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R830','Abnorm·lny n·lez v mozgovomiechovom moku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R840','Abnorm·lny n·lez vo vzork·ch z d˝chacÌch org·nov a hrudnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R850','Abnorm·lny n·lez vo vzork·ch z tr·viacich org·nov a bruönej dutiny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R860','Abnorm·lny n·lez vo vzork·ch z muûsk˝ch pohlavn˝ch org·nov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R870','Abnorm·lny n·lez vo vzork·ch zo ûensk˝ch pohlavn˝ch org·nov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R890','Abnorm·lny n·lez vo vzork·ch z in˝ch org·nov, s˙stav a tkanÌv',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R900','Abnorm·lny n·lez pri diagnostickom zobrazovanÌ centr·lnej nervovej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R910','Abnorm·lny n·lez pri diagnostickom zobrazenÌ pæ˙c',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R920','Abnorm·lny n·lez pri diagnostickom zobrazenÌ prsnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R930','Abnorm·lny n·lez pri diagnostickom zobrazenÌ in˝ch ötrukt˙r tela',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R940','Abnorm·lne v˝sledky funkËn˝ch vyöetrenÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R950','N·hla smrù dojËaùa',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R960','In· n·hla smrù z nezn·mej prÌËiny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R980','Smrù bez svedkov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R990','In· nepresne urËen· a neurËen· prÌËina smrti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S000','PovrchovÈ poranenie hlavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S010','Otvoren· rana hlavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S020','Zlomenina lebky a tv·rov˝ch kostÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S030','VykÂbenie, vyvrtnutie a natiahnutie kÂbov a v‰zov hlavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S040','Poranenie hlavov˝ch nervov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S050','Poranenie oka a oËnice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S060','Vn˙trolebkovÈ poranenie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S070','DrvivÈ poranenie hlavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S080','⁄razov· amput·cia Ëasti hlavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S090','InÈ a bliûöie neurËenÈ poranenie hlavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S100','PovrchovÈ poranenie krku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S110','Otvoren· rana krku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S120','Zlomenina krËnej chrbtice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S130','VykÂbenie, vyvrtnutie a natiahnutie kÂbov a v‰zov krku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S140','Poranenie krËn˝ch nervov a krËnej miechy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S150','Poranenie krvn˝ch ciev v ˙rovni krku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S160','Poranenie svalov a öliach v ˙rovni krku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S170','DrvivÈ poranenie krku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S180','⁄razov· amput·cia v ˙rovni krku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S190','InÈ a bliûöie neurËenÈ poranenie krku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S200','PovrchovÈ poranenie hrudnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S210','Otvoren· rana hrudnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S220','Zlomenina rebra (rebier), hrudnej kosti a hrudnÌkovej chrbtice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S230','VykÂbenie, vyvrtnutie a natiahnutie kÂbov a v‰zov hrudnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S240','Poranenie nervov a miechy v ˙rovni hrudnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S250','Poranenie krvn˝ch ciev hrudnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S260','Poranenie srdca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S270','Poranenie inÈho a bliûöie neurËenÈho vn˙trohrudnÌkovÈho org·nu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S280','DrvivÈ poranenie hrudnÌka a ˙razov· amput·cia Ëasti hrudnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S290','InÈ a bliûöie neurËenÈ poranenie hrudnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S300','PovrchovÈ poranenie brucha, drieku a panvy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S310','Otvoren· rana brucha, drieku a panvy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S320','Zlomenina driekovej Ëasti chrbtice a panvy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S330','VykÂbenie, vyvrtnutie a natiahnutie kÂbov a v‰zov driekovej chrbtice a panvy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S340','Poranenie nervov a miechy v ˙rovni brucha, drieku a panvy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S350','Poranenie krvn˝ch ciev v ˙rovni brucha, drieku a panvy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('S360','Poranenie vn˙trobruön˝ch org·nov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R170','éltaËka, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P770','Nekrotizuj˙ca enterokolitÌda plodu a novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P780','In· perinat·lna porucha tr·viacej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P800','Hypotermia u novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P810','In· porucha regul·cie telesnej teploty u novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P830','In· choroba koûe öpecifickÈ pre plod a novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P900','K‡Ëe [konvulzie]  u novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P910','In· mozgov· porucha u novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P920','ProblÈm s k‡menÌm novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P930','Reakcia na lieky a intoxik·cia liekmi podan˝mi plodu a novorodencovi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P940','Porucha svalovÈho tonusu u novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P950','Smrù plodu z bliûöie neurËenej prÌËiny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P960','In· porucha so zaËiatkom v perinat·lnom obdobÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q000','Anencefalus a podobn· vroden· chyba',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q010','EncefalokÈla',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q020','Mikrocef·lia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q030','Vroden˝ hydrocefalus',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q040','In· vroden· chyba mozgu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q050','R·zötep chrbtice  [Spina bifida]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q060','In· vroden· chyba miechy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q070','In· vroden· chyba nervovej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q100','VrodenÈ chyby mihalnice, slzn˝ch org·nov a oËnice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q110','Anoftalmus, mikroftalmus a makroftalmus',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q120','Vroden· chyba öoöovky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q130','Vroden· chyba prednÈho segmentu oka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q140','Vroden· chyba zadnÈho segmentu oka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q150','In· vroden· chyba oka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q160','VrodenÈ chyby ucha, zaprÌËiÚuj˙ce zhoröenie sluchu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q170','In· vroden· chyba ucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q180','In· vroden· chyba tv·re a krku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q200','Vroden· chyba srdcov˝ch dutÌn a ich spojenÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q210','Vroden· chyba srdcov˝ch priehradiek',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q220','Vroden· chyba pulmon·lnej a trikuspid·lnej chlopne',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q230','Vroden· chyba aort·lnej a mitr·lnej chlopne',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q240','In· vroden· chyba srdca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q250','VrodenÈ chyby veæk˝ch tepien',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q260','Vroden· chyba veæk˝ch ûÌl',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q270','In· vroden· chyba perifÈrnej cievnej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q280','In· vroden· chyba obehovej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q300','Vroden· chyba nosa',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q310','Vroden· chyba hrtana',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q320','Vroden· chyba prieduönice a prieduöiek',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q330','Vroden· chyba pæ˙c',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q340','In· vroden· chyba d˝chacÌch org·nov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q350','R·zötep podnebia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q360','R·zötep pery',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q370','R·zötep podnebia s r·zötepom pery',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q380','In· vroden· chyba jazyka, ˙st a hltana',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q390','Vroden· chyba paûer·ka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q400','In· vroden· chyba hornej tr·viacej trubice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q410','VrodenÈ ch˝banie, atrÈzia a stenÛza tenkÈho Ëreva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q420','VrodenÈ ch˝banie, atrÈzia a stenÛza hrubÈho Ëreva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q430','In· vroden· chyba Ëreva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q440','Vroden· chyba ûlËnÌka, ûlËov˝ch v˝vodov a peËene',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q450','In· vroden· chyba tr·viacej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q500','Vroden· chyba vajeËnÌkov, vajÌËkovodov  a öirok˝ch v‰zov maternice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q510','Vroden· chyba maternice a krËka maternice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q520','In· vroden· chyba ûensk˝ch pohlavn˝ch org·nov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q530','Nezost˙pen˝ semennÌk',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q540','Hyposp·dia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q550','InÈ vrodenÈ chyby muûsk˝ch pohlavn˝ch org·nov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q560','NeurËitÈ pohlavie a pseudohermafroditizmus',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q600','AgenÈza a inÈ hypopl·zie obliËiek',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q610','Cystick· choroba obliËiek',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q620','VrodenÈ obötrukËnÈ chyby obliËkovej panviËky a vrodenÈ chyby moËovodu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q630','In· vroden· chyba obliËiek',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q640','In· vroden· chyba moËovej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q650','VrodenÈ deformity bedra',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q660','Vroden· deformita nÙh',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q670','Vroden· deformita svalov a kostÌ hlavy, tv·re, chrbtice a hrudnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q680','In· vroden· deformita svalov a kostÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q690','Polydakt˝lia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q700','Syndakt˝lia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q710','RedukËnÈ defekty hornej konËatiny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q720','RedukËnÈ defekty dolnej konËatiny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q730','RedukËn˝ defekt bliûöie neurËenej konËatiny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q740','In· vroden· chyba konËatiny (konËatÌn)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q750','In· vroden· chyba kostÌ lebky a tv·rov˝ch kostÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q760','Vroden· chyba chrbtice a kostÌ hrudnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q770','Osteochondrodyspl·zie s poruchou rastu dlh˝ch kostÌ a chrbtice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q780','In· osteochondrodyspl·zia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q790','VrodenÈ chyby svalov a kostÌ, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q800','Vroden· ichtyÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q810','BulÛzna epidermol˝za',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q820','In· vroden· chyba koûe',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q830','Vroden· chyba prsnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q840','In· vroden· chyba spoloËnej (koûnej) pokr˝vky [integumentum commune]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q850','FakomatÛza, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q860','SyndrÛm vrodenej chyby, zaprÌËinen˝ zn·mymi vonkajöÌmi prÌËinami, nezatrieden˝ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q870','SyndrÛmy in˝ch bliûöie urËen˝ch vroden˝ch ch˝b, postihuj˙ci viacerÈ systÈmy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q890','In· vroden· chyba, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q900','Downov syndrÛm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q910','Edwardsov syndrÛm a Patauov syndrÛm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q920','InÈ trizÛmie a ËiastoËnÈ trizÛmie autozÛmov, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q930','MonozÛmia a delÈcia autozÛmov, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q950','Balansovan· chromozÛmov· prestavba  a ötrukt˙rne markery, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q960','Turnerov syndrÛm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q970','In· abnormalita pohlavn˝ch chromozÛmov so ûensk˝m fenotypom, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q980','In· abnormalita pohlavn˝ch chromozÛmov s muûsk˝m fenotypom, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('Q990','In· chromozÛmov· abnormalita, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R000','Poruchy srdcovÈho rytmu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R010','Srdcov˝ öelest a in˝ srdcov˝ zvuk',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R020','GangrÈna, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R030','Abnorm·lne hodnoty krvnÈho tlaku bez urËenia diagnÛzy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R040','Krv·canie z d˝chacÌch ciest',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R050','Kaöeæ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R060','Porucha d˝chania',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R070','Bolesù v hrdle a bolesù v hrudnÌku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R090','InÈ subjektÌvne a objektÌvne prÌznaky postihnutia obehovej a d˝chacej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R100','Bolesù brucha a panvy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R110','Pocit na vracanie (nauzea) a vracanie (vomitus)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R120','P·lenie z·hy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R130','Dysf·gia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R140','Flatulencia a podobnÈ poruchy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R150','Inkontinencia stolice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('R160','Hepatomeg·lia a splenomeg·lia, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O310','Komplik·cie öpecifickÈ pre viacplodov˙ graviditu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O320','Starostlivosù o matku pre zistenÈ alebo suspektnÈ nepravidelnÈ naliehanie plodu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O330','Starostlivosù o matku pri zistenom alebo suspektnom nepomere medzi plodom a panvou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O340','Starostlivosù o matku pre zisten˙ alebo suspektn˙ abnormalitu panvov˝ch org·nov matky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O350','Starostlivosù o matku pre zisten˙ alebo suspektn˙ abnormalitu a poökodenie plodu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O360','Starostlivosù o matku pre inÈ zistenÈ alebo suspektnÈ problÈmy plodu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O400','Polyhydramnion',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O410','InÈ poruchy plodovej vody a plodov˝ch obalov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O420','PredËasnÈ puknutie plodov˝ch obalov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O430','Porucha placenty',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O440','Placenta praevia a nÌzko uloûen· placenta',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O450','PredËasnÈ odlupovanie placenty  [Abruptio placentae]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O460','Krv·canie pred pÙrodom, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O470','Faloön· pÙrodn· Ëinnosù',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O480','PredÂûen· gravidita',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O600','PredËasn· pÙrodn· Ëinnosù a pÙrod',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O610','Ne˙speön· indukcia pÙrodnej Ëinnosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O620','Porucha pÙrodnej Ëinnosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O630','PredÂûen˝ pÙrod',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O640','NepokraËuj˙ci pÙrod, zaprÌËinen˝ nespr·vnou polohou a naliehanÌm plodu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O650','NepokraËuj˙ci pÙrod, zaprÌËinen˝ abnormalitami panvy matky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O660','In˝ nepokraËuj˙ci pÙrod',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O670','PÙrodn· Ëinnosù a pÙrod, komplikovanÈ krv·canÌm pri pÙrode, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O680','Komplik·cie pÙrodnej Ëinnosti a pÙrodu distresom plodu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O690','Komplik·cie pÙrodnej Ëinnosti a pÙrodu pre poruchy pupoËnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O700','Natrhnutie hr·dze pri pÙrode',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O710','InÈ pÙrodnÈ poranenie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O720','Krv·canie po pÙrode',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O730','Zadrûanie placenty a bl·n bez krv·cania',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O740','Komplik·cie anestÈzie poËas pÙrodnej Ëinnosti a pri pÙrode',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O750','In· komplik·cia pÙrodnej Ëinnosti a pÙrodu, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O800','Spont·nny pÙrod jednÈho plodu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O810','PÙrod jednÈho plodu klieöùami alebo v·kuov˝m extraktorom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O820','PÙrod jednÈho plodu cis·rskym rezom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O830','InÈ vedenie pÙrodu jednÈho plodu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O840','Plody pri viacplodovej ùarchavosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O850','Puerper·lna sepsa',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O860','In· puerper·lna infekcia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O870','éilovÈ choroby ako komplik·cie v öestonedelÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O880','EmbÛlia v gestaËnom obdobÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O890','Komplik·cie anestÈzie v öestonedelÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O900','Komplik·cie v öestonedelÌ, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O910','Infekcie prsnÌka v s˙vislosti s pÙrodom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O920','In· choroba prsnÌka a porucha lakt·cie v s˙vislosti s pÙrodom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O950','Smrù v gravidite z bliûöie neurËenej prÌËiny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O960','Smrù z akejkoævek pÙrodnÌckej prÌËiny, ktor· nastala po viac ako 42 dÚoch, ale menej ako jeden rok od pÙrodu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O970','Smrù ako n·sledok pÙrodnÌckej prÌËiny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O980','InfekËn· a parazitov· choroba matky, ktor· sa d· zatriediù inde, ale komplikuje graviditu, pÙrod a öestonedelie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O990','InÈ choroby matky, ktor· sa daj˙ zatriediù inde, ale komplikuj˙ graviditu, pÙrod a öestonedelie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P000','Poökodenie plodu a novorodenca chorobami matky, ktorÈ nemusia s˙visieù s terajöou graviditou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P010','Poökodenie plodu a novorodenca matersk˝mi komplik·ciami v gravidite',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P020','Poökodenie plodu a novorodenca komplik·ciami placenty, pupoËnÌka a bl·n',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P030','Poökodenie plodu a novorodenca in˝mi komplik·ciami pÙrodnej Ëinnosti a pÙrodu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P040','Poökodenie plodu a novorodenca ökodliv˝mi l·tkami prenesen˝mi placentou alebo matersk˝m mliekom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P050','NedostatoËn˝ rast a podv˝ûiva plodu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P070','Porucha s˙visiaca so skr·tenou graviditou a s malou pÙrodnou hmotnosùou, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P080','Porucha s˙visiaca s predÂûenou graviditou a s vysokou pÙrodnou hmotnosùou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P100','Intrakrani·lne poranenie a krv·canie zaprÌËinenÈ poranenÌm pri pÙrode',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P110','InÈ pÙrodnÈ poranenie centr·lnej nervovej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P120','PÙrodnÈ poranenie vlasatej Ëasti hlavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P130','PÙrodnÈ poranenie kostry',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P140','PÙrodnÈ poranenie perifÈrnej nervovej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P150','InÈ poranenie pri pÙrode',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P200','Vn˙tromaternicov· hypoxia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P210','PÙrodn· asfyxia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P220','RespiraËn· tieseÚ [respiratory distress] novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P230','Vroden˝ z·pal pæ˙c',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P240','Novorodeneck˝ syndrÛm z aspir·cie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P250','Interstici·lny emfyzÈm a prÌbuznÈ stavy so vznikom v perinat·lnom obdobÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P260','Pæ˙cne krv·canie so vznikom v perinat·lnom obdobÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P270','Chronick· respiraËn· choroba so vznikom v perinat·lnom obdobÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P280','InÈ respiraËnÈ poruchy so vznikom v perinat·lnom obdobÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P290','Srdcovocievne poruchy so vznikom v perinat·lnom obdobÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P350','Vroden· vÌrusov· choroba',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P360','BaktÈriov· sepsa u novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P370','In· vroden· infekËn· a parazitov· choroba',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P380','OmfalitÌda u novorodenca bez krv·cania alebo s miernym krv·canÌm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P390','In· infekcia öpecifick· pre perinat·lne obdobie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P500','Fet·lna strata krvi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P510','Krv·canie z pupoËnÌka novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P520','Vn˙trolebkovÈ ne˙razovÈ krv·canie plodu a novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P530','Hemoragick· choroba plodu a novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P540','InÈ krv·canie novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P550','Hemolytick· choroba plodu a novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P560','Hydrops plodu v dÙsledku hemolytickej choroby',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P570','Jadrov˝ ikterus',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P580','Novorodeneck· ûltaËka zaprÌËinen· inou nadmernou hemol˝zou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P590','Novorodeneck· ûltaËka z in˝ch a bliûöie neurËen˝ch prÌËin',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P600','Diseminovan· intravaskul·rna koagul·cia plodu a novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P610','In· perinat·lna krvn· choroba',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P700','Prechodn· porucha metabolizmu sacharidov öpecifick· pre plod a novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P710','Prechodn· porucha metabolizmu v·pnika a horËÌka u novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P720','In· prechodn· endokrinn· porucha u novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P740','In· prechodn· elektrolytov· a metabolick· porucha u novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P750','MekÛniov˝ ileus pri cystickej fibrÛze (E84.1Ü)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('P760','In· Ërevn· nepriechodnosù u novorodenca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M990','BiomechanickÈ poökodenie, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N000','Ak˙tny nefritick˝ syndrÛm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N010','R˝chlo progreduj˙ci nefritick˝ syndrÛm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N020','Recidivuj˙ca a pretrv·vaj˙ca hemat˙ria',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N030','Chronick˝ nefritick˝ syndrÛm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N040','Nefrotick˝ syndrÛm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N050','Nefritick˝ syndrÛm, bliûöie neurËen˝',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N060','Izolovan· protein˙ria s morfologick˝mi zmenami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N070','Heredit·rna nefropatia, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N080','Glomerulov· choroba pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N100','Ak˙tna tubulointerstici·lna nefritÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N110','Chronick· tubulointerstici·lna nefritÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N120','Tubulointerstici·lna nefritÌda, neurËen· ako ak˙tna, alebo chronick·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N130','ObötrukËn· a refluxov· uropatia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N140','Tubulointerstici·lna a tubulov· choroba zaprÌËinen· liekmi alebo ùaûk˝mi kovmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N150','In· tubulointerstici·lna choroba obliËiek',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N160','Tubulointerstici·lna choroba pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N170','Ak˙tne zlyhanie obliËiek',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N180','Chronick· choroba obliËiek',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N190','Zlyhanie obliËiek, bliûöie neurËenÈ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N200','Konkrement obliËky [nefroliti·za] a moËovodu [ureteroliti·za]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N210','Konkrement doln˝ch moËov˝ch ciest',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N220','Konkrement moËov˝ch ciest pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N230','ObliËkov· kolika, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N250','Choroba vypl˝vaj˙ca z poökodenia funkcie obliËkov˝ch tubulov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N260','Scvrknut· obliËka, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N270','Mal· obliËka z nezn·mej prÌËiny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N280','In· choroba obliËiek a moËovodov, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N290','InÈ choroby obliËiek a moËovodov pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N300','CystitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N310','Nervovosvalov· dysfunkcia moËovÈho mech˙ra, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N320','InÈ choroby moËovÈho mech˙ra',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N330','Choroba moËovÈho mech˙ra pri chorobe zatriedenej inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N340','UretritÌda a uretrov˝ syndrÛm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N350','Strikt˙ra uretry',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N360','InÈ choroby moËovej r˙ry',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N370','Choroby uretry pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N390','In· choroba moËovej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N400','Hyperpl·zia prostaty',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N410','Z·palovÈ choroby prostaty',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N420','In· choroba prostaty',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N430','HydrokÈla a spermatokÈla',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N440','Torzia semennÌka a hidatÌdy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N450','OrchitÌda a epididymitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N460','Muûsk· neplodnosù',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N470','Hyperplastick· predkoûka, fimÛza a parafimÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N480','In· choroba penisu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N490','Z·palov· choroba muûsk˝ch pohlavn˝ch org·nov, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N500','InÈ choroby muûsk˝ch pohlavn˝ch org·nov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N510','Choroby muûsk˝ch pohlavn˝ch org·nov pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N600','BenÌgna dyspl·zia prsnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N610','Z·palov· choroba prsnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N620','Hypertrofia prsnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N630','HrËka v prsnÌku, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N640','InÈ choroby prsnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N700','SalpingitÌda a ooforitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N710','Z·palov· choroba maternice, okrem krËka maternice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N720','Z·palov· choroba krËka maternice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N730','In· z·palov· choroba ûensk˝ch panvov˝ch org·nov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N740','Z·palovÈ choroby ûensk˝ch panvov˝ch org·nov pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N750','Choroby Bartholinovej ûæazy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N760','In˝ z·pal poövy a vulvy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N770','Vulvovagin·lne ulcer·cie a z·paly pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N800','EndometriÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N810','Prolaps  pohlavn˝ch org·nov u ûeny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N820','Fistula s postihnutÌm ûensk˝ch pohlavn˝ch org·nov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N830','Nez·palov· choroba vajeËnÌka, vajÌËkovodu a öirokÈho v‰zu maternice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N840','Polyp ûensk˝ch pohlavn˝ch org·nov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N850','In· nez·palov· choroba maternice, okrem krËka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N860','ErÛzia a ektropium krËka maternice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N870','Dyspl·zia krËka maternice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N880','InÈ nez·palovÈ choroby krËka maternice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N890','In· nez·palov· choroba poövy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N900','In· nez·palov· choroba vulvy a hr·dze',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N910','Ch˝baj˙ca, slab· a zriedkav· menötru·cia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N920','Nadmern·, Ëast· a nepravideln· menötru·cia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N930','InÈ abnorm·lne krv·canie z maternice alebo poövy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N940','Bolesù a inÈ odch˝lky spojenÈ so ûensk˝mi pohlavn˝mi org·nmi a menötruaËn˝m cyklom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N950','MenopauzovÈ a inÈ perimenopauzovÈ poruchy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N960','Sklon k habitu·lnemu potr·caniu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N970','éensk· neplodnosù',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N980','Komplik·cie spojenÈ s umel˝m oplodnenÌm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('N990','Choroba moËovopohlavn˝ch org·nov, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O000','Mimomaternicov· gravidita',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O010','Mola hydatidosa',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O020','In˝ abnorm·lny v˝tvor poËatia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O030','Spont·nny potrat',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O040','Lek·rsky potrat',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O050','In˝ potrat',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O060','Potrat, bliûöie neurËen˝',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O070','Ne˙speön˝ pokus o potrat',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O080','Komplik·cie po potrate, mimomaternicovej gravidite a gravidite s molou hydatidosa',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O100','Predt˝m existuj˙ca artÈriov· hypertenzia, komplikuj˙ca graviditu, pÙrod a öestonedelie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O110','Predt˝m existuj˙ca artÈriov· hypertenzia komplikuj˙ca graviditu, pÙrod a öestonedelie, s nasadaj˙cou preeklampsiou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O120','GestaËnÈ (zaprÌËinenÈ graviditou) opuchy a protein˙ria bez hypertenzie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O130','GestaËn· (zaprÌËinen· graviditou) artÈriov· hypertenzia bez v˝znamnej protein˙rie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O140','GestaËn· (zaprÌËinen· graviditou) artÈriov· hypertenzia s v˝znamnou protein˙riou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O150','Eklampsia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O160','ArtÈriov· hypertenzia matky, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O200','Krv·canie vo vËasnej gravidite',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O210','NadmernÈ vracanie v gravidite',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O220','éilovÈ choroby ako komplik·cie v gravidite',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O230','Infekcia moËovopohlavn˝ch org·nov v gravidite',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O240','Diabetes mellitus v gravidite',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O250','Podv˝ûiva v gravidite',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O260','Starostlivosù o matku pre inÈ stavy s˙visiace najm‰ s graviditou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O280','Abnorm·lny n·lez pri prenat·lnom skrÌningu matky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O290','Komplik·cie anestÈzie v gravidite',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('O300','Viacplodov· gravidita',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L420','Pityriasis rosea',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L430','Lichen ruber planus',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L440','In· papuloskvamÛzna choroba',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L450','PapuloskvamÛzna (pupencovo-öupinov·) choroba koûe pri chorobe zatriedenej inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L500','éihæavka [urticaria]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L510','Erythema exsudativum multiforme',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L520','Erythema nodosum',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L530','In· erytÈmov· choroba',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L540','ErytÈm pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L550','Ak˙tna sol·rna dermatitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L560','InÈ ak˙tne zmeny koûe zaprÌËinenÈ ultrafialov˝m ûiarenÌm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L570','Zmeny koûe zaprÌËinenÈ chronick˝m vystavenÌm neionizuj˙cemu ûiareniu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L580','R·diodermatitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L590','InÈ poökodenie koûe a podkoûnÈho tkaniva zaprÌËinenÈ ûiarenÌm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L600','Choroba nechtov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L620','Choroba nechtov pri chorobe zatriedenej inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L630','Alopecia areata',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L640','AndrogÈnna alopÈcia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L650','In· nejazvov· strata vlasov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L660','Jazvov· alopÈcia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L670','Abnormality farby a tvaru vlasov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L680','HypertrichÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L700','AknÈ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L710','Rosacea',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L720','Folikulov· cysta koûe a podkoûnÈho tkaniva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L730','In· choroba vlasov˝ch folikulov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L740','Choroba ekrinn˝ch potn˝ch ûliaz',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L750','Choroba apokrinn˝ch potn˝ch ûliaz',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L800','Vitiligo',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L810','In· porucha pigment·cie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L820','Seboroick· keratÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L830','Acanthosis nigricans',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L840','Kurie oko a mozoæ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L850','InÈ zhrubnutia epidermy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L860','Keratoderma pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L870','Choroby transepiderm·lnej elimin·cie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L880','Pyoderma gangrenosum',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L890','Dekubitus',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L900','AtrofickÈ choroby koûe',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L910','Hypertrofick· choroba koûe',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L920','GranulomatÛzne choroby koûe a podkoûnÈho tkaniva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L930','Lupus erythematosus',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L940','InÈ lokalizovanÈ choroby spojivovÈho tkaniva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L950','VaskulitÌda ohraniËen· na koûu, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L970','Vred predkolenia, nezatrieden˝ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L980','In· choroba koûe a podkoûnÈho tkaniva, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L990','InÈ choroby koûe a podkoûnÈho tkaniva pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M000','PyogÈnna artritÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M010','Priame infekcie kÂbu pri infekËn˝ch a parazitov˝ch chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M020','ReaktÌvne artropatie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M030','PoinfekËn· a reaktÌvna artritÌda pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M050','SÈropozitÌvna reumatoidn· artritÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M060','InÈ reumatoidnÈ artritÌdy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M070','Psoriatick· a enteropatick· artropatia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M080','Juveniln· artritÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M090','Juveniln· artritÌda pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M100','Dna  [L·mka]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M110','InÈ kryöt·lovÈ artropatie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M120','InÈ artropatie, bliûöie urËenÈ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M130','In· artritÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M140','Artropatie pri in˝ch chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M150','PolyartrÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M160','ArtrÛza bedrovÈho kÂbu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M170','ArtrÛza kolennÈho kÂbu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M180','ArtrÛza prvÈho karpometakarpovÈho kÂbu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M190','InÈ artrÛzy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M200','ZÌskanÈ deformity prstov r˙k a nÙh',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M210','InÈ zÌskanÈ deformity konËatÌn',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M220','Choroby pately',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M230','Vn˙torn· porucha kolennÈho kÂbu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M240','InÈ öpecifickÈ poruchy kÂbov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M250','In· choroba kÂbu, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M300','Polyarteriitis nodosa a prÌbuznÈ choroby',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M310','InÈ nekrotizuj˙ce vaskulopatie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M320','SystÈmov˝ lupus erythematosus',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M330','DermatopolymyozitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M340','SystÈmov· sklerÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M350','InÈ systÈmovÈ postihnutie spojiva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M360','SystÈmovÈ choroby spojiva pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M400','KyfÛza a lordÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M410','SkoliÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M420','OsteochondrÛza chrbtice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M430','InÈ deformuj˙ce dorzopatie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M450','Ankylozuj˙ca spondylitÌda  [spondylitis ankylosans]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M460','InÈ z·palovÈ spondylopatie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M470','SpondylÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M480','In· spondylopatia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M490','Spondylopatia pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M500','Poökodenie krËnej medzistavcovej platniËky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M510','InÈ poökodenie medzistavcovej platniËky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M530','InÈ dorzopatie, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M540','Bolesù chrbta [Dorzalgia]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M600','MyozitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M610','V·penatenie a kostnatenie svalov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M620','InÈ choroby svalov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M630','Choroby svalov pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M650','Z·pal synovi·lnej blany a öæachovej poövy [synovitÌda a tendosynovitÌda]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M660','Spont·nne roztrhnutie synovi·lnej blany a öæachy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M670','InÈ choroby synovi·lnej blany a öæachy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M680','Choroby synovi·lnej blany a öliach pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M700','Choroba m‰kkÈho tkaniva v s˙vislosti so zaùaûovanÌm, preùaûovanÌm a tlakom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M710','In· burzopatia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M720','FibromatÛzy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M730','Choroby m‰kkÈho tkaniva pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M750','Poökodenie pleca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M760','Entezopatia dolnej konËatiny, okrem nohy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M770','In· entezopatia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M790','In· choroba m‰kkÈho tkaniva, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M800','OsteoporÛza s patologickou zlomeninou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M810','OsteoporÛza bez patologickej zlomeniny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M820','OsteoporÛza pri chorobe zatriedenej inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M830','Osteomal·cia v dospelosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M840','Porucha celistvosti kosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M850','InÈ poruchy hustoty a ötrukt˙ry kostÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M860','OsteomyelitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M870','OsteonekrÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M880','Deformuj˙ca osteodystrofia  [Pagetova choroba]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M890','InÈ choroby kostÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M900','Osteopatia pri chorobe zatriedenej inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M910','Juveniln· osteochondrÛza bedra a panvy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M920','In· juveniln· osteochondrÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M930','InÈ osteochondropatie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M940','In· choroba chrupky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M950','In· zÌskan· deformita svalovej a kostrovej s˙stavy a spojivovÈho tkaniva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L410','Parapsori·za',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('M960','Porucha svalovej a kostrovej s˙stavy po lek·rskom v˝kone, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J450','Bronchi·lna astma',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J460','Status asthmaticus',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J470','Bronchiekt·zie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J600','PneumokoniÛza banÌkov uhoæn˝ch banÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J610','PneumokoniÛza zaprÌËinen· azbestom a in˝mi anorganick˝mi vl·knami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J620','PneumokoniÛza zaprÌËinen· prachom obsahuj˙cim kremÌk',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J630','PneumokoniÛza zaprÌËinen· in˝mi anorganick˝mi prachmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J640','PneumokoniÛza, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J650','PneumokoniÛza zdruûen· s tuberkulÛzou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J660','Choroba d˝chacÌch ciest zaprÌËinen· öpecifick˝m organick˝m prachom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J670','Alergick· alveolitÌda zaprÌËinen· organick˝m prachom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J680','Choroby d˝chacej s˙stavy zaprÌËinenÈ chemik·liami, plynmi, dymom a v˝parmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J690','Z·pal pæ˙c, zaprÌËinen˝ tuh˝mi l·tkami a tekutinami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J700','Choroba d˝chacÌch org·nov zaprÌËinen· in˝mi vonkajöÌmi faktormi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J800','SyndrÛm respiraËnej tiesne dospel˝ch [ARDS]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J810','Pæ˙cny opuch',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J820','Eozinofiln˝ pæ˙cny infiltr·t, nezatrieden˝ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J840','In· choroba interstÌcia pæ˙c',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J850','Absces pæ˙c a mediastÌna',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J860','Pyotorax',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J900','Pohrudnicov˝ v˝potok, nezatrieden˝ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J910','Pohrudnicov˝ v˝potok pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J920','PohrudnicovÈ zrasty',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J930','Pneumotorax',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J940','InÈ choroby pohrudnice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J950','Choroby d˝chacÌch ciest po lek·rskom v˝kone, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J960','RespiraËn· insuficiencia, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J980','InÈ choroby d˝chacej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J990','Choroby d˝chacej s˙stavy pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K000','Poruchy v˝vinu a erupcie zubov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K010','NeprerezanÈ a vrastenÈ zuby',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K020','Zubn˝ kaz',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K030','In· choroba tvrd˝ch tkanÌv zubov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K040','Choroby zubnej drene a periapik·lnych tkanÌv',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K050','Z·pal Ôasien  a choroba parodontu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K060','In· choroba Ôasien a bezzubÈho alveolovÈho hrebeÚa',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K070','Dentofaci·lne anom·lie (vr·tane ch˝b zhryzu)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K080','InÈ choroby zubov a podporn˝ch ötrukt˙r',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K090','Cysty v oblasti ˙st, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K100','InÈ choroby ËeæustÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K110','Choroba slinn˝ch ûliaz',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K120','Z·pal sliznice ˙st  a prÌbuznÈ choroby',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K130','In· choroba pery a ˙stnej sliznice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K140','Choroba jazyka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K200','EzofagitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K210','Gastroezof·gov· refluxov· choroba',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K220','In· choroba paûer·ka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K230','Choroba paûer·ka pri chorobe zatriedenej inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K250','Vred ûal˙dka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K260','Vred dvan·stnika',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K270','Peptick˝ vred bez bliûöieho urËenia miesta',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K280','Peptick˝ vred jej˙na',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K290','GastritÌda a duodenitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K300','Dyspepsia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K310','In· choroba ûal˙dka a dvan·stnika',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K350','Ak˙tna apendicitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K360','In· apendicitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K370','ApendicitÌda, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K380','In· choroba ËervovitÈho prÌvesku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K400','Slabinov· prietrû',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K410','Stehnov· prietrû',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K420','Pupkov· prietrû',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K430','Bruön· prietrû [hernia ventralis]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K440','Br·nicov· prietrû',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K450','In· bruön· prietrû',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K460','Bruön· prietrû, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K500','Crohnova choroba [Enteritis regionalis]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K510','UlcerÛzna kolitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K520','In· neinfekËn· gastroenteritÌda a kolitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K550','Cievna choroba Ëreva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K560','Paralytick˝ ileus  a mechanick˝ ileus  bez prietrûe',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K570','DivertikulÛza Ëreva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K580','SyndrÛm dr·ûdivÈho Ëreva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K590','In· funkËn· porucha Ëreva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K600','Fis˙ra a fistula an·lnej a rekt·lnej oblasti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K610','Absces v an·lnej a rekt·lnej oblasti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K620','InÈ choroby anusu a koneËnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K630','InÈ choroby Ëreva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K650','Z·pal pobruönice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K660','InÈ choroby pobruönice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K670','Choroba pobruönice pri infekËnej chorobe zatriedenej inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K700','Alkoholov· choroba peËene',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K710','Toxick· choroba peËene',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K720','Zlyh·vanie peËene, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K730','Chronick· hepatitÌda, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K740','FibrÛza a cirhÛza peËene',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K750','InÈ z·palovÈ choroby peËene',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K760','In· choroba peËene',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K770','Choroba peËene pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K800','élËovÈ kamene [choleliti·za]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K810','CholecystitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K820','In· choroba ûlËnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K830','In· choroba ûlËov˝ch ciest',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K850','Ak˙tna pankreatitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K860','In· choroba podûal˙dkovej ûæazy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K870','Choroby ûlËnÌka, ûlËov˝ch ciest a podûal˙dkovej ûæazy pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K900','»revn· malabsorpcia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K910','Choroby tr·viacej s˙stavy po lek·rskom v˝kone, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K920','InÈ choroby tr·viacej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('K930','Choroby in˝ch tr·viacich org·nov pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L000','SyndrÛm obarenej koûe zaprÌËinen˝ stafylokokmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L010','Impetigo',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L020','Koûn˝ absces, furunkul a karbunkul',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L030','FlegmÛna',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L040','Ak˙tny z·pal lymfatick˝ch uzlÌn',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L050','Pilonid·lna cysta',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L080','In· lok·lna infekcia koûe a podkoûnÈho tkaniva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L100','Pemfigus',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L110','In· akantolytick· dermatÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L120','Pemfigoid',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L130','InÈ pæuzgierovÈ dermatÛzy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L140','Pæuzgierov· (bulÛzna) dermatÛza pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L200','Atopick· dermatitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L210','Seboroick· dermatitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L220','Plienkov· dermatitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L230','Alergick· kontaktn· dermatitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L240','IritaËn· kontaktn· dermatitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L250','Kontaktn· dermatitÌda, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L260','ExfoliatÌvna dermatitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L270','DermatitÌda zaprÌËinen· l·tkami uûit˝mi vn˙torne',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L280','Lichen simplex chronicus a prurigo',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L290','Svrbenie  [pruritus]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L300','In· dermatitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('L400','Psori·za',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J440','In· chronick· obötrukËn· choroba pæ˙c',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H940','InÈ choroby ucha pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H950','Choroby ucha a hl·vkovÈho v˝beûku po lek·rskom v˝kone, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I000','Reumatick· hor˙Ëka bez postihnutia srdca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I010','Reumatick· hor˙Ëka s postihnutÌm srdca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I020','Reumatick· chorea',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I050','Reumatick· choroba mitr·lnej chlopne',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I060','Reumatick· choroba aort·lnej chlopne',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I070','Reumatick· choroba trikuspid·lnej chlopne',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I080','Choroba viacer˝ch chlopnÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I090','In· reumatick· choroba srdca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I100','Prim·rna [esenci·lna] artÈriov· hypertenzia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I110','Hypertenzn· choroba srdca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I120','Hypertenzn· choroba obliËiek',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I130','Hypertenzn· choroba srdca a obliËiek',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I150','Sekund·rna artÈriov· hypertenzia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I200','Angina pectoris',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I210','Ak˙tny infarkt myokardu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I220','œalöÌ infarkt myokardu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I230','UrËitÈ ak˙tne komplik·cie po ak˙tnom infarkte myokardu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I240','In· ak˙tna forma ischemickej choroby srdca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I250','Chronick· ischemick· choroba srdca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I260','Pæ˙cna embÛlia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I270','InÈ srdcovopæ˙cne choroby',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I280','In· choroba pæ˙cnych ciev',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I300','Ak˙tna perikarditÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I310','InÈ choroby osrdcovnÌka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I320','PerikarditÌda pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I330','Ak˙tna a subak˙tna endokarditÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I340','Nereumatick· choroba mitr·lnej chlopne',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I350','Nereumatick· choroba aort·lnej chlopne',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I360','NereumatickÈ choroby trikuspid·lnej chlopne',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I370','Choroba pulmon·lnej chlopne',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I380','EndokarditÌda bliûöie neurËenej chlopne',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I390','EndokarditÌda a chlopÚov· chyba pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I400','Ak˙tna myokarditÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I410','MyokarditÌda pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I420','Kardiomyopatia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I430','Kardiomyopatia pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I440','Atrioventrikul·rna blok·da a blok·da æavÈho ramienka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I450','In· porucha vedenia srdcov˝ch vzruchov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I460','Zastavenie srdca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I470','Paroxyzm·lna tachykardia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I480','Fibril·cia predsienÌ a flater predsienÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I490','InÈ srdcovÈ arytmia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I500','Zlyh·vanie srdca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I510','Komplik·cie choroby srdca a nepresne opÌsan· choroba srdca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I520','In· choroba srdca pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I600','Subarachnoid·lne krv·canie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I610','Vn˙tromozgovÈ krv·canie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I620','InÈ ne˙razovÈ intrakrani·lne krv·canie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I630','Mozgov˝ infarkt',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I640','Cievna mozgov· prÌhoda bliûöie neurËen· ako krv·canie alebo infarkt',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I650','Uz·ver a z˙ûenie prÌvodn˝ch mozgov˝ch tepien, ktorÈ neviedli k mozgovÈmu infarktu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I660','Uz·ver a z˙ûenie mozgov˝ch tepien, ktorÈ neviedli k mozgovÈmu infarktu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I670','In· cievna choroba mozgu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I680','Cievna choroba mozgu pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I690','N·sledky cievnych chorÙb mozgu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I700','AterosklerÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I710','Aneuryzma  a disekcia  aorty',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I720','In· aneuryzma a disekcia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I730','InÈ choroby perifÈrnych ciev',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I740','EmbÛlia a trombÛza tepny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I770','In· choroba tepien a tepniËiek',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I780','Choroba vl·soËnÌc',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I790','Choroba tepien, tepniËiek a vl·soËnÌc pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I800','TrombÛza, flebitÌda a tromboflebitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I810','TrombÛza v. portae',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I820','In· ûilov· embÛlia a trombÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I830','Varixy doln˝ch konËatÌn',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I840','Hemoroidy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I850','Varixy paûer·ka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I860','Varixy na in˝ch miestach',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I870','InÈ choroby ûÌl',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I880','Neöpecifick· lymfadenitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I890','In· neinfekËn· choroba lymfatick˝ch ciev a lymfatick˝ch uzlÌn',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I950','ArtÈriov· hypotenzia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I970','Komplik·cie obehovej s˙stavy po lek·rskom v˝kone, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I980','InÈ poruchy obehovej s˙stavy pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('I990','In· a bliûöie neurËen· choroba obehovej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J000','Ak˙tna z·pal nosohltana [n·dcha]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J010','Ak˙tny z·pal prinosov˝ch dutÌn',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J020','Ak˙tny z·pal hltana',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J030','Ak˙tny z·pal mandlÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J040','Ak˙tny z·pal hrtana a prieduönice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J050','Ak˙tny obötrukËn˝ z·pal hrtana [krup] a ak˙tny z·pal hrtanovej prÌklopky [epiglotitÌda]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J060','Ak˙tna infekcia horn˝ch d˝chacÌch ciest na viacer˝ch a bliûöie neurËen˝ch miestach',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J090','ChrÌpka zaprÌËinen· urËit˝m identifikovan˝m vÌrusom chrÌpky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J100','ChrÌpka zaprÌËinen· in˝m identifikovan˝m vÌrusom chrÌpky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J110','ChrÌpka zaprÌËinen· neidentifikovan˝m vÌrusom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J120','VÌrusov˝ z·pal pæ˙c, nezatrieden˝ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J130','Z·pal pæ˙c, zaprÌËinen˝ Streptococcus pneumoniae',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J140','Z·pal pæ˙c zaprÌËinen˝ Haemophilus influenzae',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J150','BaktÈriov˝ z·pal pæ˙c, nezatrieden˝ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J160','Z·pal pæ˙c zaprÌËinen˝ in˝m mikroorganizmom, nezatrieden˝ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J170','Z·pal pæ˙c pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J180','Z·pal pæ˙c zaprÌËinen˝ bliûöie neurËen˝m mikroorganizmom',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J200','Ak˙tny z·pal prieduöiek  [ak˙tna bronchitÌda]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J210','Ak˙tny z·pal prieduöniËiek [ak˙tna bronchiolitÌda]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J220','Ak˙tna infekcia doln˝ch d˝chacÌch ciest, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J300','Vazomotorick· a alergick· rinitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J310','Chronick˝ z·pal nosa, nosohltana a hltana',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J320','Chronick˝ z·pal prinosov˝ch dutÌn',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J330','Nosov˝ polyp',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J340','In· choroba nosa a prinosov˝ch dutÌn',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J350','Chronick· choroba mandlÌ a adenoidnÈho tkaniva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J360','Peritonzil·rny absces',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J370','Chronick· laryngitÌda a chronick· laryngotracheitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J380','Choroba hlasiviek a hrtana, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J390','In· choroba horn˝ch d˝chacÌch ciest',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J400','BronchitÌda, neurËen· ako ak˙tna alebo chronick·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J410','Jednoduch· a hlienovohnisov· chronick· bronchitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J420','Chronick· bronchitÌda, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('J430','EmfyzÈm pæ˙c',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G250','In· extrapyramÌdov· porucha a porucha hybnosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G260','ExtrapyramÌdovÈ poruchy a poruchy hybnosti pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G300','Alzheimerova choroba (F00.-*)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G310','In· degeneratÌvna choroba nervovej s˙stavy, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G320','In· degeneratÌvna choroba nervovej s˙stavy pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G350','Roztr˙sen· sklerÛza [Sclerosis multiplex, Encephalomyelitis disseminata]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G360','In· ak˙tna roztr˙sen· [diseminovan·] demyeliniz·cia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G370','In· demyelinizaËn· choroba centr·lnej nervovej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G400','Epilepsia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G410','Epileptick˝ stav  [Status epilepticus]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G430','MigrÈna',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G440','In˝ syndrÛm bolesti hlavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G450','Prechodn· mozgov· ischÈmia  a prÌbuznÈ syndrÛmy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G460','Cievne mozgovÈ syndrÛmy pri mozgov˝ch cievnych chorob·ch (I60-I67Ü)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G470','Poruchy sp·nku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G500','Porucha trojklanÈho nervu [n. trigeminus]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G510','Porucha tv·rovÈho tv·rovÈho nervu [n.facialis]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G520','Poruchy ostatn˝ch hlavov˝ch nervov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G530','Poruchy hlavov˝ch nervov pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G540','Choroby nervov˝ch koreÚov a spletÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G550','Kompresia nervov˝ch koreÚov a spletÌ pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G560','Mononeuropatia hornej konËatiny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G570','Mononeuropatia dolnej konËatiny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G580','In· mononeuropatia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G590','Mononeuropatia pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G600','DediËn· a idiopatick· neuropatia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G610','Z·palov· polyneuropatia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G620','In· polyneuropatia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G630','Polyneuropatia pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G640','In· porucha perifÈrnej nervovej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G700','Myasthenia gravis a in· nervovosvalov· choroba',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G710','Prim·rna  myopatia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G720','In· myopatia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G730','Choroba s poruchou nervovosvalovej platniËky a svalu pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G800','Detsk· mozgov· obrna',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G810','HemiparÈza a hemiplÈgia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G820','ParaparÈza a paraplÈgia, tetraparÈza a tetraplÈgia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G830','In˝ paralytick˝ syndrÛm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G900','Porucha autonÛmnej nervovej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G910','Hydrocefalus',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G920','Toxick· encefalopatia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G930','In· choroba mozgu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G940','In· choroba mozgu pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G950','In· choroba miechy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G960','In· choroby centr·lnej nervovej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G970','Choroba nervovej s˙stavy po lek·rskom v˝kone, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G980','In· choroba nervovej s˙stavy, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G990','In· choroby nervovej s˙stavy pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H000','Hordeolum  a chalazion',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H010','In˝ z·pal mihalnice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H020','In· choroba mihalnice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H030','Choroby mihalnice pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H040','Choroba slzn˝ch org·nov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H050','Choroba oËnice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H060','Choroba slzn˝ch org·nov a oËnice pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H100','KonjuktivitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H110','In· choroba spojovky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H130','Choroba spojovky pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H150','Choroby bielka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H160','KeratitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H170','Jazva a z·kal rohovky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H180','In· choroba rohovky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H190','Choroba oËnÈho bielka a rohovky pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H200','IridocyklitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H210','In· choroba d˙hovky  a vr·skovca [corpus ciliare]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H220','Choroby d˙hovky a vr·skovca pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H250','Seniln· katarakta',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H260','In· katarakta',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H270','In· choroba öoöovky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H280','Katarakta a in· choroby öoöovky pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H300','ChorioretinitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H310','In· choroba cievovky',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H320','Choroby cievovky a sietnice  pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H330','Odl˙penie sietnice a natrhnutie sietnice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H340','Okl˙zia ciev sietnice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H350','InÈ choroby sietnice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H360','Choroba sietnice pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H400','GlaukÛm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H420','GlaukÛm pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H430','Choroba sklovca',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H440','Choroba oËnej gule',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H450','Choroba sklovca a oËnej gule pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H460','Z·pal zrakovÈho nervu [neuritis n. optici]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H470','In· choroba zrakovÈho nervu a zrakov˝ch dr·h',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H480','Choroba zrakovÈho nervu  [n.opticus] a zrakov˝ch dr·h pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H490','Paralytick˝ strabizmus',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H500','In˝ strabizmus',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H510','In· porucha binokul·rnych pohybov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H520','Porucha refrakcie a akomod·cie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H530','Porucha videnia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H540','Slepota a slabozrakosù',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H550','Nystagmus a inÈ nepravidelnÈ pohyby oka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H570','InÈ choroby oka a jeho adnexov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H580','In· choroba oka a jeho adnexov pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H590','Choroby oka a jeho adnexov po lek·rskom v˝kone, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H600','Z·pal vonkajöieho ucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H610','InÈ chorobym vonkajöieho ucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H620','Choroba vonkajöieho ucha pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H650','Nehnisov˝ z·pal strednÈho ucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H660','Hnisov˝ a bliûöie neurËen˝ z·pal strednÈho ucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H670','Z·pal strednÈho ucha pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H680','Z·pal a uz·ver sluchovej trubice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H690','In· choroba sluchovej trubice',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H700','Z·pal hl·vkovÈho v˝beûku a prÌbuznÈ choroby',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H710','CholesteatÛm strednÈho ucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H720','Perfor·cia  blany bubienka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H730','InÈ choroby blany bubienka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H740','In· choroba strednÈho ucha a hl·vkovÈho v˝beûku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H750','In· choroba strednÈho ucha a hl·vkovÈho v˝beûku pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H800','OtosklerÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H810','Poruchy vestibul·rnej funkcie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H820','Z·vratov˝ syndrÛm pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H830','InÈ choroby vn˙tornÈho ucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H900','Prevodov· a percepËn·  strata sluchu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H910','In· strata sluchu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H920','Bolesù v uchu a v˝tok z ucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('H930','InÈ choroby ucha, nezatriedenÈ inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E890','Endokrinn· a metabolick· porucha po lek·rskom v˝kone, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E900','NutriËn· a metabolick· porucha pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F000','Demencia pri Alzheimerovej chorobe (G30.-Ü)',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F010','Vaskul·rna demencia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F020','Demencia pri in˝ch chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F030','Demencia, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F040','Organick˝ amnestick˝ syndrÛm nezaprÌËinen˝ alkoholom alebo in˝mi psychoaktÌvnymi l·tkami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F050','DelÌrium nezaprÌËinenÈ alkoholom alebo in˝mi psychoaktÌvnymi l·tkami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F060','InÈ duöevnÈ poruchy zaprÌËinenÈ poökodenÌm a dysfunkciou mozgu a somatickou chorobou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F070','Poruchy osobnosti a spr·vania zaprÌËinen· chorobou, poökodenÌm a dysfunkciou mozgu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F090','Organick· alebo symptomatick· psychick· porucha, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F100','Porucha psychiky a spr·vania zaprÌËinen· uûÌvanÌm alkoholu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F110','Porucha psychiky a spr·vania zaprÌËinen· uûÌvanÌm opi·tov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F120','Porucha psychiky a spr·vania zaprÌËinen· uûÌvanÌm kanabinoidov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F130','Porucha psychiky a spr·vania zaprÌËinen· uûitÌm (uûÌvanÌm) sedatÌv alebo hypnotÌk',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F140','Porucha psychiky a spr·vania zaprÌËinen· uûÌvanÌm kokaÌnu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F150','Porucha psychiky a spr·vania zaprÌËinen·, uûÌvanÌm in˝ch stimulanciÌ vr·tane kofeÌnu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F160','Porucha psychiky a spr·vania zaprÌËinen· uûÌvanÌm halucinogÈnov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F170','Porucha psychiky a spr·vania zaprÌËinen· uûÌvanÌm tabaku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F180','Porucha psychiky a spr·vania zaprÌËinen· uûÌvanÌm prchav˝ch rozp˙öùadiel',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F190','Porucha psychiky a spr·vania zaprÌËinen· uûÌvanÌm viacer˝ch drog a in˝ch psychoaktÌvnych l·tok',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F200','SchizofrÈnia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F210','Schizotypov· porucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F220','Pretrv·vaj˙ce poruchy s bludmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F230','Ak˙tne a prechodnÈ psychotickÈ poruchy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F240','Indukovan· porucha s bludmi',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F250','SchizoafektÌvne poruchy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F280','In· neorganick· psychotick· porucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F290','Neorganick· psychÛza, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F300','Manick· epizÛda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F310','Bipol·rna afektÌvna porucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F320','DepresÌvna epizÛda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F330','Recidivuj˙ca depresÌvna porucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F340','Pretrv·vaj˙ca afektÌvna porucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F380','InÈ afektÌvne poruchy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F390','AfektÌvna porucha, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F400','FÛbick· ˙zkostn· porucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F410','InÈ ˙zkostnÈ poruchy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F420','Obsedantno-kompulzÌvna porucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F430','Reakcia na ùaûk˝ stres a adaptaËnÈ poruchy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F440','DisociatÌvne [konverznÈ] poruchy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F450','SomatoformnÈ poruchy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F480','InÈ neurotickÈ poruchy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F500','Porucha prÌjmu potravy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F510','Neorganick· porucha sp·nku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F520','Poruchy pohlavn˝ch funkciÌ nezaprÌËinenÈ organickou poruchou alebo chorobou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F530','Porucha psychiky a spr·vania v öestonedelÌ, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F540','PsychickÈ faktory a faktory spr·vania spojenÈ s poruchami alebo chorobami zatrieden˝mi inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F550','äkodlivÈ uûÌvanie l·tok, ktorÈ nevytv·raj˙ z·vislosù',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F590','Poruchy spr·vania spojenÈ s poruchami fyziologick˝ch funkciÌ a somatick˝ch faktorov, bliûöie neurËenÈ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F600','äpecifickÈ poruchy osobnosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F610','Zmieöan· a in· porucha osobnosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F620','Pretrv·vaj˙ca zmena osobnosti, ktor˙ nemoûno pris˙diù poökodeniu alebo chorobe mozgu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F630','Porucha n·vykov a impulzov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F640','Porucha pohlavnej identity',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F650','Porucha sexu·lneho zamerania',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F660','Porucha psychiky a spr·vania spojen· so sexu·lnym v˝vinom a orient·ciou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F680','In· porucha osobnosti a spr·vania dospel˝ch',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F690','Porucha osobnosti a spr·vania dospel˝ch, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F700','Mierna duöevn· zaostalosù',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F710','Stredne ùaûk· duöevn· zaostalosù',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F720','çaûk· duöevn· zaostalosù',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F730','Hlbok· duöevn· zaostalosù',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F780','In· duöevn· zaostalosù',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F790','Duöevn· zaostalosù, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F800','äpecifick· v˝vinov· porucha reËi a jazyka',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F810','äpecifick· porucha v˝vinu ökolsk˝ch zruËnostÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F820','äpecifick· porucha v˝vinu motorick˝ch funkciÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F830','Zmieöan· öpecifick· v˝vinov· porucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F840','PervazÌvna v˝vinov· porucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F880','In· porucha psychickÈho v˝vinu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F890','Porucha psychickÈho v˝vinu, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F900','Hyperkinetick· porucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F910','Porucha spr·vania',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F920','Zmieöan· porucha spr·vania a emotivity',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F930','Porucha emotivity v detskom veku',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F940','Porucha soci·lneho fungovania so zaËiatkom v detstve a poËas dospievania',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F950','Tikov· porucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F980','In· porucha spr·vania a emotivity so zvyËajn˝m zaËiatkom v detstve a poËas dospievania',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('F990','Duöevn· porucha, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G000','BaktÈriov· meningitÌda, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G010','MeningitÌda pri baktÈriov˝ch chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G020','MeningitÌda pri in˝ch infekËn˝ch a parazitov˝ch chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G030','MeningitÌda zaprÌËinen· in˝mi a bliûöie neurËen˝ch prÌËinami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G040','EncefalitÌda, myelitÌda a encefalomyelitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G050','EncefalitÌda, myelitÌda a encefalomyelitÌda pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G060','Intrakrani·lny a intraspin·lny absces a granulÛm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G070','Intrakrani·lny a intraspin·lny absces a granulÛm pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G080','Intrakrani·lna a intraspin·lna flebitÌda a tromboflebitÌda',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G090','N·sledky z·palov˝ch chorÙb centr·lnej nervovej s˙stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G100','Huntingtonova choroba',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G110','DediËn· ataxia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G120','Spin·lna svalov· atrofia a prÌbuznÈ syndrÛmy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G130','SystÈmov· atrofia prvotne postihuj˙ca centr·lny nervov˝ systÈm pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G200','Parkinsonova choroba',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G210','Sekund·rny Parkinsonov syndrÛm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G220','Parkinsonov syndrÛm pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G230','In· degeneratÌvna choroba baz·lnych gangliÌ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('G240','DystÛnia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D430','N·dor s neurËit˝m alebo nezn·mym spr·vanÌm: mozog a centr·lna nervov· s˙stava','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'N·dor s neurËit˝m alebo nezn·mym spr·vanÌm: perifÈrne nervy a autonÛmna nervov· s˙stava (D48.2)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D440','N·dor s neurËit˝m alebo nezn·mym spr·vanÌm: ûæazy s vn˙torn˝m vyluËovanÌm','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D450','Polycythaemia vera','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D460','Myelodysplastick˝ syndrÛm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D470','In˝ n·dor lymfatickÈho, krvotvornÈho a prÌbuznÈho tkaniva s neurËit˝m alebo nezn·mym spr·vanÌm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D480','N·dor na in˝ch a bliûöie neurËen˝ch miestach s neurËit˝m alebo nezn·mym spr·vanÌm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D500','AnÈmia z nedostatku ûeleza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D510','AnÈmia z nedostatku vitamÌnu B12',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D520','AnÈmia z nedostatku kyseliny listovej',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D530','In· nutriËn· anÈmia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D550','AnÈmia zaprÌËinen· poruchou enz˝mov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D560','TalasÈmia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D570','Kos·Ëikovit· anÈmia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D580','In· dediËn· hemolytick· anÈmia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D590','ZÌskan· hemolytick· anÈmia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D600','ZÌskan· Ëist· apl·zia Ëerven˝ch krviniek [erytroblastopÈnia] [pure red cell aplasia]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D610','In· aplastick· anÈmia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D620','Ak˙tna posthemoragick· anÈmia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D630','AnÈmia pri chronick˝ch chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D640','In· anÈmia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D650','Diseminovan· intravaskul·rna koagul·cia [DefibrinaËn˝ syndrÛm]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D660','DediËn˝ nedostatok faktora VIII',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D670','DediËn˝ nedostatok faktora IX',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D680','InÈ poruchy koagul·cie',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D690','Purpura a inÈ stavy krv·cavosti',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D700','AgranulocytÛza a neutropÈnia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D710','FunkËn· porucha polymorfonukle·rnych neutrofilov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D720','In· porucha bielych krviniek',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D730','Choroba sleziny',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D740','MethemoglobinÈmia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D750','In· choroba krvi a krvotvorn˝ch org·nov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D760','InÈ choroby s ˙Ëasùou lymforetikulovÈho a retikulohistiocytovÈho tkaniva, bliûöie urËenÈ',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D770','In˝ syndrÛm histiocytÛzy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D800','Imunodeficit s prevahou nedostatku protil·tok',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D810','Kombinovan˝ imunodeficit',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D820','Imunodeficit spojen˝ s in˝mi ùaûk˝mi poruchami',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D830','Beûn˝ premenliv˝ imunodeficit  [common variable immunodeficiency -CVID]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D840','In˝ imunodeficit',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D860','SarkoidÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D890','In· porucha s ˙Ëasùou imunitn˝ch mechanizmov, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E000','Vroden˝ syndrÛm z nedostatku jÛdu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E010','Choroba ötÌtnej ûæazy spojen· s nedostatkom jÛdu a pridruûenÈ stavy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E020','Subklinick· hypotyreÛza z nedostatku jÛdu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E030','In· hypotyreÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E040','In· netoxick· struma',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E050','HypertyreÛza [TyreotoxikÛza]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E060','Z·pal ötÌtnej ûæazy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E070','In· choroba ötÌtnej ûæazy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E100','Diabetes mellitus 1. typu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E110','Diabetes mellitus 2. typu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E120','Diabetes mellitus spojen˝ s podv˝ûivou',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E130','In˝ diabetes mellitus, bliûöie urËen˝',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E140','Diabetes mellitus, bliûöie neurËen˝',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E150','Nediabetick· hypoglykemick· kÛma',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E160','In· porucha vn˙tornÈho vyluËovania podûal˙dkovej ûæazy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E200','HypoparatyreÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E210','HyperparatyreÛza a inÈ choroby priötÌtnych ûliaz',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E220','Hyperfunkcia hypof˝zy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E230','Hypofunkcia a inÈ choroby hypof˝zy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E240','Cushingov syndrÛm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E250','Adrenogenit·lna porucha',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E260','Hyperaldosteronizmus',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E270','In· choroba nadobliËiek',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E280','Porucha funkcie vajeËnÌkov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E290','Porucha funkcie semennÌkov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E300','Porucha puberty, nezatrieden· inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E310','Porucha Ëinnosti viacer˝ch ûliaz s vn˙torn˝m vyluËovanÌm [polyglandul·rna dysfunkcia]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E320','Choroba t˝musu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E340','In· choroba ûliaz s vn˙torn˝m vyluËovanÌm',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E350','Porucha ûliaz s vn˙torn˝m vyluËovanÌm pri chorob·ch zatrieden˝ch inde',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E400','Kvaöiorkor',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E410','NutriËn˝ marazmus',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E420','Marantick˝ kvaöiorkor',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E430','çaûk· proteÌnovo-energetick· podv˝ûiva, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E440','ProteÌnovo-energetick· podv˝ûiva strednÈho a mierneho stupÚa',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E450','Zaost·vanie vo v˝vine v dÙsledku proteÌnovo-energetickej podv˝ûivy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E460','ProteÌnovo-energetick· podv˝ûiva, bliûöie neurËen·',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E500','Nedostatok vitamÌnu A',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E510','Nedostatok tiamÌnu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E520','Nedostatok niacÌnu [Pellagra]',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E530','Nedostatok inÈho vitamÌnu skupiny B',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E540','Nedostatok vitamÌnu C',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E550','Nedostatok vitamÌnu D',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E560','In˝ nedostatok vitamÌnu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E580','Nedostatok v·pnika vo v˝ûive',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E590','Nedostatok selÈnu vo v˝ûive',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E600','Nedostatok zinku vo v˝ûive',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E610','Nedostatok inÈho stopovÈho prvku vo v˝ûive',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E630','In˝ nedostatok vo v˝ûive',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E640','N·sledky podv˝ûivy a in˝ch nedostatkov vo v˝ûive',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E650','Lokalizovan· obezita',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E660','Obezita',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E670','In· nadmern· v˝ûiva',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E680','N·sledok nadmernej v˝ûivy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E700','Porucha metabolizmu aromatick˝ch aminokyselÌn',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E710','Poruchy metabolizmu aminokyselÌn s rozvetven˝m reùazcom a poruchy metabolizmu mastn˝ch kyselÌn',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E720','In· porucha metabolizmu aminokyselÌn',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E730','Intolerancia laktÛzy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E740','In· porucha metabolizmu sacharidov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E750','Porucha metabolizmu sfingolipidov a in· porucha ukladania lipidov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E760','Porucha metabolizmu glykozaminoglyk·nu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E770','Porucha metabolizmu glykoproteÌnov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E780','Porucha metabolizmu lipoproteÌnov a in· lipidÈmia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E790','Porucha metabolizmu purÌnu a pyrimidÌnu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E800','Porucha metabolizmu porfyrÌnu a bilirubÌnu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E830','Porucha metabolizmu miner·lov',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E840','Cystick· fibrÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E850','AmyloidÛza',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E860','Dehydrat·cia, hypovolÈmia',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E870','In· porucha rovnov·hy tekutÌn, elektrolytov a acidob·zickej rovnov·hy',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('E880','In· porucha metabolizmu',null,null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D050','KarcinÛm in situ prsnÌka','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'Z',to_date('01.01.94','DD.MM.RR'),null,null,'KarcinÛm in situ koûe prsnÌka (D04.5), MelanÛm in situ koûe prsnÌka (D03.5)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D060','KarcinÛm in situ krËka maternice','Karcinoma in situ krËka maternice',null,null,'Z',to_date('01.01.94','DD.MM.RR'),null,'Intraepitelov˝ n·dor krËka maternice [CIN] III. stupÚa','VysokostupÚov· dyspl·zia krËka maternice bez bliûöieho urËenia (N87.2), MelanÛm in situ krËka maternice (D03.5)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D070','KarcinÛm in situ in˝ch a bliûöie neurËen˝ch pohlavn˝ch org·nov','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'MelanÛm in situ (D03.5)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D090','KarcinÛm in situ na in˝ch a bliûöie neurËen˝ch miestach','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'MelanÛm in situ (D03.5)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D100','Nezhubn˝ n·dor ˙st a hltana','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌ',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D110','Nezhubn˝ n·dor veæk˝ch slinn˝ch ûliaz','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌ',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'NezhubnÈ n·dory mal˝ch slinn˝ch ûliaz bez bliûöieho urËenia (D10.3)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D120','Nezhubn˝ n·dor hrubÈho Ëreva, koneËnÌka, anusu a an·lneho kan·la','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D130','Nezhubn˝ n·dor in˝ch a nepresne urËen˝ch ËastÌ tr·viacej s˙stavy','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D140','Nezhubn˝ n·dor strednÈho ucha a d˝chacej s˙stavy','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D150','Nezhubn˝ n·dor in˝ch a bliûöie neurËen˝ch vn˙trohrudnÌkov˝ch org·nov','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D160','Nezhubn˝ n·dor kosti a kÂbovej chrupky','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Keratocystick˝ odontogÈnny n·dor','Nezhubn˝ n·dor synovi·lnej blany (D21.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D170','Nezhubn˝ lipomatÛzny n·dor','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Morfologick˝ kÛd M885 ñ M888 so stupÚom malignity /0',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D180','HemangiÛm a lymfangiÛm','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Morfologick˝ kÛd M912 ñ M917 so stupÚom malignity /0','Modr˝ alebo pigmentov˝ nÈvus (D22.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D190','Nezhubn˝ n·dor mezotelovÈho tkaniva','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Morfologick˝ kÛd M905 so stupÚom malignity /0',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D200','Nezhubn˝ n·dor m‰kkÈho tkaniva retroperitonea a peritonea','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Nezhubn˝ n·dor tukovÈho tkaniva pobruönice a retroperitonea (D17.7), Nezhubn˝ n·dor mezotelovÈho tkaniva (D19.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D210','In˝ nezhubn˝ n·dor spojivovÈho a inÈho m‰kkÈho tkaniva','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Krvn· cieva, Burza, Fascia, TukovÈ tkanivo, Chrupka',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D220','Melanocytov˝ nÈvus','NezhubnÈ n·dory koûe',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'Morfologick˝ kÛd M872 ñ M879 so stupÚom malignity /0, Vlasat˝ nÈvus (Nevus pilosus)',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D230','In˝ nezhubn˝ n·dor koûe','NezhubnÈ n·dory koûe',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Nezhubn˝ n·dor tukovÈho tkaniva (D17.0 ñ D17.3), Melanocytov˝ nÈvus (D22.-)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D240','Nezhubn˝ n·dor prsnÌka','NezhubnÈ n·dory prsnÌka',null,null,'Z',to_date('01.01.94','DD.MM.RR'),null,null,'Nezhubn· dyspl·zia prsnÌka (N60.-), Nezhubn˝ n·dor koûe prsnÌka (D22.5, D23.5)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D250','LeiomyÛm maternice','LeiomyÛm maternice',null,null,'Z',to_date('01.01.94','DD.MM.RR'),null,'FibromyÛm maternice',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D260','In˝ nezhubn˝ n·dor maternice','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'Z',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D270','Nezhubn˝ n·dor vajeËnÌka','NezhubnÈ n·dory vajeËnÌka',null,null,'Z',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D280','Nezhubn˝ n·dor in˝ch a bliûöie neurËen˝ch ûensk˝ch pohlavn˝ch org·nov','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'Z',to_date('01.01.94','DD.MM.RR'),null,'AdenomatÛzny polyp, Nezhubn˝ n·dor koûe ûensk˝ch pohlavn˝ch org·nov',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D290','Nezhubn˝ n·dor muûsk˝ch pohlavn˝ch org·nov','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'M',to_date('01.01.94','DD.MM.RR'),null,'Nezhubn˝ n·dor koûe muûsk˝ch pohlavn˝ch org·nov',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D300','Nezhubn˝ n·dor moËovej s˙stavy','NezhubnÈ n·dory moËov˝ch org·nov',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D310','Nezhubn˝ n·dor oka a oËn˝ch adnexov','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Nezhubn˝ n·dor spojivovÈho tkaniva mihalnice (D21.0), Nezhubn˝ n·dor koûe mihalnice (D22.1, D23.1), Nezhubn˝ n·dor optickÈho nervu (D33.3)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D320','Nezhubn˝ n·dor mozgovomiechov˝ch obalov','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D330','Nezhubn˝ n·dor mozgu a in˝ch ËastÌ centr·lnej nervovej s˙stavy','NezhubnÈ n·dory mozgu a in˝ch ËastÌ centr·lneho nervovÈho systÈmu',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,'AngiÛm (D18.0-), Nezhubn˝ n·dor mozgovomiechov˝ch obalov (D32.-)',null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D340','Nezhubn˝ n·dor ötÌtnej ûæazy','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D350','Nezhubn˝ n·dor in˝ch a bliûöie neurËen˝ch ûliaz s vn˙torn˝m vyluËovanÌm','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Nezhubn˝ n·dor endokrinnej Ëasti pankreasu (D13.7), Nezhubn˝ n·dor semennÌka (D29.2), Nezhubn˝ n·dor vajeËnÌka (D27), Nezhubn˝ n·dor t˝musu (D15.0)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D360','Nezhubn˝ n·dor na in˝ch a bliûöie neurËen˝ch miestach','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D370','N·dor ˙stnej dutiny a tr·viacich org·nov s neurËit˝m alebo nezn·mym spr·vanÌm','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D380','N·dor s neurËit˝m alebo nezn·mym spr·vanÌm: strednÈ ucho, d˝chacie a vn˙trohrudnÌkovÈ org·ne','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,'Srdce (D48.7)');
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D390','N·dor ûensk˝ch pohlavn˝ch org·nov s neurËit˝m alebo nezn·mym spr·vanÌm','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'Z',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D400','N·dor muûsk˝ch pohlavn˝ch org·nov s neurËit˝m alebo nezn·mym spr·vanÌm','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'M',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D410','N·dor s neurËit˝m alebo nezn·mym spr·vanÌm: moËov· s˙stava','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+Insert into SYSTEM.CHOROBA (CIS_CHOROBA,NAZOV,SK_OCHORENI,OBM_VEK_OD,OBM_VEK_DO,OBM_POHLAVIE,VALID_OD,VALID_DO,DOPL_INFO_PATRI,DOPL_INFO_NEPATRI) values ('D420','N·dor mozgovomiechov˝ch obalov s neurËit˝m alebo nezn·mym spr·vanÌm','InÈ nezhubnÈ n·dory in situ a n·dory s neurËit˝m a nezn·mym spr·vanÌm',null,null,'V',to_date('01.01.94','DD.MM.RR'),null,null,null);
+REM INSERTING into SYSTEM.KRAJ
+SET DEFINE OFF;
+Insert into SYSTEM.KRAJ (ID_KRAJ,NAZOV) values ('1','Bratislavsk˝');
+Insert into SYSTEM.KRAJ (ID_KRAJ,NAZOV) values ('2','Trnavsk˝');
+Insert into SYSTEM.KRAJ (ID_KRAJ,NAZOV) values ('3','Trenciansky');
+Insert into SYSTEM.KRAJ (ID_KRAJ,NAZOV) values ('4','Nitriansky');
+Insert into SYSTEM.KRAJ (ID_KRAJ,NAZOV) values ('5','éilinsk˝');
+Insert into SYSTEM.KRAJ (ID_KRAJ,NAZOV) values ('6','Banskobystrick˝');
+Insert into SYSTEM.KRAJ (ID_KRAJ,NAZOV) values ('7','Preöovsk˝');
+Insert into SYSTEM.KRAJ (ID_KRAJ,NAZOV) values ('8','Koöick˝');
+REM INSERTING into SYSTEM.L_BALENIE
+SET DEFINE OFF;
+Insert into SYSTEM.L_BALENIE (KOD_BALENIA,ID_LIEK,SPOSOB_UHRADY,CENA,DOPLATOK,POCET_KS) values ('86052','1','I','1,68','1,68','24');
+REM INSERTING into SYSTEM.LEKAR
+SET DEFINE OFF;
+Insert into SYSTEM.LEKAR (ID_LEKAR,ID_POUZIVATEL,ID_ODDEL,DO) values ('1','2','2',null);
+REM INSERTING into SYSTEM.LIEK
+SET DEFINE OFF;
+Insert into SYSTEM.LIEK (ID_LIEK,NAZOV,REZIM_VYDAJA,LIEK_FORMA) values ('1','Paralen 500','F ','Tableta');
+REM INSERTING into SYSTEM.LIEK_APLIKACIA
+SET DEFINE OFF;
+Insert into SYSTEM.LIEK_APLIKACIA (ID_LIEK,ID_OBLAST) values ('1','1');
+Insert into SYSTEM.LIEK_APLIKACIA (ID_LIEK,ID_OBLAST) values ('1','2');
+REM INSERTING into SYSTEM.LIEK_UCINNA_LATKA
+SET DEFINE OFF;
+Insert into SYSTEM.LIEK_UCINNA_LATKA (ID_LIEK,ID_LATKA) values ('1','1');
+REM INSERTING into SYSTEM.MESTO
+SET DEFINE OFF;
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Horn˝ Lieskov','874');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Horn˝ Pial','875');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('46','Horn˝ TisovnÌk','876');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('36','Horn˝ VadiËov','877');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Horovce','878');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','Horovce','879');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Hosùov·','880');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Hosùovce','881');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Hosùovce','882');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Hoste','883');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Hostiöovce','884');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Hostice','885');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Hostie','886');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Hostovice','887');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','Hozelec','888');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Hr·dok','889');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','HrËeæ','890');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','HraÚ','891');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('19','HraönÈ','892');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','HraöovÌk','893');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','DolnÈ Plachtince','614');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','DolnÈ Saliby','615');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','DolnÈ Semerovce','616');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','DolnÈ Srnie','617');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','DolnÈ Strh·re','618');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','DolnÈ Trhoviöte','619');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','DolnÈ Vestenice','620');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','DolnÈ Zahorany','621');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','DolnÈ Zelenice','622');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Doln˝ BadÌn','623');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Doln˝ Bar','624');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Doln˝ Chot·r','625');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Doln˝ Harmanec','626');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Doln˝ HriËov','627');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Doln˝ KalnÌk','628');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Doln˝ KubÌn','629');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Doln˝ Lieskov','630');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','Doln˝ Lopaöov','631');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Doln˝ Ohaj','632');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Sv‰t˝ Peter','633');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Doln˝ Pial','634');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('36','Doln˝ VadiËov','635');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Domadice','636');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','DomanÌky','637');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Domaniûa','638');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','DomaÚovce','639');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Donovaly','640');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Dr·ûovce','641');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Dr·bsko','642');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','DrÚa','643');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Drûenice','644');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Drûkovce','645');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Draûice','646');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Draûkovce','647');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','DrahÚov','648');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','Drahovce','649');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Dravce','650');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','DrienËany','651');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Drienica','652');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Drienov','653');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Drienovec','654');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Drienovo','655');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Drienovsk· Nov· Ves','656');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Drietoma','657');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Drnava','658');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Druûstevn· pri Horn·de','659');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','DubinnÈ','660');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','DubnÌk','661');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','DubniËka','662');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','Dubnica nad V·hom','663');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Dubno','664');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Dubodiel','665');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('7','Dubov·','666');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Dubov·','667');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','DubovÈ','668');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','DubovÈ','669');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','Dubovany','670');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','Dubovce','671');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Dubovec','672');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Dubovica','673');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','DucovÈ','674');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Dudince','675');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Dukovce','676');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','Dulov','677');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Dulova Ves','678');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Dulovce','679');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Dulovo','680');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','Dunajov','681');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Dunajsk· Luûn·','682');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Dunajsk· Streda','683');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Dunajsk˝ Kl·tov','684');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','DuplÌn','685');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Dvorany nad Nitrou','686');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Dvorec','687');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Dvorianky','688');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','DvornÌky','689');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Dvory nad éitavou','690');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Egreö','691');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','FaËkov','692');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Falkuöovce','693');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Farn·','694');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Fekiöovce','695');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Fiæakovo','696');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','FiæakovskÈ Kov·Ëe','697');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Figa','698');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Fijaö','699');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Fintice','700');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Folkuöov·','701');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Forbasy','702');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','FriËka','703');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','FriËkovce','704');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','FriËovce','705');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Fulianka','706');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','G·Ú','707');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','G·novce','708');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','GÙtovany','709');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','GabËÌkovo','710');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Gaboltov','711');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Gajary','712');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Galanta','713');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Galovany','714');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Gbeæany','715');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Gbelce','716');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','Gbely','717');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','GeËa','718');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','Gelnica','719');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Gemer','720');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','GemerËek','721');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Gemersk· HÙrka','722');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Gemersk· Panica','723');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Gemersk· Poloma','724');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Gemersk· Ves','725');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','GemerskÈ Decht·re','726');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','GemerskÈ Michalovce','727');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','GemerskÈ Teplice','728');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Gemersk˝ Jablonec','729');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Gemersk˝ Sad','730');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Geraltov','731');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Gerlachov','732');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','Gerlachov','733');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Giglovce','734');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Giraltovce','735');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Girovce','736');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Glabuöovce','737');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','GoËaltovo','738');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','GoËovo','739');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Golianovo','740');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Gortva','741');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','GranË-Petrovce','742');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Gregorova Vieska','743');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Gregorovce','744');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Gribov','745');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Gruzovce','746');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','GyÚov','747');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','H·j','748');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','H·j','749');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('29','H·jske','750');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','HÙrka','751');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','HÙrka nad V·hom','752');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','HÙrky','753');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','H˝æov','754');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','HaËava','755');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','HaûÌn','756');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','HaûÌn nad Cirochou','757');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','HaûlÌn','758');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('42','Habovka','759');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','Habura','760');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Hajn· Nov· Ves','761');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Hajn·Ëka','762');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Hajtovka','763');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Hal·Ëovce','764');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','HaliË','765');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Haligovce','766');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Haluzice','767');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Hamuliakovo','768');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Handlov·','769');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Hanigovce','770');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Haniska','771');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Haniska','772');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Hankov·','773');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Hankovce','774');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Hankovce','775');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Hanuöovce nad Topæou','776');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Harakovce','777');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Harhaj','778');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Harichovce','779');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Harmanec','780');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Hatalov','781');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','HatnÈ','782');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Havaj','783');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Havka','784');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Havranec','785');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Heæpa','786');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','Helcmanovce','787');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Henckovce','788');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','Henclov·','789');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Hencovce','790');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Hendrichovce','791');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Heræany','792');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Hermanovce','793');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Hermanovce nad Topæou','794');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','HertnÌk','795');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Hervartov','796');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Hiadeæ','797');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Hincovce','798');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('42','Hladovka','799');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','HlbokÈ','800');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','HlbokÈ nad V·hom','801');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','HlinÌk nad Hronom','802');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','HlinnÈ','803');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Hliviötia','804');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','Hlohovec','805');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Hn˙öùa','806');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Hniezdne','807');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','HnilËÌk','808');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Hnilec','809');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','HnojnÈ','810');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Hodejov','811');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Hodejovec','812');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Hodkovce','813');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','Hodruöa-H·mre','814');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Hokovce','815');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','HolËÌkovce','816');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','HolÌË','817');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Holiöa','818');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Holiare','819');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Holice','820');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Holumnica','821');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Honce','822');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Hontianska Vrbica','823');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Hontianske Moravce','824');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Hontianske Nemce','825');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Hontianske Tes·re','826');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Hontianske Trsùany','827');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','HorÚa','828');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','HorÚany','829');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Horn· ätubÚa','830');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Horn· édaÚa','831');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','Horn· Breznica','832');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('29','Horn· Kr·æov·','833');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Horn· Krup·','834');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Horn· Lehota','835');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Horn· Lehota','836');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Horn· Marikov·','837');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Horn· MiËin·','838');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','Horn· Poruba','839');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Horn· PotÙÚ','840');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','PotÙnske L˙ky','841');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Horn· S˙Ëa','842');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Horn· SeË','843');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Horn· Streda','844');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Horn· Strehov·','845');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Horn· Ves','846');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Horn· Ves','847');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','HornÈ ätit·re','848');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','HornÈ Chlebany','849');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','HornÈ DubovÈ','850');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','HornÈ H·mre','851');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','HornÈ Lefantovce','852');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','HornÈ M˝to','853');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','HornÈ Mladonice','854');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','HornÈ Naötice','855');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','HornÈ Obdokovce','856');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','HornÈ Oreöany','857');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','HornÈ Otrokovce','858');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','HornÈ Plachtince','859');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','HornÈ Pröany','860');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','HornÈ Saliby','861');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','HornÈ Semerovce','862');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','HornÈ Srnie','863');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','HornÈ Strh·re','864');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','HornÈ Turovce','865');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','HornÈ Trhoviöte','866');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','HornÈ Vestenice','867');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','HornÈ Zahorany','868');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','HornÈ Zelenice','869');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Horn˝ BadÌn','870');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Horn˝ Bar','871');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Horn˝ HriËov','872');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Horn˝ KalnÌk','873');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Bretka','420');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','Breza','421');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Brezany','422');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Brezina','423');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Breziny','424');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','BrezniËka','425');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','BrezniËka','426');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Breznica','427');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Brezno','428');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Brezolupy','429');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Brezov','430');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('19','Brezov· pod Bradlom','431');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Brezovec','432');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','BrezoviËka','433');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('42','Brezovica','434');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Brezovica','435');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Brezovka','436');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Brhlovce','437');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Brieötie','438');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','BrodskÈ','439');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','Brodzany','440');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Brunovce','441');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','BrusnÌk','442');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Brusnica','443');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Brusno','444');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Brutovce','445');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Bruty','446');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Brvniöte','447');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','BrzotÌn','448');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','BuËany','449');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Buöince','450');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Buöovce','451');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Buclovany','452');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','BudËa','453');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Budiö','454');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Budikovany','455');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','BudimÌr','456');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Budin·','457');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Budince','458');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Budkovce','459');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('7','Budmerice','460');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Buglovce','461');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Bukov·','462');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Bukovce','463');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Bukovec','464');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('19','Bukovec','465');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Bukovina','466');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Bulhary','467');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Bunetice','468');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Bunkovce','469');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Buzica','470');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Buzitka','471');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Byöta','472');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Bystr·','473');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Bystr·','474');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','BystrÈ','475');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Bystrany','476');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','BystriËany','477');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','BystriËka','478');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','BytËa','479');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Bzenica','480');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Bzenov','481');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Bzince pod Javorinou','482');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Bziny','483');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','BzovÌk','484');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Bzovsk· LehÙtka','485');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','CÌfer','486');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Cabaj-»·por','487');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Cabov','488');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Cakov','489');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Cejkov','490');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Cernina','491');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Cerov·','492');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Cerovo','493');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Cestice','494');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Chæaba','495');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Chanava','496');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Chlebnice','497');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Chlmec','498');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Chmeænica','499');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Chmeæov','500');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Chmeæov·','501');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Chmeæovec','502');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','ChmiÚany','503');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Chminianska Nov· Ves','504');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Chminianske Jakubovany','505');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','ChoËa','506');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','ChoÚkovce','507');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Chocholn·-VelËice','508');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Chorv·tsky Grob','509');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Chorv·ty','510');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','ChotËa','511');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','ChotÌn','512');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Chr·mec','513');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Chrùany','514');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Chrabrany','515');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Chrasù nad Horn·dom','516');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Chrastince','517');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','ChrastnÈ','518');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Chrenovec-Brusno','519');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','Chropov','520');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','Chtelnica','521');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Chud· Lehota','522');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Chvalov·','523');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('19','Chvojnica','524');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Chvojnica','525');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','ChyûnÈ','526');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','Chynorany','527');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Cigeæ','528');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Cigeæka','529');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Cigla','530');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Cimenn·','531');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','CinobaÚa','532');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','D˙brava','533');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','D˙brava','534');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','D˙brava','535');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','D˙bravica','536');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','D˙bravka','537');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('46','D˙bravy','538');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','DaËov Lom','539');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Daletice','540');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Daniöovce','541');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Dargov','542');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Davidov','543');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Deûerice','544');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','DebraÔ','545');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Dechtice','546');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','DedaËov','547');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Dedina Ml·deûe','548');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Dedinka','549');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Dedinky','550');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('44','Dek˝ö','551');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Dem‰novsk· Dolina','552');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Demandice','553');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Demjata','554');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','DetrÌk','555');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('46','Detva','556');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('46','Detvianska Huta','557');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','DeviËany','558');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','DeviËie','559');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Diakov·','560');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('29','Diakovce','561');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','DivÌn','562');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Diviacka Nov· Ves','563');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Diviaky nad Nitricou','564');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Divina','565');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Divinka','566');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','DlûÌn','567');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Dlh·','568');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','Dlh· nad Kysucou','569');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Dlh· nad Oravou','570');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('29','Dlh· nad V·hom','571');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Dlh· Ves','572');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','DlhÈ KlËovo','573');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','DlhÈ nad Cirochou','574');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','DlhÈ Pole','575');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','DlhÈ Str·ûe','576');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','DlhoÚa','577');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('7','Doæany','578');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Doæany','579');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Doböin·','580');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Dobr·','581');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Dobr· Niva','582');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Dobr· Voda','583');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','DobroË','584');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Kotmanov·','585');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Dobrohoöù','586');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Dobroslava','587');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','DohÚany','588');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','DojË','589');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Dolinka','590');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Doln· édaÚa','591');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','Doln· Breznica','592');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Doln· Krup·','593');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Doln· Lehota','594');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Doln· Marikov·','595');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Doln· MiËin·','596');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Doln· Poruba','597');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Doln· S˙Ëa','598');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Doln· SeË','599');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Doln· Streda','600');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Doln· Strehov·','601');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Doln· Tiûina','602');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Doln· Trn·vka','603');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Doln· Ves','604');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','DolnÈ DubovÈ','605');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','DolnÈ KoËkovce','606');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','DolnÈ Lefantovce','607');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','DolnÈ LovËice','608');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','DolnÈ Mladonice','609');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','DolnÈ Naötice','610');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','DolnÈ Obdokovce','611');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','DolnÈ Oreöany','612');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','DolnÈ Otrokovce','613');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','Batizovce','307');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','BeÚadikov·','308');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','BeÚadikovce','309');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','BeÚadovo','310');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','BeÚatina','311');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','BeÚuö','312');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Beöa','313');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Beöa','314');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','BeöeÚov','315');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','BeöeÚov·','316');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Beûovce','317');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Becherov','318');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Beckov','319');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Beharovce','320');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Bel·','321');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Bel·','322');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Bel· nad Cirochou','323');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Bel·-Dulice','324');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','BelÌn','325');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Belûa','326');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Beladice','327');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Belejovce','328');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Belina','329');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Belince','330');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Bellova Ves','331');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Beloveûa','332');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','Beluöa','333');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('44','Beluj','334');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Beniakovce','335');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Benice','336');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Benkovce','337');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Bernol·kovo','338');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Bertotovce','339');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Betlanovce','340');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Betliar','341');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Bidovce','342');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Biel','343');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Bielovce','344');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Biely Kostol','345');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Bijacovce','346');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Biskupice','347');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Biskupov·','348');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Bitarov·','349');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Blaûice','350');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Blaûovce','351');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Blahov·','352');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Blatn· na Ostrove','353');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Blatn· Polianka','354');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','BlatnÈ','355');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','BlatnÈ Remety','356');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','BlatnÈ Reviötia','357');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Blatnica','358');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Blesovce','359');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Blhovce','360');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','BoËiar','361');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Boæ','362');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Boækovce','363');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Boö·ca','364');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','Boöany','365');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Boùany','366');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Bobot','367');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','Bobrov','368');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','BobrovËek','369');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Bobrovec','370');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','BobrovnÌk','371');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','BodÌky','372');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Bodin·','373');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Bodorov·','374');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Bodovce','375');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Bodruûal','376');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Bodza','377');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Bodzianske L˙ky','378');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Bogliarka','379');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Boh˙Úovo','380');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Bohdanovce','381');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Bohdanovce nad Trnavou','382');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Boheæov','383');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','Bohunice','384');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Bohunice','385');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Bojn·','386');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','BojniËky','387');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Bojnice','388');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Boldog','389');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','Boleöov','390');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Boler·z','391');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Boliarov','392');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','BorËany','393');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','BorËice','394');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Boröa','395');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Borcov·','396');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Borinka','397');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Borov·','398');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','Borovce','399');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Borsk˝ Sv‰t˝ Jur','400');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Borsk˝ Mikul·ö','401');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Bory','402');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Bottovo','403');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Bracovce','404');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','BranË','405');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Branovo','406');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Brav‰covo','407');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Brd·rka','408');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Breûany','409');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Brehov','410');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','Brehy','411');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Brekov','412');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Brestov','413');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Brestov','414');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','Brestov nad Laborcom','415');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Brestovany','416');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Brestovec','417');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('19','Brestovec','418');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Bretejovce','419');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('44','Bansk˝ Studenec','300');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Bara','301');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Barca','302');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Bardejov','303');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','BardoÚovo','304');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Bartoöova LehÙtka','305');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Bartoöovce','306');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','¡belov·','1');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','»·ry','2');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','»ÌËov','3');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','»Ìû','4');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','»aÚa','5');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','»ab','6');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','»abalovce','7');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','»abiny','8');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','»abradsk˝ Vrbovok','9');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','»achtice','10');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','»ajkov','11');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','»aka','12');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','»akajovce','13');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','»akanovce','14');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','»akanovce','15');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','»akany','16');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','»aklov','17');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','»alovec','18');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Veæk˝ Meder','19');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','»amovce','20');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','»aradice','21');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('7','»ast·','22');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','»astkov','23');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','»astkovce','24');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','»ata','25');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','»ataj','26');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','»avoj','27');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','»eËehov','28');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','»eËejovce','29');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','»eæadice','30');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','»eæovce','31');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','»elovce','32');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','»ebovce','33');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','»echy','34');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','»echynce','35');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','»ekovce','36');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','»el·re','37');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','»eæadince','38');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','»elkova Lehota','39');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','»elovce','40');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','»enkovce','41');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','»erÌn','42');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','»ereÚany','43');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','»erenËany','44');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','»erhov','45');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','»ermany','46');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','»ernÌk','47');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','»ernina','48');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','»ernochov','49');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','»ertiûnÈ','50');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','»erveÚany','51');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','»erven· Voda','52');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','»ervenÌk','53');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','»erven˝ Hr·dok','54');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','»erven˝ KameÚ','55');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','»erven˝ Kl·ötor','56');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','»ervenica','57');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','»ervenica pri Sabinove','58');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','»eskÈ Brezovo','59');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','»iËarovce','60');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','»iËava','61');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','»iËmany','62');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','»iûatice','63');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','»ierna','64');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','»ierna Lehota','65');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','»ierna Lehota','66');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','»ierna nad Tisou','67');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','»ierna Voda','68');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','»ierne','69');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','»ierne KæaËany','70');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','»ierne nad Topæou','71');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','»ierne Pole','72');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','»ierny Balog','73');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','»ierny Brod','74');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','»ierny Potok','75');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','»if·re','76');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','»iliûsk· RadvaÚ','77');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('42','»imhov·','78');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','»irË','79');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','»oltovo','80');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','»remoönÈ','81');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','»uËma','82');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','»ukalovce','83');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','œaËov','84');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','œanov·','85');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','œapalovce','86');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','œub·kovo','87');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','œurËin·','88');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','œurÔoö','89');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','œurÔoöÌk','90');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','œurÔovÈ','91');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','œurkov','92');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','œurkov·','93');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','œurkovce','94');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','L˙Ëky','95');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','ºub·','96');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','ºubeæa','97');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','ºubiöa','98');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','ºubica','99');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','ºubietov·','100');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','ºubochÚa','101');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','ºuboreË','102');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','ºuborieËka','103');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','ºubotÌn','104');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','ºubotice','105');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','ºubovec','106');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','ºudovÌtov·','107');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','ºutina','108');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','ºutov','109');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','“agov','110');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','ä·voæ','111');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','äÌd','112');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','äÌpkov','113');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','äÌpkovÈ','114');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','ä˙rovce','115');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','ä˙tovce','116');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','ä˙tovo','117');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('29','äaæa','118');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','äaöov·','119');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','äaötÌn-Str·ûe','120');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Tornaæa','121');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','äahy','122');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','äajdÌkove Humence','123');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','äalgoËka','124');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','äalgovce','125');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','äalov','126');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','äambron','127');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','äamorÌn','128');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','äamudovce','129');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','äandal','130');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','äarbov','131');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','äariösk· Poruba','132');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','äariösk· Trsten·','133');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','äariöskÈ »ierne','134');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','äariöskÈ Bohdanovce','135');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','äariöskÈ Dravce','136');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','äariöskÈ Jastrabie','137');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','äariöskÈ Michaæany','138');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','äariöskÈ Sokolovce','139');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','äariösk˝ ätiavnik','140');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','äarkan','141');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','äarovce','142');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','äelpice','143');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','äemöa','144');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','äemetkovce','145');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('7','äenkvice','146');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','äiöov','147');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','äiatorsk· Bukovinka','148');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','äiba','149');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','äimonovce','150');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','äindliar','151');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','äintava','152');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','äir·kov','153');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','äirkovce','154');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','äirokÈ','155');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','äivetice','156');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','ämigovec','157');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','äolt˝ska','158');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','äoporÚa','159');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','äpaËince','160');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','äpania Dolina','161');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','äpanie Pole','162');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','ärob·rov·','163');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','ätÌtnik','164');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','ätÛs','165');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','ätÙla','166');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','ät˙rovo','167');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','ätefanov','168');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('42','ätefanov nad Oravou','169');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('7','ätefanov·','170');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','ätefanovce','171');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','ätefanovce','172');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','ätefanoviËov·','173');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','ätefurov','174');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','äterusy','175');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','ätiavniËka','176');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('44','ätiavnickÈ Bane','177');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','ätiavnik','178');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','ätit·re','179');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','ätrba','180');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','ätrkovec','181');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','ätvrtok','182');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','ätvrtok na Ostrove','183');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','äuæa','184');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','äuÚava','185');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Sudince','186');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','äuja','187');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','äumiac','188');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','äurany','189');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','äurianky','190');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','äurice','191');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','äv·bovce','192');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','ävedl·r','193');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Telg·rt','194');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','ävoöov','195');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','çapeöovo','196');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','⁄breû','197');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','⁄dol','198');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','⁄horn·','199');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','éÌp','200');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','éirany','201');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','éaökov','202');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','éabokreky','203');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','éabokreky nad Nitrou','204');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','éakarovce','205');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','éakovce','206');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','éalobÌn','207');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','éarnov','208');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','éarnovica','209');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','ébince','210');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','édaÚa','211');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','édiar','212');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','éelovce','213');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','éehÚa','214');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','éehra','215');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','éelezn· Breznica','216');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','éeleznÌk','217');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','éeliezovce','218');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','éelmanovce','219');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','éemberovce','220');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','éemliare','221');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','éiar','222');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','éiar','223');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','éiar nad Hronom','224');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','éibritov','225');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('29','éih·rec','226');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','éikava','227');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','éilina','228');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','éipov','229');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','éitavany','230');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','éitavce','231');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','éitn·-Radiöa','232');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','élkovce','233');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','éupËany','234');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','éupkov','235');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Abovce','236');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Abrah·m','237');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Abrah·movce','238');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Abrah·movce','239');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Abramov·','240');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Abranovce','241');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','AdamovskÈ Kochanovce','242');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Adidovce','243');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Aleköince','244');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Andovce','245');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Andrejov·','246');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('44','Sv‰t˝ Anton','247');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Ardanovce','248');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Ardovo','249');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Arnutovce','250');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','B·Ë','251');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','B·b','252');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','B·dice','253');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('7','B·hoÚ','254');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','B·nov','255');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','B·novce nad Bebravou','256');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','B·novce nad Ondavou','257');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','B·tka','258');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','B·torov·','259');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','B·tovce','260');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','BÌÚa','261');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','BÌÚovce','262');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','BÌlkove Humence','263');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','BÙrka','264');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','B˙Ë','265');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Bûany','266');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','BaËka','267');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','BaËkov','268');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','BaËkovÌk','269');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('44','BaÔan','270');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','BaÚa','271');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Baöka','272');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Baökovce','273');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Baökovce','274');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','Baöovce','275');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','BabÌn','276');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Babie','277');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Babin·','278');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Babindol','279');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Babinec','280');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Bac˙ch','281');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Bac˙rov','282');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','BadÌn','283');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','BajË','284');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Bajany','285');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Bajerov','286');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Bajerovce','287');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Bajka','288');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Bajtava','289');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Baka','290');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Bal·ûe','291');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Baldovce','292');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','BaloÚ','293');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Balog nad Ipæom','294');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','Banka','295');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('44','Bansk· ätiavnica','296');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('44','Bansk· Bel·','297');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Bansk· Bystrica','298');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','BanskÈ','299');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','HrabiËov','894');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Hrabkov','895');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Hrabov· Roztoka','896');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','HrabovËÌk','897');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Hrabovec','898');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Hrabovec nad Laborcom','899');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Hrabovka','900');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','HrabskÈ','901');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Hrabuöice','902');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Hrachoviöte','903');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Hrachovo','904');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','Hradiöte','905');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','Hradiöte','906');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Hradiöte pod Vr·tnom','907');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Hradisko','908');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','HraniËnÈ','909');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','Hranovnica','910');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Hrhov','911');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','HriËovskÈ Podhradie','912');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('46','HriÚov·','913');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','Hriöovce','914');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Hriadky','915');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Hrkovce','916');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Hrlica','917');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Nitrianske HrnËiarovce','918');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','HrnËiarovce nad Parnou','919');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','HrnËiarska Ves','920');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','HrnËiarske Zaluûany','921');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Doln˝ ät·l','922');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Hrochoù','923');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Hromoö','924');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Hronec','925');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Hronovce','926');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Hronsek','927');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Hronsk· Breznica','928');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Hronsk· D˙brava','929');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','HronskÈ KæaËany','930');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','HronskÈ Kosihy','931');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','Hronsk˝ BeÚadik','932');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Hruöov','933');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Hruöov','934');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Hruöovany','935');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Hruöovo','936');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','HruötÌn','937');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Hrub· Boröa','938');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Hrub˝ ä˙r','939');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','HruboÚovo','940');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Hrubov','941');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Hubice','942');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','Hubina','943');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Huboöovce','944');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','Hubov·','945');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Hubovo','946');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','HucÌn','947');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Hudcovce','948');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Hul','949');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','HumennÈ','950');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Huncovce','951');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Hunkovce','952');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Hurbanova Ves','953');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Hurbanovo','954');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Hus·k','955');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Husin·','956');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Hutka','957');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Huty','958');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Hviezdoslavov','959');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','Hvozdnica','960');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Hybe','961');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','IÚa','962');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','IÚaËovce','963');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Iûa','964');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Iûipovce','965');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Iûkovce','966');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Igram','967');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Ihæany','968');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Ihr·Ë','969');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','Ilava','970');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Iliaöovce','971');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('44','Ilija','972');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Imeæ','973');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Inovce','974');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','IpeæskÈ ⁄æany','975');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','IpeæskÈ Predmostie','976');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Ipeæsk˝ Sokolec','977');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','IstebnÈ','978');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','Ivachnov·','979');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','IvanËin·','980');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Ivanice','981');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Ivanka pri Nitre','982');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Ivanka pri Dunaji','983');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Ivanovce','984');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','J·novce','985');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','JabloÚ','986');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','JabloÚovce','987');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('7','Jablonec','988');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Jablonica','989');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('19','Jablonka','990');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Jablonov','991');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Jablonov nad TurÚou','992');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','JablonovÈ','993');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','JablonovÈ','994');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Jacovce','995');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Jahodn·','996');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','Jaklovce','997');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Jakovany','998');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Jakuöovce','999');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Jakubany','1000');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Jakubov','1001');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Jakubova Voæa','1002');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Jakubovany','1003');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Jakubovany','1004');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','JalöovÈ','1005');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','JalöovÌk','1006');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Jalov·','1007');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Jalovec','1008');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Jalovec','1009');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','JamnÌk','1010');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','JamnÌk','1011');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','JanÌk','1012');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','JanÌky','1013');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Janice','1014');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Jankovce','1015');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Janov','1016');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','JanovÌk','1017');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Janova Lehota','1018');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Janovce','1019');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','J·novce','1020');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Jarab·','1021');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Jarabina','1022');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Jarok','1023');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Jarovnice','1024');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Jasenica','1025');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Jasenie','1026');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Jasenov','1027');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Jasenov','1028');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Jasenov·','1029');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','JasenovÈ','1030');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Jasenovce','1031');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Jasenovo','1032');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','JaslovskÈ Bohunice','1033');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Jasov','1034');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Jasov·','1035');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Jastrab·','1036');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Jastrabie nad Topæou','1037');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Jastrabie pri Michalovciach','1038');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Jatov','1039');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','Tatransk· Javorina','1040');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Javorina','1041');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Jazernica','1042');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','Jeökova Ves','1043');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','JedæovÈ Kostoæany','1044');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Jedlinka','1045');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Jelöava','1046');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Jelöovce','1047');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Jelöovec','1048');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Jelenec','1049');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Jelka','1050');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Jenkovce','1051');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','JesenskÈ','1052');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','JesenskÈ','1053');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Jestice','1054');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Jezersko','1055');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Jovice','1056');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Jovsa','1057');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Jur nad Hronom','1058');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('7','Sv‰t˝ Jur','1059');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Jurkov· Voæa','1060');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Jurov·','1061');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','JurskÈ','1062');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Juskova Voæa','1063');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','K·lnica','1064');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','K·tlovce','1065');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','K·tov','1066');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Kæ˙Ëovec','1067');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','KæaËany','1068');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','KæaËe','1069');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','KæaËno','1070');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','Kæak','1071');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Kæuöov','1072');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Köinn·','1073');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','K˙tniky','1074');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','K˙ty','1075');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','KaËanov','1076');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Kaæamenov·','1077');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Kaæava','1078');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Kaöov','1079');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Kajal','1080');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Kalöa','1081');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','Kalameny','1082');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Kalinkovo','1083');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','Kalinov','1084');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','Kalinovo','1085');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Kaln· nad Hronom','1086');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Kaln· Roztoka','1087');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Kalniöte','1088');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Kaloöa','1089');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Kalonda','1090');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Kaluûa','1091');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Kamanov·','1092');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','KameÚany','1093');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','KamenÌn','1094');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Kamenec pod Vt·Ënikom','1095');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','KameniËany','1096');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','KameniËn·','1097');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Kamenica','1098');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Kamenica nad Cirochou','1099');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Kamenica nad Hronom','1100');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Kamenn· Poruba','1101');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Kamenn· Poruba','1102');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','KamennÈ Kosihy','1103');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Kamenn˝ Most','1104');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Kamienka','1105');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Kamienka','1106');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Kanianka','1107');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Kapiöov·','1108');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Kapince','1109');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Kaplna','1110');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Kapuöany','1111');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Kapuöianske KæaËany','1112');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Karlov·','1113');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Karn·','1114');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','KazimÌr','1115');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','KeËkovce','1116');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','KeËovo','1117');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Keûmarok','1118');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Kecerovce','1119');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Kecerovsk˝ Lipovec','1120');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Kechnec','1121');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Kendice','1122');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Kesovce','1123');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Kiarov','1124');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Kl·ötor pod Znievom','1125');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','Kl·tova Nov· Ves','1126');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','KlËov','1127');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','KlÌûska Nem·','1128');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Kladzany','1129');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Klasov','1130');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','KleÚany','1131');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Klenov','1132');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Klenov·','1133');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Klenovec','1134');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Klieötina','1135');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','Klin','1136');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Klin nad Bodrogom','1137');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('46','KlokoË','1138');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','KlokoËov','1139');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','KlokoËov','1140');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','Klubina','1141');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','Kluknava','1142');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Kmeùovo','1143');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','KoËÌn-LanË·r','1144');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','KoËovce','1145');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','KoÚuö','1146');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Koö','1147');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Koöùany nad Turcom','1148');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Koö˙ty','1149');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('19','Koöarisk·','1150');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Koöarovce','1151');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','Koöeca','1152');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','KoöeckÈ Podhradie','1153');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Koöick· Bel·','1154');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Koöick· Polianka','1155');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','KoöickÈ Oæöany','1156');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Koöick˝ KleËenov','1157');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Koökovce','1158');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Koöoln·','1159');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Koûany','1160');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Koûuchov','1161');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Koûuchovce','1162');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Kobeliarovo','1163');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Kobylnice','1164');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Kobyly','1165');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Kocurany','1166');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Koceæovce','1167');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Kochanovce','1168');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Kochanovce','1169');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Kociha','1170');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','Kojöov','1171');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Kojatice','1172');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Koköov-Baköa','1173');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','Kokava nad Rimavicou','1174');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Kokoöovce','1175');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','Kol·rovice','1176');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Kol·rovo','1177');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Kol·re','1178');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','KolÌÚany','1179');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','KolaËkov','1180');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','KolaËno','1181');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Kolbasov','1182');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Kolbovce','1183');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Kolibabovce','1184');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Kolinovce','1185');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Kolonica','1186');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Kolta','1187');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Kom·rany','1188');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Kom·rno','1189');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Kom·rov','1190');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Kom·rovce','1191');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Komjatice','1192');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','Komjatn·','1193');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','KomoËa','1194');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Koniarovce','1195');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Konr·dovce','1196');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Konsk·','1197');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Konsk·','1198');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','ZemplÌnske KopËany','1199');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','KopËany','1200');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Kopernica','1201');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','Koplotovce','1202');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Koprivnica','1203');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','KorÚa','1204');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','KordÌky','1205');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Korejovce','1206');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Koromæa','1207');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Korunkov·','1208');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('46','Koryt·rky','1209');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','KorytnÈ','1210');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Kosihovce','1211');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Kosihy nad Ipæom','1212');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','KosorÌn','1213');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Kostoæany nad Horn·dom','1214');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Kostoæany pod TribeËom','1215');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Kostolec','1216');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Kostoliöte','1217');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Kostoln· pri Dunaji','1218');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Kostoln· Ves','1219');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Kostoln·-Z·rieËie','1220');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('19','KostolnÈ','1221');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','KostolnÈ KraËany','1222');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','Koteöov·','1223');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','KotrËin· L˙Ëka','1224');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Kov·Ëov·','1225');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Kov·Ëov·','1226');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Kov·Ëovce','1227');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Kov·lov','1228');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','Kov·lovec','1229');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Kovarce','1230');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Koz·rovce','1231');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','KozÌ Vrbovok','1232');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('44','KozelnÌk','1233');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Kr·æ','1234');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Kr·æov Brod','1235');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Kr·æova Lehota','1236');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('29','Kr·æov· nad V·hom','1237');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Kr·æov· pri Senci','1238');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Kr·æovce','1239');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Kr·æovce-Krniöov','1240');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Kr·æoviËove KraËany','1241');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Kr·æovsk˝ Chlmec','1242');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Kr·liky','1243');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Kr·sna L˙ka','1244');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Kr·sna Ves','1245');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','Kr·sno','1246');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','Kr·sno nad Kysucou','1247');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Kr·snohorsk· Dlh· L˙ka','1248');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Kr·snohorskÈ Podhradie','1249');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Kr·snovce','1250');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','Kr·sny Brod','1251');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','KrËava','1252');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','KrÌûe','1253');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','KrÌûov· Ves','1254');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','KrÌûovany','1255');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Krökany','1256');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','KraË˙novce','1257');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Kraæovany','1258');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Krahule','1259');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Krajn· Bystr·','1260');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Krajn· Poæana','1261');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Krajn· Por˙bka','1262');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('19','KrajnÈ','1263');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','KrajnÈ »ierno','1264');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','Krakovany','1265');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','KrasÚany','1266');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Kraskovo','1267');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','Kravany','1268');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Kravany','1269');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Kravany nad Dunajom','1270');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Kremn·','1271');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Kremnica','1272');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','KremnickÈ Bane','1273');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Kriöæovce','1274');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Kriöovsk· Lieskov·','1275');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Kriûovany nad Dudv·hom','1276');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Kristy','1277');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Kriv·','1278');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('46','Kriv·Ú','1279');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','KrivÈ','1280');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Krivany','1281');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','Krivokl·t','1282');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Krivos˙d-Bodovka','1283');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','Krn·','1284');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','KrnËa','1285');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Krokava','1286');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Krompachy','1287');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Krpeæany','1288');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Krtovce','1289');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','Kruöetnica','1290');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Kruöinec','1291');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Kruöovce','1292');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Kruûlov','1293');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Kruûlov·','1294');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Kruûn·','1295');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Kruûno','1296');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Krupina','1297');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','KuËÌn','1298');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','KuËÌn','1299');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Kub·Úovo','1300');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','KuchyÚa','1301');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Kuklov','1302');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Kukov·','1303');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','KukuËÌnov','1304');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Kuneöov','1305');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Kunerad','1306');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Kunova Teplica','1307');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Kuraæany','1308');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Kurima','1309');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Kurimany','1310');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Kurimka','1311');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Kurov','1312');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','KusÌn','1313');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Kuzmice','1314');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Kuzmice','1315');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','KvaËany','1316');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','KvaËany','1317');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','Kvaöov','1318');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Kvakovce','1319');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Keù','1320');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Kvetoslavov','1321');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Kyjatice','1322');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Kyjov','1323');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Kynceæov·','1324');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Kysak','1325');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Kyselica','1326');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Kysta','1327');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('36','KysuckÈ NovÈ Mesto','1328');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('36','Kysuck˝ Lieskovec','1329');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','L·b','1330');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('46','L·tky','1331');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','L˙Ë na Ostrove','1332');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','L˙Ëina','1333');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','L˙Ëka','1334');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','L˙Ëka','1335');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','L˙Ëka','1336');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','L˙Ëka','1337');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','L˙Ëky','1338');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','L˙Ëky','1339');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','L˙Ënica nad éitavou','1340');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','L˙ka','1341');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','L˙ky','1342');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Laökovce','1343');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Lackov','1344');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Lackov·','1345');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Lackovce','1346');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Lada','1347');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','Ladce','1348');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Ladice','1349');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Ladmovce','1350');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Ladomersk· Vieska','1351');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Ladomirov','1352');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Ladomirov·','1353');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Ladzany','1354');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Lakö·rska Nov· Ves','1355');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Lascov','1356');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Lask·r','1357');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','LastomÌr','1358');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Lastovce','1359');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Lazany','1360');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Lazisko','1361');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','Lazy pod Makytou','1362');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Leöù (vojensk˝ obvod)','1363');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Leötiny','1364');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Leûiachov','1365');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Lechnica','1366');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','Lednica','1367');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','LednickÈ Rovne','1368');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Lefantovce','1369');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Legnava','1370');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','LehÙtka','1371');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','LehÙtka pod Brehmi','1372');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Lehnice','1373');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Lehota','1374');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Lehota nad Rimavicou','1375');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Lehota pod Vt·Ënikom','1376');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Lek·rovce','1377');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Leæa','1378');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Leles','1379');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Lemeöany','1380');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Lenartov','1381');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Lenartovce','1382');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Lendak','1383');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Lenka','1384');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Lentvora','1385');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','Leopoldov','1386');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','LesÌËek','1387');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Lesenice','1388');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','LesnÈ','1389');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Lesnica','1390');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Letanovce','1391');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','LetniËie','1392');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Levice','1393');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Levkuöka','1394');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','LevoËa','1395');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','LiËartovce','1396');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Liöov','1397');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Libichava','1398');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Licince','1399');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Lieöùany','1400');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Lieöno','1401');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('42','Liesek','1402');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Lieskovany','1403');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Lieskovec','1404');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Lieskovec','1405');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Lietava','1406');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Lietavsk· L˙Ëka','1407');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','Likavka','1408');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('7','Limbach','1409');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Lipany','1410');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','LipnÌk','1411');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','LipnÌky','1412');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Lipov·','1413');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Lipov·','1414');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','LipovÈ','1415');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Lipovany','1416');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Lipovce','1417');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Lipovec','1418');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Lipovec','1419');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','LipovnÌk','1420');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','LipovnÌk','1421');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','Liptovsk· ätiavnica','1422');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Liptovsk· Anna','1423');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Liptovsk· Kokava','1424');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','Liptovsk· L˙ûna','1425');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','Liptovsk· Osada','1426');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Liptovsk· Por˙bka','1427');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Liptovsk· Sielnica','1428');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','Liptovsk· Tepl·','1429');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','Liptovsk· TepliËka','1430');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','LiptovskÈ Beharovce','1431');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','LiptovskÈ KæaËany','1432');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','LiptovskÈ Matiaöovce','1433');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','LiptovskÈ Rev˙ce','1434');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Liptovsk˝ Hr·dok','1435');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Liptovsk˝ J·n','1436');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','Liptovsk˝ Michal','1437');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Liptovsk˝ Mikul·ö','1438');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Liptovsk˝ Ondrej','1439');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Liptovsk˝ Peter','1440');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Liptovsk˝ Trnovec','1441');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','Liskov·','1442');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Litava','1443');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Litmanov·','1444');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','Livina','1445');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','LivinskÈ Opatovce','1446');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Livov','1447');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Livovsk· Huta','1448');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Loöonec','1449');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','LoûÌn','1450');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('36','Lodno','1451');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Lok','1452');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','Lokca','1453');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Lom nad Rimavicou','1454');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','Lomn·','1455');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','LomnÈ','1456');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','LomniËka','1457');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Lontov','1458');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Lop˙chov','1459');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','Lopaöov','1460');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('36','LopuönÈ Paûite','1461');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','LovËa','1462');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','LovËica-TrubÌn','1463');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Lovce','1464');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','LovinobaÚa','1465');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Lozorno','1466');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','LuËatÌn','1467');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','LuËenec','1468');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','LuËivn·','1469');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Luûany','1470');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Luûany pri Topli','1471');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Luûianky','1472');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','LubenÌk','1473');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Lubina','1474');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Ludanice','1475');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','Ludrov·','1476');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','LuhyÚa','1477');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Luk·Ëovce','1478');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','LukaËovce','1479');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Lukavica','1480');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Lukavica','1481');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Lukov','1482');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Lukoviötia','1483');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Lula','1484');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','LupoË','1485');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Lutiöe','1486');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Lutila','1487');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','Lys· pod Makytou','1488');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Lysica','1489');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','M·laö','1490');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','M·linec','1491');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','MÙlËa','1492');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','M˝tna','1493');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','M˝tne Ludany','1494');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','M˝to pod œumbierom','1495');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','MaÚa','1496');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Maökov·','1497');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Maökovce','1498');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','MaùovskÈ Vojkovce','1499');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Machulince','1500');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Macov','1501');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','Madunice','1502');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Magnezitovce','1503');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Majcichov','1504');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Majere','1505');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Majerovce','1506');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','Makov','1507');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Makovce','1508');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Mal· »alomija','1509');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Mal· »ausa','1510');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Mal· »ierna','1511');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Mal· Domaöa','1512');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Mal· Frankov·','1513');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Mal· Hradn·','1514');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Mal· Ida','1515');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','Mal· Lehota','1516');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Mal· Lodina','1517');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Mal· MaËa','1518');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Mal· nad Hronom','1519');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Mal· Poæana','1520');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Mal· T‡Úa','1521');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','MalËice','1522');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','MalÈ BorovÈ','1523');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','MalÈ Chyndice','1524');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','MalÈ DvornÌky','1525');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','MalÈ Hoste','1526');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','MalÈ Kosihy','1527');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','MalÈ Kozm·lovce','1528');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','MalÈ KröteÚany','1529');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','MalÈ Lednice','1530');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','MalÈ Lev·re','1531');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','MalÈ Ludince','1532');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','MalÈ Ozorovce','1533');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','MalÈ Raökovce','1534');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','MalÈ RipÚany','1535');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','MalÈ Straciny','1536');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','MalÈ Trakany','1537');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','MalÈ Uherce','1538');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','MalÈ Vozokany','1539');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','MalÈ Z·luûie','1540');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','MalÈ Zlievce','1541');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Mal˝ »epËÌn','1542');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Mal˝ äariö','1543');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Mal˝ CetÌn','1544');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Mal˝ Horeö','1545');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Mal˝ Kamenec','1546');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Mal˝ KrtÌö','1547');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Mal˝ Lap·ö','1548');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Mal˝ LipnÌk','1549');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Mal˝ Slavkov','1550');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Mal˝ SlivnÌk','1551');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Malûenice','1552');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Malachov','1553');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Malacky','1554');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','MalatÌny','1555');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Malatin·','1556');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Malcov','1557');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Malinov·','1558');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Malinovo','1559');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Maluûin·','1560');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Mankovce','1561');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','Maröov·-Raöov','1562');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Marcelov·','1563');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','Margecany','1564');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','MarhaÚ','1565');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Marianka','1566');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Markovce','1567');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Markuöka','1568');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Markuöovce','1569');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Martin','1570');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Martin nad éitavou','1571');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','MartinËek','1572');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Martinov·','1573');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Martovce','1574');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Mat˙ökovo','1575');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Matejovce nad Horn·dom','1576');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Matiaöka','1577');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Matiaöovce','1578');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Matovce','1579');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Matysov·','1580');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Medovarce','1581');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','MedveÔov','1582');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Medvedie','1583');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Medzany','1584');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Medzev','1585');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Medzianky','1586');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Medzibrod','1587');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Medzibrodie nad Oravou','1588');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','Medzilaborce','1589');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','MelËice-LieskovÈ','1590');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Melek','1591');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Meliata','1592');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','Mengusovce','1593');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','Meraöice','1594');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','MernÌk','1595');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','MesteËko','1596');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Mestisko','1597');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','MiËakovce','1598');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','MiÚovce','1599');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Michaæany','1600');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Michajlov','1601');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Michal na Ostrove','1602');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Michal nad éitavou','1603');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Michalkov·','1604');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Michalok','1605');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Michalov·','1606');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Michalovce','1607');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Mierovo','1608');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Miezgovce','1609');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Mikluöovce','1610');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Mikov·','1611');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Mikuöovce','1612');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','Mikuöovce','1613');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Mikul·öov·','1614');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Veæk˝ K˝r','1615');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Milhosù','1616');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Miloslavov','1617');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Milpoö','1618');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Mirkovce','1619');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Miroæa','1620');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','Ml·dzovo','1621');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Mlyn·rovce','1622');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','MlynËeky','1623');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','Mlynica','1624');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Mlynky','1625');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','MnÌöek nad Hnilcom','1626');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','MnÌöek nad Popradom','1627');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','MnÌchova Lehota','1628');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','MoËa','1629');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('44','MoËiar','1630');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Moökovec','1631');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Moöovce','1632');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Moötenica','1633');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Moöurov','1634');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Modr˝ KameÚ','1635');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('7','Modra','1636');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Modra nad Cirochou','1637');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Modrany','1638');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Modrov·','1639');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Modrovka','1640');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Mojö','1641');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','MojmÌrovce','1642');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','MojtÌn','1643');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Mojzesovo','1644');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Mokr· L˙ka','1645');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','Mokr˝ H·j','1646');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Mokrance','1647');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Mokroluh','1648');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Moldava nad Bodvou','1649');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Moravany','1650');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','Moravany nad V·hom','1651');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','MoravskÈ LieskovÈ','1652');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Moravsk˝ Sv‰t˝ J·n','1653');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Most pri Bratislave','1654');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Mostov·','1655');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Moteöice','1656');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','MotyËky','1657');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Mr·zovce','1658');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','MuËÌn','1659');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Muæa','1660');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Muûla','1661');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','MudroÚovo','1662');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Mudrovce','1663');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Mur·Ú','1664');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Mur·nska Dlh· L˙ka','1665');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Mur·nska Huta','1666');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Mur·nska Lehota','1667');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Mur·nska Zdychava','1668');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','M˙tne','1669');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('19','Myjava','1670');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Myslina','1671');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','N·lepkovo','1672');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','N·mestovo','1673');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','N·na','1674');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','N˝rovce','1675');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Nacina Ves','1676');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','Nadlice','1677');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Nah·Ë','1678');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Nandraû','1679');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Nechv·lova Polianka','1680');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Necpaly','1681');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Nedaöovce','1682');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','Nedanovce','1683');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('29','Neded','1684');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Nededza','1685');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Nedoûery-Brezany','1686');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','NemËiÚany','1687');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','NemËice','1688');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Nemöov·','1689');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Nemce','1690');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Nemcovce','1691');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Nemcovce','1692');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','NemeËky','1693');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Nemeöany','1694');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Nemeck·','1695');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Nenince','1696');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Neporadza','1697');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Neporadza','1698');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('36','Nesluöa','1699');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Neverice','1700');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Nevidzany','1701');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Nevidzany','1702');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','NevoænÈ','1703');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Nezbudsk· L˙Ëka','1704');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('42','Niûn·','1705');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','Niûn·','1706');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Niûn· Boca','1707');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Niûn· Hutka','1708');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Niûn· Jablonka','1709');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Niûn· Jedæov·','1710');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Niûn· Kamenica','1711');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Niûn· Myöæa','1712');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Niûn· Olöava','1713');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Niûn· Pisan·','1714');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Niûn· Polianka','1715');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Niûn· Rybnica','1716');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Niûn· Sitnica','1717');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Niûn· Slan·','1718');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Niûn· Voæa','1719');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','NiûnÈ LadiËkovce','1720');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','NiûnÈ NemeckÈ','1721');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','NiûnÈ Repaöe','1722');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','NiûnÈ Ruûbachy','1723');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Niûn˝ »aj','1724');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Niûn˝ éipov','1725');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Niûn˝ Hrabovec','1726');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Niûn˝ Hruöov','1727');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Niûn˝ Kl·tov','1728');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Niûn˝ Kom·rnik','1729');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Niûn˝ KruËov','1730');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Niûn˝ L·nec','1731');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Niûn˝ Miroöov','1732');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Niûn˝ OrlÌk','1733');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Niûn˝ Sk·lnik','1734');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Niûn˝ Slavkov','1735');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Niûn˝ Tvaroûec','1736');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','Nimnica','1737');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Nitra nad Ipæom','1738');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Nitrianska Blatnica','1739');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Nitrianska Streda','1740');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Nitrianske Pravno','1741');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Nitrianske Rudno','1742');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Nitrianske SuËany','1743');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Nitrica','1744');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','NolËovo','1745');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Norovce','1746');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Nov· ºubovÚa','1747');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','Nov· BaÚa','1748');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Nov· Baöta','1749');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Nov· Boö·ca','1750');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','Nov· Bystrica','1751');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Nov· Dedina','1752');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Nov· Dedinka','1753');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','Nov· Dubnica','1754');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Nov· KelËa','1755');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Nov· Lehota','1756');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','Nov· Lesn·','1757');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Nov· Polhora','1758');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Nov· Polianka','1759');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Nov· Sedlica','1760');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Nov· Ves','1761');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Nov· Ves nad éitavou','1762');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Nov· Ves nad V·hom','1763');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Nov· Vieska','1764');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Nov·Ëany','1765');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Nov·ky','1766');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','NovÈ Hony','1767');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','NovÈ Mesto nad V·hom','1768');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','NovÈ Sady','1769');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','NovÈ Z·mky','1770');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Nov˝ éivot','1771');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Nov˝ Ruskov','1772');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Nov˝ Salaö','1773');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Nov˝ Svet','1774');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Nov˝ Tekov','1775');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','Novoù','1776');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Novosad','1777');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','OËkov','1778');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','OËov·','1779');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Oæöavka','1780');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','Oæöinkov','1781');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Oæöov','1782');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Oædza','1783');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','Oæka','1784');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','OöËadnica','1785');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','OûÔany','1786');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Obeckov','1787');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Obiöovce','1788');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Obid','1789');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','OborÌn','1790');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','ObruËnÈ','1791');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Obyce','1792');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('36','Ochodnica','1793');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Ochtin·','1794');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','OdorÌn','1795');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Ohrady','1796');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Ohradzany','1797');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','OkoË','1798');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','OkoliËn· na Ostrove','1799');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Okr˙hle','1800');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Okruûn·','1801');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Oæöavce','1802');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Oæöavica','1803');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Oæöavka','1804');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Olöovany','1805');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Olcnava','1806');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','Oleön·','1807');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','OlejnÌkov','1808');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Olov·ry','1809');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Omöenie','1810');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Omastin·','1811');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Ondavka','1812');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','OndavskÈ Matiaöovce','1813');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Ondraöov·','1814');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Ondraöovce','1815');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Ondrejovce','1816');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Op·tka','1817');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Opatovce','1818');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Opatovce nad Nitrou','1819');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Opatovsk· Nov· Ves','1820');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Opava','1821');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Opin·','1822');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Opoj','1823');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Oponice','1824');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Or·vka','1825');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Oravce','1826');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','Oravsk· Jasenica','1827');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','Oravsk· Lesn·','1828');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','Oravsk· Polhora','1829');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Oravsk· Poruba','1830');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','OravskÈ VeselÈ','1831');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('42','Oravsk˝ Biely Potok','1832');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Oravsk˝ Podz·mok','1833');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Ordzovany','1834');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Oreöany','1835');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Orechov·','1836');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Orechov· PotÙÚ','1837');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Vieska','1838');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','OreskÈ','1839');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','OreskÈ','1840');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Orlov','1841');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','Orovnica','1842');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Ortuùov·','1843');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Os·dka','1844');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','OsadnÈ','1845');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Osikov','1846');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Oslany','1847');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Osrblie','1848');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Ostr· L˙ka','1849');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','Ostr˝ Gr˙Ú','1850');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','Ostratice','1851');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Ostrov','1852');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','Ostrov','1853');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Ostrovany','1854');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','OsturÚa','1855');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','OsuskÈ','1856');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Otrh·nky','1857');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','OtroËok','1858');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','OvËiarsko','1859');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','OvËie','1860');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','OzdÌn','1861');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','P·rnica','1862');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','PËolinÈ','1863');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('7','PÌla','1864');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','PÌla','1865');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','PÌla','1866');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','PÙtor','1867');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','P˙chov','1868');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','PaËa','1869');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','PaÚa','1870');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','PaÚovce','1871');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Paökov·','1872');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Paötina Z·vada','1873');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','Paûiù','1874');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Pad·Ú','1875');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Padarovce','1876');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Pakostov','1877');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Pal·rikovo','1878');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','PalÌn','1879');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Sap','1880');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','Palota','1881');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','PanickÈ Dravce','1882');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','PapÌn','1883');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Papradno','1884');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Parchovany','1885');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Parihuzovce','1886');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Partiz·nska ºupËa','1887');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','Partiz·nske','1888');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Pataö','1889');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Pastovce','1890');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','Pastuchov','1891');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Pata','1892');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Patince','1893');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','PavËina Lehota','1894');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Pavæany','1895');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Pavlice','1896');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Pavlov·','1897');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Pavlova Ves','1898');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Pavlovce','1899');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Pavlovce','1900');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Pavlovce nad Uhom','1901');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','PeËeÚady','1902');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','PeËeÚany','1903');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','PeËenice','1904');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','PeËovsk· Nov· Ves','1905');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Peder','1906');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','PerÌn-Chym','1907');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Pernek','1908');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Petkovce','1909');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Petrikovce','1910');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Petrov·','1911');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Petrova Lehota','1912');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','Petrova Ves','1913');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Petrovany','1914');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Petrovce','1915');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Petrovce','1916');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Petrovce','1917');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Petrovce nad Laborcom','1918');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','Petrovice','1919');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Petrovo','1920');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('7','Pezinok','1921');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Pichne','1922');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','Pieöùany','1923');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Pincin·','1924');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Pinkovce','1925');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Piskorovce','1926');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Pitelov·','1927');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Pl·öùovce','1928');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','PlavÈ Vozokany','1929');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','PlaveË','1930');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','PlaveckÈ Podhradie','1931');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Plaveck˝ ätvrtok','1932');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Plaveck˝ Mikul·ö','1933');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Plaveck˝ Peter','1934');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Plavnica','1935');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Pleö','1936');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Sv‰tuöe','1937');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Pleöivec','1938');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Plechotice','1939');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','PlevnÌk-DrienovÈ','1940');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Plieöovce','1941');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','PloskÈ','1942');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','PloskÈ','1943');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('44','PoË˙vadlo','1944');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','PoËarov·','1945');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Poæanovce','1946');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Poæany','1947');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Poæn˝ Kesov','1948');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Poöa','1949');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Pobedim','1950');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Pochabany','1951');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('42','Podbiel','1952');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','PodbranË','1953');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Podbrezov·','1954');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Podh·jska','1955');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Podhorany','1956');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Podhorany','1957');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Podhorany','1958');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('44','Podhorie','1959');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Podhorie','1960');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','PodhoroÔ','1961');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','PodhradÌk','1962');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Podhradie','1963');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Podhradie','1964');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Podhradie','1965');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Podkonice','1966');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('46','Podkriv·Ú','1967');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('19','Podkylava','1968');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Podluûany','1969');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Podluûany','1970');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','PodolÌnec','1971');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Podolie','1972');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','PodreËany','1973');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Podskalie','1974');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','PodtureÚ','1975');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','Podvysok·','1976');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Podz·mËok','1977');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Pohorel·','1978');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Pohranice','1979');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Pohronsk· Polhora','1980');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Pohronsk˝ Bukovec','1981');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Pohronsk˝ Ruskov','1982');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Pokryv·Ë','1983');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Polichno','1984');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Poliakovce','1985');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('19','Polianka','1986');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Polina','1987');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Poloma','1988');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Polomka','1989');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','Polt·r','1990');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Poluvsie','1991');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Pongr·covce','1992');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Poniky','1993');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','Poprad','1994');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','PoproË','1995');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','PoproË','1996');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','PopudinskÈ MoËidæany','1997');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Por·Ë','1998');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Por˙bka','1999');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Por˙bka','2000');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Por˙bka','2001');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('19','Poriadie','2002');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Porostov','2003');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Poruba','2004');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Poruba pod Vihorlatom','2005');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Por˙bka','2006');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','PotÙËky','2007');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','Potok','2008');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Potok','2009');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Potoky','2010');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Potvorice','2011');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Povaûany','2012');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Povaûsk· Bystrica','2013');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('36','Povina','2014');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','PovraznÌk','2015');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Pozba','2016');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Pozdiöovce','2017');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Pr·znovce','2018');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','PrÌbelce','2019');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','PrÌbovce','2020');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','PrÌkra','2021');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Pröa','2022');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Praöice','2023');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','PraönÌk','2024');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Praha','2025');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','Prakovce','2026');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Pravenec','2027');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Pravica','2028');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Pravotice','2029');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','PreËÌn','2030');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Preöov','2031');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Predajn·','2032');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','Predmier','2033');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('44','PrenËov','2034');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Preseæany','2035');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Prestavlky','2036');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','PribenÌk','2037');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Pribeta','2038');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Pribiö','2039');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Pribylina','2040');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Priechod','2041');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Priekopa','2042');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('19','PriepasnÈ','2043');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Prietrû','2044');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','Prietrûka','2045');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Prievaly','2046');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Prievidza','2047');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Prihradzany','2048');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','PrÌslop','2049');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Prituæany','2050');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','ProË','2051');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Prochot','2052');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','ProsaËov','2053');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Prosiek','2054');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Pruûina','2055');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','PruskÈ','2056');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Prusy','2057');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Pstrin·','2058');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','PtiËie','2059');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Ptruköa','2060');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Puöovce','2061');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Pucov','2062');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Pukanec','2063');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','PustÈ »emernÈ','2064');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','PustÈ ⁄æany','2065');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','PustÈ Pole','2066');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','PustÈ Sady','2067');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','R·koö','2068');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','R·koö','2069');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','R·ztoËno','2070');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','R·ztoka','2071');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','R˙baÚ','2072');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Raöice','2073');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','RaûÚany','2074');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','RabËa','2075');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','RabËice','2076');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Rad','2077');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','RadÙstka','2078');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Radatice','2079');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Radava','2080');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','Radimov','2081');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Radnovce','2082');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('36','Radoæa','2083');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Radoöina','2084');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Radoöovce','2085');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','Radoöovce','2086');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Radobica','2087');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Radoma','2088');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','RadvaÚ nad Dunajom','2089');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','RadvaÚ nad Laborcom','2090');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Radvanovce','2091');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Radzovce','2092');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Rafajovce','2093');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','RajËany','2094');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Rajec','2095');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Rajeck· Lesn·','2096');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','RajeckÈ Teplice','2097');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Raköa','2098');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Rak˙sy','2099');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','Rakov·','2100');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','RakovËÌk','2101');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Rakovec nad Ondavou','2102');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','Rakovice','2103');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Rakovnica','2104');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Rakovo','2105');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','RakytnÌk','2106');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Rankovce','2107');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Rapovce','2108');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Raslavice','2109');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Rastislavice','2110');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Ratka','2111');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Ratkov·','2112');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','Ratkovce','2113');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Ratkovo','2114');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Ratkovsk· Lehota','2115');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Ratkovsk· Such·','2116');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','RatkovskÈ BystrÈ','2117');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','Ratnovce','2118');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Ratvaj','2119');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Reæov','2120');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Reöica','2121');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Reöov','2122');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Reca','2123');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Regetovka','2124');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Rejdov·','2125');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Remeniny','2126');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','RemetskÈ H·mre','2127');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','RenËiöov','2128');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','Repejov','2129');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Repiöte','2130');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Rev˙ca','2131');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Rev˙cka Lehota','2132');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','RiöÚovce','2133');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','Richnava','2134');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Richvald','2135');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','RieËka','2136');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','RieËka','2137');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Rimavsk· BaÚa','2138');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Rimavsk· SeË','2139');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Rimavsk· Sobota','2140');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','RimavskÈ Brezovo','2141');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','RimavskÈ Janovce','2142');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','RimavskÈ Zaluûany','2143');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','Roökovce','2144');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Roöt·r','2145');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','RoûÚava','2146');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','RoûÚavskÈ BystrÈ','2147');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Roûkovany','2148');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Rochovce','2149');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','RohoûnÌk','2150');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','RohoûnÌk','2151');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Rohov','2152');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Rohovce','2153');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Rokycany','2154');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Rokytov','2155');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Rokytov pri Humennom','2156');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','Rokytovce','2157');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Rosina','2158');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','RovÚany','2159');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Rovensko','2160');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Rovinka','2161');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','RovnÈ','2162');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','RovnÈ','2163');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','RovnÈ','2164');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Rozhanovce','2165');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Rozloûn·','2166');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Roztoky','2167');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Ruûin·','2168');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Ruûindol','2169');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','Ruûomberok','2170');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','RudÚany','2171');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('36','Rudina','2172');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('36','Rudinka','2173');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('36','Rudinsk·','2174');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Rudlov','2175');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Rudn·','2176');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','RudnÌk','2177');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('19','RudnÌk','2178');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Rudnianska Lehota','2179');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Rudno','2180');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','Rudno nad Hronom','2181');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Rumanov·','2182');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Rumince','2183');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Runina','2184');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Rusk·','2185');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Rusk· Bystr·','2186');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Rusk· KajÚa','2187');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Rusk· Nov· Ves','2188');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Rusk· Poruba','2189');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Rusk· Voæa','2190');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Rusk· Voæa nad Popradom','2191');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Rusk· Volov·','2192');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Rusk˝ Hrabovec','2193');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Vyön˝ KazimÌr','2194');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','KruËov','2195');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Rusk˝ Potok','2196');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Ruskov','2197');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Ruskovce','2198');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Ruskovce','2199');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Rybany','2200');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Rybky','2201');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','RybnÌk','2202');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','RybnÌk','2203');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','RykynËice','2204');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','S·doËnÈ','2205');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','S·sa','2206');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','S·sa','2207');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Sæaûany','2208');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','S˙æov-Hradn·','2209');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','S˙dovce','2210');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','S˙lovce','2211');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','S˙tor','2212');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','SaËurov','2213');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Sabinov','2214');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Sady nad Torysou','2215');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Salka','2216');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Santovka','2217');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','Sasinkovo','2218');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Sazdice','2219');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','SeË','2220');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','SeËianky','2221');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','SeËovce','2222');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','SeËovsk· Polianka','2223');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Seæany','2224');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','SeÚa','2225');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Sebechleby','2226');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','SebedÌn-BeËov','2227');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Sebedraûie','2228');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Sedliacka Dubov·','2229');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Sedlice','2230');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Sedlisk·','2231');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','Sedmerovec','2232');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Sejkov','2233');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Sekule','2234');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Selce','2235');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','Selce','2236');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Selce','2237');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Selec','2238');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('29','Selice','2239');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Semerovo','2240');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Senec','2241');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Seniakovce','2242');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Senica','2243');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','SennÈ','2244');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','SennÈ','2245');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Senohrad','2246');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','SereÔ','2247');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Sielnica','2248');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','SihelnÈ','2249');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Sihla','2250');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','SikeniËka','2251');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','Siladice','2252');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Silica','2253');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Silick· Brezov·','2254');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Silick· Jablonica','2255');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Sirk','2256');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','SirnÌk','2257');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Sk·roö','2258');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Sk˝cov','2259');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','SkaËany','2260');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','Skalica','2261');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','SkalitÈ','2262');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Skalka nad V·hom','2263');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Skereöovo','2264');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','SklabiÚa','2265');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Sklabin·','2266');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Sklabinsk˝ Podz·mok','2267');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','SklenÈ','2268');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','SklenÈ Teplice','2269');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','SkrabskÈ','2270');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('29','MoËenok','2271');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Sl·dkoviËovo','2272');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Slavkovce','2273');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','SlanËÌk','2274');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Slanec','2275');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Slansk· Huta','2276');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','SlanskÈ NovÈ Mesto','2277');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Slask·','2278');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Slatina','2279');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Slatina nad Bebravou','2280');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Slatinka nad Bebravou','2281');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('46','SlatinskÈ Lazy','2282');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Slatvina','2283');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Slavec','2284');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','Slavnica','2285');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Slavoöka','2286');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Slavoöovce','2287');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','SlepËany','2288');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','SliaË','2289');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','LiptovskÈ SliaËe','2290');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Sliepkovce','2291');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','SlivnÌk','2292');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','SlizkÈ','2293');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Slopn·','2294');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Slovany','2295');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Slovensk· ºupËa','2296');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Slovensk· KajÚa','2297');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Slovensk· Nov· Ves','2298');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Slovensk· Ves','2299');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Slovensk· Volov·','2300');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','SlovenskÈ œarmoty','2301');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','SlovenskÈ KæaËany','2302');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','SlovenskÈ KrivÈ','2303');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','SlovenskÈ NovÈ Mesto','2304');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','SlovenskÈ Pravno','2305');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('7','Slovensk˝ Grob','2306');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Slovinky','2307');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Smiûany','2308');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Smilno','2309');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Smolenice','2310');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','SmolinskÈ','2311');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','SmolnÌcka Huta','2312');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','SmolnÌk','2313');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Smrd·ky','2314');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','SmreËany','2315');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Snakov','2316');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('36','Sneûnica','2317');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Snina','2318');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Soæ','2319');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','SoænÌk','2320');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','SoæniËka','2321');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Soblahov','2322');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Soboö','2323');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Sobotiöte','2324');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Sobrance','2325');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Socovce','2326');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Sokoæ','2327');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Sokoæany','2328');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Sokolce','2329');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','Sokolovce','2330');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','SolËany','2331');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','SolËianky','2332');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Soloönica','2333');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Somotor','2334');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Sopkovce','2335');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Spiösk· Bel·','2336');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Spiösk· Nov· Ves','2337');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Spiösk· Star· Ves','2338');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','Spiösk· Teplica','2339');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','SpiöskÈ BystrÈ','2340');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','SpiöskÈ Hanuöovce','2341');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','SpiöskÈ Podhradie','2342');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','SpiöskÈ Tom·öovce','2343');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','SpiöskÈ Vlachy','2344');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','Spiösk˝ ätiavnik','2345');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Spiösk˝ ätvrtok','2346');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Spiösk˝ Hrhov','2347');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Spiösk˝ Hruöov','2348');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','Staökov','2349');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Staökovce','2350');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','StakËÌn','2351');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','StakËÌnska Roztoka','2352');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','StanËa','2353');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','Stankovany','2354');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Stankovce','2355');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Star· ºubovÚa','2356');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Star· Baöta','2357');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','Star· Bystrica','2358');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Star· HaliË','2359');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('46','Star· Huta','2360');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Star· KremniËka','2361');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Star· Lehota','2362');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Star· Lesn·','2363');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('19','Star· Myjava','2364');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Star· Tur·','2365');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','Star· Voda','2366');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','StarÈ','2367');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','StarÈ Hory','2368');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Star˝ Hr·dok','2369');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Star˝ Tekov','2370');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Starina','2371');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','StebnÌcka Huta','2372');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','StebnÌk','2373');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('46','Stoûok','2374');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Str·Úany','2375');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Str·Úavy','2376');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Str·ûa','2377');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Str·ûne','2378');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Str·ûske','2379');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Str·ne pod Tatrami','2380');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Str·nska','2381');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Str·nske','2382');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Straten·','2383');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','StreËno','2384');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','Streûenice','2385');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Streda nad Bodrogom','2386');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','StrednÈ Plachtince','2387');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Strekov','2388');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','StrelnÌky','2389');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','Lev·re','2390');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Stretava','2391');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Stretavka','2392');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Strihovce','2393');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','StroËÌn','2394');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Stropkov','2395');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Stuæany','2396');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Studen·','2397');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Studenec','2398');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Studienka','2399');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Stupava','2400');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','StupnÈ','2401');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','SuËany','2402');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','Suöany','2403');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Such· Dolina','2404');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('42','Such· Hora','2405');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Such· nad Parnou','2406');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Such·Ú','2407');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','SuchÈ','2408');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','SuchÈ Brezovo','2409');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Suchohrad','2410');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','Sukov','2411');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','SulÌn','2412');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Sv‰t˝ KrÌû','2413');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Sv‰toplukovo','2414');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Sv‰tuö','2415');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','SvedernÌk','2416');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Sverûov','2417');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Sverepec','2418');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','Svetlice','2419');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','SvidnÌk','2420');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','SvidniËka','2421');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Svinia','2422');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Svinica','2423');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Svinice','2424');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Svinn·','2425');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','Svit','2426');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','SvodÌn','2427');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','SvrËinovec','2428');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Svrbice','2429');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','TÙÚ','2430');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','T‡nie','2431');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Taöuæa','2432');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Tachty','2433');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Tajn·','2434');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Tajov','2435');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Tarnov','2436');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('29','TeöedÌkovo','2437');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Tehla','2438');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','TekolÔany','2439');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','Tekovsk· Breznica','2440');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','TekovskÈ Luûany','2441');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','TekovskÈ Nemce','2442');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Tekovsk˝ Hr·dok','2443');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Telince','2444');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Temeö','2445');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Tepl˝ Vrch','2446');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','TepliËka','2447');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','TepliËka nad V·hom','2448');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','TepliËky','2449');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','TerÚa','2450');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Terany','2451');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Terchov·','2452');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Teriakovce','2453');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Tes·re','2454');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Tes·rske MlyÚany','2455');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Tibava','2456');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Tich˝ Potok','2457');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Timoradza','2458');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Tisinec','2459');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Tisovec','2460');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','TlmaËe','2461');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','ToËnica','2462');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','TokajÌk','2463');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Tom·öikovo','2464');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Tom·öov','2465');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Tom·öovce','2466');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Tom·öovce','2467');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','TopoæËany','2468');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','TopoæËianky','2469');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Topoæa','2470');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','TopoænÌky','2471');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Topoænica','2472');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','“·rad','2473');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Topoæovka','2474');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Toporec','2475');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Torysa','2476');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Torysky','2477');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Tovarnianska Polianka','2478');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','TovarnÈ','2479');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','TovarnÌky','2480');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Tr·vnica','2481');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Tr·vnik','2482');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('12','Trakovice','2483');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','Trebatice','2484');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Trebeæovce','2485');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Trebejov','2486');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Trebiöov','2487');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Trebichava','2488');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Trebostovo','2489');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Trebuöovce','2490');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','TrenË','2491');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','TrenËÌn','2492');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','TrenËianska Tepl·','2493');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','TrenËianska Turn·','2494');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','TrenËianske Bohuslavice','2495');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','TrenËianske Jastrabie','2496');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','TrenËianske Mitice','2497');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','TrenËianske Stankovce','2498');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','TrenËianske Teplice','2499');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Trhov· Hradsk·','2500');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Trhoviöte','2501');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Trn·vka','2502');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Trn·vka','2503');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Trnav· Hora','2504');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Trnava','2505');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Trnava pri Laborci','2506');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Trnkov','2507');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','Trnovec','2508');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('29','Trnovec nad V·hom','2509');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Trnovo','2510');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','TroËany','2511');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','TrpÌn','2512');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Trsùany','2513');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','TrstÌn','2514');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('42','Trsten·','2515');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Trsten· na Ostrove','2516');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','TrstenÈ','2517');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','TrstenÈ pri Horn·de','2518');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Trstice','2519');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Tuöice','2520');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Tuöick· Nov· Ves','2521');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Tuûina','2522');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','TuchyÚa','2523');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Tuh·r','2524');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Tuhrina','2525');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','TulËÌk','2526');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Tup·','2527');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Tur·','2528');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','TurËek','2529');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','TurËianky','2530');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','TurËianska ätiavniËka','2531');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','TurËianske Jaseno','2532');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','TurËianske KæaËany','2533');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','TurËianske Teplice','2534');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','TurËiansky œur','2535');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','TurËiansky Peter','2536');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','TurËok','2537');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','TurÌk','2538');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Turany','2539');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Turany nad Ondavou','2540');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Turcovce','2541');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','TureÚ','2542');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Tureck·','2543');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Turie','2544');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','TurÚa nad Bodvou','2545');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Turnianska Nov· Ves','2546');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Turov·','2547');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Tvaroûn·','2548');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('42','TvrdoöÌn','2549');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Tvrdoöovce','2550');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Tvrdomestice','2551');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','⁄æany nad éitavou','2552');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','UÚatÌn','2553');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Ubæa','2554');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','UdavskÈ','2555');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','UdiËa','2556');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Uhlisk·','2557');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Uhorsk· Ves','2558');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','UhorskÈ','2559');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','Uhrovec','2560');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','UhrovskÈ Podhradie','2561');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','UliË','2562');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','UliËskÈ KrivÈ','2563');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Uloûa','2564');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','UnÌn','2565');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Urmince','2566');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','Utek·Ë','2567');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Uzovce','2568');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Uzovsk· Panica','2569');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','UzovskÈ Pekæany','2570');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Uzovsk˝ äalgov','2571');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','V·hovce','2572');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','V·penÌk','2573');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','VËelince','2574');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','VÌùaz','2575');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('46','VÌgæaö','2576');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('46','VÌgæaösk· Huta-Kalinka','2577');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','VÌtkovce','2578');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Vrbnica','2579');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','V˝born·','2580');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','V˝chodn·','2581');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','V˝rava','2582');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','VaÔovce','2583');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','VaækovÚa','2584');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Valkovce','2585');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Vaûec','2586');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Vagrinec','2587');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Vajkovce','2588');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','ValËa','2589');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Valaliky','2590');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Valask·','2591');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Valask· Bel·','2592');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('40','Valask· Dubov·','2593');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','Valentovce','2594');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Valice','2595');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Vaniökovce','2596');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','VarÌn','2597');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Varadka','2598');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Varechovce','2599');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','VarhaÚovce','2600');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','Vasiæov','2601');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','VavreËka','2602');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Vavriöovo','2603');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Vavrinec','2604');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','VeËelkov','2605');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Veæaty','2606');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Veæk· »alomija','2607');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Veæk· »ausa','2608');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Veæk· »ierna','2609');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Veæk· Dolina','2610');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Veæk· Frankov·','2611');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Veæk· Hradn·','2612');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Veæk· Ida','2613');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Veæk· L˙ka','2614');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','Veæk· Lehota','2615');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Veæk· Lesn·','2616');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Veæk· Lodina','2617');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Veæk· Lomnica','2618');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Veæk· MaËa','2619');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Veæk· nad Ipæom','2620');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Veæk· Paka','2621');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Veæk· T‡Úa','2622');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','Veæk· Ves','2623');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Veæk· Ves nad Ipæom','2624');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','VeækÈ ⁄æany','2625');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','VeækÈ Bierovce','2626');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','VeækÈ Blahovo','2627');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','VeækÈ BorovÈ','2628');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','VeækÈ Chlievany','2629');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','VeækÈ Chyndice','2630');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','VeækÈ Drûkovce','2631');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','VeækÈ Dravce','2632');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','VeækÈ Dvorany','2633');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','VeækÈ DvornÌky','2634');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','VeækÈ Hoste','2635');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','VeækÈ Kapuöany','2636');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','VeækÈ Kosihy','2637');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','VeækÈ Kostoæany','2638');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','VeækÈ Kozm·lovce','2639');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','VeækÈ KröteÚany','2640');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','VeækÈ Lev·re','2641');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','VeækÈ Lovce','2642');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','VeækÈ Ludince','2643');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','VeækÈ Orviöte','2644');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','VeækÈ Ozorovce','2645');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','VeækÈ Pole','2646');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','VeækÈ Raökovce','2647');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','VeækÈ RipÚany','2648');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','VeækÈ RovnÈ','2649');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','VeækÈ Slemence','2650');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','VeækÈ Straciny','2651');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','VeækÈ Teriakovce','2652');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','VeækÈ Trakany','2653');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','VeækÈ Turovce','2654');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','VeækÈ Uherce','2655');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','VeækÈ Vozokany','2656');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','VeækÈ Z·luûie','2657');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','VeækÈ Zlievce','2658');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('41','Veæk˝ »epËÌn','2659');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Veæk˝ œur','2660');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Veæk˝ äariö','2661');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Veæk˝ Biel','2662');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Veæk˝ Blh','2663');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Veæk˝ CetÌn','2664');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','Veæk˝ Folkmar','2665');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Veæk˝ Grob','2666');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Veæk˝ Horeö','2667');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Veæk˝ Kamenec','2668');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('21','Veæk˝ KlÌû','2669');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Veæk˝ KrtÌö','2670');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Veæk˝ Lap·ö','2671');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Veæk˝ LipnÌk','2672');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Veæk˝ Lom','2673');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','Veæk˝ Slavkov','2674');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Veæk˝ SlivnÌk','2675');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Veækrop','2676');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Veæopolie','2677');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Vechec','2678');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','VelËice','2679');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','VeliËn·','2680');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Veluöovce','2681');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','Vern·r','2682');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','VeselÈ','2683');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Vetern· Poruba','2684');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','ViöÚov','2685');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('50','ViöÚovÈ','2686');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','ViöÚovÈ','2687');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','ViöÚovÈ','2688');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('7','Viötuk','2689');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','VÌùazovce','2690');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('48','Vidin·','2691');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Vieska','2692');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Vieska nad éitavou','2693');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Vieska nad Blhom','2694');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','Vikartovce','2695');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','ViniËky','2696');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('7','ViniËnÈ','2697');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Vinica','2698');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','VinnÈ','2699');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Vinodol','2700');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Vinohrady nad V·hom','2701');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('7','Vinosady','2702');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Virt','2703');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Vislanka','2704');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Vislava','2705');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','Visolaje','2706');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('42','Vitanov·','2707');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('29','VlËany','2708');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','VlËkovce','2709');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','VlaËa','2710');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Vlachovo','2711');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Vlachy','2712');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','VladiËa','2713');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('43','Vlkanov·','2714');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','Vlkas','2715');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Vlkov·','2716');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Vlkovce','2717');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Vlky','2718');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','VlkyÚa','2719');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Voæa','2720');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Voderady','2721');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','VojËice','2722');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','VojÚany','2723');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Vojany','2724');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Vojka','2725');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Vojka nad Dunajom','2726');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('78','Vojkovce','2727');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Vojnatina','2728');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','B·torove Kosihy','2729');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Vojtovce','2730');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','Volica','2731');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Volkovce','2732');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('54','Voznica','2733');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Vozokany','2734');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Vozokany','2735');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Vr·ble','2736');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('15','Vr·diöte','2737');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','VrÌcko','2738');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','VröatskÈ Podhradie','2739');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Vr˙tky','2740');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Vrak˙Ú','2741');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Vranov nad Topæou','2742');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Vrbov','2743');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Vrbov· nad V·hom','2744');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('13','VrbovÈ','2745');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('19','Vrbovce','2746');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Vrbovka','2747');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Vrchtepl·','2748');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Vt·Ëkovce','2749');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','V˝Ëapy-Opatovce','2750');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Vyökovce','2751');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Vyökovce nad Ipæom','2752');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Vyön· äebastov·','2753');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Vyön· Boca','2754');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Vyön· Hutka','2755');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Vyön· Jablonka','2756');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Vyön· Jedæov·','2757');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Vyön· Kamenica','2758');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Vyön· Myöæa','2759');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Vyön· Olöava','2760');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Vyön· Pisan·','2761');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Vyön· Polianka','2762');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Vyön· Rybnica','2763');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Vyön· Sitnica','2764');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('76','Vyön· Slan·','2765');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Vyön· Voæa','2766');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','VyönÈ LadiËkovce','2767');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','VyönÈ nad Hronom','2768');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','VyönÈ NemeckÈ','2769');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','VyönÈ Remety','2770');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','VyönÈ Repaöe','2771');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','VyönÈ Ruûbachy','2772');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','VyönÈ Valice','2773');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Vyön˝ »aj','2774');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Vyön˝ éipov','2775');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('66','Vyön˝ Hrabovec','2776');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Vyön˝ Hruöov','2777');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Vyön˝ Kl·tov','2778');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Vyön˝ Kom·rnik','2779');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Vyön˝ KruËov','2780');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Vyön˝ KubÌn','2781');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Vyön˝ Medzev','2782');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Vyön˝ Miroöov','2783');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Vyön˝ OrlÌk','2784');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Vyön˝ Sk·lnik','2785');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('60','Vyön˝ Slavkov','2786');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Vyön˝ Tvaroûec','2787');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Vydrany','2788');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','Vydrn·','2789');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','VydrnÌk','2790');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('55','Vyhne','2791');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','VysoËany','2792');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('44','Vysok·','2793');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('63','Vysok·','2794');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','Vysok· nad Kysucou','2795');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Vysok· nad Uhom','2796');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Vysok· pri Morave','2797');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('42','Z·biedovo','2798');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Z·borie','2799');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Z·borskÈ','2800');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Z·diel','2801');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Z·dor','2802');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','Z·hor','2803');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Z·horce','2804');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Z·horie','2805');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Z·horsk· Ves','2806');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Z·hradnÈ','2807');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('8','Z·lesie','2808');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Z·lesie','2809');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','Z·mutov','2810');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','Z·rieËie','2811');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('22','Z·skalie','2812');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('37','Z·vaûn· Poruba','2813');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('30','Z·vada','2814');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Z·vada','2815');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Z·vada','2816');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Z·vadka','2817');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Z·vadka','2818');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('74','Z·vadka','2819');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('45','Z·vadka nad Hronom','2820');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Z·vod','2821');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('51','Zacharovce','2822');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','Z·kamennÈ','2823');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Zalaba','2824');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Zaluûice','2825');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('16','Zamarovce','2826');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','ZatÌn','2827');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','Zavar','2828');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','ZbehÚov','2829');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Zbehy','2830');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','Zboj','2831');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','ZbojnÈ','2832');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','ZbrojnÌky','2833');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','Zborov','2834');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','Zborov nad Bystricou','2835');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('61','Zbudsk· Bel·','2836');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','ZbudskÈ DlhÈ','2837');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','Zbudza','2838');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','ZbyÚov','2839');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','ZeleneË','2840');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Zemianska OlËa','2841');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('23','Zemianske Kostoæany','2842');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('20','Zemianske Podhradie','2843');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('11','Zemianske Sady','2844');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('47','Zemiansky Vrbovok','2845');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('28','ZemnÈ','2846');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','ZemplÌn','2847');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('75','ZemplÌnska äirok·','2848');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','ZemplÌnska Nov· Ves','2849');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','ZemplÌnska Teplica','2850');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('64','ZemplÌnske H·mre','2851');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','ZemplÌnske Hradiöte','2852');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','ZemplÌnske Jastrabie','2853');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','ZemplÌnsky BranË','2854');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Zlat· BaÚa','2855');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','Zlat· Idka','2856');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('57','ZlatÈ','2857');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','ZlatÈ Klasy','2858');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','ZlatÈ Moravce','2859');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Zlatn· na Ostrove','2860');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','ZlatnÌk','2861');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('17','ZlatnÌky','2862');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('49','Zlatno','2863');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('31','Zlatno','2864');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('18','Zliechov','2865');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('6','Zohor','2866');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('52','Zombor','2867');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('24','Zub·k','2868');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('42','Zuberec','2869');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','ZubnÈ','2870');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('39','Zubrohlava','2871');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Zvolen','2872');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Zvolensk· Slatina','2873');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('9','ZvonËÌn','2874');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('2','Bratislava-PodunajskÈ Biskupice','2875');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('70','Koöice-äaca','2876');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('72','Koöice-äebastovce','2877');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('72','Koöice-Barca','2878');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('72','Koöice-Juh','2879');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('69','Koöice-KaveËany','2880');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('71','Koöice-Koöick· Nov· Ves','2881');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('72','Koöice-Kr·sna','2882');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('70','Koöice-LorinËÌk','2883');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('70','Koöice-Myslava','2884');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('70','Koöice-Z·pad','2885');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('70','Koöice-Poæov','2886');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('69','Koöice-Sever','2887');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('69','Koöice-StarÈ Mesto','2888');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','»adca','2889');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('69','Koöice-çahanovce','2890');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('1','Bratislava','2891');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('2','Bratislava','2892');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('3','Bratislava','2893');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('4','Bratislava','2894');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('4','Bratislava-DevÌnska Nov· Ves','2895');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('72','Koöice V','2896');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('5','Bratislava-Rusovce','2897');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('3','Bratislava-Vajnory','2898');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('4','Bratislava-Z·horsk· Bystrica','2899');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('2','Bratislava-VrakuÚa','2900');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('5','Bratislava-»unovo','2901');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('5','Bratislava-Jarovce','2902');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('3','Bratislava-RaËa','2903');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('5','Bratislava-Petrûalka','2904');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('4','Bratislava-Karlova Ves','2905');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('4','Bratislava-DevÌn','2906');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('4','Bratislava-LamaË','2907');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('4','Bratislava-D˙bravka','2908');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('2','Bratislava-Ruûinov','2909');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('2','Bratislava-Prievoz','2910');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('3','Bratislava-NovÈ Mesto','2911');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('1','Bratislava-StarÈ Mesto','2912');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Laûany','2913');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Mad','2914');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('58','Valaökovce','2915');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Nitra','2916');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','Turzovka','2917');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('34','Z·kopËie','2918');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('77','VeækÈ Reviötia','2919');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('69','Koöice','2920');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('70','Koöice','2921');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('71','Koöice','2922');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('72','Koöice','2923');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('35','Z·zriv·','2924');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('5','Bratislava','2925');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('73','DvornÌky-VËel·re','2926');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('32','Lietavsk· Svinn·-Babkov','2927');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('27','Sikenica','2928');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('79','Sv‰t· M·ria','2929');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('69','Koöice-Dûungæa','2930');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('69','Koöice-SÌdlisko çahanovce','2931');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('70','Koöice-LunÌk IX','2932');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('70','Koöice-Pereö','2933');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('70','Koöice-SÌdlisko KVP','2934');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('71','Koöice-Dargovsk˝ch hrdinov','2935');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('72','Koöice-Nad Jazerom','2936');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('72','Koöice-VyönÈ Op·tske','2937');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','Povoda','2938');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('62','VysokÈ Tatry','2939');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Podsadek','2940');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','Pöurnovice','2941');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','HrabovÈ','2942');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','DolnÈ HlbokÈ','2943');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','HornÈ HlbokÈ','2944');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','ºubickÈ K˙pele','2945');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Zoln·','2946');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','MÙùov·','2947');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Kr·æov·','2948');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','LukovÈ','2949');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Solivar','2950');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','äariöskÈ L˙ky','2951');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Niûn· äebastov·','2952');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Soæn· BaÚa','2953');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','äv·by','2954');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','äalgovÌk','2955');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Ruskinovce','2956');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','»emernÈ','2957');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','»·Ëov','2958');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Kunov','2959');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','HlbokÈ','2960');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Prietrû','2961');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','MoËidæany','2962');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','Zemianska Dedina','2963');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','Bratislava-D˙bravka','2964');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','MnÌöek nad Hnilcom','2965');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('2','Bratislava','2966');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('5','Bratislava','2967');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('1','Bratislava','2968');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('3','Bratislava','2969');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('4','Bratislava','2970');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','Bratislava-D˙bravka','2971');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('2','Bratislava-Prievoz','2972');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('68','»emernÈ','2973');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','DolnÈ HlbokÈ','2974');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','HornÈ HlbokÈ','2975');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','HrabovÈ','2976');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('69','Koöice','2977');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('70','Koöice','2978');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('71','Koöice','2979');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('72','Koöice','2980');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('72','Koöice V','2981');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Kr·æov·','2982');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('25','Lefantovce','2983');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','ºubickÈ K˙pele','2984');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','LukovÈ','2985');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','MnÌöek nad Hnilcom','2986');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','MoËidæany','2987');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','MÙùov·','2988');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Niûn· äebastov·','2990');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('65','Podsadek','2991');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('33','Pöurnovice','2992');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('59','Ruskinovce','2993');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Solivar','2994');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','Soæn· BaÚa','2995');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','äalgovÌk','2996');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','äariöskÈ L˙ky','2997');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('56','äv·by','2998');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','Zemianska Dedina','2999');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('53','Zoln·','3000');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','Sverûov','3001');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','Sverûov','3002');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','HlbokÈ','3003');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Prietrû','3004');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','»·Ëov','3005');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('14','Kunov','3006');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('38','Turany','3007');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('10','GabËÌkovo','3008');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('72','Koöice-Nad jazerom','3009');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('67','Jurkova Voæa','3010');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Nesvady','3011');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('26','Nesvady','3012');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','Veæk· Poæana','3013');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','RuskÈ','3014');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','SmolnÌk','3015');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','Zvala','3016');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','Ostruûnica','3017');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','Starina','3018');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','Dara','3019');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','Veæk· Poæana','3020');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','RuskÈ','3021');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','SmolnÌk','3022');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','Zvala','3023');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','Ostruûnica','3024');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','Starina','3025');
+Insert into SYSTEM.MESTO (ID_OKRES,NAZOV,ID_MESTO) values ('80','Dara','3026');
+REM INSERTING into SYSTEM.NEMOCNICA
+SET DEFINE OFF;
+Insert into SYSTEM.NEMOCNICA (ID_NEM,NAZOV,MOBIL,ULICA,URL_STRANKA,ID_MESTO) values ('1','Fakultn· nemocnica s poliklinikou éilina','421415110111','Vojtecha Spanyola 43','https://www.fnspza.sk/sk/uvod','228');
+Insert into SYSTEM.NEMOCNICA (ID_NEM,NAZOV,MOBIL,ULICA,URL_STRANKA,ID_MESTO) values ('2','Poliklinika KysuckÈ NovÈ Mesto','041/4207373','BelanskÈho 773',null,'1328');
+REM INSERTING into SYSTEM.OBLAST_URCENIA
+SET DEFINE OFF;
+Insert into SYSTEM.OBLAST_URCENIA (ID_OBLAST,NAZOV) values ('1','hor˙Ëka');
+Insert into SYSTEM.OBLAST_URCENIA (ID_OBLAST,NAZOV) values ('2','bolesù');
+REM INSERTING into SYSTEM.ODDELENIE
+SET DEFINE OFF;
+Insert into SYSTEM.ODDELENIE (ID_ODDEL,ID_NEM,ID_PRIMAR,NAZOV_ODD) values ('1','1',null,'GastroenterolÛgia');
+Insert into SYSTEM.ODDELENIE (ID_ODDEL,ID_NEM,ID_PRIMAR,NAZOV_ODD) values ('2','2',null,'Vöeobecn˝ lek·r');
+REM INSERTING into SYSTEM.OKRES
+SET DEFINE OFF;
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('1','1','Bratislava I');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('2','1','Bratislava II');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('3','1','Bratislava III');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('4','1','Bratislava IV');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('5','1','Bratislava V');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('6','1','Malacky');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('7','1','Pezinok');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('8','1','Senec');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('9','2','Trnava');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('10','2','Dunajsk· Streda');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('11','2','Galanta');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('12','2','Hlohovec');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('13','2','Pieöùany');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('14','2','Senica');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('15','2','Skalica');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('16','3','TrenËÌn');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('17','3','B·novce nad Bebravou');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('18','3','Ilava');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('19','3','Myjava');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('20','3','NovÈ Mesto nad V·hom');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('21','3','Partiz·nske');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('22','3','Povaûsk· Bystrica');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('23','3','Prievidza');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('24','3','P˙chov');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('25','4','Nitra');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('26','4','Kom·rno');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('27','4','Levice');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('28','4','NovÈ Z·mky');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('29','4','äaæa');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('30','4','TopoæËany');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('31','4','ZlatÈ Moravce');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('32','5','éilina');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('33','5','BytËa');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('34','5','»adca');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('35','5','Doln˝ KubÌn');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('36','5','KysuckÈ NovÈ Mesto');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('37','5','Liptovsk˝ Mikul·ö');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('38','5','Martin');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('39','5','N·mestovo');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('40','5','Ruûomberok');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('41','5','TurËianske Teplice');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('42','5','TvrdoöÌn');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('43','6','Bansk· Bystrica');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('44','6','Bansk· ätiavnica');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('45','6','Brezno');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('46','6','Detva');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('47','6','Krupina');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('48','6','LuËenec');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('49','6','Polt·r');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('50','6','Rev˙ca');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('51','6','Rimavsk· Sobota');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('52','6','Veæk˝ KrtÌö');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('53','6','Zvolen');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('54','6','éarnovica');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('55','6','éiar nad Hronom');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('56','7','Preöov');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('57','7','Bardejov');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('58','7','HumennÈ');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('59','7','Keûmarok');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('60','7','LevoËa');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('61','7','Medzilaborce');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('62','7','Poprad');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('63','7','Sabinov');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('64','7','Snina');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('65','7','Star· ºubovÚa');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('66','7','Stropkov');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('67','7','SvidnÌk');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('68','7','Vranov nad Topæou');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('69','8','Koöice I');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('70','8','Koöice II');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('71','8','Koöice III');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('72','8','Koöice IV');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('73','8','Koöice-okolie');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('74','8','Gelnica');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('75','8','Michalovce');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('76','8','RoûÚava');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('77','8','Sobrance');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('78','8','Spiösk· Nov· Ves');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('79','8','Trebiöov');
+Insert into SYSTEM.OKRES (ID_OKRES,ID_KRAJ,NAZOV) values ('80','8','Koöice - okolie');
+REM INSERTING into SYSTEM.PACIENT
+SET DEFINE OFF;
+REM INSERTING into SYSTEM.POISTOVNA
+SET DEFINE OFF;
+Insert into SYSTEM.POISTOVNA (ID_POISTOVNA,NAZOV,KONTAKT_MOBIL,LOGO_URL,ODKAZ_URL) values ('1','D‘VERA zdravotn· poisùovÚa','0850 850 850','https://poistovne.sk/data/images/17669.jpg','http://www.dovera.sk');
+Insert into SYSTEM.POISTOVNA (ID_POISTOVNA,NAZOV,KONTAKT_MOBIL,LOGO_URL,ODKAZ_URL) values ('2','Union zdravotn· poisùovÚa, a.s.','0850 003 333','https://poistovne.sk/data/images/65.jpg','https://www.union.sk/zdravotna-poistovna/');
+Insert into SYSTEM.POISTOVNA (ID_POISTOVNA,NAZOV,KONTAKT_MOBIL,LOGO_URL,ODKAZ_URL) values ('3','Vöeobecn· zdravotn· poisùovÚa, a.s.','0850 003 003','https://poistovne.sk/data/images/66.jpg','http://www.vszp.sk');
+REM INSERTING into SYSTEM.PREDP_LIECBA
+SET DEFINE OFF;
+REM INSERTING into SYSTEM.PRIZNAKY
+SET DEFINE OFF;
+REM INSERTING into SYSTEM.RECEPT
+SET DEFINE OFF;
+REM INSERTING into SYSTEM."RoleClaims"
+SET DEFINE OFF;
+REM INSERTING into SYSTEM."Roles"
+SET DEFINE OFF;
+Insert into SYSTEM."Roles" ("Id","Name","NormalizedName","ConcurrencyStamp") values ('3','Pacient','PACIENT','5180f88f-92cf-469e-8be9-ee68fa05b67b');
+Insert into SYSTEM."Roles" ("Id","Name","NormalizedName","ConcurrencyStamp") values ('1','Spravca','SPRAVCA','893937e0-3175-4d89-895c-5b14a9940fb1');
+Insert into SYSTEM."Roles" ("Id","Name","NormalizedName","ConcurrencyStamp") values ('2','Lekar','LEKAR','771f9cf4-38a4-4273-9532-fdb42b1a872d');
+REM INSERTING into SYSTEM.SQLPLUS_PRODUCT_PROFILE
+SET DEFINE OFF;
+REM INSERTING into SYSTEM.TYP_LEKARA
+SET DEFINE OFF;
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('49','Pediater','detsk˝ lek·r, venuje sa starostlivosti o dieùa a to od jeho narodenia aû po dosiahnutie dospelosti, lek·rska starostlivosù o deti zahrÚuje prevenciu, diagnostiku i lieËbu ich ochorenÌ');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('50','Plastick˝ chirurg','chirurg zaoberaj˙ci sa chirurgickou n·pravou vroden˝ch Ëi zÌskan˝ch tvarov˝ch, veækostn˝ch a funkËn˝ch odchyliek jednotliv˝ch ËastÌ æudskÈho tela, od norm·lu');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('51','PneumolÛg','lek·r, ktor˝ sa zaober· v˝skumom, diagnÛzou a lieËbou pæ˙cnych ochorenÌ');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('52','Praktick˝ lek·r','lek·r so vöeobecnou praxou (na rozdiel od odbornÈho, öpecializovanÈho), ktor˝ zaisùuje prim·rnu lieËebn˙ a preventÌvnu starostlivosù o dospel˙ popul·ciu, mÙûe zaisùovaù i starostlivosù o deti a dorast');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('53','Psychiater','lek·r, ktor˝ sa zaober· rozpozn·vanÌm, prevenciou a lieËbou duöevn˝ch por˙ch');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('54','PsycholÛg','"vysokoökolsky ötudovan˝ Ëlovek, ktor˝ sa zaober· ""duöou"""');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('55','RadiolÛg','lek·r zaoberaj˙ci sa r·diodiagnostikou (diagnostikou pomocou rˆntgenov˝ch metÛd), zaoberaj˙ci sa i ÔalöÌmi zobrazovacÌmi metÛdami, ako s˙ vyöetrenia ultrazvukom alebo pomocou magnetickej rezonancie, prÌp. denzitometriou');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('56','R·dioterapeut','lek·r zaoberaj˙ci sa r·dioterapiou - oûarovanÌm');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('57','RehabilitaËn˝ lek·r','zaober· sa obnovenÌm pÙvodnÈho stavu a schopnostÌ pacienta (jeho pohyblivosùou, v˝konnosùou, pracovnou schopnosùou)');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('58','ReumatolÛg','lek·r zaoberaj˙ci sa v˝skumom, diagnÛzou a lieËbou z·palov˝ch i nez·palov˝ch reumatick˝ch ochorenÌ kÂbov, öliach, svalov a prÌbuzn˝ch ötrukt˙r');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('59','SexuolÛg','lek·r zaoberaj˙ci sa æudskou sexualitou, öt˙diom, diagnostikou a lieËbou sexu·lnych por˙ch');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('60','StomatolÛg','zubn˝ lek·r alebo stomatolÛg sa zaober· funkciou zubov, kostÌ a m‰kk˝ch tkanÌv v ˙stnej dutine.');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('61','ToxikolÛg','lek·r, odborn˝ pracovnÌk zaoberaj˙ci sa toxikolÛgiou. N·ukou o jedoch a liekoch.');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('62','TraumatolÛg','chirurg zaoberaj˙ci sa komplexnou lieËbou poranenÌ, najm‰ pohybovÈho ˙strojenstva ( ˙razovÈ lek·rstvo )');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('63','UrolÛg','lek·r ñ chirurg ñ zaoberaj˙ci sa ochorenÌm moËovÈho systÈmu a muûsk˝ch pohlavn˝ch org·nov a ich lieËbou, vËetne operaËnej lieËby');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('64','VenerolÛg','odbornÌk zaoberaj˙ci sa pohlavn˝mi chorobami');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('65','Vöeobecn˝ lek·r pre deti a dorast','praktick˝ lek·r prvÈho kontaktu, ktor˝ sa venuje deùom a dorastencom od 0 - 25 rokov');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('66','Vöeobecn˝ lek·r pre dospel˝ch','in˝ n·zov pre praktickÈho lek·ra, ktor˝ sa venuje æuÔom staröÌm ako 18, respektÌve 25 rokov');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('33','KardiolÛg','lek·r zaboberaj˙ci sa ochorenÌm srdca a ciev, celkovo sa vyËleÚuje s odboru vn˙tornÈho alebo internÈho lek·rstva. Oblasù zah‡Úa diagnostiku vroden˝ch srdcov˝ch ch˝b, ischemickÈ choroby, srdcovÈ zlyhania a ostatnÈ ochorenia srdca a ciev.');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('34','Klinick˝ a dopravn˝ psycholÛg','Zaober· sa dopravnou psycholÛgiou. Testuje vodiËov.');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('35','Klinick˝ biochemik','je lek·r v odbore klinick· biochÈmia, ktor˝ sa zaober· biochemick˝mi poruchami a anal˝zami telesn˝ch tekutÌn, buniek a tkanÌv ako aj interpret·ciou zÌskan˝ch v˝sledkov v zdravÌ a chorobe.');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('36','LogopÈd','zaober· sa prevenciou a n·pravou por˙ch reËi u detÌ i dospel˝ch.');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('37','MamolÛg','mamolÛgia je medicÌnsky odbor, ktor˝ sa zaober· problematikou ochorenÌ prsnÌkov. Ide o multidisciplin·rny odbor, pretoûe v sebe zah‡Úa diagnostiku, chirurgiu, patolÛgiu a lieËbu ochorenÌ mlieËnej ûæazy.');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('38','MikrobiolÛg','odbornÌk, ktor˝ sk˙ma jednobunkovÈ mikroorganizmy, nebunkovÈ organizmy a subvÌrovÈ patogÈny');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('39','NefrolÛg','lek·r zaoberaj˙ci sa v˝skumom, diagnÛzou a lieËbou chorÙb obliËiek, vr·tane hemo ñ dial˝zy.');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('40','NeonatolÛg','lek·r venuj˙ci sa problematike novorodeneckÈho obdobia, lek·r, ktor˝ spad· do podoboru pediatrie,');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('41','Neurochirurg','chirurg, ktor˝ sa zaober· operaËnou lieËbou ochorenÌ nervovÈho systÈmu, medzi ktorÈ patria n·dory Ëi ˙razy mozgu a miechy, perifÈrnych ne');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('42','NeurolÛg','lek·r zaoberaj˙ca sa öt˙diom, diagnostikou a neoperaËnou lieËbou chorÙb nervovÈho systÈmu (mozgu, miechy, nervov a nimi inervovan˝ch svalov)');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('43','NozolÛg','odbornÌk, ktor˝ sa zaober· triedenÌm chorÙb a systematick˝m opisom chorÙb');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('44','OftalmolÛg','oËn˝ lek·r, zaober· sa v˝skumom, diagnÛzou, prevenciou a lieËbou oËn˝ch chorÙb vzhæadom k skuteËnosti, ûe oËnÌ lek·ri prev·dzaj˙ oper·cie oËÌ, s˙ povaûovan˝ za lek·rov a chirurgov.');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('45','OnkolÛg','lek·r zaoberaj˙ci sa v˝skumom, diagnÛzou a lieËbou n·dorov˝ch ochorenÌ (rakoviny), vr·tane r·dioterapie (lieËba ûiarenÌm)');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('46','OrtopÈd',' lek·r zaoberaj˙ci sa prevenciou, zisùovanÌm a lieËenÌm vroden˝ch alebo zÌskan˝ch ch˝b, chorÙb a ˙razov pohybovÈho ˙stroja');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('47','OtorinolaryngolÛg','lek·r zaoberaj˙ci sa v˝skumom, diagnÛzou, prevenciou a lieËbou chorÙb : uön˝ch, nosn˝ch a krËn˝ch. Pracovisko kde pÙsobÌ otorinolaringolÛg sa beûne oznaËuje ORL');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('48','PatolÛg','lek·r zaoberaj˙ci sa n·ukou o chorob·ch (o chorobn˝ch pochodoch a zmen·ch v æudskom tele)');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('1','Akupunkturista','lek·r zaoberaj˙ci sa akupukt˙rou. Akupunkt˙ra je medicÌnska metÛda poch·dzaj˙ca z »Ìny.');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('2','AlergolÛg a imunolÛg','lek·r zaoberaj˙cim sa öt˙diom, diagnostikou, lieËbou a prevenciou chorÙb, ktorÈ s˙ vyvol·vanÈ poruchami imunity (napr. alergia, imunodeficitnÈ stavy a pod.)');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('3','AlgeziolÛg','lek·r, ktor˝ sa zaober· lieËenÌm ak˙tnej, chronickej a n·dorovej bolesti');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('4','AnestÈziolÛg','lek·r zaoberaj˙ci sa anestÈziou (znecitlivenÌm), staraj˙ci sa o spr·vne uspatie pacienta pri oper·ciÌ');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('5','Angiochirurg','cievny chirurg');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('6','AngiolÛg','lek·r z oboru vn˙tornÈho lek·rstva, tj. internista, zaoberaj˙ci sa öt˙diom, diagnostikou, lieËbou a prevenciou ochorenÌ ciev');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('7','AudiolÛg','lek·r zaoberaj˙ci sa sluchom a jeho poruchami, lek·rsky odbor spojen˝ s ORL, odbor lek·rstva zaoberaj˙ci sa sluchom a poruchami sluchu');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('8','Chirurg','lek·r zaoberaj˙ci sa operaËnou lieËbou ochorenÌ rÙznych org·nov vr·tane poranenÌ(napr. kardiochirurg, plastick˝ chirurg a pod.)');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('9','CytolÛg','odbornÌk v oblasti cytolÛgie');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('10','DermatolÛg - koûn˝ lek·r','koûn˝ lek·r, zaober· sa v˝skumom, diagnÛzou a lieËbou koûn˝ch chorÙb');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('11','DermatovenerolÛg','odborn˝ lek·r zaoberaj˙ci sa, diagnostikou a lieËbou koûn˝ch a pohlavn˝ch chorÙb');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('12','DiabetolÛg','lek·r zaoberaj˙ci sa v˝skumom, diagnÛzou, prevenciou a lieËbou cukrovky (odborne: diabetes mellitus) a jej komplik·ciami');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('13','Diagnostik','lek·r, ktor˝ urËuje choroby (diagnÛzy). Tento odbor sa mÙûe zluËovaù s ÔalöÌmi.');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('14','EndokrinolÛg','lek·r zaoberaj˙ci sa öt˙diom ûliaz s vn˙tornou sekrÈciou a ich produktov (hormÛnov), diagnostikuje a lieËi ich poruchy');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('15','EpidemiolÛg','lek·r, odbornÌk, ktor˝ ötuduje v popul·ciÌ v˝skyt a rozloûenie urËit˝ch ochorenÌ, Ëi znakov a javov so vzùahom k zdraviu, medzi ne patria choroby infekËnÈho alebo chronickÈ(napr. srdcovÈ cievne)');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('16','Foniatrik','lek·r zaoberaj˙ci sa foniatriou. Foniatria (z grÈckÈho slova phoniatria) je lek·rskym odborom, ktor˝ se zaober· vyöetrovanÌm funkciÌ: hlasu, reËi a sluchu,');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('17','FtizeolÛg','lek·r zaoberaj˙ci sa prevenciou, diagnostikou a lieËbou tuberkulÛzy');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('18','Fyzioterapeut','fyzioterapeut pom·ha rehabilitovaù æudÌ, ktorÌ sa zotavuj˙ po zraneniach, oper·ci·ch, alebo ktorÌ trpia ochoreniami svalstva alebo kÂbov.');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('19','GastroenterolÛg','lek·r zaoberaj˙ci sa v˝skumom, diagnÛzou a lieËbou chorÙb tr·viaceho systÈmu (ûal˙dka, Ëriev, slinivky bruönej, dvan·stornÌka.)');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('20','Genetik','lek·r zaoberaj˙ci sa n·ukou o dediËnosti, tj. v˝skumom, diagnostikou, lieËbou a prevenciou dediËn˝ch por˙ch a chorÙb.');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('21','Geriater','lek·r, ktor˝ sa zaober· prevenciou, diagnostikou, lieËbou a rehabilit·ciou seniorov, t.j. osÙb vo veku nad 65 rokov.');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('22','GerontolÛg','je lek·r, ktor˝ sa zaober· procesom starnutia a ochorenÌ t˝kaj˙cich sa starnutia.');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('23','GynekolÛg - ReprodukËn· medicÌna','ReprodukËn· medicÌna je lek·rsky odbor, ktor˝ sa zaober· fyziolÛgiou a odch˝lkami reprodukËnÈho systÈmu Ëloveka, so zameranÌm na lieËbu por˙ch a ochorenÌ reprodukËnÈho systÈmu ûeny.');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('24','GynekolÛg a pÙrodnÌk','lek·r zaoberaj˙ci sa v˝skumom, diagnÛzou, lieËbou a prevenciou chorÙb ûensk˝ch pohlavn˝ch org·nov, jeho n·plÚou je tieû starostlivosù o ûenu v obdobÌ tehotenstva, v priebehu pÙrodu i po Úom');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('25','HematolÛg','lek·r, ktor˝ ötuduje krv');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('26','HepatolÛg',' lek·r zaoberaj˙ci sa öt˙diom, diagnÛzou a lieËenÌm peËeÚov˝ch ochorenÌ');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('27','HistolÛg','lek·r, ktor˝ sa zaober· öt˙diom mikroskopickej ötrukt˙ry org·nov a tkanÌv. HistolÛgia najËastejöie pouûÌva sveteln˝ mikroskop a rÙzne farbiace techniky.');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('28','Homeopat','lek·r, ktor˝ si svoje lek·rske vzdelanie doplnil öt˙diom homeopatie');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('29','Hygienik','lek·r zaoberaj˙ci sa n·ukou o zdravom spÙsobe ûivota jedinca i spoloËnosti, opatreniami, ktorÈ zabezpeËuj˙ ochranu zdravia, Ôalej dodrûovanÌm hygienick˝ch z·sad, noriem a predpisov');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('30','InfektolÛg','lek·r zaoberaj˙ci sa diagnostikou, lieËenÌm a v˝skumom infekËn˝ch ochorenÌ');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('31','Internista','lek·r zaoberaj˙ci sa diagnÛzou a nechirurgickou lieËbou chorÙb vn˙torn˝ch org·nov (srdca, pæ˙c, tr·viaceho ˙strojenstva, ûliaz s vn˙tornou sekrÈciou atÔ.)');
+Insert into SYSTEM.TYP_LEKARA (ID_TYP,NAZOV,POPIS) values ('32','Kardiochirurg','chirurg, ktor˝ sa venuje operaËnej lieËbe ochorenÌ srdca, medzi ktorÈ patrÌ vrodenÈ alebo zÌskanÈ vady chlopnÌ, aortokoron·rny bypass, transplant·cia srdca a inÈ.');
+REM INSERTING into SYSTEM.TYP_SYMPTOM
+SET DEFINE OFF;
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('1','svrbenie');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('2','koûn· vyr·ûka');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('3','uzlina na pokoûke');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('4','nepretrûitÈ k˝chanie');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('5','triaöka');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('6','zimnica');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('7','bolesù kÂbov');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('8','bolesù brucha');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('9','kyslosù');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('10','vredy na jazyku');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('11','ochabovanie svalov');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('12','vracanie');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('13','p·lenie_mixovanie');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('14','ËastÈ moËenie');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('15','˙nava');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('16','priberanie');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('17','˙zkosù');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('18','studenÈ ruky a nohy');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('19','v˝kyvy n·lad');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('20','strata v·hy');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('21','nepokoj');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('22','letargia');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('23','n·öivky v hrdle');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('24','hladina nepravidelnÈho cukru');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('25','kaöeæ');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('26','vysok· hor˙Ëka');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('27','potopenÈ_ oËi');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('28','d˝chaviËnosù');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('29','potenie');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('30','dehydrat·cia');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('31','poruchy tr·venia');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('32','bolesù hlavy');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('33','ûltkast· koûa');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('34','tmav˝ moË');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('35','nevoænosù');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('36','strata chuti do jedla');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('37','bolesù v zadnej Ëasti oka');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('38','bolesù chrbta');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('39','z·pcha');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('40','bolesù brucha');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('41','hnaËka');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('42','mierna hor˙Ëka');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('43','ûlt˝ moË');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('44','zaûltnutÈ oËi');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('45','ak˙tne ûivotnÈ zlyhanie');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('46','preùaûenie tekutinou');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('47','opuch ûal˙dka');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('48','zvaËöenÈ uzliny v hrdle');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('49','mal·tnosù');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('50','rozmazanÈ a zkreslenÈ videnie');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('51','hlien');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('52','hrdlo_dr·ûdenie');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('53','zaËervenanÈ oËi');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('54','sÌnusov˝ tlak');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('55','st·le soplenie ');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('56','preùaûenie');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('57','bolesù v hrudi');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('58','slabosti v kostiach');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('59','r˝chly srdcov˝ tep');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('60','bolestivÈ pohyby');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('61','bolesù v oblasti koneËnÌka');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('62','krv v stolici');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('63','podr·ûdenie_v_anuse');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('64','bolesù krku');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('65','z·vrat');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('66','k‡Ëe');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('67','podliatiny');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('68','obezita');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('69','opuchnutÈ nohy');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('70','opuch ûÌl');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('71','opuch tv·re a oËÌ');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('72','zv‰Ëöen·_ötÌtna ûæaza');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('73','krechkÈ nechty');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('74','nadmern˝ opuch ');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('75','nadmern˝ hlad');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('76','Ëast˝ sexualny kontakt');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('77','suöenie_a_mravËanie_pier');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('78','nezrozumiteæn˝ prejav');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('79','bolesù kolena');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('80','bolesù bedrovÈho kÂbu');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('81','svalov·_slabosù');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('82','stuhnut˝ krk');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('83','opuch kÂbov');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('84','z·vraty');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('85','toËenie pri pohybe');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('86','strata stability');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('87','nestabilita');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('88','oslaben· jedna strana tela');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('89','strata Ëuchu');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('90','neprÌjemn˝ pocit v oblasti moËovÈho mech˙ra');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('91','z·pach v moËi');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('92','Ëast˝ pocit na moËenie');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('93','"nad˙vanie');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('94','vn˙tornÈ svrbenie');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('95','toxick˝ v˝zor(T˝fus)');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('96','depresia');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('97','podr·ûdenosù');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('98','svalov· bolesù');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('99','zmenena pozornosti');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('100','ËervenÈ bodky na tele');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('101','bolest brucha');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('102','abnorm·lna menötru·cia');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('103','farbosleposù');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('104','slzenie oËÌ');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('105','zv˝öen· chuù do jedla');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('106','poly˙ria');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('107','rodinn· histÛria');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('108','vnutorn· kyselina');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('109','hlieÚ');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('110','nedostatok koncentr·cie');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('111','vizu·lne poruchy');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('112','prÌjem krvnej transf˙zie');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('113','prijÌmanie nesterilnych injekciÌ');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('114','kÛma');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('115','krv·canie zo ûal˙dka');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('116','roztiahnutie bruönej dutiny');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('117','pozostatok alkoholu ');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('118','preùaûenie tekutinou');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('119','krv v hlieni');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('120','opuch ûÌl na lÌtku');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('121','b˙öenie srdca');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('122','bolestiv· chÙdza');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('123','hnisavÈ vyr·ûky');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('124','Ëierne bodky');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('125','ökrÌpanie');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('126','odlup·vanie koûe');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('127','bledosù');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('128','malÈ jamky v nechtoch');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('129','z·palovÈ nechty');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('130','pæuzgier');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('131','Ëerven˝ opuch nosa');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('132','ûltkast· kÙra na tv·ri');
+Insert into SYSTEM.TYP_SYMPTOM (ID_SYMPTOM,NAZOV) values ('133','prognÛza');
+REM INSERTING into SYSTEM.UCINNA_LATKA
+SET DEFINE OFF;
+Insert into SYSTEM.UCINNA_LATKA (ID_LATKA,ID_LIEK,UCINNA_LATKA,UCINNA_LATKA_GRAMAZ) values ('1','1','Paracetamol','500');
+REM INSERTING into SYSTEM."UserClaims"
+SET DEFINE OFF;
+REM INSERTING into SYSTEM."UserLogins"
+SET DEFINE OFF;
+REM INSERTING into SYSTEM."UserRoles"
+SET DEFINE OFF;
+Insert into SYSTEM."UserRoles" ("UserId","RoleId") values ('1','1');
+Insert into SYSTEM."UserRoles" ("UserId","RoleId") values ('2','2');
+REM INSERTING into SYSTEM."Users"
+SET DEFINE OFF;
+Insert into SYSTEM."Users" ("Registrovany","Meno","Priezvisko","RodPriezvisko","RodCislo","DatNarodenia","Email","Mobil","PoslednePrihlasenie","Pohlavie","Id","AccessFailedCount","ConcurrencyStamp","EmailConfirmed","LockoutEnabled","LockoutEnd","NormalizedEmail","NormalizedUserName","PhoneNumber","PhoneNumberConfirmed","SecurityStamp","TwoFactorEnabled","UserName","PasswordHash") values (to_timestamp('12.10.21 14:47:28,577188000','DD.MM.RR HH24:MI:SSXFF'),'admin','x',null,'x          ',to_date('24.11.98','DD.MM.RR'),'admin@gmail.com','x',to_timestamp('12.10.21 14:47:28,577197600','DD.MM.RR HH24:MI:SSXFF'),'M','1','0','72c3f3d4-fd4b-4fdc-9a72-ee95a00b7c28','0','1',null,'ADMIN@GMAIL.COM','ADMIN',null,'0','IC3DQFUHPHTNE2RUVXASTOCWLLXMN7JX','0','admin','AQAAAAEAACcQAAAAEES2X0sfXvBIGcuaUbtt86dFqf89uzVn0xeYnEk2j4/JsqeDoSrbi1Xuadx4RLsbvA==');
+Insert into SYSTEM."Users" ("Registrovany","Meno","Priezvisko","RodPriezvisko","RodCislo","DatNarodenia","Email","Mobil","PoslednePrihlasenie","Pohlavie","Id","AccessFailedCount","ConcurrencyStamp","EmailConfirmed","LockoutEnabled","LockoutEnd","NormalizedEmail","NormalizedUserName","PhoneNumber","PhoneNumberConfirmed","SecurityStamp","TwoFactorEnabled","UserName","PasswordHash") values (to_timestamp('13.10.21 12:36:57,172821400','DD.MM.RR HH24:MI:SSXFF'),'Mudr. Peter','Stanik',null,'801124/4169',to_date('24.11.80','DD.MM.RR'),'motivationgajdy@gmail.com','421414207370',to_timestamp('13.10.21 12:36:57,172831400','DD.MM.RR HH24:MI:SSXFF'),'M','2','0','e92bb80e-ce48-4418-9535-90ac8833da79','0','1',null,'MOTIVATIONGAJDY@GMAIL.COM','MOTIVATIONGAJDY',null,'0','OKAIL4BDLV46ELNFPPUWSGBXXMYBM346','0','motivationgajdy','AQAAAAEAACcQAAAAEOUwtdQMJJei8U7bBMUalZRgQ/ySRU0DbW+ErUBuNp2uH0RqDfNYj/aqyD6EW+SdTg==');
+REM INSERTING into SYSTEM."UserTokens"
+SET DEFINE OFF;
+REM INSERTING into SYSTEM.VYK_VYSETRENIA
+SET DEFINE OFF;
+REM INSERTING into SYSTEM.ZAP_CHOROBY
+SET DEFINE OFF;
+REM INSERTING into SYSTEM.ZDRAV_KARTA_POVOLENIA
+SET DEFINE OFF;
+REM INSERTING into SYSTEM.ZDRAV_POISTENIE
+SET DEFINE OFF;
+REM INSERTING into SYSTEM.ZDRAVOTNA_KARTA
+SET DEFINE OFF;
+--------------------------------------------------------
+--  DDL for Index PK___EFMigrationsHistory
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK___EFMigrationsHistory" ON "SYSTEM"."__EFMigrationsHistory" ("MigrationId") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_ATESTACIE_LEKAR
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_ATESTACIE_LEKAR" ON "SYSTEM"."ATESTACIE_LEKAR" ("ID_ATESTACIA", "ID_LEKAR", "ID_TYP") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP29
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP29" ON "SYSTEM"."BYDLISKO" ("ID_POUZIVATEL") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP102
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP102" ON "SYSTEM"."BYDLISKO" ("ID_MESTO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_BYDLISKO
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_BYDLISKO" ON "SYSTEM"."BYDLISKO" ("ID_BYDLISKA") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_FOTKA_POUZIVATEL
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_FOTKA_POUZIVATEL" ON "SYSTEM"."FOTKA_POUZIVATEL" ("ID_POUZIVATEL") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_CHOROBA
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_CHOROBA" ON "SYSTEM"."CHOROBA" ("CIS_CHOROBA") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_KRAJ
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_KRAJ" ON "SYSTEM"."KRAJ" ("ID_KRAJ") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP72
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP72" ON "SYSTEM"."L_BALENIE" ("ID_LIEK") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_L_BALENIE
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_L_BALENIE" ON "SYSTEM"."L_BALENIE" ("KOD_BALENIA") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP16
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP16" ON "SYSTEM"."LEKAR" ("ID_POUZIVATEL") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP51
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP51" ON "SYSTEM"."LEKAR" ("ID_ODDEL") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_LEKAR
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_LEKAR" ON "SYSTEM"."LEKAR" ("ID_LEKAR") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_LIEK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_LIEK" ON "SYSTEM"."LIEK" ("ID_LIEK") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_LIEK_APLIKACIA
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_LIEK_APLIKACIA" ON "SYSTEM"."LIEK_APLIKACIA" ("ID_LIEK", "ID_OBLAST") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_LIEK_UCINNA_LATKA
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_LIEK_UCINNA_LATKA" ON "SYSTEM"."LIEK_UCINNA_LATKA" ("ID_LIEK", "ID_LATKA") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_MESTO
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_MESTO" ON "SYSTEM"."MESTO" ("ID_MESTO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP70
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP70" ON "SYSTEM"."MESTO" ("ID_OKRES") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP100
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP100" ON "SYSTEM"."NEMOCNICA" ("ID_MESTO") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_NEMOCNICA
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_NEMOCNICA" ON "SYSTEM"."NEMOCNICA" ("ID_NEM") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_OBLAST_URCENIA
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_OBLAST_URCENIA" ON "SYSTEM"."OBLAST_URCENIA" ("ID_OBLAST") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP49
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP49" ON "SYSTEM"."ODDELENIE" ("ID_NEM") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP61
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP61" ON "SYSTEM"."ODDELENIE" ("ID_PRIMAR") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_ODDELENIE
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_ODDELENIE" ON "SYSTEM"."ODDELENIE" ("ID_ODDEL") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP1
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP1" ON "SYSTEM"."OKRES" ("ID_KRAJ") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_OKRES
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_OKRES" ON "SYSTEM"."OKRES" ("ID_OKRES") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP33
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP33" ON "SYSTEM"."PACIENT" ("ID_VSEOBECNY_LEKAR") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP10
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP10" ON "SYSTEM"."PACIENT" ("ID_POUZIVATEL") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_PACIENT
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_PACIENT" ON "SYSTEM"."PACIENT" ("ID_PACIENT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_POISTOVNA
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_POISTOVNA" ON "SYSTEM"."POISTOVNA" ("ID_POISTOVNA") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_PREDP_LIECBA
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_PREDP_LIECBA" ON "SYSTEM"."PREDP_LIECBA" ("ID_LIEK", "OD", "ID_VYSETRENIE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_PRIZNAKY
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_PRIZNAKY" ON "SYSTEM"."PRIZNAKY" ("CIS_CHOROBA", "OD", "ID_ZDRAVOTNA_KARTA", "ID_SYMPTOM") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP35
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP35" ON "SYSTEM"."RECEPT" ("ID_VYSETRENIE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP41
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP41" ON "SYSTEM"."RECEPT" ("ID_LIEK") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_RECEPT
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_RECEPT" ON "SYSTEM"."RECEPT" ("ID_RECEPT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_RoleClaims
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_RoleClaims" ON "SYSTEM"."RoleClaims" ("Id") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_Roles
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_Roles" ON "SYSTEM"."Roles" ("Id") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_TYP_LEKARA
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_TYP_LEKARA" ON "SYSTEM"."TYP_LEKARA" ("ID_TYP") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_TYP_SYMPTOM
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_TYP_SYMPTOM" ON "SYSTEM"."TYP_SYMPTOM" ("ID_SYMPTOM") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_UCINNA_LATKA
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_UCINNA_LATKA" ON "SYSTEM"."UCINNA_LATKA" ("ID_LATKA") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_UserClaims
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_UserClaims" ON "SYSTEM"."UserClaims" ("Id") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_UserLogins
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_UserLogins" ON "SYSTEM"."UserLogins" ("UserId") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_UserRoles
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_UserRoles" ON "SYSTEM"."UserRoles" ("RoleId", "UserId") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_UserRoles_UserId
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_UserRoles_UserId" ON "SYSTEM"."UserRoles" ("UserId") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_Users
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_Users" ON "SYSTEM"."Users" ("Id") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_UserTokens
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_UserTokens" ON "SYSTEM"."UserTokens" ("UserId") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP23
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP23" ON "SYSTEM"."VYK_VYSETRENIA" ("ID_LEKAR") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP36
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP36" ON "SYSTEM"."VYK_VYSETRENIA" ("ID_PACIENT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_VYK_VYSETRENIA
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_VYK_VYSETRENIA" ON "SYSTEM"."VYK_VYSETRENIA" ("ID_VYSETRENIE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP32
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP32" ON "SYSTEM"."ZAP_CHOROBY" ("ID_VYSETRENIE") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_ZAP_CHOROBY
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_ZAP_CHOROBY" ON "SYSTEM"."ZAP_CHOROBY" ("CIS_CHOROBA", "OD", "ID_ZDRAVOTNA_KARTA") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_ZDRAV_KARTA_POVOLENIA
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_ZDRAV_KARTA_POVOLENIA" ON "SYSTEM"."ZDRAV_KARTA_POVOLENIA" ("OD", "ID_LEKAR", "ID_PACIENT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_ZDRAV_POISTENIE
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_ZDRAV_POISTENIE" ON "SYSTEM"."ZDRAV_POISTENIE" ("ID_POISTOVNA", "ID_PACIENT", "OD") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index PK_ZDRAVOTNA_KARTA
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "SYSTEM"."PK_ZDRAVOTNA_KARTA" ON "SYSTEM"."ZDRAVOTNA_KARTA" ("ID_PACIENT") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  DDL for Index IX_RELATIONSHIP104
+--------------------------------------------------------
+
+  CREATE INDEX "SYSTEM"."IX_RELATIONSHIP104" ON "SYSTEM"."ZDRAVOTNA_KARTA" ("ID_MESTO_NARODENIA") 
+  PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM" ;
+--------------------------------------------------------
+--  Constraints for Table __EFMigrationsHistory
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."__EFMigrationsHistory" MODIFY ("MigrationId" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."__EFMigrationsHistory" MODIFY ("ProductVersion" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."__EFMigrationsHistory" ADD CONSTRAINT "PK___EFMigrationsHistory" PRIMARY KEY ("MigrationId")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table ATESTACIE_LEKAR
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ATESTACIE_LEKAR" MODIFY ("ID_LEKAR" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ATESTACIE_LEKAR" MODIFY ("ID_TYP" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ATESTACIE_LEKAR" MODIFY ("ID_ATESTACIA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ATESTACIE_LEKAR" MODIFY ("ATESTACIA_OD" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ATESTACIE_LEKAR" ADD CONSTRAINT "PK_ATESTACIE_LEKAR" PRIMARY KEY ("ID_ATESTACIA", "ID_LEKAR", "ID_TYP")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table BYDLISKO
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."BYDLISKO" MODIFY ("ID_MESTO" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."BYDLISKO" MODIFY ("ID_BYDLISKA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."BYDLISKO" MODIFY ("ULICA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."BYDLISKO" MODIFY ("ADRESA_OD" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."BYDLISKO" MODIFY ("TRVALE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."BYDLISKO" ADD CONSTRAINT "PK_BYDLISKO" PRIMARY KEY ("ID_BYDLISKA")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."BYDLISKO" MODIFY ("PSC_BYDLISKO" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table FOTKA_POUZIVATEL
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."FOTKA_POUZIVATEL" MODIFY ("ID_POUZIVATEL" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."FOTKA_POUZIVATEL" MODIFY ("FOTKA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."FOTKA_POUZIVATEL" ADD CONSTRAINT "PK_FOTKA_POUZIVATEL" PRIMARY KEY ("ID_POUZIVATEL")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table CHOROBA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."CHOROBA" MODIFY ("CIS_CHOROBA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CHOROBA" MODIFY ("NAZOV" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CHOROBA" MODIFY ("VALID_OD" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."CHOROBA" ADD CHECK (obm_pohlavie in ('Z','M','D','V','A')) ENABLE;
+  ALTER TABLE "SYSTEM"."CHOROBA" ADD CONSTRAINT "PK_CHOROBA" PRIMARY KEY ("CIS_CHOROBA")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table KRAJ
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."KRAJ" MODIFY ("ID_KRAJ" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."KRAJ" MODIFY ("NAZOV" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."KRAJ" ADD CONSTRAINT "PK_KRAJ" PRIMARY KEY ("ID_KRAJ")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table L_BALENIE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."L_BALENIE" MODIFY ("KOD_BALENIA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."L_BALENIE" MODIFY ("SPOSOB_UHRADY" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."L_BALENIE" MODIFY ("CENA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."L_BALENIE" MODIFY ("DOPLATOK" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."L_BALENIE" MODIFY ("POCET_KS" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."L_BALENIE" ADD CHECK (sposob_uhrady in ('I','S','A')
+) ENABLE;
+  ALTER TABLE "SYSTEM"."L_BALENIE" ADD CONSTRAINT "PK_L_BALENIE" PRIMARY KEY ("KOD_BALENIA")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table LEKAR
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."LEKAR" MODIFY ("ID_LEKAR" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."LEKAR" MODIFY ("ID_POUZIVATEL" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."LEKAR" ADD CONSTRAINT "PK_LEKAR" PRIMARY KEY ("ID_LEKAR")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table LIEK
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."LIEK" MODIFY ("ID_LIEK" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."LIEK" MODIFY ("NAZOV" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."LIEK" MODIFY ("REZIM_VYDAJA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."LIEK" MODIFY ("LIEK_FORMA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."LIEK" ADD CHECK (rezim_vydaja in ('F','R','Rx')) ENABLE;
+  ALTER TABLE "SYSTEM"."LIEK" ADD CONSTRAINT "PK_LIEK" PRIMARY KEY ("ID_LIEK")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table LIEK_APLIKACIA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."LIEK_APLIKACIA" MODIFY ("ID_LIEK" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."LIEK_APLIKACIA" MODIFY ("ID_OBLAST" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."LIEK_APLIKACIA" ADD CONSTRAINT "PK_LIEK_APLIKACIA" PRIMARY KEY ("ID_LIEK", "ID_OBLAST")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table LIEK_UCINNA_LATKA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."LIEK_UCINNA_LATKA" MODIFY ("ID_LIEK" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."LIEK_UCINNA_LATKA" MODIFY ("ID_LATKA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."LIEK_UCINNA_LATKA" ADD CONSTRAINT "PK_LIEK_UCINNA_LATKA" PRIMARY KEY ("ID_LIEK", "ID_LATKA")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table MESTO
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."MESTO" MODIFY ("ID_OKRES" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."MESTO" MODIFY ("NAZOV" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."MESTO" MODIFY ("ID_MESTO" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."MESTO" ADD CONSTRAINT "PK_MESTO" PRIMARY KEY ("ID_MESTO")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table NEMOCNICA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."NEMOCNICA" MODIFY ("ID_NEM" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."NEMOCNICA" MODIFY ("NAZOV" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."NEMOCNICA" MODIFY ("MOBIL" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."NEMOCNICA" MODIFY ("ULICA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."NEMOCNICA" ADD CONSTRAINT "PK_NEMOCNICA" PRIMARY KEY ("ID_NEM")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+  ALTER TABLE "SYSTEM"."NEMOCNICA" MODIFY ("ID_MESTO" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table OBLAST_URCENIA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."OBLAST_URCENIA" MODIFY ("ID_OBLAST" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."OBLAST_URCENIA" MODIFY ("NAZOV" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."OBLAST_URCENIA" ADD CONSTRAINT "PK_OBLAST_URCENIA" PRIMARY KEY ("ID_OBLAST")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table ODDELENIE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ODDELENIE" MODIFY ("ID_ODDEL" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ODDELENIE" MODIFY ("ID_NEM" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ODDELENIE" MODIFY ("NAZOV_ODD" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ODDELENIE" ADD CONSTRAINT "PK_ODDELENIE" PRIMARY KEY ("ID_ODDEL")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table OKRES
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."OKRES" MODIFY ("ID_OKRES" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."OKRES" MODIFY ("ID_KRAJ" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."OKRES" MODIFY ("NAZOV" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."OKRES" ADD CONSTRAINT "PK_OKRES" PRIMARY KEY ("ID_OKRES")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table PACIENT
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."PACIENT" MODIFY ("ID_PACIENT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."PACIENT" MODIFY ("ID_POUZIVATEL" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."PACIENT" MODIFY ("ID_VSEOBECNY_LEKAR" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."PACIENT" MODIFY ("OD" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."PACIENT" ADD CONSTRAINT "PK_PACIENT" PRIMARY KEY ("ID_PACIENT")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table POISTOVNA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."POISTOVNA" MODIFY ("ID_POISTOVNA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."POISTOVNA" MODIFY ("NAZOV" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."POISTOVNA" MODIFY ("KONTAKT_MOBIL" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."POISTOVNA" MODIFY ("LOGO_URL" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."POISTOVNA" ADD CONSTRAINT "PK_POISTOVNA" PRIMARY KEY ("ID_POISTOVNA")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table PREDP_LIECBA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."PREDP_LIECBA" MODIFY ("ID_LIEK" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."PREDP_LIECBA" MODIFY ("ID_VYSETRENIE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."PREDP_LIECBA" MODIFY ("OD" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."PREDP_LIECBA" MODIFY ("DAVKOVANIE_POCET" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."PREDP_LIECBA" ADD CONSTRAINT "PK_PREDP_LIECBA" PRIMARY KEY ("ID_LIEK", "OD", "ID_VYSETRENIE")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table PRIZNAKY
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."PRIZNAKY" MODIFY ("CIS_CHOROBA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."PRIZNAKY" MODIFY ("ID_ZDRAVOTNA_KARTA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."PRIZNAKY" MODIFY ("ID_SYMPTOM" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."PRIZNAKY" MODIFY ("OD" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."PRIZNAKY" ADD CONSTRAINT "PK_PRIZNAKY" PRIMARY KEY ("CIS_CHOROBA", "OD", "ID_ZDRAVOTNA_KARTA", "ID_SYMPTOM")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table RECEPT
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."RECEPT" MODIFY ("ID_RECEPT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."RECEPT" MODIFY ("ID_VYSETRENIE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."RECEPT" MODIFY ("ID_LIEK" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."RECEPT" MODIFY ("BALENIE_KS" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."RECEPT" MODIFY ("VYSTAVENIE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."RECEPT" ADD CONSTRAINT "PK_RECEPT" PRIMARY KEY ("ID_RECEPT")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table RoleClaims
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."RoleClaims" MODIFY ("Id" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."RoleClaims" MODIFY ("RoleId" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."RoleClaims" ADD CONSTRAINT "PK_RoleClaims" PRIMARY KEY ("Id")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table Roles
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."Roles" MODIFY ("Id" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."Roles" ADD CONSTRAINT "PK_Roles" PRIMARY KEY ("Id")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table SQLPLUS_PRODUCT_PROFILE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."SQLPLUS_PRODUCT_PROFILE" MODIFY ("PRODUCT" NOT NULL ENABLE);
+--------------------------------------------------------
+--  Constraints for Table TYP_LEKARA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."TYP_LEKARA" MODIFY ("ID_TYP" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."TYP_LEKARA" MODIFY ("NAZOV" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."TYP_LEKARA" ADD CONSTRAINT "PK_TYP_LEKARA" PRIMARY KEY ("ID_TYP")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table TYP_SYMPTOM
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."TYP_SYMPTOM" MODIFY ("ID_SYMPTOM" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."TYP_SYMPTOM" MODIFY ("NAZOV" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."TYP_SYMPTOM" ADD CONSTRAINT "PK_TYP_SYMPTOM" PRIMARY KEY ("ID_SYMPTOM")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table UCINNA_LATKA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."UCINNA_LATKA" MODIFY ("ID_LATKA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."UCINNA_LATKA" MODIFY ("UCINNA_LATKA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."UCINNA_LATKA" ADD CONSTRAINT "PK_UCINNA_LATKA" PRIMARY KEY ("ID_LATKA")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table UserClaims
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."UserClaims" MODIFY ("Id" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."UserClaims" MODIFY ("UserId" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."UserClaims" ADD CONSTRAINT "PK_UserClaims" PRIMARY KEY ("Id")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table UserLogins
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."UserLogins" MODIFY ("UserId" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."UserLogins" ADD CONSTRAINT "PK_UserLogins" PRIMARY KEY ("UserId")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table UserRoles
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."UserRoles" MODIFY ("UserId" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."UserRoles" MODIFY ("RoleId" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."UserRoles" ADD CONSTRAINT "PK_UserRoles" PRIMARY KEY ("RoleId", "UserId")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table Users
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."Users" MODIFY ("Registrovany" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."Users" MODIFY ("Meno" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."Users" MODIFY ("Priezvisko" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."Users" MODIFY ("Email" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."Users" MODIFY ("Id" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."Users" MODIFY ("Pohlavie" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."Users" MODIFY ("AccessFailedCount" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."Users" MODIFY ("EmailConfirmed" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."Users" MODIFY ("LockoutEnabled" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."Users" MODIFY ("PhoneNumberConfirmed" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."Users" MODIFY ("TwoFactorEnabled" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."Users" ADD CONSTRAINT "PK_Users" PRIMARY KEY ("Id")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table UserTokens
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."UserTokens" MODIFY ("UserId" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."UserTokens" ADD CONSTRAINT "PK_UserTokens" PRIMARY KEY ("UserId")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table VYK_VYSETRENIA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."VYK_VYSETRENIA" MODIFY ("ID_VYSETRENIE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."VYK_VYSETRENIA" MODIFY ("DATUM_VYS" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."VYK_VYSETRENIA" MODIFY ("VYSLEDOK" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."VYK_VYSETRENIA" ADD CONSTRAINT "PK_VYK_VYSETRENIA" PRIMARY KEY ("ID_VYSETRENIE")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table ZAP_CHOROBY
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ZAP_CHOROBY" MODIFY ("ID_ZDRAVOTNA_KARTA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ZAP_CHOROBY" MODIFY ("CIS_CHOROBA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ZAP_CHOROBY" MODIFY ("OD" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ZAP_CHOROBY" MODIFY ("ID_VYSETRENIE" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ZAP_CHOROBY" ADD CONSTRAINT "PK_ZAP_CHOROBY" PRIMARY KEY ("CIS_CHOROBA", "OD", "ID_ZDRAVOTNA_KARTA")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table ZDRAV_KARTA_POVOLENIA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ZDRAV_KARTA_POVOLENIA" MODIFY ("ID_LEKAR" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ZDRAV_KARTA_POVOLENIA" MODIFY ("ID_PACIENT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ZDRAV_KARTA_POVOLENIA" MODIFY ("OD" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ZDRAV_KARTA_POVOLENIA" ADD CONSTRAINT "PK_ZDRAV_KARTA_POVOLENIA" PRIMARY KEY ("OD", "ID_LEKAR", "ID_PACIENT")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table ZDRAV_POISTENIE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ZDRAV_POISTENIE" MODIFY ("ID_POISTOVNA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ZDRAV_POISTENIE" MODIFY ("ID_PACIENT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ZDRAV_POISTENIE" MODIFY ("OD" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ZDRAV_POISTENIE" ADD CONSTRAINT "PK_ZDRAV_POISTENIE" PRIMARY KEY ("ID_POISTOVNA", "ID_PACIENT", "OD")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Constraints for Table ZDRAVOTNA_KARTA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ZDRAVOTNA_KARTA" MODIFY ("ID_PACIENT" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ZDRAVOTNA_KARTA" MODIFY ("ID_MESTO_NARODENIA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ZDRAVOTNA_KARTA" MODIFY ("KRV_SKUPINA" NOT NULL ENABLE);
+  ALTER TABLE "SYSTEM"."ZDRAVOTNA_KARTA" ADD CHECK (krv_skupina in ('A+','B+','AB+','0+','A-','B-','AB-','0-')) ENABLE;
+  ALTER TABLE "SYSTEM"."ZDRAVOTNA_KARTA" ADD CONSTRAINT "PK_ZDRAVOTNA_KARTA" PRIMARY KEY ("ID_PACIENT")
+  USING INDEX PCTFREE 10 INITRANS 2 MAXTRANS 255 COMPUTE STATISTICS 
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1
+  BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "SYSTEM"  ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table ATESTACIE_LEKAR
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ATESTACIE_LEKAR" ADD CONSTRAINT "RELATIONSHIP62" FOREIGN KEY ("ID_LEKAR")
+	  REFERENCES "SYSTEM"."LEKAR" ("ID_LEKAR") ENABLE;
+  ALTER TABLE "SYSTEM"."ATESTACIE_LEKAR" ADD CONSTRAINT "RELATIONSHIP63" FOREIGN KEY ("ID_TYP")
+	  REFERENCES "SYSTEM"."TYP_LEKARA" ("ID_TYP") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table BYDLISKO
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."BYDLISKO" ADD CONSTRAINT "RELATIONSHIP103" FOREIGN KEY ("ID_MESTO")
+	  REFERENCES "SYSTEM"."MESTO" ("ID_MESTO") ENABLE;
+  ALTER TABLE "SYSTEM"."BYDLISKO" ADD CONSTRAINT "RELATIONSHIP29" FOREIGN KEY ("ID_POUZIVATEL")
+	  REFERENCES "SYSTEM"."Users" ("Id") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table FOTKA_POUZIVATEL
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."FOTKA_POUZIVATEL" ADD CONSTRAINT "RELATIONSHIP55" FOREIGN KEY ("ID_POUZIVATEL")
+	  REFERENCES "SYSTEM"."Users" ("Id") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table L_BALENIE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."L_BALENIE" ADD CONSTRAINT "RELATIONSHIP72" FOREIGN KEY ("ID_LIEK")
+	  REFERENCES "SYSTEM"."LIEK" ("ID_LIEK") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table LEKAR
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."LEKAR" ADD CONSTRAINT "RELATIONSHIP16" FOREIGN KEY ("ID_POUZIVATEL")
+	  REFERENCES "SYSTEM"."Users" ("Id") ENABLE;
+  ALTER TABLE "SYSTEM"."LEKAR" ADD CONSTRAINT "RELATIONSHIP51" FOREIGN KEY ("ID_ODDEL")
+	  REFERENCES "SYSTEM"."ODDELENIE" ("ID_ODDEL") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table LIEK_APLIKACIA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."LIEK_APLIKACIA" ADD CONSTRAINT "RELATIONSHIP75" FOREIGN KEY ("ID_LIEK")
+	  REFERENCES "SYSTEM"."LIEK" ("ID_LIEK") ENABLE;
+  ALTER TABLE "SYSTEM"."LIEK_APLIKACIA" ADD CONSTRAINT "RELATIONSHIP76" FOREIGN KEY ("ID_OBLAST")
+	  REFERENCES "SYSTEM"."OBLAST_URCENIA" ("ID_OBLAST") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table LIEK_UCINNA_LATKA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."LIEK_UCINNA_LATKA" ADD CONSTRAINT "RELATIONSHIP73" FOREIGN KEY ("ID_LIEK")
+	  REFERENCES "SYSTEM"."LIEK" ("ID_LIEK") ENABLE;
+  ALTER TABLE "SYSTEM"."LIEK_UCINNA_LATKA" ADD CONSTRAINT "RELATIONSHIP74" FOREIGN KEY ("ID_LATKA")
+	  REFERENCES "SYSTEM"."UCINNA_LATKA" ("ID_LATKA") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table MESTO
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."MESTO" ADD CONSTRAINT "RELATIONSHIP70" FOREIGN KEY ("ID_OKRES")
+	  REFERENCES "SYSTEM"."OKRES" ("ID_OKRES") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table NEMOCNICA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."NEMOCNICA" ADD CONSTRAINT "RELATIONSHIP101" FOREIGN KEY ("ID_MESTO")
+	  REFERENCES "SYSTEM"."MESTO" ("ID_MESTO") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table ODDELENIE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ODDELENIE" ADD CONSTRAINT "RELATIONSHIP49" FOREIGN KEY ("ID_NEM")
+	  REFERENCES "SYSTEM"."NEMOCNICA" ("ID_NEM") ENABLE;
+  ALTER TABLE "SYSTEM"."ODDELENIE" ADD CONSTRAINT "RELATIONSHIP61" FOREIGN KEY ("ID_PRIMAR")
+	  REFERENCES "SYSTEM"."LEKAR" ("ID_LEKAR") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table PACIENT
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."PACIENT" ADD CONSTRAINT "RELATIONSHIP10" FOREIGN KEY ("ID_POUZIVATEL")
+	  REFERENCES "SYSTEM"."Users" ("Id") ENABLE;
+  ALTER TABLE "SYSTEM"."PACIENT" ADD CONSTRAINT "RELATIONSHIP33" FOREIGN KEY ("ID_VSEOBECNY_LEKAR")
+	  REFERENCES "SYSTEM"."LEKAR" ("ID_LEKAR") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table PREDP_LIECBA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."PREDP_LIECBA" ADD CONSTRAINT "RELATIONSHIP6" FOREIGN KEY ("ID_LIEK")
+	  REFERENCES "SYSTEM"."LIEK" ("ID_LIEK") ENABLE;
+  ALTER TABLE "SYSTEM"."PREDP_LIECBA" ADD CONSTRAINT "RELATIONSHIP39" FOREIGN KEY ("ID_VYSETRENIE")
+	  REFERENCES "SYSTEM"."VYK_VYSETRENIA" ("ID_VYSETRENIE") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table PRIZNAKY
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."PRIZNAKY" ADD CONSTRAINT "RELATIONSHIP68" FOREIGN KEY ("CIS_CHOROBA", "OD", "ID_ZDRAVOTNA_KARTA")
+	  REFERENCES "SYSTEM"."ZAP_CHOROBY" ("CIS_CHOROBA", "OD", "ID_ZDRAVOTNA_KARTA") ENABLE;
+  ALTER TABLE "SYSTEM"."PRIZNAKY" ADD CONSTRAINT "RELATIONSHIP69" FOREIGN KEY ("ID_SYMPTOM")
+	  REFERENCES "SYSTEM"."TYP_SYMPTOM" ("ID_SYMPTOM") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table RECEPT
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."RECEPT" ADD CONSTRAINT "RELATIONSHIP35" FOREIGN KEY ("ID_VYSETRENIE")
+	  REFERENCES "SYSTEM"."VYK_VYSETRENIA" ("ID_VYSETRENIE") ENABLE;
+  ALTER TABLE "SYSTEM"."RECEPT" ADD CONSTRAINT "RELATIONSHIP41" FOREIGN KEY ("ID_LIEK")
+	  REFERENCES "SYSTEM"."LIEK" ("ID_LIEK") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table UserRoles
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."UserRoles" ADD CONSTRAINT "FK_UserRoles_Roles_RoleId" FOREIGN KEY ("RoleId")
+	  REFERENCES "SYSTEM"."Roles" ("Id") ON DELETE CASCADE ENABLE;
+  ALTER TABLE "SYSTEM"."UserRoles" ADD CONSTRAINT "FK_UserRoles_Users_UserId" FOREIGN KEY ("UserId")
+	  REFERENCES "SYSTEM"."Users" ("Id") ON DELETE CASCADE ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table VYK_VYSETRENIA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."VYK_VYSETRENIA" ADD CONSTRAINT "RELATIONSHIP23" FOREIGN KEY ("ID_LEKAR")
+	  REFERENCES "SYSTEM"."LEKAR" ("ID_LEKAR") ENABLE;
+  ALTER TABLE "SYSTEM"."VYK_VYSETRENIA" ADD CONSTRAINT "RELATIONSHIP36" FOREIGN KEY ("ID_PACIENT")
+	  REFERENCES "SYSTEM"."ZDRAVOTNA_KARTA" ("ID_PACIENT") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table ZAP_CHOROBY
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ZAP_CHOROBY" ADD CONSTRAINT "RELATIONSHIP7" FOREIGN KEY ("ID_ZDRAVOTNA_KARTA")
+	  REFERENCES "SYSTEM"."ZDRAVOTNA_KARTA" ("ID_PACIENT") ENABLE;
+  ALTER TABLE "SYSTEM"."ZAP_CHOROBY" ADD CONSTRAINT "RELATIONSHIP8" FOREIGN KEY ("CIS_CHOROBA")
+	  REFERENCES "SYSTEM"."CHOROBA" ("CIS_CHOROBA") ENABLE;
+  ALTER TABLE "SYSTEM"."ZAP_CHOROBY" ADD CONSTRAINT "RELATIONSHIP32" FOREIGN KEY ("ID_VYSETRENIE")
+	  REFERENCES "SYSTEM"."VYK_VYSETRENIA" ("ID_VYSETRENIE") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table ZDRAV_KARTA_POVOLENIA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ZDRAV_KARTA_POVOLENIA" ADD CONSTRAINT "RELATIONSHIP53" FOREIGN KEY ("ID_PACIENT")
+	  REFERENCES "SYSTEM"."ZDRAVOTNA_KARTA" ("ID_PACIENT") ENABLE;
+  ALTER TABLE "SYSTEM"."ZDRAV_KARTA_POVOLENIA" ADD CONSTRAINT "RELATIONSHIP54" FOREIGN KEY ("ID_LEKAR")
+	  REFERENCES "SYSTEM"."LEKAR" ("ID_LEKAR") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table ZDRAV_POISTENIE
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ZDRAV_POISTENIE" ADD CONSTRAINT "RELATIONSHIP64" FOREIGN KEY ("ID_POISTOVNA")
+	  REFERENCES "SYSTEM"."POISTOVNA" ("ID_POISTOVNA") ENABLE;
+  ALTER TABLE "SYSTEM"."ZDRAV_POISTENIE" ADD CONSTRAINT "RELATIONSHIP65" FOREIGN KEY ("ID_PACIENT")
+	  REFERENCES "SYSTEM"."PACIENT" ("ID_PACIENT") ENABLE;
+--------------------------------------------------------
+--  Ref Constraints for Table ZDRAVOTNA_KARTA
+--------------------------------------------------------
+
+  ALTER TABLE "SYSTEM"."ZDRAVOTNA_KARTA" ADD CONSTRAINT "RELATIONSHIP105" FOREIGN KEY ("ID_MESTO_NARODENIA")
+	  REFERENCES "SYSTEM"."MESTO" ("ID_MESTO") ENABLE;
+  ALTER TABLE "SYSTEM"."ZDRAVOTNA_KARTA" ADD CONSTRAINT "RELATIONSHIP42" FOREIGN KEY ("ID_PACIENT")
+	  REFERENCES "SYSTEM"."PACIENT" ("ID_PACIENT") ENABLE;

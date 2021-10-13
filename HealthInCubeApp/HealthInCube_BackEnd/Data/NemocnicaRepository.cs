@@ -15,9 +15,11 @@ namespace HealthInCube_BackEnd.Data
     {
         private readonly HealthInCubeContext _context;
         private readonly IMapper _mapper;
+        private readonly ILekarRepository _lekarRepository;
 
-        public NemocnicaRepository(HealthInCubeContext context, IMapper mapper)
+        public NemocnicaRepository(HealthInCubeContext context, IMapper mapper, ILekarRepository lekarRepository)
         {
+            _lekarRepository = lekarRepository;
             _mapper = mapper;
             _context = context;
         }
@@ -27,18 +29,26 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<IEnumerable<LekarDto>> GetAllPractitionersByCityAsync(decimal cityID)
         {
-            var queryLekary =  _context.Nemocnica.Where(n => n.IdMesto == cityID)
+            var nemocnica = await _context.Nemocnica.Where(n => n.IdMesto == cityID)
                                             .Include(n => n.Oddelenies.Where(o => o.NazovOdd == "Všeobecný lekár"))
                                             .ThenInclude(od => od.Lekars)
-                                            .ThenInclude(l => l.AtestacieLekars)
-                                            .SelectMany(l => l.Oddelenies.SelectMany(o => o.Lekars)).AsQueryable();
+                                            .ThenInclude(l => l.AtestacieLekars).SingleOrDefaultAsync();
 
             
-                                            
+            var lekari = new List<LekarDto>();
 
-            
+            if (nemocnica == null) return lekari;
 
-            return await queryLekary.ProjectTo<LekarDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();                 
+            foreach (var oddelenie in nemocnica.Oddelenies)
+            {
+                foreach (var lekar in oddelenie.Lekars)
+                {
+                    var lekarDto =  await _lekarRepository.GetItemAsync(lekar.IdLekar);
+                    lekari.Add(lekarDto);
+                }
+            }
+
+            return lekari;
         }
 
 
@@ -48,10 +58,10 @@ namespace HealthInCube_BackEnd.Data
             if (nemocnica == null) return false;
 
             _context.Nemocnica.Remove(nemocnica);
-            return true; 
+            return true;
         }
 
-        
+
 
         public async Task<NemocnicaDto> GetItemAsync(decimal itemId)
         {
@@ -83,6 +93,6 @@ namespace HealthInCube_BackEnd.Data
             _context.Entry(item).State = EntityState.Modified;
         }
 
-       
+
     }
 }

@@ -1,8 +1,7 @@
 import { Action } from "@ngrx/store";
 import { Mesto } from "src/app/models/mesto";
 import { Okres } from "src/app/models/okres";
-import { PouzivatelLekar } from "src/app/models/pouzivatelLekar";
-import { Rola } from "src/app/models/rola";
+import { Lekar } from "src/app/models/lekar";
 
 export const FETCH_OKRESY = '[Register] Fetch okresy'; // async
 export const SET_OKRESY = '[Register] Set okresy';        // sync
@@ -11,8 +10,8 @@ export const FETCH_MESTA = '[Register] Fetch mesta';
 export const SET_MESTA = '[Register] Set mesta';
 
 
-export const FETCH_PRACTITIONER = '[Register] Fetch practitioner';
-export const SET_PRACTITIONER = '[Register] Set practitioner';
+export const FETCH_PRACTITIONERS = '[Register] Fetch practitioners';
+export const SET_PRACTITIONERS = '[Register] Set practitioners';
 
 
 
@@ -52,18 +51,18 @@ export class SetMesta implements Action {
 
 
 
-export class FetchPractitioner implements Action {
-    readonly type = FETCH_PRACTITIONER;
+export class FetchPractitioners implements Action {
+    readonly type = FETCH_PRACTITIONERS;
     
     constructor(public payload: { idMesto: number, vek: number}) {}
 
 }
 
 
-export class SetPractitioner implements Action {
-    readonly type = SET_PRACTITIONER;
+export class SetPractitioners implements Action {
+    readonly type = SET_PRACTITIONERS;
 
-    constructor(public payload: PouzivatelLekar[]) {}
+    constructor(public payload: Lekar[]) {}
 
 }
 
@@ -76,8 +75,8 @@ export type RegisterActions =
   | SetOkresy
   | FetchMesta
   | SetMesta
-  | FetchPractitioner
-  | SetPractitioner;
+  | FetchPractitioners
+  | SetPractitioners;
  
 
 

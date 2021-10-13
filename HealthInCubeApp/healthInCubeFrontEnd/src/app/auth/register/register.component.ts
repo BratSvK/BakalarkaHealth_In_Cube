@@ -7,10 +7,12 @@ import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { Mesto } from 'src/app/models/mesto';
 import { Okres } from 'src/app/models/okres';
-import { PouzivatelLekar } from 'src/app/models/pouzivatelLekar';
+import { Lekar } from 'src/app/models/lekar';
 import { AppState } from 'src/app/_store/models/AppState';
 
 import * as RegisterBundleActions from './store/register.actions';
+
+
 
 @Component({
   selector: 'app-register',
@@ -22,7 +24,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   genders: string[] = ["M", "F"];
   okresy: Okres[] = [];
   mesta: Mesto[] = [];
-  practitioners: PouzivatelLekar[] = [];
+  practitioners: Lekar[] = [];
+
+  idLekar: number;
 
 
   registerSub: Subscription;
@@ -68,7 +72,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     var city : string = this.registerForm.get('userAddress.city').value;
     var cityId = +city.trim().split('-')[1];
     var vekPacienta = this.getAgeByDateBirth();
-    this.store.dispatch(new RegisterBundleActions.FetchPractitioner({idMesto: cityId, vek: vekPacienta}));
+    this.store.dispatch(new RegisterBundleActions.FetchPractitioners({idMesto: cityId, vek: vekPacienta}));
   }
 
 
@@ -103,7 +107,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
       let dateStr = `19${BID.substr(0,2)}-${BID.substr(2,2)}-${BID.substr(4,2)}}`;
       
-      //985124/4168
+      //905124/4168
       
       this.registerForm.get('userData.birthDate')?.setValue(this.getDateByBID(dateStr));
       this.registerForm.get('userData.gender')?.setValue(this.genders[pohlavie]);
@@ -160,6 +164,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
       practitioner: new FormControl(null, Validators.required),
     });
   }
+
+
+  onSelectPractitioner(lekar: Lekar) {
+    this.idLekar = lekar.idLekar;
+    return lekar.fullName;
+  } 
 
 
   ngOnDestroy(): void {

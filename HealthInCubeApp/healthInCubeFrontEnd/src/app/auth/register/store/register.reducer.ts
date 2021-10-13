@@ -3,7 +3,6 @@ import * as RegisterAcitonsBundle from './register.actions';
 
 const initialRegisterState: RegisterState = {
   okresy: [],
-  role: [],
   mesta: [],
   practitioners: []
   
@@ -28,7 +27,7 @@ export function registerReducer(
         mesta: [...action.payload],
       };
 
-      case RegisterAcitonsBundle.SET_PRACTITIONER:
+      case RegisterAcitonsBundle.SET_PRACTITIONERS:
         return {
           ...state,
           practitioners: [...action.payload],

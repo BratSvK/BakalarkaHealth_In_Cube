@@ -9,7 +9,7 @@ import * as RegisterAcitonsBundle from './register.actions';
 import { map, switchMap } from "rxjs/operators";
 import { Okres } from "src/app/models/okres";
 import { Mesto } from "src/app/models/mesto";
-import { PouzivatelLekar } from "src/app/models/pouzivatelLekar";
+import { Lekar } from "src/app/models/lekar";
 
 
 
@@ -54,18 +54,18 @@ export class RegisterEffects {
 
 fetchPractitioner = createEffect(() => 
 this.actions$.pipe(
-    ofType(RegisterAcitonsBundle.FETCH_PRACTITIONER),
-    switchMap((action: RegisterAcitonsBundle.FetchPractitioner) => {
+    ofType(RegisterAcitonsBundle.FETCH_PRACTITIONERS),
+    switchMap((action: RegisterAcitonsBundle.FetchPractitioners) => {
         let params = new HttpParams();
 
 
        params = params.append('idCity', action.payload.idMesto.toString());
        params = params.append('age', action.payload.vek.toString());
 
-        return this.http.get<PouzivatelLekar[]>(fetchUrl + `nemocnica/vseobecnyLekary`, {observe: "response", params} );
+        return this.http.get<Lekar[]>(fetchUrl + `nemocnica/vseobecnyLekary`, {observe: "response", params} );
     }),
     map(pract => {
-        return new RegisterAcitonsBundle.SetPractitioner(pract.body);
+        return new RegisterAcitonsBundle.SetPractitioners(pract.body);
     })
 )
 );

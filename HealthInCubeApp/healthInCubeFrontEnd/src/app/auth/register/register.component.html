@@ -173,12 +173,12 @@
                                 formControlName="practitioner">
                                 <option [disabled]="true" [selected]="true" [value]="">Choose practitioner</option>
                                 <option [value]=""></option>
-                                <option *ngFor="let practitioner of practitioners">{{practitioner.idPouzivatelNavigation.fullName}}</option>
+                                <option *ngFor="let practitioner of practitioners">{{onSelectPractitioner(practitioner)}}</option>
                             </select>
                         </div>
 
                         <div class="col-md-8" *ngIf="practitionerChoosed()">
-                            <app-practitioner-info></app-practitioner-info>
+                            <app-practitioner-info [practitionerId]="idLekar"></app-practitioner-info>
                         </div>
 
                     </div>
