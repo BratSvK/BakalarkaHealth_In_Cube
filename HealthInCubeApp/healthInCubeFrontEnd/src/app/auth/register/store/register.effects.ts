@@ -3,12 +3,13 @@ import { createEffect, Actions, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { AppState } from "src/app/_store/models/AppState";
 import { environment } from "src/environments/environment";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import * as RegisterAcitonsBundle from './register.actions';
 
 import { map, switchMap } from "rxjs/operators";
 import { Okres } from "src/app/models/okres";
 import { Mesto } from "src/app/models/mesto";
+import { PouzivatelLekar } from "src/app/models/pouzivatelLekar";
 
 
 
@@ -47,6 +48,26 @@ export class RegisterEffects {
             return new RegisterAcitonsBundle.SetMesta(mesta);
         })
     )
+);
+
+
+
+fetchPractitioner = createEffect(() => 
+this.actions$.pipe(
+    ofType(RegisterAcitonsBundle.FETCH_PRACTITIONER),
+    switchMap((action: RegisterAcitonsBundle.FetchPractitioner) => {
+        let params = new HttpParams();
+
+
+       params = params.append('idCity', action.payload.idMesto.toString());
+       params = params.append('age', action.payload.vek.toString());
+
+        return this.http.get<PouzivatelLekar[]>(fetchUrl + `nemocnica/vseobecnyLekary`, {observe: "response", params} );
+    }),
+    map(pract => {
+        return new RegisterAcitonsBundle.SetPractitioner(pract.body);
+    })
+)
 );
 
 

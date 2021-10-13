@@ -23,6 +23,25 @@ namespace HealthInCube_BackEnd.Data
         }
 
 
+
+
+        public async Task<IEnumerable<LekarDto>> GetAllPractitionersByCityAsync(decimal cityID)
+        {
+            var queryLekary =  _context.Nemocnica.Where(n => n.IdMesto == cityID)
+                                            .Include(n => n.Oddelenies.Where(o => o.NazovOdd == "Všeobecný lekár"))
+                                            .ThenInclude(od => od.Lekars)
+                                            .ThenInclude(l => l.AtestacieLekars)
+                                            .SelectMany(l => l.Oddelenies.SelectMany(o => o.Lekars)).AsQueryable();
+
+            
+                                            
+
+            
+
+            return await queryLekary.ProjectTo<LekarDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();                 
+        }
+
+
         public async Task<bool> DeleteItem(decimal itemId)
         {
             var nemocnica = await _context.Nemocnica.FindAsync(itemId);
@@ -31,6 +50,8 @@ namespace HealthInCube_BackEnd.Data
             _context.Nemocnica.Remove(nemocnica);
             return true; 
         }
+
+        
 
         public async Task<NemocnicaDto> GetItemAsync(decimal itemId)
         {

@@ -53,7 +53,7 @@ namespace HealthInCube_BackEnd.Controllers
             if (!result.Succeeded) return BadRequest(result.Errors);
 
             // adding a member role to  new user -> registration is only for pacient
-            var roleResult = await _userManager.AddToRoleAsync(user, "Pacient");
+            var roleResult = await _userManager.AddToRoleAsync(user, "Lekar");
 
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 

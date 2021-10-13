@@ -10,8 +10,12 @@ namespace HealthInCube_BackEnd.Helpers
         {
             CreateMap<Nemocnica,NemocnicaDto>();
             CreateMap<Pouzivatel,RegisterPouzivatelDto>();
+
+            CreateMap<Pouzivatel,PouzivatelLekarDto>();
+
             CreateMap<RegisterPouzivatelDto,Pouzivatel>();
 
+            CreateMap<Lekar,LekarDto>();
 
 
 

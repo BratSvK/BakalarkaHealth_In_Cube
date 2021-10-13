@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { Subscription } from 'rxjs';
 import { Mesto } from 'src/app/models/mesto';
 import { Okres } from 'src/app/models/okres';
+import { PouzivatelLekar } from 'src/app/models/pouzivatelLekar';
 import { AppState } from 'src/app/_store/models/AppState';
 
 import * as RegisterBundleActions from './store/register.actions';
@@ -18,11 +19,10 @@ import * as RegisterBundleActions from './store/register.actions';
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
-
   genders: string[] = ["M", "F"];
-
   okresy: Okres[] = [];
   mesta: Mesto[] = [];
+  practitioners: PouzivatelLekar[] = [];
 
 
   registerSub: Subscription;
@@ -42,17 +42,33 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.registerSub = this.store.select('register').subscribe(registerFormData => {
       this.okresy = registerFormData.okresy;
       this.mesta = registerFormData.mesta;
+      this.practitioners = registerFormData.practitioners
     });
 
 
     this.initForm();
   }
 
+  practitionerChoosed(): boolean {
+    let practiotioner = this.registerForm.get('practitioner').status;
+    return practiotioner === "VALID";
+  }
+
 
   onChangeCites() {
-    var okresStr : string = this.registerForm.get('district').value;
+    var okresStr : string = this.registerForm.get('userAddress.district').value;
     var idOkres = +okresStr.trim().split('-')[1];
     this.store.dispatch(new RegisterBundleActions.FetchMesta(idOkres));
+  }
+
+
+  onChangeCity() {
+    console.log('Som tu');
+
+    var city : string = this.registerForm.get('userAddress.city').value;
+    var cityId = +city.trim().split('-')[1];
+    var vekPacienta = this.getAgeByDateBirth();
+    this.store.dispatch(new RegisterBundleActions.FetchPractitioner({idMesto: cityId, vek: vekPacienta}));
   }
 
 
@@ -68,11 +84,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
 
 
+  
 
 
   onCalculateFromBIDToBirthDate() {
   
-    let BID: string = this.registerForm.get('birthIDNumber')?.value;
+    let BID: string = this.registerForm.get('userData.birthIDNumber')?.value;
 
     if ( BID != undefined || BID != null)
     {
@@ -88,11 +105,25 @@ export class RegisterComponent implements OnInit, OnDestroy {
       
       //985124/4168
       
-      this.registerForm.get('birthDate')?.setValue(this.getDateByBID(dateStr));
-      this.registerForm.get('gender')?.setValue(this.genders[pohlavie]);
+      this.registerForm.get('userData.birthDate')?.setValue(this.getDateByBID(dateStr));
+      this.registerForm.get('userData.gender')?.setValue(this.genders[pohlavie]);
     }
   }
 
+
+
+  private getAgeByDateBirth() : number
+  {
+    var birthDate = this.registerForm.get('userData.birthDate').value;
+    let dateToSet = moment(birthDate,"YYYY-MM-DD").toDate();
+
+    
+    if (birthDate === null) return -1;
+
+    let timeDiff = Math.abs(Date.now() - dateToSet.getTime());
+    let age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25);
+    return age;
+  } 
 
   private getDateByBID(dateString: string): string{
     let dateToSet = moment(dateString,"YYYY-MM-DD").toDate();
@@ -106,19 +137,27 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   private initForm() {
     this.registerForm = new FormGroup({
-      firstName: new FormControl("", Validators.required),
-      lastName: new FormControl("", Validators.required),
-      familyName: new FormControl(""),
-      birthIDNumber: new FormControl(null, [Validators.pattern("^[0-9]+[/]*[0-9]*$"),Validators.minLength(11)]),
-      birthDate: new FormControl(new Date(), [Validators.required]),
-      email: new FormControl("", [Validators.required, Validators.email]),
-      phoneNumber: new FormControl(null),
-      gender: new FormControl(null, [Validators.required]),
-      country: new FormControl(null, [Validators.required]),
-      district: new FormControl(null, Validators.required),
-      city: new FormControl(null, Validators.required),
-      street: new FormControl("", Validators.required),
-      isPernamentAddress: new FormControl(null),
+      userData: new FormGroup({
+        firstName: new FormControl('', Validators.required),
+        lastName: new FormControl('', Validators.required),
+        familyName: new FormControl(''),
+        birthIDNumber: new FormControl(null, [
+          Validators.pattern('^[0-9]+[/]*[0-9]*$'),
+          Validators.minLength(11),
+        ]),
+        birthDate: new FormControl(null, [Validators.required]),
+        email: new FormControl('', [Validators.required, Validators.email]),
+        phoneNumber: new FormControl(null),
+        gender: new FormControl(null, [Validators.required]),
+      }),
+      userAddress: new FormGroup({
+        country: new FormControl(null, [Validators.required]),
+        district: new FormControl(null, Validators.required),
+        city: new FormControl(null, Validators.required),
+        street: new FormControl('', Validators.required),
+        isPernamentAddress: new FormControl(null),
+      }),
+      practitioner: new FormControl(null, Validators.required),
     });
   }
 
