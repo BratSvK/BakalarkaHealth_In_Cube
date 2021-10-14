@@ -5,6 +5,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.Entities;
+using HealthInCube_BackEnd.Helpers;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +23,9 @@ namespace HealthInCube_BackEnd.Data
 
         }
 
+      
+          
+
         // pozriet sa na triggre 
         public Task<bool> DeleteItem(decimal itemId)
         {
@@ -32,6 +36,7 @@ namespace HealthInCube_BackEnd.Data
         {
             var lekar =  _context.Lekar
                                 .Include(l => l.IdPouzivatelNavigation)
+                                .ThenInclude(us => us.FotkaPouzivatel)
                                 .Include(l => l.AtestacieLekars)
                                 .Include(l => l.Oddelenies)
                                 .ThenInclude(od => od.IdNemNavigation)
@@ -44,7 +49,8 @@ namespace HealthInCube_BackEnd.Data
                                     Email = l.IdPouzivatelNavigation.Email,
                                     Nemocnica = l.IdOddelNavigation.IdNemNavigation.Nazov,
                                     OddelenieNazov = l.IdOddelNavigation.NazovOdd,
-                                    Atestacie = l.AtestacieLekars
+                                    Atestacie = l.AtestacieLekars,
+                                    Fotka = l.IdPouzivatelNavigation.FotkaPouzivatel.Fotka
                                 })
                                 .AsNoTracking().AsQueryable();
                                 
@@ -57,14 +63,19 @@ namespace HealthInCube_BackEnd.Data
             throw new System.NotImplementedException();
         }
 
+        public async Task<Lekar> GetLekarEntity(decimal lekarId)
+        {
+            return await _context.Lekar.FindAsync(lekarId);
+        }
+
         public Task<Lekar> InsertItem(Lekar item)
         {
             throw new System.NotImplementedException();
         }
 
-        public Task<bool> SaveAllAsync()
+        public async Task<bool> SaveAllAsync()
         {
-            throw new System.NotImplementedException();
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public void UpdateItem(Lekar item)

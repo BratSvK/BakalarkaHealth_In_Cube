@@ -8,5 +8,6 @@ export interface Lekar {
     fullName: string;
     nemocnica: string;
     oddelenieNazov: string;
+    fotka: any;
     // atestacie: AtestacieLekar[];
 }

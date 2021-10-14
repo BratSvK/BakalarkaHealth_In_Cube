@@ -1,5 +1,7 @@
 {
     "csharpextensions.privateMemberPrefix": "_",
     "csharpextensions.useThisForCtorAssignments": false,
-    "explorer.compactFolders": false
+    "explorer.compactFolders": false,
+    "extensions.autoUpdate": false,
+    "angular.view-engine": true
 }

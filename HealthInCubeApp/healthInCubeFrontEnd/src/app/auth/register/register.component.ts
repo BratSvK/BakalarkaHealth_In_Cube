@@ -25,18 +25,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
   okresy: Okres[] = [];
   mesta: Mesto[] = [];
   practitioners: Lekar[] = [];
-
-  idLekar: number;
-
+  chooseLekar: Lekar;
 
   registerSub: Subscription;
-
   registerForm: FormGroup;
 
   constructor(private store: Store<AppState>, private router: Router, private route: ActivatedRoute) { 
-    if (this.okresy.length === 0) {
-      this.store.dispatch(new RegisterBundleActions.FetchOkresy);
-    }
+
     
   }
  
@@ -58,21 +53,25 @@ export class RegisterComponent implements OnInit, OnDestroy {
     return practiotioner === "VALID";
   }
 
+  onCountryChange() {
+    let country: string = this.registerForm.get('userAddress.country').value;
+      if (country && country.toLocaleLowerCase() === "slovakia") {
+      this.store.dispatch(new RegisterBundleActions.FetchOkresy);
+    }
+  }
+  
 
-  onChangeCites() {
-    var okresStr : string = this.registerForm.get('userAddress.district').value;
-    var idOkres = +okresStr.trim().split('-')[1];
+  onChangeOkres() {
+    var idOkres: number = this.registerForm.get('userAddress.district').value;
     this.store.dispatch(new RegisterBundleActions.FetchMesta(idOkres));
   }
 
 
-  onChangeCity() {
-    console.log('Som tu');
 
-    var city : string = this.registerForm.get('userAddress.city').value;
-    var cityId = +city.trim().split('-')[1];
+  onChangeCity() {
+    var idCity = this.registerForm.get('userAddress.city').value as number;
     var vekPacienta = this.getAgeByDateBirth();
-    this.store.dispatch(new RegisterBundleActions.FetchPractitioners({idMesto: cityId, vek: vekPacienta}));
+    this.store.dispatch(new RegisterBundleActions.FetchPractitioners({idMesto: idCity, vek: vekPacienta}));
   }
 
 
@@ -83,6 +82,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   onReturn() {
+    this.store.dispatch(new RegisterBundleActions.ResetForm());
     this.router.navigate(['../'], {relativeTo: this.route});
   }
 
@@ -114,6 +114,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
   }
 
+
+  onChangePractitioner() {
+    let lekar = this.registerForm.get('practitioner').value as Lekar;
+    this.chooseLekar = lekar;
+  }
 
 
   private getAgeByDateBirth() : number
@@ -166,10 +171,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
 
-  onSelectPractitioner(lekar: Lekar) {
-    this.idLekar = lekar.idLekar;
-    return lekar.fullName;
-  } 
+  
 
 
   ngOnDestroy(): void {

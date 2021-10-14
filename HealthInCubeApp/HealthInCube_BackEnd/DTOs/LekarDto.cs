@@ -21,6 +21,8 @@ namespace HealthInCube_BackEnd.DTOs
 
         }
 
+        public byte[] Fotka { get; set; }
+
         public string Nemocnica { get; set; }
         public string OddelenieNazov { get; set; }
         public ICollection<AtestacieLekar> Atestacie { get; set; }

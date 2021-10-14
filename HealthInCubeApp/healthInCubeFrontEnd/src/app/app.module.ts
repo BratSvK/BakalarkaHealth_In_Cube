@@ -12,7 +12,6 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from 'src/environments/environment';
 import { RegisterEffects } from './auth/register/store/register.effects';
 import { HttpClientModule } from '@angular/common/http';
-import { PractitionerInfoEffects } from './auth/register/practitioner-info/store/practitioner-info.effects';
 
 
 
@@ -28,7 +27,7 @@ import { PractitionerInfoEffects } from './auth/register/practitioner-info/store
     HttpClientModule,
     CoreModule,
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([RegisterEffects, PractitionerInfoEffects]),
+    EffectsModule.forRoot([RegisterEffects]),
     StoreDevtoolsModule.instrument({logOnly: environment.production})
   ],
   providers: [],

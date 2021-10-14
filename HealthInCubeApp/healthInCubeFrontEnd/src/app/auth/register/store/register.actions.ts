@@ -14,7 +14,12 @@ export const FETCH_PRACTITIONERS = '[Register] Fetch practitioners';
 export const SET_PRACTITIONERS = '[Register] Set practitioners';
 
 
+export const RESET_FORM = '[Register] Reset form';
 
+
+export class ResetForm implements Action {
+    readonly type = RESET_FORM;
+}
 
 
 export class FetchOkresy implements Action {
@@ -76,7 +81,8 @@ export type RegisterActions =
   | FetchMesta
   | SetMesta
   | FetchPractitioners
-  | SetPractitioners;
+  | SetPractitioners
+  | ResetForm;
  
 
 

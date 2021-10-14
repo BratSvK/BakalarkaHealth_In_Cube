@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using HealthInCube_BackEnd.DTOs;
+using HealthInCube_BackEnd.Extensions;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,8 @@ namespace HealthInCube_BackEnd.Controllers
             return Ok(lekar);
             
         }
+
+        
 
     }
 }

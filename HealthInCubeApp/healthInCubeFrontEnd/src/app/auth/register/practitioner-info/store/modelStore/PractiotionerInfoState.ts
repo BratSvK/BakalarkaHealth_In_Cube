@@ -1,5 +1,5 @@
-import { Lekar } from "src/app/models/lekar";
+// import { Lekar } from "src/app/models/lekar";
 
-export interface PractitionerInfoState {
-    registerLekar: Lekar;
-}
+// export interface PractitionerInfoState {
+//     registerLekar: Lekar;
+// }

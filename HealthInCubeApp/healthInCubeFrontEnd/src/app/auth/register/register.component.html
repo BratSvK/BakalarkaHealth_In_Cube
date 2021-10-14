@@ -106,9 +106,9 @@
                     <div class="form-row">
                         <div class="col-md-4 mb-3">
                             <label for="country">Country*</label>
-                            <select class="custom-select d-block w-100" id="country" formControlName="country">
-                                <option value="">Choose...</option>
-                                <option [selected]="true">Slovakia</option>
+                            <select class="custom-select d-block w-100" id="country" formControlName="country" (ngModelChange)="onCountryChange()">
+                                <option [selected]="true" [ngValue]="">Choose...</option>
+                                <option >Slovakia</option>
                             </select>
                             <!-- <div class="invalid-feedback">
                             Please select a valid country.
@@ -117,9 +117,9 @@
                         <div class="col-md-4 mb-3">
                             <label for="district">District*</label>
                             <select class="custom-select d-block w-100" id="district" formControlName="district"
-                                (ngModelChange)="onChangeCites()">
+                                (ngModelChange)="onChangeOkres()">
                                 <option [disabled]="true" [selected]="true" value="">Choose...</option>
-                                <option *ngFor="let district of okresy">{{district.nazov}} - {{district.idOkres}}
+                                <option [ngValue]="district.idOkres" *ngFor="let district of okresy">{{district.nazov}} - {{district.idOkres}}
                                 </option>
                             </select>
                             <!-- <div class="invalid-feedback">
@@ -131,7 +131,7 @@
                             <label for="city">City*</label>
                             <select class="custom-select d-block w-100" id="city" formControlName="city" (ngModelChange)="onChangeCity()">
                                 <option [disabled]="true" [selected]="true" value="">Choose...</option>
-                                <option *ngFor="let mesto of mesta">{{mesto.nazov}} - {{mesto.idMesto}}</option>
+                                <option [ngValue]="mesto.idMesto" *ngFor="let mesto of mesta">{{mesto.nazov}} - {{mesto.idMesto}}</option>
                             </select>
                             <!-- <div class="invalid-feedback">
                             Please provide a valid state.
@@ -170,15 +170,15 @@
                     <div class="form-row">
                         <div class="col-md-4">
                             <select class="form-control form-control-sm " id="practitioner"
-                                formControlName="practitioner">
-                                <option [disabled]="true" [selected]="true" [value]="">Choose practitioner</option>
-                                <option [value]=""></option>
-                                <option *ngFor="let practitioner of practitioners">{{onSelectPractitioner(practitioner)}}</option>
+                                formControlName="practitioner" (ngModelChange)="onChangePractitioner()">
+                                <option [disabled]="true" [selected]="true" [ngValue]="">Choose practitioner</option>
+                                <option [ngValue]=""></option>
+                                <option [ngValue]="practitioner" *ngFor="let practitioner of practitioners">{{practitioner.meno}}</option>
                             </select>
                         </div>
 
-                        <div class="col-md-8" *ngIf="practitionerChoosed()">
-                            <app-practitioner-info [practitionerId]="idLekar"></app-practitioner-info>
+                        <div class="col-md-8" *ngIf="chooseLekar">
+                            <app-practitioner-info [practitioner]="chooseLekar"></app-practitioner-info>
                         </div>
 
                     </div>

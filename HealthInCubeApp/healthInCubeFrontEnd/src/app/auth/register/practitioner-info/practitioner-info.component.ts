@@ -1,9 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
 import { Lekar } from 'src/app/models/lekar';
-import { AppState } from 'src/app/_store/models/AppState';
-import * as PractitionerBundleActions from './store/practitioner-info.actions';
 
 
 @Component({
@@ -13,30 +9,24 @@ import * as PractitionerBundleActions from './store/practitioner-info.actions';
 })
 export class PractitionerInfoComponent implements OnInit, OnDestroy {
 
-  @Input() practitionerId: number;
-  practitioner: Lekar = null;
-
-  infoSub: Subscription;
+  @Input() practitioner: Lekar;
 
 
-  constructor(private store: Store<AppState>) {
-    this.store.dispatch(new PractitionerBundleActions.FetchPractitioner(this.practitionerId));
+
+  constructor() {
+    
     
    }
  
 
   ngOnInit(): void {
-    if (this.practitionerId > 0 ) {
-      this.infoSub = this.store.select('practitionerInfo').subscribe(practionerStateData => {
-        this.practitioner = practionerStateData.registerLekar;
-      });
-      }
+    console.log(this.practitioner);
   }
 
 
 
   ngOnDestroy(): void {
-    this.infoSub.unsubscribe();
+    // this.infoSub.unsubscribe();
   }
 
 
