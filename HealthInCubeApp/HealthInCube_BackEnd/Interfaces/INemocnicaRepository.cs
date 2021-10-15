@@ -11,6 +11,10 @@ namespace HealthInCube_BackEnd.Interfaces
 
         Task<IEnumerable<LekarDto>> GetAllPractitionersByCityAsync(decimal cityID);
 
+        Task<IEnumerable<LekarDto>> GetAllPractitionersByOkresAsync(decimal cityID);
+
+        
+
 
         // Task<bool> AddDoctorToNemocnica(Lekar)
 

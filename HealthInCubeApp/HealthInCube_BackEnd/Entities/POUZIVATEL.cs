@@ -33,7 +33,7 @@ namespace HealthInCube_BackEnd.Entities
         public virtual ICollection<Lekar> Lekars { get; set; }
         public virtual ICollection<Pacient> Pacients { get; set; }
 
-        public ICollection<AppPouzivatelRola> PouzivatelRole { get; set; }
+        public virtual ICollection<AppPouzivatelRola> PouzivatelRole { get; set; }
 
     }
 }

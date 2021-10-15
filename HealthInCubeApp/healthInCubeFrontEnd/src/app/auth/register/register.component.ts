@@ -4,7 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as moment from 'moment';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Mesto } from 'src/app/models/mesto';
 import { Okres } from 'src/app/models/okres';
 import { Lekar } from 'src/app/models/lekar';
@@ -27,6 +27,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   practitioners: Lekar[] = [];
   chooseLekar: Lekar;
 
+  isShowenSelectionOfPractitioners = false;
+
+
   registerSub: Subscription;
   registerForm: FormGroup;
 
@@ -41,11 +44,17 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.registerSub = this.store.select('register').subscribe(registerFormData => {
       this.okresy = registerFormData.okresy;
       this.mesta = registerFormData.mesta;
-      this.practitioners = registerFormData.practitioners
+      this.practitioners = registerFormData.practitioners;
+      if (this.practitioners.length > 0) {
+        this.registerForm.controls['practitioner'].enable();
+      };
     });
 
 
+
+
     this.initForm();
+
   }
 
   practitionerChoosed(): boolean {
@@ -71,6 +80,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
   onChangeCity() {
     var idCity = this.registerForm.get('userAddress.city').value as number;
     var vekPacienta = this.getAgeByDateBirth();
+    console.log(this.isShowenSelectionOfPractitioners);
+    if (this.isShowenSelectionOfPractitioners)
+    {
+    }
     this.store.dispatch(new RegisterBundleActions.FetchPractitioners({idMesto: idCity, vek: vekPacienta}));
   }
 
@@ -97,7 +110,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
     if ( BID != undefined || BID != null)
     {
-      // console.log(BID.replace(regex, ''));
       var pohlavie = this.chceckPohlavie(BID.substr(2,1)) ? 0 : 1;
 
       if (pohlavie === 1) {
@@ -166,7 +178,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         street: new FormControl('', Validators.required),
         isPernamentAddress: new FormControl(null),
       }),
-      practitioner: new FormControl(null, Validators.required),
+      practitioner: new FormControl({value: null, disabled: true}, Validators.required),
     });
   }
 

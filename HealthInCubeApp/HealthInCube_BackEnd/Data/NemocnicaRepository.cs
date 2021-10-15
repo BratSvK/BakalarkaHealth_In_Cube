@@ -16,9 +16,11 @@ namespace HealthInCube_BackEnd.Data
         private readonly HealthInCubeContext _context;
         private readonly IMapper _mapper;
         private readonly ILekarRepository _lekarRepository;
+        private readonly IFotoRepository _fotoRepository;
 
-        public NemocnicaRepository(HealthInCubeContext context, IMapper mapper, ILekarRepository lekarRepository)
+        public NemocnicaRepository(HealthInCubeContext context, IMapper mapper, ILekarRepository lekarRepository, IFotoRepository fotoRepository)
         {
+            _fotoRepository = fotoRepository;
             _lekarRepository = lekarRepository;
             _mapper = mapper;
             _context = context;
@@ -32,9 +34,9 @@ namespace HealthInCube_BackEnd.Data
             var nemocnica = await _context.Nemocnica.Where(n => n.IdMesto == cityID)
                                             .Include(n => n.Oddelenies.Where(o => o.NazovOdd == "Všeobecný lekár"))
                                             .ThenInclude(od => od.Lekars)
-                                            .ThenInclude(l => l.AtestacieLekars).SingleOrDefaultAsync();
+                                            .ThenInclude(l => l.AtestacieLekars).AsNoTracking().SingleOrDefaultAsync();
 
-            
+
             var lekari = new List<LekarDto>();
 
             if (nemocnica == null) return lekari;
@@ -43,7 +45,7 @@ namespace HealthInCube_BackEnd.Data
             {
                 foreach (var lekar in oddelenie.Lekars)
                 {
-                    var lekarDto =  await _lekarRepository.GetItemAsync(lekar.IdLekar);
+                    var lekarDto = await _lekarRepository.GetItemAsync(lekar.IdLekar);
                     lekari.Add(lekarDto);
                 }
             }
@@ -93,6 +95,51 @@ namespace HealthInCube_BackEnd.Data
             _context.Entry(item).State = EntityState.Modified;
         }
 
+        public async Task<IEnumerable<LekarDto>> GetAllPractitionersByOkresAsync(decimal cityID)
+        {
+            // potrebujem si ziskat okresID 
 
+            var query = await _context.Okres
+                 .Join(
+                         _context.Mesto,
+                         okres => okres.IdOkres,
+                         mesto => mesto.IdOkres,
+                         (okres, mesto) => new
+                         {
+                             IdMesto = mesto.IdMesto,
+                             IdOkres = okres.IdOkres
+                         })
+                 .Where(x => x.IdMesto == cityID)
+                 .FirstOrDefaultAsync();
+
+            var nemocnica = await _context.Nemocnica
+                                            .Include(n => n.IdMestoNavigation)
+                                            .Include(n => n.Oddelenies.Where(o => o.NazovOdd == "Všeobecný lekár"))
+                                            .ThenInclude(od => od.Lekars).ThenInclude(lekar => lekar.IdPouzivatelNavigation)
+                                            .ThenInclude(od => od.Lekars).ThenInclude(lekar => lekar.AtestacieLekars)
+                                            .Where(n => n.IdMestoNavigation.IdOkres == query.IdOkres)
+                                            .SingleOrDefaultAsync();
+
+
+            var lekari = new List<LekarDto>();
+
+            if (nemocnica == null) return lekari;
+            // pozor na lazy loading 
+            var oddelenia = nemocnica.Oddelenies.ToList();
+            lekari = oddelenia.SelectMany(od => od.Lekars, (od, lek) => new LekarDto
+            {
+                IdLekar = lek.IdLekar,
+                Meno = lek.IdPouzivatelNavigation.Meno,
+                Priezvisko = lek.IdPouzivatelNavigation.Priezvisko,
+                Mobil = lek.IdPouzivatelNavigation.Mobil,
+                Email = lek.IdPouzivatelNavigation.Email,
+                Nemocnica = nemocnica.Nazov,
+                OddelenieNazov = od.NazovOdd,
+                AtestacieId = lek.AtestacieLekars.Select(a => a.IdTyp).ToList(),
+                Fotka = _fotoRepository.GetItemAsync(lek.IdPouzivatelNavigation.Id).Result.Fotka
+            }).ToList();
+
+            return lekari;
+        }
     }
 }

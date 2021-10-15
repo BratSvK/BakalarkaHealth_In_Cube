@@ -21,6 +21,9 @@ namespace HealthInCube_BackEnd.Helpers
 
             CreateMap<Oddelenie,OddelenieDto>();
 
+            CreateMap<FotkaPouzivatel,FotkaDto>();
+
+
 
 
 

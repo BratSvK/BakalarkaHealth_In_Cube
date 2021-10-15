@@ -21,6 +21,8 @@ namespace HealthInCube_BackEnd.Extensions
             services.AddScoped<IPouzivatelRepository, PouzivatelRepository>();
             services.AddScoped<IClenenieSlovenskaRepository, ClenenieSlovenskaRepository>();
             services.AddScoped<ILekarRepository, LekarRepository>();
+            services.AddScoped<IFotoRepository, FotoRepository>();
+
 
 
 

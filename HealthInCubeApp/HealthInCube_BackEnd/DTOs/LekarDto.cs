@@ -25,7 +25,7 @@ namespace HealthInCube_BackEnd.DTOs
 
         public string Nemocnica { get; set; }
         public string OddelenieNazov { get; set; }
-        public ICollection<AtestacieLekar> Atestacie { get; set; }
+        public ICollection<decimal> AtestacieId { get; set; }
 
 
         

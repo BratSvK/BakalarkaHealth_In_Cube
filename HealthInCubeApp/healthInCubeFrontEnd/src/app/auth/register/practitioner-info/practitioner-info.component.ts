@@ -1,5 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Lekar } from 'src/app/models/lekar';
+import { DomSanitizer } from '@angular/platform-browser';
+import { extractFotoFromApi } from 'src/app/shared/foto-extract';
 
 
 @Component({
@@ -10,17 +12,22 @@ import { Lekar } from 'src/app/models/lekar';
 export class PractitionerInfoComponent implements OnInit, OnDestroy {
 
   @Input() practitioner: Lekar;
+  image: any;
 
 
 
-  constructor() {
+  constructor(private sanitizer: DomSanitizer) {
     
     
    }
  
 
   ngOnInit(): void {
-    console.log(this.practitioner);
+    
+    if (this.practitioner.fotka) 
+      this.image = extractFotoFromApi(this.practitioner.fotka, this.sanitizer);
+    
+    
   }
 
 

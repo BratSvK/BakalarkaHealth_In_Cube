@@ -1,7 +1,21 @@
-import { Action } from "@ngrx/store";
+import { Action, createSelector } from "@ngrx/store";
 import { Mesto } from "src/app/models/mesto";
 import { Okres } from "src/app/models/okres";
 import { Lekar } from "src/app/models/lekar";
+import { AppState } from "src/app/_store/models/AppState";
+import { RegisterState } from "./modelStore/RegisterState";
+
+
+
+export const selectRegister = (state: AppState) => state.register;
+
+export const selectRegisterPractitioners = createSelector(
+    selectRegister,
+    (state: RegisterState) => state.practitioners
+);
+
+
+
 
 export const FETCH_OKRESY = '[Register] Fetch okresy'; // async
 export const SET_OKRESY = '[Register] Set okresy';        // sync

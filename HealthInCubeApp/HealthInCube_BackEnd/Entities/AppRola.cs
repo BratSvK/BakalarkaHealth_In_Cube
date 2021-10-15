@@ -5,7 +5,7 @@ namespace HealthInCube_BackEnd.Entities
 {
     public class AppRola : IdentityRole<decimal>
     {
-        public ICollection<AppPouzivatelRola> PouzivatelRole { get; set; }
+        public virtual ICollection<AppPouzivatelRola> PouzivatelRole { get; set; }
         
     }
 }

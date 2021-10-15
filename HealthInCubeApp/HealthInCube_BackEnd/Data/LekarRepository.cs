@@ -49,7 +49,7 @@ namespace HealthInCube_BackEnd.Data
                                     Email = l.IdPouzivatelNavigation.Email,
                                     Nemocnica = l.IdOddelNavigation.IdNemNavigation.Nazov,
                                     OddelenieNazov = l.IdOddelNavigation.NazovOdd,
-                                    Atestacie = l.AtestacieLekars,
+                                    AtestacieId = l.AtestacieLekars.Select(a => a.IdTyp).ToList(),
                                     Fotka = l.IdPouzivatelNavigation.FotkaPouzivatel.Fotka
                                 })
                                 .AsNoTracking().AsQueryable();

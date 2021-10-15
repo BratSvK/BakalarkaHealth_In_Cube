@@ -26,7 +26,8 @@ namespace HealthInCube_BackEnd.Controllers
 
         }
 
-
+        // from query params -> throught client 
+        // postman -> from body 
         [AllowAnonymous]
         [HttpGet("vseobecnyLekary")]
         public async Task<ActionResult<IEnumerable<LekarDto>>> GetAllGeneralPractitionersAsync([FromQuery] RegisterPacientAgeAndCityDto registerPacientAgeAndCity)
@@ -35,7 +36,13 @@ namespace HealthInCube_BackEnd.Controllers
             var lekari = await _nemocnicaRepository.GetAllPractitionersByCityAsync(registerPacientAgeAndCity.IdCity);
             var lekariByPacientAge = new List<LekarDto>();
 
-            if (lekari.Count() == 0 ) return NotFound("Nothing found");
+            // ak som nenasiel lekarov podla mesta tak idem do okresu a pridelim toho lekara
+            // naprikald ak zadas horny vadicov tak ho presmeruje na nemocnicu v okrese a to je KNM -> polikninika KNM
+            if (lekari.Count() == 0 ) 
+            {   
+                lekari = await _nemocnicaRepository.GetAllPractitionersByOkresAsync(registerPacientAgeAndCity.IdCity);
+
+            }
 
             if(registerPacientAgeAndCity.Age > 0 && registerPacientAgeAndCity.Age <= 25)
             {
@@ -85,7 +92,7 @@ namespace HealthInCube_BackEnd.Controllers
 
         private List<LekarDto> GetLekariByAge(IEnumerable<LekarDto> lekary , int typVseobecny)
         {
-            return lekary.Where(l => l.Atestacie.Any(atestacia => atestacia.IdTyp == typVseobecny)).ToList();
+            return lekary.Where(l => l.AtestacieId.Any(atestacia => atestacia == typVseobecny)).ToList();
 
         }
 
