@@ -7,5 +7,6 @@ export interface RegisterState {
     mesta: Mesto[];
     okresy: Okres[];
     practitioners: Lekar[]
+    
 
 }

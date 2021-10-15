@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.Entities;
+using HealthInCube_BackEnd.Extensions;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,8 +19,10 @@ namespace HealthInCube_BackEnd.Controllers
         private readonly UserManager<Pouzivatel> _userManager;
         private readonly SignInManager<Pouzivatel> _signInManager;
         private readonly IZiadankaRepository _ziadankaRepository;
-        public UcetController(UserManager<Pouzivatel> userManager, SignInManager<Pouzivatel> signInManager, ITokenService tokenService, IMapper mapper, IZiadankaRepository ziadankaRepository)
+        private readonly IFotoRepository _fotoRepository;
+        public UcetController(UserManager<Pouzivatel> userManager, SignInManager<Pouzivatel> signInManager, IFotoRepository fotoRepository, ITokenService tokenService, IMapper mapper, IZiadankaRepository ziadankaRepository)
         {
+            _fotoRepository = fotoRepository;
             _ziadankaRepository = ziadankaRepository;
             _signInManager = signInManager;
             _userManager = userManager;
@@ -61,7 +64,8 @@ namespace HealthInCube_BackEnd.Controllers
 
             // here we need to send ziadanka  to Lekar 
 
-            var ziadanka = new Ziadanka {
+            var ziadanka = new Ziadanka
+            {
                 IdPacient = user.Id,
                 IdLekar = registeredUser.IdDoctor
             };
@@ -74,14 +78,14 @@ namespace HealthInCube_BackEnd.Controllers
                 {
                     Email = user.Email,
                     Token = await _tokenService.CreateToken(user),
-                    Pohlavie = user.Pohlavie,
-                    Bydliskos = user.Bydliskos
-
+                    FullName = user.GetFullName(),
+                    FotkaBlob = _fotoRepository.GetFotkaByUserId(user.Id).Result.Fotka,
+                    UserId = user.Id
                 });
             }
 
             return BadRequest("Failed to register !!");
-            
+
         }
 
         private async Task<decimal> PridelIdToNewUserAsync()
@@ -105,13 +109,14 @@ namespace HealthInCube_BackEnd.Controllers
 
             if (!result.Succeeded) return Unauthorized();
 
-            return new PouzivatelDto
+            return Ok(new PouzivatelDto
             {
                 Email = user.Email,
                 Token = await _tokenService.CreateToken(user),
-                Pohlavie = user.Pohlavie,
-                Bydliskos = user.Bydliskos
-            };
+                FullName = user.GetFullName(),
+                FotkaBlob = _fotoRepository.GetFotkaByUserId(user.Id).Result.Fotka,
+                UserId = user.Id
+            });
         }
 
         // async becouse we are working with db
@@ -121,5 +126,7 @@ namespace HealthInCube_BackEnd.Controllers
             return await _userManager.Users.AnyAsync(x => x.Email == email.ToLower());
 
         }
+
+
     }
 }

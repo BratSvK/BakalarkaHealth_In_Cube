@@ -3,14 +3,18 @@ import { createEffect, Actions, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { AppState } from "src/app/_store/models/AppState";
 import { environment } from "src/environments/environment";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpParams } from "@angular/common/http";
 import * as RegisterAcitonsBundle from './register.actions';
 
-import { catchError, map, switchMap } from "rxjs/operators";
+import { catchError, map, switchMap, tap } from "rxjs/operators";
 import { Okres } from "src/app/models/okres";
 import { Mesto } from "src/app/models/mesto";
 import { Lekar } from "src/app/models/lekar";
 import { Observable, of } from "rxjs";
+import { Pouzivatel } from "src/app/models/pouzivatel";
+import { RegisterPouzivatel } from "src/app/models/pouzivatelRegistracia";
+import { UserToLogin } from "src/app/models/userToLogin";
+import { Router } from "@angular/router";
 
 
 
@@ -49,6 +53,9 @@ export class RegisterEffects {
     )
   );
 
+
+  
+
   fetchPractitioner = createEffect(() =>
     this.actions$.pipe(
       ofType(RegisterAcitonsBundle.FETCH_PRACTITIONERS),
@@ -74,12 +81,104 @@ export class RegisterEffects {
     )
   );
 
+
+
+
+  authSignup = createEffect(() =>
+    this.actions$.pipe(
+      ofType(RegisterAcitonsBundle.REGISTER_START),
+      switchMap((authSignData: RegisterAcitonsBundle.RegisterUserStart) => {
+        const signInObject = this.createModelToSend(authSignData.payload);
+
+        return this.http
+          .post<UserToLogin>(fetchUrl + 'ucet/register',
+            signInObject
+          )
+          .pipe(
+            // return a observable automaticly
+            map((resData) => {
+              return new RegisterAcitonsBundle.RegisterUserSuccess();
+            }),
+            catchError((error) => {
+              // returning non error observable
+              const errorToSend = this.handleError(error);
+              return of(null); // creating a new observable without error
+            })
+          );
+      })
+    )
+  );
+
+  authRedirect = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(RegisterAcitonsBundle.REGISTER_SUCCESS),
+        tap(() => {
+         
+            this.router.navigate(['auth']);
+        })
+      ),
+    { dispatch: false } // just create a effect to UI
+  );
+
   constructor(
     private actions$: Actions,
     private http: HttpClient,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private router: Router,
   ) {}
+
+
+
+  private createModelToSend(signUpForm: RegisterPouzivatel) : RegisterPouzivatel {
+    return {
+      meno: signUpForm.meno,
+      priezvisko: signUpForm.priezvisko,
+      rodPriezvisko: signUpForm.rodPriezvisko,
+      rodCislo: signUpForm.rodCislo,
+      datNarodenia: signUpForm.datNarodenia,
+      idDoctor: signUpForm.idDoctor,
+      mobil: signUpForm.mobil,
+      pohlavie: signUpForm.pohlavie,
+      email: signUpForm.email,
+      password: signUpForm.password,
+      country: signUpForm.country,
+      city: signUpForm.city,
+      district: signUpForm.district,
+      street: signUpForm.street,
+      isPernamentAddress: signUpForm.isPernamentAddress
+    };
+  }
+
+  private handleError(errorRes: HttpErrorResponse) {
+    let errorMessage = 'An uknown error occured!';
+
+    if (!errorRes.error || !errorRes.error.error) {
+      return errorMessage;
+    }
+
+    switch (errorRes.error.error.message) {
+      case 'EMAIL_EXISTS':
+        errorMessage = 'This email exists!';
+        break;
+
+      case 'EMAIL_NOT_FOUND':
+        errorMessage = 'This account not exists!';
+        break;
+
+      case 'INVALID_PASSWORD':
+        errorMessage = 'This credentials are not right!';
+        break;
+
+      default:
+        break;
+    }
+    return errorMessage;
+  }
+
 }
+
+
 
 
 

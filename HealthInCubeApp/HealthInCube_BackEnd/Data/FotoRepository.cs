@@ -28,6 +28,12 @@ namespace HealthInCube_BackEnd.Data
             throw new System.NotImplementedException();
         }
 
+        public async Task<FotkaDto> GetFotkaByUserId(decimal userId)
+        {
+            var fotka =  await _context.FotkaPouzivatel.SingleOrDefaultAsync(f => f.IdPouzivatel == userId);
+            return _mapper.Map<FotkaDto>(fotka);
+        }
+
         public async Task<FotkaDto> GetItemAsync(decimal itemId)
         {
             var fotka = await _context.FotkaPouzivatel.FindAsync(itemId);

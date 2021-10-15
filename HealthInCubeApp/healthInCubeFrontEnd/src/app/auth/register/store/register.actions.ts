@@ -4,6 +4,8 @@ import { Okres } from "src/app/models/okres";
 import { Lekar } from "src/app/models/lekar";
 import { AppState } from "src/app/_store/models/AppState";
 import { RegisterState } from "./modelStore/RegisterState";
+import { Pouzivatel } from "src/app/models/pouzivatel";
+import { RegisterPouzivatel } from "src/app/models/pouzivatelRegistracia";
 
 
 
@@ -16,7 +18,6 @@ export const selectRegisterPractitioners = createSelector(
 
 
 
-
 export const FETCH_OKRESY = '[Register] Fetch okresy'; // async
 export const SET_OKRESY = '[Register] Set okresy';        // sync
 
@@ -26,6 +27,12 @@ export const SET_MESTA = '[Register] Set mesta';
 
 export const FETCH_PRACTITIONERS = '[Register] Fetch practitioners';
 export const SET_PRACTITIONERS = '[Register] Set practitioners';
+
+
+export const REGISTER_START = '[Register] Register Start User';
+
+export const REGISTER_SUCCESS = '[Register] Register Success User';
+
 
 
 export const RESET_FORM = '[Register] Reset form';
@@ -41,6 +48,17 @@ export class FetchOkresy implements Action {
 
     
 
+}
+
+export class RegisterUserStart implements Action {
+    readonly type =  REGISTER_START;
+
+
+    constructor(public payload: RegisterPouzivatel) {}
+}
+
+export class RegisterUserSuccess implements Action {
+    readonly type =  REGISTER_SUCCESS;
 }
 
 
@@ -96,7 +114,9 @@ export type RegisterActions =
   | SetMesta
   | FetchPractitioners
   | SetPractitioners
-  | ResetForm;
+  | ResetForm
+  | RegisterUserStart
+  | RegisterUserSuccess;
  
 
 

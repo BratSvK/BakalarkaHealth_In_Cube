@@ -15,6 +15,7 @@ export function registerReducer(
   // only synchronous code
 
   switch (action.type) {
+    
     case RegisterAcitonsBundle.SET_OKRESY:
       return {
         ...state,

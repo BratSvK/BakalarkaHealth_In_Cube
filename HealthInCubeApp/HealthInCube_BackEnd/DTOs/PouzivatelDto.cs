@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using HealthInCube_BackEnd.Entities;
 
@@ -5,12 +6,17 @@ namespace HealthInCube_BackEnd.DTOs
 {
     public class PouzivatelDto
     {
+        public decimal UserId { get; set; }
         public string Email { get; set; }
         public string Token { get; set; }
+        public byte[] FotkaBlob { get; set; }
 
-        public string Pohlavie { get; set; }
+        public string FullName { get; set; }
 
-        public ICollection<Bydlisko> Bydliskos { get; set; }
+        public DateTime ExpirationDateToken {get; set;} = DateTime.Now.AddHours(1);
+
+
+        // public ICollection<Bydlisko> Bydliskos { get; set; }
 
     }
 }

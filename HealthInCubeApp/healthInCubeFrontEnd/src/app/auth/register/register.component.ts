@@ -11,6 +11,7 @@ import { Lekar } from 'src/app/models/lekar';
 import { AppState } from 'src/app/_store/models/AppState';
 
 import * as RegisterBundleActions from './store/register.actions';
+import { RegisterPouzivatel } from 'src/app/models/pouzivatelRegistracia';
 
 
 
@@ -90,8 +91,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
 
   onSubmit() {
-    // this.calculateFromBIDToBirthDate();
-    console.log(this.registerForm.value);
+
+    var registerPouzivatel = this.createModelToSingUp();
+    
+    this.store.dispatch(new RegisterBundleActions.RegisterUserStart(registerPouzivatel));
+    
   }
 
   onReturn() {
@@ -180,6 +184,26 @@ export class RegisterComponent implements OnInit, OnDestroy {
       }),
       practitioner: new FormControl({value: null, disabled: true}, Validators.required),
     });
+  }
+
+  private createModelToSingUp(): RegisterPouzivatel {
+    return {
+      meno: this.registerForm.get('userData.firstName').value,
+      priezvisko: this.registerForm.get('userData.lastName').value,
+      rodPriezvisko: this.registerForm.get('userData.familyName').value,
+      rodCislo: this.registerForm.get('userData.birthIDNumber').value,
+      datNarodenia: this.registerForm.get('userData.birthDate').value,
+      email: this.registerForm.get('userData.email').value,
+      mobil: this.registerForm.get('userData.phoneNumber').value,
+      pohlavie: this.registerForm.get('userData.gender').value,
+      country: this.registerForm.get('userAddress.country').value,
+      district: this.registerForm.get('userAddress.district').value,
+      city: this.registerForm.get('userAddress.city').value,
+      street: this.registerForm.get('userAddress.street').value,
+      isPernamentAddress: this.registerForm.get('userAddress.isPernamentAddress').value,
+      password: this.registerForm.get('password').value,
+      idDoctor: this.registerForm.get('practitioner').value.idLekar,
+    };
   }
 
 
