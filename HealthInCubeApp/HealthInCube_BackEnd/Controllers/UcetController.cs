@@ -80,7 +80,7 @@ namespace HealthInCube_BackEnd.Controllers
                 });
             }
 
-            return BadRequest("Failed to send ziadanka!!");
+            return BadRequest("Failed to register !!");
             
         }
 

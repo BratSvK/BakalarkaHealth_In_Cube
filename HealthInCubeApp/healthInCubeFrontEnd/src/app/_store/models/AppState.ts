@@ -2,5 +2,4 @@ import { RegisterState } from "src/app/auth/register/store/modelStore/RegisterSt
 
 export interface AppState {
     register: RegisterState,
-    // practitionerInfo: PractitionerInfoState
 }

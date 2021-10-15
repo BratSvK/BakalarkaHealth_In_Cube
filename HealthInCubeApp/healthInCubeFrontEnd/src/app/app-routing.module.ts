@@ -16,7 +16,11 @@ const appRoutes: Routes = [
     {path: '', redirectTo: '/auth', pathMatch: 'full'},
     {
         path: 'auth',
-        loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)      // lazy loading, nedaveme to do appModule
+        loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)                      // lazy loading, nedaveme to do appModule
+    }, 
+    {
+        path:'user',
+        loadChildren: () => import('./user/user.module').then((m)=>m.UserModule)
     }
 ];
 
