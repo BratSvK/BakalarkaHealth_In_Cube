@@ -26,13 +26,9 @@ namespace HealthInCube_BackEnd.Data
 
 
 
-        public async Task<bool> DeleteItem(decimal itemId)
+        public void DeleteItem(Pouzivatel pouzivatel)
         {
-             var user = await _context.Users.FindAsync(itemId);
-            if (user == null) return false;
-
-            _context.Users.Remove(user);
-            return true; 
+            _context.Users.Remove(pouzivatel);
         }
 
         // public async Task<IEnumerable<RolaDTO>> GetAllRoles()
@@ -62,10 +58,10 @@ namespace HealthInCube_BackEnd.Data
             return  await _context.Users.FindAsync(pouzivatelId);
         }
 
-        public async Task<Pouzivatel> InsertItem(Pouzivatel item)
+        public void InsertItem(Pouzivatel item)
         {
-            await _context.Users.AddAsync(item);
-            return item;
+             _context.Users.Add(item);
+            
         }
 
         public async Task<bool> SaveAllAsync()

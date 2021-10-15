@@ -10,6 +10,7 @@ namespace HealthInCube_BackEnd.Entities
         public Lekar()
         {
             AtestacieLekars = new HashSet<AtestacieLekar>();
+            Ziadanky = new HashSet<Ziadanka>();
             Oddelenies = new HashSet<Oddelenie>();
             Pacients = new HashSet<Pacient>();
             VykVysetrenia = new HashSet<VykVysetrenium>();
@@ -23,6 +24,7 @@ namespace HealthInCube_BackEnd.Entities
 
         public virtual Oddelenie IdOddelNavigation { get; set; }
         public virtual Pouzivatel IdPouzivatelNavigation { get; set; }
+        public virtual ICollection<Ziadanka> Ziadanky { get; set; }
         public virtual ICollection<AtestacieLekar> AtestacieLekars { get; set; }
         public virtual ICollection<Oddelenie> Oddelenies { get; set; }
         public virtual ICollection<Pacient> Pacients { get; set; }

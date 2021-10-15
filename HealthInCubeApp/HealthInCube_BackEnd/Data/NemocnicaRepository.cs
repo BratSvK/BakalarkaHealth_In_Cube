@@ -54,13 +54,9 @@ namespace HealthInCube_BackEnd.Data
         }
 
 
-        public async Task<bool> DeleteItem(decimal itemId)
+        public void DeleteItem(Nemocnica nemocnica)
         {
-            var nemocnica = await _context.Nemocnica.FindAsync(itemId);
-            if (nemocnica == null) return false;
-
             _context.Nemocnica.Remove(nemocnica);
-            return true;
         }
 
 
@@ -78,10 +74,9 @@ namespace HealthInCube_BackEnd.Data
             return await query.ProjectTo<NemocnicaDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
         }
 
-        public async Task<Nemocnica> InsertItem(Nemocnica item)
+        public void InsertItem(Nemocnica item)
         {
-            await _context.Nemocnica.AddAsync(item);
-            return item;
+             _context.Nemocnica.Add(item);
         }
 
         public async Task<bool> SaveAllAsync()

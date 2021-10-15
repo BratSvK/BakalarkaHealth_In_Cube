@@ -27,7 +27,7 @@ namespace HealthInCube_BackEnd.Data
           
 
         // pozriet sa na triggre 
-        public Task<bool> DeleteItem(decimal itemId)
+        public void DeleteItem(Lekar itemId)
         {
             throw new System.NotImplementedException();
         }
@@ -68,7 +68,7 @@ namespace HealthInCube_BackEnd.Data
             return await _context.Lekar.FindAsync(lekarId);
         }
 
-        public Task<Lekar> InsertItem(Lekar item)
+        public void InsertItem(Lekar item)
         {
             throw new System.NotImplementedException();
         }

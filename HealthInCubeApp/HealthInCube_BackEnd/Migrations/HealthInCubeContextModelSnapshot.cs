@@ -973,6 +973,31 @@ namespace HealthInCube_BackEnd.Migrations
                     b.ToTable("ZDRAVOTNA_KARTA");
                 });
 
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.Ziadanka", b =>
+                {
+                    b.Property<decimal>("IdPacient")
+                        .HasColumnType("NUMBER(38)")
+                        .HasColumnName("ID_PACIENT");
+
+                    b.Property<decimal>("IdLekar")
+                        .HasColumnType("NUMBER(38)")
+                        .HasColumnName("ID_LEKAR");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("DATE")
+                        .HasColumnName("VYTVORENA");
+
+                    b.Property<DateTime?>("AcceptedAt")
+                        .HasColumnType("DATE")
+                        .HasColumnName("AKCEPTOVANA");
+
+                    b.HasKey("IdPacient", "IdLekar", "CreatedAt");
+
+                    b.HasIndex("IdLekar");
+
+                    b.ToTable("ZIADANKA");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<decimal>", b =>
                 {
                     b.Property<int>("Id")
@@ -1403,6 +1428,25 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Navigation("IdPacientNavigation");
                 });
 
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.Ziadanka", b =>
+                {
+                    b.HasOne("HealthInCube_BackEnd.Entities.Lekar", "IdLekarNavigation")
+                        .WithMany("Ziadanky")
+                        .HasForeignKey("IdLekar")
+                        .HasConstraintName("RELATIONSHIP200")
+                        .IsRequired();
+
+                    b.HasOne("HealthInCube_BackEnd.Entities.Pacient", "IdPacientNavigation")
+                        .WithMany("Ziadanky")
+                        .HasForeignKey("IdPacient")
+                        .HasConstraintName("RELATIONSHIP201")
+                        .IsRequired();
+
+                    b.Navigation("IdLekarNavigation");
+
+                    b.Navigation("IdPacientNavigation");
+                });
+
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.AppRola", b =>
                 {
                     b.Navigation("PouzivatelRole");
@@ -1424,6 +1468,8 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Navigation("VykVysetrenia");
 
                     b.Navigation("ZdravKartaPovolenia");
+
+                    b.Navigation("Ziadanky");
                 });
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.Liek", b =>
@@ -1473,6 +1519,8 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Navigation("ZdravotnaKartum");
 
                     b.Navigation("ZdravPoistenies");
+
+                    b.Navigation("Ziadanky");
                 });
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.Poistovna", b =>

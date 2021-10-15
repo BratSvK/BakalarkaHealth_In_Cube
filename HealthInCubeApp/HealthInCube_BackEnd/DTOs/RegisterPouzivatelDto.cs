@@ -23,5 +23,8 @@ namespace HealthInCube_BackEnd.DTOs
         [Required]
         [StringLength(10, MinimumLength= 4)]
         public string Password { get; set; }
+
+
+        public decimal IdDoctor { get; set; }
     }
 }

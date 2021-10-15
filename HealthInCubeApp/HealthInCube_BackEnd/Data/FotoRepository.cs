@@ -23,7 +23,7 @@ namespace HealthInCube_BackEnd.Data
         }
 
 
-        public Task<bool> DeleteItem(decimal itemId)
+        public void DeleteItem(FotkaPouzivatel itemId)
         {
             throw new System.NotImplementedException();
         }
@@ -41,7 +41,7 @@ namespace HealthInCube_BackEnd.Data
             return await query.ProjectTo<FotkaDto>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
-        public Task<FotkaPouzivatel> InsertItem(FotkaPouzivatel item)
+        public void InsertItem(FotkaPouzivatel item)
         {
             throw new System.NotImplementedException();
         }

@@ -17,8 +17,10 @@ namespace HealthInCube_BackEnd.Controllers
         private readonly IMapper _mapper;
         private readonly UserManager<Pouzivatel> _userManager;
         private readonly SignInManager<Pouzivatel> _signInManager;
-        public UcetController(UserManager<Pouzivatel> userManager, SignInManager<Pouzivatel> signInManager, ITokenService tokenService, IMapper mapper)
+        private readonly IZiadankaRepository _ziadankaRepository;
+        public UcetController(UserManager<Pouzivatel> userManager, SignInManager<Pouzivatel> signInManager, ITokenService tokenService, IMapper mapper, IZiadankaRepository ziadankaRepository)
         {
+            _ziadankaRepository = ziadankaRepository;
             _signInManager = signInManager;
             _userManager = userManager;
             _mapper = mapper;
@@ -29,7 +31,7 @@ namespace HealthInCube_BackEnd.Controllers
         // for registration of new user 
         // async becouse of manipulation with db 
         // api controller is smart enough to figere out where the parameter comming from 
-        
+
         [HttpPost("register")]
         public async Task<ActionResult<PouzivatelDto>> Register(RegisterPouzivatelDto registeredUser)             // reason to failing we need to send a json object -> for now string username is null
         {
@@ -45,7 +47,7 @@ namespace HealthInCube_BackEnd.Controllers
             user.Email = registeredUser.Email.ToLower();
             user.UserName = user.Email.Split('@')[0];
             user.Id = await this.PridelIdToNewUserAsync();
-            
+
 
             //EF uses 
             var result = await _userManager.CreateAsync(user, registeredUser.Password);     // create user and save changes to DB 
@@ -53,18 +55,33 @@ namespace HealthInCube_BackEnd.Controllers
             if (!result.Succeeded) return BadRequest(result.Errors);
 
             // adding a member role to  new user -> registration is only for pacient
-            var roleResult = await _userManager.AddToRoleAsync(user, "Lekar");
+            var roleResult = await _userManager.AddToRoleAsync(user, "Pacient");
 
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
-            return new PouzivatelDto
-            {
-                Email = user.Email,
-                Token =  await _tokenService.CreateToken(user),
-                Pohlavie = user.Pohlavie,
-                Bydliskos = user.Bydliskos
+            // here we need to send ziadanka  to Lekar 
 
+            var ziadanka = new Ziadanka {
+                IdPacient = user.Id,
+                IdLekar = registeredUser.IdDoctor
             };
+
+            _ziadankaRepository.InsertItem(ziadanka);
+
+            if (await _ziadankaRepository.SaveAllAsync())
+            {
+                return Ok(new PouzivatelDto
+                {
+                    Email = user.Email,
+                    Token = await _tokenService.CreateToken(user),
+                    Pohlavie = user.Pohlavie,
+                    Bydliskos = user.Bydliskos
+
+                });
+            }
+
+            return BadRequest("Failed to send ziadanka!!");
+            
         }
 
         private async Task<decimal> PridelIdToNewUserAsync()

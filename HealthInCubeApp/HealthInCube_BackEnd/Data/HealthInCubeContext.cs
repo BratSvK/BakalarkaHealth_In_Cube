@@ -50,6 +50,14 @@ namespace HealthInCube_BackEnd.Data
         public virtual DbSet<ZdravotnaKartum> ZdravotnaKarta { get; set; }
 
 
+        public virtual DbSet<Ziadanka> Ziadanka { get; set; }
+
+
+
+
+
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -80,6 +88,44 @@ namespace HealthInCube_BackEnd.Data
 
              modelBuilder.Entity<IdentityUserToken<decimal>>(entity => {
                 entity.HasKey(r => r.UserId);
+            });
+
+
+            modelBuilder.Entity<Ziadanka>(entity => {
+                entity.HasKey(z => new { z.IdPacient, z.IdLekar, z.CreatedAt});
+                entity.ToTable("ZIADANKA");
+
+                 entity.Property(e => e.IdPacient)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("ID_PACIENT");
+
+                entity.Property(e => e.IdLekar)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("ID_LEKAR");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("DATE")
+                    .HasColumnName("VYTVORENA");
+
+                entity.Property(e => e.AcceptedAt)
+                    .HasColumnType("DATE")
+                    .HasColumnName("AKCEPTOVANA");
+
+
+            entity.HasOne(d => d.IdLekarNavigation)
+                    .WithMany(p => p.Ziadanky)
+                    .HasForeignKey(d => d.IdLekar)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("RELATIONSHIP200");
+
+                entity.HasOne(d => d.IdPacientNavigation)
+                    .WithMany(p => p.Ziadanky)
+                    .HasForeignKey(d => d.IdPacient)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("RELATIONSHIP201");
+
+
+
             });
 
 
