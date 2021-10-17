@@ -6,7 +6,7 @@ import { environment } from "src/environments/environment";
 import { HttpClient, HttpErrorResponse, HttpParams } from "@angular/common/http";
 import * as RegisterAcitonsBundle from './register.actions';
 
-import { catchError, map, switchMap, tap } from "rxjs/operators";
+import { catchError, map, switchMap, switchMapTo, tap } from "rxjs/operators";
 import { Okres } from "src/app/models/okres";
 import { Mesto } from "src/app/models/mesto";
 import { Lekar } from "src/app/models/lekar";
@@ -16,6 +16,7 @@ import { RegisterPouzivatel } from "src/app/models/pouzivatelRegistracia";
 import { UserToLogin } from "src/app/models/userToLogin";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
+import { Mail } from "src/app/models/mail";
 
 
 
@@ -111,6 +112,16 @@ export class RegisterEffects {
       })
     )
   );
+
+sendingConfirmEmail = createEffect(() => 
+    this.actions$.pipe(
+      ofType(RegisterAcitonsBundle.REGISTER_SEND_EMAIL_CONFIRM),
+      switchMap((registerDataEmail: RegisterAcitonsBundle.SendingEmailToUser) => {
+        return this.http.post<Mail>(`${fetchUrl}/pouzivatel/mail`, registerDataEmail.payload)
+      })
+    ), {dispatch: false}
+);
+
 
   authRedirect = createEffect(
     () =>

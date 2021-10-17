@@ -17,6 +17,7 @@ delete from ziadanka;
 
 delete from bydlisko;
 
+
 delete from "UserRoles" ur
 where ur."UserId" = 3;
 

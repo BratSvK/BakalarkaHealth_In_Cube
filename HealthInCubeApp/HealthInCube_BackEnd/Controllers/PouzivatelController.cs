@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Net.Mail;
+using Microsoft.Extensions.Configuration;
 
 namespace HealthInCube_BackEnd.Controllers
 {
@@ -19,8 +21,10 @@ namespace HealthInCube_BackEnd.Controllers
     {
         private readonly IPouzivatelRepository _pouzivatelRepository;
         private readonly IMapper _mapper;
+
         public PouzivatelController(IPouzivatelRepository pouzivatelRepository, IMapper mapper)
         {
+            
             _mapper = mapper;
             _pouzivatelRepository = pouzivatelRepository;
 
@@ -39,7 +43,7 @@ namespace HealthInCube_BackEnd.Controllers
 
 
         // zatia funguje len pre lekara pridame poliocy pre admin lekar pacient vsetci 
-        [Authorize(Roles ="Lekar,Pacient")]
+        [Authorize(Roles = "Lekar,Pacient")]
         [HttpPost("add-photo")]
         public async Task<ActionResult> AddPhoto(IFormFile file)
         {
@@ -50,7 +54,7 @@ namespace HealthInCube_BackEnd.Controllers
                 using (var stream = new FileStream(filePath, FileMode.Create))
                     await file.CopyToAsync(stream);
 
-            var fotkaBlob = await  ImageParser.GetImageBytesAsync(filePath);
+            var fotkaBlob = await ImageParser.GetImageBytesAsync(filePath);
 
             // var fotkaBlob = await ImageParser.GetImageBytesAsync(imagePath);
 
@@ -61,7 +65,7 @@ namespace HealthInCube_BackEnd.Controllers
 
             if (userToAddPhoto.FotkaPouzivatel != null) return BadRequest("You cannot add your main photo");
 
-            var fotkaPouzivatel = new FotkaPouzivatel 
+            var fotkaPouzivatel = new FotkaPouzivatel
             {
                 IdPouzivatel = sourceUserId,
                 Fotka = fotkaBlob
@@ -75,19 +79,22 @@ namespace HealthInCube_BackEnd.Controllers
             return BadRequest("Failed to save photo");
 
         }
-        
-        [Authorize(Roles ="Pacient")]
+
+        [Authorize(Roles = "Pacient")]
         [HttpGet("bydliska")]
-        public async Task<ActionResult<BydliskoDto>> GetBydliskaAsync() 
+        public async Task<ActionResult<BydliskoDto>> GetBydliskaAsync()
         {
 
             var bydliska = await _pouzivatelRepository.GetBydliskaAsync();
 
-            if(bydliska.Any()) return NotFound("You have no addresses");
+            if (bydliska.Any()) return NotFound("You have no addresses");
 
             return Ok(bydliska);
 
         }
+
+
+       
 
 
 

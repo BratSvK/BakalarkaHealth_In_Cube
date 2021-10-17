@@ -6,6 +6,8 @@ import { AppState } from "src/app/_store/models/AppState";
 import { RegisterState } from "./modelStore/RegisterState";
 import { Pouzivatel } from "src/app/models/pouzivatel";
 import { RegisterPouzivatel } from "src/app/models/pouzivatelRegistracia";
+import { Actions } from "@ngrx/effects";
+import { Mail } from "src/app/models/mail";
 
 
 
@@ -36,10 +38,19 @@ export const REGISTER_SUCCESS = '[Register] Register Success User';
 export const REGISTER_FAILED = '[Register] Register Failed User';
 
 
+export const REGISTER_SEND_EMAIL_CONFIRM = '[Register] Sending a confirm email';
+
+
 
 
 export const RESET_FORM = '[Register] Reset form';
 
+
+export class SendingEmailToUser implements Action {
+    readonly type = REGISTER_SEND_EMAIL_CONFIRM;
+
+    constructor(public payload: Mail) {}
+}
 
 export class ResetForm implements Action {
     readonly type = RESET_FORM;
@@ -124,7 +135,8 @@ export type RegisterActions =
   | ResetForm
   | RegisterUserStart
   | RegisterUserSuccess
-  | RegisterUserFailed;
+  | RegisterUserFailed
+  | SendingEmailToUser;
  
 
 

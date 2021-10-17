@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using Microsoft.Extensions.Configuration;
+using System.Net.Mail;
 
 namespace HealthInCube_BackEnd.Controllers
 {
@@ -22,8 +24,10 @@ namespace HealthInCube_BackEnd.Controllers
         private readonly IZiadankaRepository _ziadankaRepository;
         private readonly IFotoRepository _fotoRepository;
         private readonly IPouzivatelRepository _pouzivatelRepository;
-        public UcetController(UserManager<Pouzivatel> userManager, SignInManager<Pouzivatel> signInManager, IPouzivatelRepository pouzivatelRepository, IFotoRepository fotoRepository, ITokenService tokenService, IMapper mapper, IZiadankaRepository ziadankaRepository)
+        private readonly IConfiguration _config;
+        public UcetController(UserManager<Pouzivatel> userManager, SignInManager<Pouzivatel> signInManager, IConfiguration config, IPouzivatelRepository pouzivatelRepository, IFotoRepository fotoRepository, ITokenService tokenService, IMapper mapper, IZiadankaRepository ziadankaRepository)
         {
+            _config = config;
             _pouzivatelRepository = pouzivatelRepository;
             _fotoRepository = fotoRepository;
             _ziadankaRepository = ziadankaRepository;
@@ -77,7 +81,7 @@ namespace HealthInCube_BackEnd.Controllers
                 IdLekar = registeredUser.IdDoctor
             };
 
-            
+
 
             _ziadankaRepository.InsertItem(ziadanka);
 
@@ -93,7 +97,7 @@ namespace HealthInCube_BackEnd.Controllers
                 });
             }
 
-            
+
 
             return BadRequest("Failed to register !!");
 
@@ -134,6 +138,57 @@ namespace HealthInCube_BackEnd.Controllers
                 FotkaBlob = _fotoRepository.GetFotkaByUserId(user.Id).Result.Fotka,
                 UserId = user.Id
             });
+        }
+
+
+
+        // sending email to user 
+
+        [HttpPost("mail")]
+        public IActionResult SendAccReqConfMail([FromBody] MailDto mailToSend)
+        {
+            if (mailToSend == null)
+            {
+                return BadRequest("Mail structure is null");
+            }
+            var smtpAddress = _config["Smtp:Host"];
+            var portNumber = int.Parse(_config["Smtp:Port"]);
+            var enableSSL = true;
+            var emailFromAddress = _config["Smtp:Username"]; //Sender Email Address  
+            var password = _config["Smtp:Password"]; //Sender Password  
+            var emailToAddress = mailToSend.ReceiverEmail;
+
+
+            var subject = "Your Account has been created";
+            var body = "<div style='text-align: center; background-color:  rgba(255, 230, 208, 0.363); width: 50%; position: absolute; margin-left: 25%; border-style: solid; border-width: 1px;border-color: rgba(255, 68, 0, 0.37);" +
+             "border-radius:3px; padding: 10px;'>" + "<div style ='font-size: large; color: dimgray;'>Dear " + mailToSend.ReceiverFullName + ",</div>" +
+             "<br>" +
+             "<div style ='font-size: meddium; color: dimgray;'> Thank you for your creation. </div> " +
+             "<br>" +
+            "<div style ='font-size: meddium; color: dimgray;'> Please wait till your doctor aproved your patient and health status</div> " +
+             "<br>" +
+            "<div style ='font-size: meddium; color: dimgray;'> For now please update your user profil and upload your main photo to acount</div> " +
+             "<br>" +
+             "<div style ='font-size: meddium; color: dimgray;'> Have a nice day!  </div> " +
+             "<div style ='font-size: meddium; color: dimgray;'> The HealthInCube Team </div> "
+            + "</div>";
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress(emailFromAddress);
+                mail.To.Add(emailToAddress);
+                mail.Subject = subject;
+                mail.Body = body;
+                mail.IsBodyHtml = true;
+                //mail.Attachments.Add(new Attachment("D:\\TestFile.txt"));//--Uncomment this to send any attachment  
+                using (SmtpClient smtp = new SmtpClient(smtpAddress, portNumber))
+                {
+                    smtp.Credentials = new System.Net.NetworkCredential(emailFromAddress, password);
+                    smtp.EnableSsl = enableSSL;
+                    smtp.Send(mail);
+                }
+            }
+
+            return Ok("Email sended");
         }
 
         // async becouse we are working with db
