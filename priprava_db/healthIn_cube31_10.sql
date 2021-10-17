@@ -5,6 +5,11 @@ join "Roles" r on (r."Id" = ur."RoleId");
 select * from "Users";
 
 
+select * from "Users" u
+join bydlisko b on (b.id_pouzivatel = u."Id")
+where u."Id" = 3;
+
+
 commit;
 
 select * from lekar;

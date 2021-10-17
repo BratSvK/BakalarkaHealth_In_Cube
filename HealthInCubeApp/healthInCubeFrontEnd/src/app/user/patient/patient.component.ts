@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { tap } from 'rxjs/operators';
+import { AppState } from 'src/app/_store/models/AppState';
 
 @Component({
   selector: 'app-patient',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PatientComponent implements OnInit {
 
-  constructor() { }
+  constructor() { 
+    
+  }
 
   ngOnInit(): void {
+   
   }
 
 }

@@ -16,16 +16,19 @@ export function authReducer(state: AuthState = initialState, action: AuthActions
     
     switch (action.type) {
       case AuthActionsBundle.LOGIN:
-          const userToSend: UserToLogin = {
-            email: action.payload.email,
-            userId: action.payload.userId,
-            fullName: action.payload.fullName,
-            fotka: action.payload.fotka,
-            token: action.payload.token,
-            expirationDateToken: action.payload.expirationDateToken,
-            roleStoreBase: action.payload.roleStoreBase
-          };
-           
+
+      console.log(action.payload);
+          const userToSend = new Pouzivatel(
+            action.payload.email,
+            action.payload.userId,
+             action.payload.fullName,
+             action.payload.fotka,
+             action.payload.token,
+             action.payload.expirationDateToken,
+             action.payload.roleStoreBase
+          );
+
+          
 
         return {
             ...state,

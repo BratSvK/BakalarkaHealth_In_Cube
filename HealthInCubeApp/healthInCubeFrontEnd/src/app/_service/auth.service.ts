@@ -23,6 +23,9 @@ export class AuthService {
 
   // autologin after expires one hour 
   setLogoutTimer(expirationDuration: number) {
+
+    console.log(expirationDuration);
+
     this.tokenExpirationTimer = setTimeout(() => {
       this.store.dispatch(new AuthActionBundle.Logout);
     }, expirationDuration);

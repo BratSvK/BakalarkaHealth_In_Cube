@@ -27,8 +27,7 @@ export class JwtInterceptor implements HttpInterceptor {
     // tu ho nacitam zo storu take(1) and subscbribe -> we dont need to unsubscrube and we are complete 
     // ak prejdeme chceme naklonovat spravit deep copy a vlozit nove daata ako autorizacia 
     this.store.select('auth').pipe(take(1)).subscribe(userData => {
-        var user: UserToLogin = userData.user;
-         currentUser = new Pouzivatel(user.email,user.userId,user.fullName, user.fotka, user.token, user.expirationDateToken, user.roleStoreBase);
+         currentUser = userData.user
     });
 
 

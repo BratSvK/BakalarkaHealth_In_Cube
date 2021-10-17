@@ -104,6 +104,7 @@ export class AuthEffects {
         if (loadedUser.token) {
            const expirationDuration = new Date(loadedUser.tokenExpi).getTime() - new Date().getTime();
           this.authService.setLogoutTimer(expirationDuration);
+
           return new AuthActionsBundle.AuthentificateSuccess({
             email: loadedUser.email,
             userId: loadedUser.userId,
@@ -162,13 +163,18 @@ export class AuthEffects {
 
   private handleAuthentification(resData: UserToLogin) {
 
+
     var expirationDateTime = new Date(resData.expirationDateToken).getTime();
+    
     resData.roleStoreBase = [];
+
+    console.log();
 
     const expirationDate = new Date(
       expirationDateTime
     ); // current timestamp in milliconds
 
+    console.log(expirationDate.getTime());
     // check roles for user to save 
     const roles = this.getDecodedToken(resData.token).role;
     Array.isArray(roles) ? resData.roleStoreBase = roles : resData.roleStoreBase.push(roles);
@@ -183,9 +189,11 @@ export class AuthEffects {
     );
 
   // set timer here or in pipeline of obervable
-    this.authService.setLogoutTimer(expirationDateTime * 1000 );
+    this.authService.setLogoutTimer(expirationDateTime);
+
 
     localStorage.setItem('userData', JSON.stringify(user));
+    console.log(expirationDate);
 
     return new AuthActionsBundle.AuthentificateSuccess({
       email: resData.email,
