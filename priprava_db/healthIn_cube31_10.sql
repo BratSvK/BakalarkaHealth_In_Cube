@@ -5,6 +5,74 @@ join "Roles" r on (r."Id" = ur."RoleId");
 select * from "Users";
 
 
+commit;
+
+select * from lekar;
+
+select * from ziadanka;
+
+select * from fotka_pouzivatel;
+
+delete from ziadanka;
+
+delete from bydlisko;
+
+delete from "UserRoles" ur
+where ur."UserId" = 3;
+
+select * from bydlisko;
+
+select * from "UserRoles";
+
+
+delete from "Users" u
+where u."Id" = 3;
+commit;
+
+desc ziadanka;
+
+
+select * from pacient p
+join ziadanka z on(z.id_pacient = p.id_pacient);
+
+
+select  
+   decode(constraint_type,
+     'C', 'Check',
+     'O', 'R/O View',
+     'P', 'Primary',
+     'R', 'Foreign',
+     'U', 'Unique',
+     'V', 'Check view') type,
+   constraint_name,
+   status,
+   last_change
+from   
+   dba_constraints
+where
+   table_name = 'ZIADANKA'
+order by
+   1;
+   
+   select * from ziadanka;
+
+select * from pacient;
+
+delete from "Users" u
+where u."Priezvisko" = 'Gajdos';
+
+select * from "UserTokens";
+
+select * from "UserLogins";
+
+
+select * from bydlisko;
+
+delete from bydlisko;
+
+select * from "UserRoles";
+
+
 select p."Meno" || ' ' || p."Priezvisko" as FullMeno from "Users" p
 where exists(select 'x' 
              from lekar l where 
@@ -15,6 +83,13 @@ desc lekar;
 
 insert into lekar
 values(1,2,2,null);
+
+
+show
+
+
+
+desc pacient;
 
 
 
