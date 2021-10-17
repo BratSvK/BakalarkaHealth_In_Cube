@@ -11,6 +11,9 @@ namespace HealthInCube_BackEnd.Interfaces
         // Task<IEnumerable<RolaDTO>> GetAllRoles();
         Task<Pouzivatel> GetPouzivatelEntity(decimal pouzivatelId);
 
+        Task<IEnumerable<BydliskoDto>> GetBydliskaAsync();
+
+
 
     }
 }

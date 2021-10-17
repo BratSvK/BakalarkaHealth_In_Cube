@@ -5,7 +5,7 @@ namespace HealthInCube_BackEnd.Entities
 {
     public class Ziadanka
     {
-        public decimal IdPacient { get; set; }
+        public decimal IdUser { get; set; }
         public decimal IdLekar { get; set; }
 
         public DateTime? AcceptedAt { get; set; }
@@ -14,7 +14,7 @@ namespace HealthInCube_BackEnd.Entities
 
         public virtual Lekar IdLekarNavigation {get; set;}
 
-        public virtual Pacient IdPacientNavigation {get; set;}
+        public virtual Pouzivatel IdPouzivatelNavigation {get; set;}
         
 
     }

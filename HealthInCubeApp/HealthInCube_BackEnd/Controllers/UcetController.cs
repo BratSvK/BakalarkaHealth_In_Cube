@@ -8,6 +8,7 @@ using HealthInCube_BackEnd.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace HealthInCube_BackEnd.Controllers
 {
@@ -20,8 +21,10 @@ namespace HealthInCube_BackEnd.Controllers
         private readonly SignInManager<Pouzivatel> _signInManager;
         private readonly IZiadankaRepository _ziadankaRepository;
         private readonly IFotoRepository _fotoRepository;
-        public UcetController(UserManager<Pouzivatel> userManager, SignInManager<Pouzivatel> signInManager, IFotoRepository fotoRepository, ITokenService tokenService, IMapper mapper, IZiadankaRepository ziadankaRepository)
+        private readonly IPouzivatelRepository _pouzivatelRepository;
+        public UcetController(UserManager<Pouzivatel> userManager, SignInManager<Pouzivatel> signInManager, IPouzivatelRepository pouzivatelRepository, IFotoRepository fotoRepository, ITokenService tokenService, IMapper mapper, IZiadankaRepository ziadankaRepository)
         {
+            _pouzivatelRepository = pouzivatelRepository;
             _fotoRepository = fotoRepository;
             _ziadankaRepository = ziadankaRepository;
             _signInManager = signInManager;
@@ -50,6 +53,10 @@ namespace HealthInCube_BackEnd.Controllers
             user.Email = registeredUser.Email.ToLower();
             user.UserName = user.Email.Split('@')[0];
             user.Id = await this.PridelIdToNewUserAsync();
+            var adresaRegister = registeredUser.Adresa;
+            adresaRegister.IdBydliska = await this.PridelIdToNewBydliskoAsync();
+            var bydliskoToUser = _mapper.Map<Bydlisko>(adresaRegister);
+            user.Bydliskos.Add(bydliskoToUser);
 
 
             //EF uses 
@@ -66,9 +73,11 @@ namespace HealthInCube_BackEnd.Controllers
 
             var ziadanka = new Ziadanka
             {
-                IdPacient = user.Id,
+                IdUser = user.Id,
                 IdLekar = registeredUser.IdDoctor
             };
+
+            
 
             _ziadankaRepository.InsertItem(ziadanka);
 
@@ -84,8 +93,16 @@ namespace HealthInCube_BackEnd.Controllers
                 });
             }
 
+            
+
             return BadRequest("Failed to register !!");
 
+        }
+
+        private async Task<decimal> PridelIdToNewBydliskoAsync()
+        {
+            var bydliska = await _pouzivatelRepository.GetBydliskaAsync();
+            return bydliska.Count() + 1;
         }
 
         private async Task<decimal> PridelIdToNewUserAsync()

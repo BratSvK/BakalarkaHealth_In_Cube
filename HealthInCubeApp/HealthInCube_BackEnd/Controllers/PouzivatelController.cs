@@ -10,6 +10,7 @@ using HealthInCube_BackEnd.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 
 namespace HealthInCube_BackEnd.Controllers
 {
@@ -38,7 +39,7 @@ namespace HealthInCube_BackEnd.Controllers
 
 
         // zatia funguje len pre lekara pridame poliocy pre admin lekar pacient vsetci 
-        [Authorize(Roles = "Lekar")]
+        [Authorize(Roles ="Lekar,Pacient")]
         [HttpPost("add-photo")]
         public async Task<ActionResult> AddPhoto(IFormFile file)
         {
@@ -74,8 +75,19 @@ namespace HealthInCube_BackEnd.Controllers
             return BadRequest("Failed to save photo");
 
         }
+        
+        [Authorize(Roles ="Pacient")]
+        [HttpGet("bydliska")]
+        public async Task<ActionResult<BydliskoDto>> GetBydliskaAsync() 
+        {
 
+            var bydliska = await _pouzivatelRepository.GetBydliskaAsync();
 
+            if(bydliska.Any()) return NotFound("You have no addresses");
+
+            return Ok(bydliska);
+
+        }
 
 
 

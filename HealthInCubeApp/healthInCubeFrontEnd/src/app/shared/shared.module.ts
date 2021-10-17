@@ -6,7 +6,7 @@ import { NavComponent } from "../nav/nav.component";
 import { HasRoleDirective } from "../_directives/has-role.directive";
 
 @NgModule({
-  declarations: [NavComponent, HasRoleDirective],
+  declarations: [NavComponent, HasRoleDirective,],
   imports: [CommonModule],
   exports: [CommonModule, NavComponent, HasRoleDirective]
 })

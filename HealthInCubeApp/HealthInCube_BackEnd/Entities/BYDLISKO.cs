@@ -14,7 +14,6 @@ namespace HealthInCube_BackEnd.Entities
         public DateTime? AdresaDo { get; set; }
         public string Trvale { get; set; }
         public decimal IdMesto { get; set; }
-        public string PscBydlisko { get; set; }
 
         public virtual Mesto IdMestoNavigation { get; set; }
         public virtual Pouzivatel IdPouzivatelNavigation { get; set; }

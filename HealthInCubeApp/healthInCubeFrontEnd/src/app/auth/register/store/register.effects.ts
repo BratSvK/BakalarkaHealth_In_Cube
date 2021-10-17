@@ -15,6 +15,7 @@ import { Pouzivatel } from "src/app/models/pouzivatel";
 import { RegisterPouzivatel } from "src/app/models/pouzivatelRegistracia";
 import { UserToLogin } from "src/app/models/userToLogin";
 import { Router } from "@angular/router";
+import { ToastrService } from "ngx-toastr";
 
 
 
@@ -70,6 +71,7 @@ export class RegisterEffects {
           params,
         }).pipe(
             map((pract) => {
+                // this.toastr.success("Lekar pridany");
                 return new RegisterAcitonsBundle.SetPractitioners(pract.body);
               }),
             catchError((error) => {
@@ -88,11 +90,11 @@ export class RegisterEffects {
     this.actions$.pipe(
       ofType(RegisterAcitonsBundle.REGISTER_START),
       switchMap((authSignData: RegisterAcitonsBundle.RegisterUserStart) => {
-        const signInObject = this.createModelToSend(authSignData.payload);
+        // const signInObject = this.createModelToSend(authSignData.payload);
 
         return this.http
           .post<UserToLogin>(fetchUrl + 'ucet/register',
-            signInObject
+            authSignData.payload
           )
           .pipe(
             // return a observable automaticly
@@ -102,7 +104,8 @@ export class RegisterEffects {
             catchError((error) => {
               // returning non error observable
               const errorToSend = this.handleError(error);
-              return of(null); // creating a new observable without error
+              this.toastr.error(errorToSend);
+              return of(new RegisterAcitonsBundle.RegisterUserFailed());
             })
           );
       })
@@ -114,8 +117,8 @@ export class RegisterEffects {
       this.actions$.pipe(
         ofType(RegisterAcitonsBundle.REGISTER_SUCCESS),
         tap(() => {
-         
-            this.router.navigate(['auth']);
+            this.toastr.success("Account created");
+            this.router.navigate(['/auth']);
         })
       ),
     { dispatch: false } // just create a effect to UI
@@ -126,6 +129,7 @@ export class RegisterEffects {
     private http: HttpClient,
     private store: Store<AppState>,
     private router: Router,
+    private toastr: ToastrService
   ) {}
 
 
@@ -142,11 +146,7 @@ export class RegisterEffects {
       pohlavie: signUpForm.pohlavie,
       email: signUpForm.email,
       password: signUpForm.password,
-      country: signUpForm.country,
-      city: signUpForm.city,
-      district: signUpForm.district,
-      street: signUpForm.street,
-      isPernamentAddress: signUpForm.isPernamentAddress
+      adresa: signUpForm.adresa
     };
   }
 

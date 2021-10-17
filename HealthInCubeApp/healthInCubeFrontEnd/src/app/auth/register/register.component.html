@@ -48,7 +48,7 @@
                         </div> -->
                             <ng-template #calculate>
                                 <div class="col-md mt-3">
-                                    <button class="btn btn-info" (click)="onCalculateFromBIDToBirthDate()">Calculate
+                                    <button class="btn btn-info" type="button" (click)="onCalculateFromBIDToBirthDate()">Calculate
                                         date</button>
                                 </div>
                             </ng-template>
@@ -69,7 +69,7 @@
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="birthDate">Birth Date*</label>
-                            <input type="date" class="form-control" id="lastName" formControlName="birthDate">
+                            <input type="date" class="form-control" id="birthDate" formControlName="birthDate">
                             <!-- <div class="invalid-feedback">
                             Valid last name is required.
                         </div> -->
@@ -94,6 +94,19 @@
                         <!-- <div class="invalid-feedback">
                         Please enter a valid email phonenumber.
                     </div> -->
+                    </div>
+
+                    <div class="form-row mb-3">
+                        <div class="col-md">
+                        <label for="password">Password*</label>
+                        <input type="text" class="form-control" id="password" placeholder="SilneHeslo1"
+                            formControlName="password">
+                        </div>
+                        <div class="col-md">
+                            <label for="confirmPassword">Confirm password*</label>
+                            <input type="text" class="form-control" id="confirmPassword" placeholder="SilneHeslo1"
+                                formControlName="confirmPassword">
+                            </div>
                     </div>
                 </div>
 

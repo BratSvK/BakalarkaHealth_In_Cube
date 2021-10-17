@@ -33,6 +33,9 @@ export const REGISTER_START = '[Register] Register Start User';
 
 export const REGISTER_SUCCESS = '[Register] Register Success User';
 
+export const REGISTER_FAILED = '[Register] Register Failed User';
+
+
 
 
 export const RESET_FORM = '[Register] Reset form';
@@ -59,6 +62,10 @@ export class RegisterUserStart implements Action {
 
 export class RegisterUserSuccess implements Action {
     readonly type =  REGISTER_SUCCESS;
+}
+
+export class RegisterUserFailed implements Action {
+    readonly type =  REGISTER_FAILED;
 }
 
 
@@ -116,7 +123,8 @@ export type RegisterActions =
   | SetPractitioners
   | ResetForm
   | RegisterUserStart
-  | RegisterUserSuccess;
+  | RegisterUserSuccess
+  | RegisterUserFailed;
  
 
 

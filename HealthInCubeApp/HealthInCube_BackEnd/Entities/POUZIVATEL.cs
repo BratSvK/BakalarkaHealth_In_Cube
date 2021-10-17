@@ -14,6 +14,8 @@ namespace HealthInCube_BackEnd.Entities
             Bydliskos = new HashSet<Bydlisko>();
             Lekars = new HashSet<Lekar>();
             Pacients = new HashSet<Pacient>();
+            Ziadanky = new HashSet<Ziadanka>();
+
         }
 
        
@@ -34,6 +36,9 @@ namespace HealthInCube_BackEnd.Entities
         public virtual ICollection<Pacient> Pacients { get; set; }
 
         public virtual ICollection<AppPouzivatelRola> PouzivatelRole { get; set; }
+
+        public virtual ICollection<Ziadanka> Ziadanky { get; set; }
+
 
     }
 }

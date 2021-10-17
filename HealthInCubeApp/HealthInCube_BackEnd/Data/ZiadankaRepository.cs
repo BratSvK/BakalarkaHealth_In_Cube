@@ -35,7 +35,7 @@ namespace HealthInCube_BackEnd.Data
         public async Task<IEnumerable<ZiadankaDto>> GetItemsAsync()
         {
             return await _context.Ziadanka
-                                .Include(z => z.IdPacientNavigation)
+                                .Include(z => z.IdPouzivatelNavigation)
                                 .Include(z => z.IdLekarNavigation)
                                 .ProjectTo<ZiadankaDto>(_mapper.ConfigurationProvider)
                                 .ToListAsync();
@@ -48,7 +48,7 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<Ziadanka> GetZiadankaByPatientId(int id)
         {
-            return await _context.Ziadanka.Include(z => z.IdPacientNavigation).SingleOrDefaultAsync(z => z.IdPacient == id);
+            return await _context.Ziadanka.Include(z => z.IdPouzivatelNavigation).SingleOrDefaultAsync(z => z.IdUser == id);
 
         }
 

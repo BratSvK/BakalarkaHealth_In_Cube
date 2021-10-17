@@ -10,7 +10,6 @@ namespace HealthInCube_BackEnd.Entities
         public Pacient()
         {
             ZdravPoistenies = new HashSet<ZdravPoistenie>();
-            Ziadanky = new HashSet<Ziadanka>();
 
         }
 
@@ -24,7 +23,6 @@ namespace HealthInCube_BackEnd.Entities
         public virtual Lekar IdVseobecnyLekarNavigation { get; set; }
         public virtual ZdravotnaKartum ZdravotnaKartum { get; set; }
         public virtual ICollection<ZdravPoistenie> ZdravPoistenies { get; set; }
-        public virtual ICollection<Ziadanka> Ziadanky { get; set; }
 
     }
 }

@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { RegisterEffects } from './auth/register/store/register.effects';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthEffects } from './auth/store/auth.effects';
+import {ToastrModule} from 'ngx-toastr';
 
 
 
@@ -26,7 +27,10 @@ import { AuthEffects } from './auth/store/auth.effects';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    CoreModule,
+    CoreModule, 
+    ToastrModule.forRoot({      // config options 
+      positionClass: 'toast-bottom-right'
+    }),
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([RegisterEffects, AuthEffects]),
     StoreDevtoolsModule.instrument({logOnly: environment.production})

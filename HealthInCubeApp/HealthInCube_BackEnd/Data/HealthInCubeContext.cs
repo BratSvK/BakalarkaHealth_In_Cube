@@ -92,10 +92,10 @@ namespace HealthInCube_BackEnd.Data
 
 
             modelBuilder.Entity<Ziadanka>(entity => {
-                entity.HasKey(z => new { z.IdPacient, z.IdLekar, z.CreatedAt});
+                entity.HasKey(z => new { z.IdUser, z.IdLekar, z.CreatedAt});
                 entity.ToTable("ZIADANKA");
 
-                 entity.Property(e => e.IdPacient)
+                 entity.Property(e => e.IdUser)
                     .HasColumnType("NUMBER(38)")
                     .HasColumnName("ID_PACIENT");
 
@@ -118,9 +118,9 @@ namespace HealthInCube_BackEnd.Data
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("RELATIONSHIP200");
 
-                entity.HasOne(d => d.IdPacientNavigation)
+                entity.HasOne(d => d.IdPouzivatelNavigation)
                     .WithMany(p => p.Ziadanky)
-                    .HasForeignKey(d => d.IdPacient)
+                    .HasForeignKey(d => d.IdUser)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("RELATIONSHIP201");
 
@@ -200,12 +200,7 @@ namespace HealthInCube_BackEnd.Data
                     .HasColumnType("NUMBER(38)")
                     .HasColumnName("ID_POUZIVATEL");
 
-                entity.Property(e => e.PscBydlisko)
-                    .IsRequired()
-                    .HasMaxLength(5)
-                    .IsUnicode(false)
-                    .HasColumnName("PSC_BYDLISKO")
-                    .IsFixedLength(true);
+                
 
                 entity.Property(e => e.Trvale)
                     .IsRequired()

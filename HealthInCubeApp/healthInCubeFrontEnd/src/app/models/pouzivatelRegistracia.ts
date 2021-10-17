@@ -1,3 +1,5 @@
+import { Adresa } from "./adresa";
+
 export interface RegisterPouzivatel {
     meno: string;
     priezvisko: string;
@@ -9,9 +11,6 @@ export interface RegisterPouzivatel {
     pohlavie: string;
     password: string;
     idDoctor: number;
-    country: string;
-    district: string;
-    city: string;
-    street: string;
-    isPernamentAddress: boolean;
+    adresa : Adresa;
+   
 }

@@ -103,14 +103,6 @@ namespace HealthInCube_BackEnd.Migrations
                         .HasColumnType("NUMBER(38)")
                         .HasColumnName("ID_POUZIVATEL");
 
-                    b.Property<string>("PscBydlisko")
-                        .IsRequired()
-                        .HasMaxLength(5)
-                        .IsUnicode(false)
-                        .HasColumnType("CHAR(5)")
-                        .HasColumnName("PSC_BYDLISKO")
-                        .IsFixedLength(true);
-
                     b.Property<string>("Trvale")
                         .IsRequired()
                         .HasMaxLength(1)
@@ -975,7 +967,7 @@ namespace HealthInCube_BackEnd.Migrations
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.Ziadanka", b =>
                 {
-                    b.Property<decimal>("IdPacient")
+                    b.Property<decimal>("IdUser")
                         .HasColumnType("NUMBER(38)")
                         .HasColumnName("ID_PACIENT");
 
@@ -991,7 +983,7 @@ namespace HealthInCube_BackEnd.Migrations
                         .HasColumnType("DATE")
                         .HasColumnName("AKCEPTOVANA");
 
-                    b.HasKey("IdPacient", "IdLekar", "CreatedAt");
+                    b.HasKey("IdUser", "IdLekar", "CreatedAt");
 
                     b.HasIndex("IdLekar");
 
@@ -1436,15 +1428,15 @@ namespace HealthInCube_BackEnd.Migrations
                         .HasConstraintName("RELATIONSHIP200")
                         .IsRequired();
 
-                    b.HasOne("HealthInCube_BackEnd.Entities.Pacient", "IdPacientNavigation")
+                    b.HasOne("HealthInCube_BackEnd.Entities.Pouzivatel", "IdPouzivatelNavigation")
                         .WithMany("Ziadanky")
-                        .HasForeignKey("IdPacient")
+                        .HasForeignKey("IdUser")
                         .HasConstraintName("RELATIONSHIP201")
                         .IsRequired();
 
                     b.Navigation("IdLekarNavigation");
 
-                    b.Navigation("IdPacientNavigation");
+                    b.Navigation("IdPouzivatelNavigation");
                 });
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.AppRola", b =>
@@ -1519,8 +1511,6 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Navigation("ZdravotnaKartum");
 
                     b.Navigation("ZdravPoistenies");
-
-                    b.Navigation("Ziadanky");
                 });
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.Poistovna", b =>
@@ -1539,6 +1529,8 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Navigation("Pacients");
 
                     b.Navigation("PouzivatelRole");
+
+                    b.Navigation("Ziadanky");
                 });
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.TypLekara", b =>

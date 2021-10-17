@@ -31,6 +31,13 @@ namespace HealthInCube_BackEnd.Data
             _context.Users.Remove(pouzivatel);
         }
 
+        public async Task<IEnumerable<BydliskoDto>> GetBydliskaAsync()
+        {
+           var query = _context.Bydlisko.AsQueryable();
+
+           return await query.ProjectTo<BydliskoDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
+        }
+
         // public async Task<IEnumerable<RolaDTO>> GetAllRoles()
         // {
         //     var query =  _context.Rola.AsQueryable();

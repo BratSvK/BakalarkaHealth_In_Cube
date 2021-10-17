@@ -1,6 +1,6 @@
 import { formatDate } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as moment from 'moment';
@@ -12,6 +12,7 @@ import { AppState } from 'src/app/_store/models/AppState';
 
 import * as RegisterBundleActions from './store/register.actions';
 import { RegisterPouzivatel } from 'src/app/models/pouzivatelRegistracia';
+import { Adresa } from 'src/app/models/adresa';
 
 
 
@@ -52,9 +53,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
     });
 
 
-
-
     this.initForm();
+
+    
 
   }
 
@@ -81,10 +82,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
   onChangeCity() {
     var idCity = this.registerForm.get('userAddress.city').value as number;
     var vekPacienta = this.getAgeByDateBirth();
-    console.log(this.isShowenSelectionOfPractitioners);
-    if (this.isShowenSelectionOfPractitioners)
-    {
-    }
+    
+
+    if (vekPacienta !== -1)
     this.store.dispatch(new RegisterBundleActions.FetchPractitioners({idMesto: idCity, vek: vekPacienta}));
   }
 
@@ -93,7 +93,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   onSubmit() {
 
     var registerPouzivatel = this.createModelToSingUp();
-    
+
     this.store.dispatch(new RegisterBundleActions.RegisterUserStart(registerPouzivatel));
     
   }
@@ -102,10 +102,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.store.dispatch(new RegisterBundleActions.ResetForm());
     this.router.navigate(['../'], {relativeTo: this.route});
   }
-
-
-
-  
 
 
   onCalculateFromBIDToBirthDate() {
@@ -174,6 +170,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
         email: new FormControl('', [Validators.required, Validators.email]),
         phoneNumber: new FormControl(null),
         gender: new FormControl(null, [Validators.required]),
+        password: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.minLength(4)]),
+        confirmPassword: new FormControl('', [Validators.required, this.matchValues('password')]),
       }),
       userAddress: new FormGroup({
         country: new FormControl(null, [Validators.required]),
@@ -183,10 +181,30 @@ export class RegisterComponent implements OnInit, OnDestroy {
         isPernamentAddress: new FormControl(null),
       }),
       practitioner: new FormControl({value: null, disabled: true}, Validators.required),
+      
+    });
+
+    // aktualizovanie confirm password 
+    this.registerForm.get('userData.password').valueChanges.subscribe(() => {
+      this.registerForm.get('userData.confirmPassword').updateValueAndValidity();
     });
   }
 
+
+  private matchValues(matchTo: string): ValidatorFn {
+   return (control: AbstractControl) => {
+     return control?.value === control?.parent?.controls[matchTo].value ? null : {isMatching: true}      // return null ak prejde validacia 
+   } 
+  }
+
   private createModelToSingUp(): RegisterPouzivatel {
+
+    var adresa: Adresa = {
+      idMesto: +this.registerForm.get('userAddress.city').value,
+      trvale: this.registerForm.get('userAddress.isPernamentAddress').value,
+      ulica: this.registerForm.get('userAddress.street').value
+    };
+
     return {
       meno: this.registerForm.get('userData.firstName').value,
       priezvisko: this.registerForm.get('userData.lastName').value,
@@ -196,18 +214,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
       email: this.registerForm.get('userData.email').value,
       mobil: this.registerForm.get('userData.phoneNumber').value,
       pohlavie: this.registerForm.get('userData.gender').value,
-      country: this.registerForm.get('userAddress.country').value,
-      district: this.registerForm.get('userAddress.district').value,
-      city: this.registerForm.get('userAddress.city').value,
-      street: this.registerForm.get('userAddress.street').value,
-      isPernamentAddress: this.registerForm.get('userAddress.isPernamentAddress').value,
-      password: this.registerForm.get('password').value,
+      password: this.registerForm.get('userData.password').value,
       idDoctor: this.registerForm.get('practitioner').value.idLekar,
+      adresa: adresa
+      }
     };
-  }
-
-
   
+
 
 
   ngOnDestroy(): void {
@@ -215,5 +228,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.registerSub.unsubscribe();
     }
   }
-
 }
+
+
