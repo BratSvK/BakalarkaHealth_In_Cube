@@ -4,7 +4,7 @@ export interface UserToLogin  {
     fotka: any;
     token: string;
     fullName: string;
-    expirationDate: Date;
+    expirationDateToken: Date;
     roleStoreBase: string[];
 
     

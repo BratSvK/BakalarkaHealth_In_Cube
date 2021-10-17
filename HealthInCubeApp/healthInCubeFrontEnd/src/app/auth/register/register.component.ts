@@ -13,6 +13,7 @@ import { AppState } from 'src/app/_store/models/AppState';
 import * as RegisterBundleActions from './store/register.actions';
 import { RegisterPouzivatel } from 'src/app/models/pouzivatelRegistracia';
 import { Adresa } from 'src/app/models/adresa';
+import { Mail } from 'src/app/models/mail';
 
 
 
@@ -93,8 +94,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
   onSubmit() {
 
     var registerPouzivatel = this.createModelToSingUp();
-
+    var email : Mail = {
+      receiverEmail: registerPouzivatel.email,
+      receiverFullName: `${registerPouzivatel.meno.trim()} ${registerPouzivatel.priezvisko}`,
+    }
     this.store.dispatch(new RegisterBundleActions.RegisterUserStart(registerPouzivatel));
+    this.store.dispatch(new RegisterBundleActions.SendingEmailToUser(email));
     
   }
 

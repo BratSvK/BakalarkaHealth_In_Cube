@@ -22,7 +22,7 @@ export function authReducer(state: AuthState = initialState, action: AuthActions
             fullName: action.payload.fullName,
             fotka: action.payload.fotka,
             token: action.payload.token,
-            expirationDate: action.payload.expirationDate,
+            expirationDateToken: action.payload.expirationDateToken,
             roleStoreBase: action.payload.roleStoreBase
           };
            

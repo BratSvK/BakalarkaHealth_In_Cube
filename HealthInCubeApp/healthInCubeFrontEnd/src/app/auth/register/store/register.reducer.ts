@@ -34,6 +34,7 @@ export function registerReducer(
           practitioners: [...action.payload],
         };
 
+        case RegisterAcitonsBundle.REGISTER_SUCCESS:
         case RegisterAcitonsBundle.RESET_FORM:
           return state = {...initialRegisterState}
 

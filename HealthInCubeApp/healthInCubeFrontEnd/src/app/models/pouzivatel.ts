@@ -4,7 +4,6 @@ export class Pouzivatel {
         public email: string,
         public userId: string,
         public fullName: string,
-        public pohlavie: string,
         public fotka: any,
         private _token: string,
         private _tokenExpirationDate: Date,

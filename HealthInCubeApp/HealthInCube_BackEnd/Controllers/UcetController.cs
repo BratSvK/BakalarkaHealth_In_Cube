@@ -119,7 +119,6 @@ namespace HealthInCube_BackEnd.Controllers
         {
             // making request we need await
             var user = await _userManager.Users
-                .Include(p => p.Bydliskos)
                 .SingleOrDefaultAsync(user => user.Email == loginUser.Email.ToLower());
 
             if (user == null)
@@ -135,7 +134,7 @@ namespace HealthInCube_BackEnd.Controllers
                 Email = user.Email,
                 Token = await _tokenService.CreateToken(user),
                 FullName = user.GetFullName(),
-                FotkaBlob = _fotoRepository.GetFotkaByUserId(user.Id).Result.Fotka,
+                FotkaBlob = _fotoRepository.GetFotkaByUserId(user.Id).Result?.Fotka,
                 UserId = user.Id
             });
         }
@@ -188,7 +187,7 @@ namespace HealthInCube_BackEnd.Controllers
                 }
             }
 
-            return Ok("Email sended");
+            return Ok();
         }
 
         // async becouse we are working with db

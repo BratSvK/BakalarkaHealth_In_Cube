@@ -2,10 +2,12 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Actions, createEffect, Effect, ofType } from "@ngrx/effects";
+import { ToastrService } from "ngx-toastr";
 import { of } from "rxjs";
 import { catchError, map, switchMap, tap } from "rxjs/operators";
 import { Pouzivatel } from "src/app/models/pouzivatel";
 import { PrihlaseniePouzivatel } from "src/app/models/prihlaseniePouzivatel";
+import { UserToLogin } from "src/app/models/userToLogin";
 import { AuthService } from "src/app/_service/auth.service";
 import { environment } from "src/environments/environment";
 import * as AuthActionsBundle from './auth.actions';
@@ -33,7 +35,7 @@ export class AuthEffects {
 
         const signInObject = this.createModelToSend(authData.payload);
         return this.http
-          .post<Pouzivatel>(fetchUrl + 'ucet/login',
+          .post<UserToLogin>(fetchUrl + 'ucet/login',
             signInObject
           )
           .pipe(
@@ -58,10 +60,8 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActionsBundle.LOGIN),
         tap((authSuccesfullData: AuthActionsBundle.AuthentificateSuccess) => {
-          
+            this.toastr.success("Succesfully logged");
             this.router.navigate(['/user']);
-        
-         
         })
       ),
     { dispatch: false } // just create a effect to UI
@@ -94,7 +94,6 @@ export class AuthEffects {
           userDataToSend.email,
           userDataToSend.userId,
           userDataToSend.fullName,
-          userDataToSend.pohlavie,
           userDataToSend.fotka,
           userDataToSend.token,
           new Date(userDataToSend.tokenExpi),
@@ -109,7 +108,7 @@ export class AuthEffects {
             email: loadedUser.email,
             userId: loadedUser.userId,
             token: loadedUser.token,
-            expirationDate: loadedUser.tokenExpi,
+            expirationDateToken: loadedUser.tokenExpi,
             fotka: loadedUser.fotka,
             roleStoreBase: loadedUser.roleStoreBase,
             fullName: loadedUser.fullName
@@ -131,7 +130,8 @@ export class AuthEffects {
     private actions$: Actions,
     private http: HttpClient,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastr: ToastrService
   ) {}
 
   private handleError(errorRes: HttpErrorResponse) {
@@ -160,24 +160,30 @@ export class AuthEffects {
     return errorMessage;
   }
 
-  private handleAuthentification(resData: Pouzivatel) {
+  private handleAuthentification(resData: UserToLogin) {
+
+    var expirationDateTime = new Date(resData.expirationDateToken).getTime();
+    resData.roleStoreBase = [];
+
     const expirationDate = new Date(
-      new Date().getTime() + +resData.tokenExpi * 1000
+      expirationDateTime
     ); // current timestamp in milliconds
 
+    // check roles for user to save 
+    const roles = this.getDecodedToken(resData.token).role;
+    Array.isArray(roles) ? resData.roleStoreBase = roles : resData.roleStoreBase.push(roles);
     const user = new Pouzivatel(
         resData.email,
         resData.userId,
         resData.fullName,
-        resData.pohlavie,
         resData.fotka,
         resData.token,
-        resData.tokenExpi,
+        expirationDate,
         resData.roleStoreBase
     );
 
   // set timer here or in pipeline of obervable
-    this.authService.setLogoutTimer(+resData.tokenExpi * 1000 );
+    this.authService.setLogoutTimer(expirationDateTime * 1000 );
 
     localStorage.setItem('userData', JSON.stringify(user));
 
@@ -185,11 +191,19 @@ export class AuthEffects {
       email: resData.email,
       userId: resData.userId,
       token: resData.token,
-      expirationDate: expirationDate,
+      expirationDateToken: expirationDate,
       fotka: resData.fotka,
       fullName: resData.fullName,
       roleStoreBase: resData.roleStoreBase,
     });
+  }
+
+
+
+  private getDecodedToken(token: string) {
+   // token -> header , payload, signature 
+    // acces to payload
+    return JSON.parse(atob(token.split('.')[1]));
   }
 
   private createModelToSend(signUpForm: PrihlaseniePouzivatel) {

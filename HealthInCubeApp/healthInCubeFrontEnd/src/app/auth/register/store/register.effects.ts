@@ -90,6 +90,7 @@ export class RegisterEffects {
   authSignup = createEffect(() =>
     this.actions$.pipe(
       ofType(RegisterAcitonsBundle.REGISTER_START),
+      
       switchMap((authSignData: RegisterAcitonsBundle.RegisterUserStart) => {
         // const signInObject = this.createModelToSend(authSignData.payload);
 
@@ -99,7 +100,9 @@ export class RegisterEffects {
           )
           .pipe(
             // return a observable automaticly
+           
             map((resData) => {
+              
               return new RegisterAcitonsBundle.RegisterUserSuccess();
             }),
             catchError((error) => {
@@ -117,7 +120,7 @@ sendingConfirmEmail = createEffect(() =>
     this.actions$.pipe(
       ofType(RegisterAcitonsBundle.REGISTER_SEND_EMAIL_CONFIRM),
       switchMap((registerDataEmail: RegisterAcitonsBundle.SendingEmailToUser) => {
-        return this.http.post<Mail>(`${fetchUrl}/pouzivatel/mail`, registerDataEmail.payload)
+        return this.http.post<Mail>(`${fetchUrl}ucet/mail`, registerDataEmail.payload)
       })
     ), {dispatch: false}
 );
@@ -130,7 +133,7 @@ sendingConfirmEmail = createEffect(() =>
         tap(() => {
             this.toastr.success("Account created");
             this.router.navigate(['/auth']);
-        })
+        }),
       ),
     { dispatch: false } // just create a effect to UI
   );

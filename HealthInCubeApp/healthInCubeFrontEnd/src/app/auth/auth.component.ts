@@ -2,8 +2,9 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { PrihlaseniePouzivatel } from '../models/prihlaseniePouzivatel';
 import { AppState } from '../_store/models/AppState';
-import * as RegisterAcitonsBundle from './register/store/register.actions';
+import * as AuthentificateBundleActions from './store/auth.actions';
 
 @Component({
   selector: 'app-auth',
@@ -14,7 +15,7 @@ export class AuthComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(private router: Router, private route: ActivatedRoute, private store: Store<AppState>) { }
 
   ngOnInit(): void {
 
@@ -30,7 +31,18 @@ export class AuthComponent implements OnInit {
 
 
   onSubmit() {
-    console.log(this.loginForm.value);
+    var loginUser = this.createLoginUser();
+
+    this.store.dispatch(new AuthentificateBundleActions.LoginStart(loginUser));
+  }
+
+
+
+  private createLoginUser(): PrihlaseniePouzivatel {
+    return {
+      email: this.loginForm.get('email').value,
+      password: this.loginForm.get('password').value
+    };
   }
 
 
