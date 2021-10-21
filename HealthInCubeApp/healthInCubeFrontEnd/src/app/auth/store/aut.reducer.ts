@@ -16,8 +16,6 @@ export function authReducer(state: AuthState = initialState, action: AuthActions
     
     switch (action.type) {
       case AuthActionsBundle.LOGIN:
-
-      console.log(action.payload);
           const userToSend = new Pouzivatel(
             action.payload.email,
             action.payload.userId,
@@ -27,9 +25,6 @@ export function authReducer(state: AuthState = initialState, action: AuthActions
              action.payload.expirationDateToken,
              action.payload.roleStoreBase
           );
-
-          
-
         return {
             ...state,
             authError: null,

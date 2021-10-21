@@ -115,7 +115,7 @@ namespace HealthInCube_BackEnd.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<PouzivatelDto>> Login(PrihlaseniePouzivatelDto loginUser)
+        public async Task<ActionResult<PouzivatelDto>> Login([FromBody]PrihlaseniePouzivatelDto loginUser)
         {
             // making request we need await
             var user = await _userManager.Users

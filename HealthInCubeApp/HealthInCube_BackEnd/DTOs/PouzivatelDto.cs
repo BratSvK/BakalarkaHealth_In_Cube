@@ -13,7 +13,7 @@ namespace HealthInCube_BackEnd.DTOs
 
         public string FullName { get; set; }
 
-        public DateTime ExpirationDateToken {get; set;} = DateTime.Now.AddHours(1);
+        public DateTime ExpirationDateToken {get; set;} = DateTime.UtcNow.AddHours(1);
 
 
         // public ICollection<Bydlisko> Bydliskos { get; set; }
