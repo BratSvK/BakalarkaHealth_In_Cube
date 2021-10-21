@@ -14,6 +14,9 @@ using System.Net.Mail;
 
 namespace HealthInCube_BackEnd.Controllers
 {
+    /// <summary>
+    /// Controller for login and register.
+    /// </summary>
     public class UcetController : BaseApiController
     {
 
@@ -37,22 +40,22 @@ namespace HealthInCube_BackEnd.Controllers
             _tokenService = tokenService;
         }
 
-
-        // for registration of new user 
-        // async becouse of manipulation with db 
-        // api controller is smart enough to figere out where the parameter comming from 
-
+        /// <summary>
+        /// Register method.
+        /// Reason to failing we need to send a json object -> for now string username is null
+        /// </summary>
+        /// <param name="registeredUser">register object to work with</param>
+        /// <returns></returns>
         [HttpPost("register")]
-        public async Task<ActionResult<PouzivatelDto>> Register(RegisterPouzivatelDto registeredUser)             // reason to failing we need to send a json object -> for now string username is null
+        public async Task<ActionResult<PouzivatelDto>> Register(RegisterPouzivatelDto registeredUser)             
         {
             // check if we have a username in db
             if (await UserExists(registeredUser.Email))
-                return BadRequest("Email is taken!!");      //this is type of actionResults 
+                return BadRequest("Email is taken!!");     
 
             // create a user for transition to DB
             var user = _mapper.Map<Pouzivatel>(registeredUser);
             // using is used for disposing a object when we finish the work with it 
-
 
             user.Email = registeredUser.Email.ToLower();
             user.UserName = user.Email.Split('@')[0];
@@ -61,7 +64,6 @@ namespace HealthInCube_BackEnd.Controllers
             adresaRegister.IdBydliska = await this.PridelIdToNewBydliskoAsync();
             var bydliskoToUser = _mapper.Map<Bydlisko>(adresaRegister);
             user.Bydliskos.Add(bydliskoToUser);
-
 
             //EF uses 
             var result = await _userManager.CreateAsync(user, registeredUser.Password);     // create user and save changes to DB 
@@ -74,14 +76,11 @@ namespace HealthInCube_BackEnd.Controllers
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
             // here we need to send ziadanka  to Lekar 
-
             var ziadanka = new Ziadanka
             {
                 IdUser = user.Id,
                 IdLekar = registeredUser.IdDoctor
             };
-
-
 
             _ziadankaRepository.InsertItem(ziadanka);
 
@@ -97,25 +96,16 @@ namespace HealthInCube_BackEnd.Controllers
                 });
             }
 
-
-
             return BadRequest("Failed to register !!");
-
         }
 
-        private async Task<decimal> PridelIdToNewBydliskoAsync()
-        {
-            var bydliska = await _pouzivatelRepository.GetBydliskaAsync();
-            return bydliska.Count() + 1;
-        }
-
-        private async Task<decimal> PridelIdToNewUserAsync()
-        {
-            return await _userManager.Users.CountAsync() + 1;
-        }
-
+      
+        /// <summary>
+        /// Login user to application.
+        /// </summary>
+        /// <param name="loginUser">email and password</param>
         [HttpPost("login")]
-        public async Task<ActionResult<PouzivatelDto>> Login([FromBody]PrihlaseniePouzivatelDto loginUser)
+        public async Task<ActionResult<PouzivatelDto>> Login(PrihlaseniePouzivatelDto loginUser)
         {
             // making request we need await
             var user = await _userManager.Users
@@ -141,8 +131,11 @@ namespace HealthInCube_BackEnd.Controllers
 
 
 
-        // sending email to user 
-
+        /// <summary>
+        /// Sending email to user after account creation.
+        /// </summary>
+        /// <param name="mailToSend"></param>
+        /// <returns></returns>
         [HttpPost("mail")]
         public IActionResult SendAccReqConfMail([FromBody] MailDto mailToSend)
         {
@@ -156,7 +149,6 @@ namespace HealthInCube_BackEnd.Controllers
             var emailFromAddress = _config["Smtp:Username"]; //Sender Email Address  
             var password = _config["Smtp:Password"]; //Sender Password  
             var emailToAddress = mailToSend.ReceiverEmail;
-
 
             var subject = "Your Account has been created";
             var body = "<div style='text-align: center; background-color:  rgba(255, 230, 208, 0.363); width: 50%; position: absolute; margin-left: 25%; border-style: solid; border-width: 1px;border-color: rgba(255, 68, 0, 0.37);" +
@@ -186,18 +178,23 @@ namespace HealthInCube_BackEnd.Controllers
                     smtp.Send(mail);
                 }
             }
-
             return Ok();
         }
 
-        // async becouse we are working with db
         private async Task<bool> UserExists(string email)
         {
             // check if any username in Users table matches this name 
             return await _userManager.Users.AnyAsync(x => x.Email == email.ToLower());
 
         }
-
-
+        private async Task<decimal> PridelIdToNewBydliskoAsync()
+        {
+            var bydliska = await _pouzivatelRepository.GetBydliskaAsync();
+            return bydliska.Count() + 1;
+        }
+        private async Task<decimal> PridelIdToNewUserAsync()
+        {
+            return await _userManager.Users.CountAsync() + 1;
+        }
     }
 }
