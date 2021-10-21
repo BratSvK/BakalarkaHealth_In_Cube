@@ -46,6 +46,7 @@ export class AuthEffects {
             catchError((error) => {
               // returning non error observable
               const errorToSend = this.handleError(error);
+              this.toastr.error(errorToSend);
               return of(new AuthActionsBundle.LoginFail(errorToSend)); // creating a new observable without error
             })
           );
@@ -137,21 +138,16 @@ export class AuthEffects {
 
   private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = 'An uknown error occured!';
-
-    if (!errorRes.error || !errorRes.error.error) {
+    if (!errorRes.error) {
       return errorMessage;
     }
 
-    switch (errorRes.error.error.message) {
-      case 'EMAIL_EXISTS':
-        errorMessage = 'This email exists!';
-        break;
-
+    switch (errorRes.error) {
       case 'EMAIL_NOT_FOUND':
         errorMessage = 'This account not exists!';
         break;
 
-      case 'INVALID_PASSWORD':
+      case 'INVALID_CREDENTIALS':
         errorMessage = 'This credentials are not right!';
         break;
 

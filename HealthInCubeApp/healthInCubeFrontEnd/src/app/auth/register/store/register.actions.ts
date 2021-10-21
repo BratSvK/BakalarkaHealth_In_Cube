@@ -49,7 +49,7 @@ export const RESET_FORM = '[Register] Reset form';
 export class SendingEmailToUser implements Action {
     readonly type = REGISTER_SEND_EMAIL_CONFIRM;
 
-    constructor(public payload: Mail) {}
+   
 }
 
 export class ResetForm implements Action {
@@ -73,6 +73,8 @@ export class RegisterUserStart implements Action {
 
 export class RegisterUserSuccess implements Action {
     readonly type =  REGISTER_SUCCESS;
+
+     constructor(public payload: Mail) {}
 }
 
 export class RegisterUserFailed implements Action {

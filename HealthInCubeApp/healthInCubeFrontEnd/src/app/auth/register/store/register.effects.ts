@@ -102,8 +102,11 @@ export class RegisterEffects {
             // return a observable automaticly
            
             map((resData) => {
-              
-              return new RegisterAcitonsBundle.RegisterUserSuccess();
+              const emailData: Mail = {
+                receiverEmail: resData.email,
+                receiverFullName: resData.fullName
+              };
+              return new RegisterAcitonsBundle.RegisterUserSuccess(emailData);
             }),
             catchError((error) => {
               // returning non error observable
@@ -116,24 +119,18 @@ export class RegisterEffects {
     )
   );
 
-sendingConfirmEmail = createEffect(() => 
-    this.actions$.pipe(
-      ofType(RegisterAcitonsBundle.REGISTER_SEND_EMAIL_CONFIRM),
-      switchMap((registerDataEmail: RegisterAcitonsBundle.SendingEmailToUser) => {
-        return this.http.post<Mail>(`${fetchUrl}ucet/mail`, registerDataEmail.payload)
-      })
-    ), {dispatch: false}
-);
-
 
   authRedirect = createEffect(
     () =>
       this.actions$.pipe(
         ofType(RegisterAcitonsBundle.REGISTER_SUCCESS),
+        switchMap((registerData: RegisterAcitonsBundle.RegisterUserSuccess) => {
+          return this.http.post<Mail>(`${fetchUrl}ucet/mail`, registerData.payload)
+        }),
         tap(() => {
             this.toastr.success("Account created");
             this.router.navigate(['/auth']);
-        }),
+        })
       ),
     { dispatch: false } // just create a effect to UI
   );

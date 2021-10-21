@@ -99,7 +99,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       receiverFullName: `${registerPouzivatel.meno.trim()} ${registerPouzivatel.priezvisko}`,
     }
     this.store.dispatch(new RegisterBundleActions.RegisterUserStart(registerPouzivatel));
-    this.store.dispatch(new RegisterBundleActions.SendingEmailToUser(email));
     
   }
 

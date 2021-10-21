@@ -31,9 +31,14 @@ namespace HealthInCube_BackEnd.Data
             _context.Users.Remove(pouzivatel);
         }
 
-        public async Task<IEnumerable<BydliskoDto>> GetBydliskaAsync()
+        public async Task<IEnumerable<BydliskoDto>> GetBydliskaAsync(decimal pouzivatelId)
         {
-           var query = _context.Bydlisko.AsQueryable();
+           if (!_context.Bydlisko.Any(b => b.IdPouzivatel == pouzivatelId))
+           {
+               return null;
+           }
+
+           var query = _context.Bydlisko.Where(b => b.IdPouzivatel == pouzivatelId).AsQueryable();
 
            return await query.ProjectTo<BydliskoDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
         }

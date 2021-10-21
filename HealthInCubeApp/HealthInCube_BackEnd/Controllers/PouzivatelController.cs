@@ -81,11 +81,11 @@ namespace HealthInCube_BackEnd.Controllers
         }
 
         [Authorize(Roles = "Pacient")]
-        [HttpGet("bydliska")]
-        public async Task<ActionResult<BydliskoDto>> GetBydliskaAsync()
+        [HttpGet("{pacientId}/bydliska")]
+        public async Task<ActionResult<BydliskoDto>> GetBydliskaAsync(decimal pacientId)
         {
 
-            var bydliska = await _pouzivatelRepository.GetBydliskaAsync();
+            var bydliska = await _pouzivatelRepository.GetBydliskaAsync(pacientId);
 
             if (bydliska.Any()) return NotFound("You have no addresses");
 

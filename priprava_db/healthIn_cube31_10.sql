@@ -2,7 +2,24 @@ select r."Name" from "Users" u
 join "UserRoles" ur on (ur."UserId" = u."Id")
 join "Roles" r on (r."Id" = ur."RoleId");
 
-select * from "Users";
+
+-- len pacienti 
+select * from "Users" u
+where exists(select 'x' 
+             from "UserRoles" ur
+             where ur."UserId" = u."Id" and 
+             ur."RoleId" = 3);
+             
+-- lekary             
+select * from "Users" u
+where exists(select 'x' 
+             from "UserRoles" ur
+             where ur."UserId" = u."Id" and 
+             ur."RoleId" = 2);
+             
+update "Users" u
+set u."RodPriezvisko" = 'Stanik'
+where u."Id" = 2;
 
 
 select * from "Users" u
@@ -14,26 +31,35 @@ commit;
 
 select * from lekar;
 
+select * from bydlisko;
+
+
+select * from "Users";
+
+
 select * from ziadanka;
 
 select * from fotka_pouzivatel;
 
+-- delete User-testovaci id=3
 delete from ziadanka;
-
 delete from bydlisko;
-
 
 delete from "UserRoles" ur
 where ur."UserId" = 3;
+
+delete from "Users" u
+where u."Id" = 3;
+commit;
+
+
 
 select * from bydlisko;
 
 select * from "UserRoles";
 
 
-delete from "Users" u
-where u."Id" = 3;
-commit;
+
 
 desc ziadanka;
 

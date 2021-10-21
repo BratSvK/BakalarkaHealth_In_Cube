@@ -61,7 +61,7 @@ namespace HealthInCube_BackEnd.Controllers
             user.UserName = user.Email.Split('@')[0];
             user.Id = await this.PridelIdToNewUserAsync();
             var adresaRegister = registeredUser.Adresa;
-            adresaRegister.IdBydliska = await this.PridelIdToNewBydliskoAsync();
+            adresaRegister.IdBydliska = this.PridelIdToNewBydliskoAsync(user.Id).Result;
             var bydliskoToUser = _mapper.Map<Bydlisko>(adresaRegister);
             user.Bydliskos.Add(bydliskoToUser);
 
@@ -112,12 +112,12 @@ namespace HealthInCube_BackEnd.Controllers
                 .SingleOrDefaultAsync(user => user.Email == loginUser.Email.ToLower());
 
             if (user == null)
-                return Unauthorized("Invalid email");
+                return NotFound("EMAIL_NOT_FOUND");
 
             // prihalsenie cez singIn manazera
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginUser.Password, false);        // dont lock out the user if has bas credentials 
 
-            if (!result.Succeeded) return Unauthorized();
+            if (!result.Succeeded) return Unauthorized("INVALID_CREDENTIALS");
 
             return Ok(new PouzivatelDto
             {
@@ -187,9 +187,13 @@ namespace HealthInCube_BackEnd.Controllers
             return await _userManager.Users.AnyAsync(x => x.Email == email.ToLower());
 
         }
-        private async Task<decimal> PridelIdToNewBydliskoAsync()
+        private async Task<decimal> PridelIdToNewBydliskoAsync(decimal pouzivatelId)
         {
-            var bydliska = await _pouzivatelRepository.GetBydliskaAsync();
+            var bydliska = await _pouzivatelRepository.GetBydliskaAsync(pouzivatelId);
+            if (bydliska == null)
+            {
+                return 1;
+            }
             return bydliska.Count() + 1;
         }
         private async Task<decimal> PridelIdToNewUserAsync()
