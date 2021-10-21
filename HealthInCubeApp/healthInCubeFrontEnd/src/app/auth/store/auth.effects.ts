@@ -182,11 +182,11 @@ export class AuthEffects {
     );
 
     const today = new Date();
-    const EndDateTokenMiliseconds = expirationDate.getTime() - today.getTime(); 
+    const endDateTokenMiliseconds = expirationDate.getTime() - today.getTime(); 
 
 
   // set timer here or in pipeline of obervable
-    this.authService.setLogoutTimer(EndDateTokenMiliseconds);
+    this.authService.setLogoutTimer(endDateTokenMiliseconds);
 
 
     localStorage.setItem('userData', JSON.stringify(user));
