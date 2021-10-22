@@ -25,7 +25,7 @@ export class AuthGuard implements CanActivate {
              return true;
            }
            else {
-            this.toastr.error('You need to log in');
+            // this.toastr.error('You need to log in');
             return this.router.parseUrl('/auth');
            }
          }),
