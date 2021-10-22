@@ -60,7 +60,7 @@ export class AuthEffects {
     () =>
       this.actions$.pipe(
         ofType(AuthActionsBundle.LOGIN),
-        tap((authSuccesfullData: AuthActionsBundle.AuthentificateSuccess) => {
+        tap(() => {
             this.toastr.success("Succesfully logged");
             this.router.navigate(['/user']);
         })
@@ -101,10 +101,11 @@ export class AuthEffects {
           userDataToSend.roleStoreBase
         );
 
+
         // using get -> validation
         if (loadedUser.token) {
            const expirationDuration = new Date(loadedUser.tokenExpi).getTime() - new Date().getTime();
-          this.authService.setLogoutTimer(expirationDuration);
+           this.authService.setLogoutTimer(expirationDuration);
 
           return new AuthActionsBundle.AuthentificateSuccess({
             email: loadedUser.email,
@@ -116,7 +117,6 @@ export class AuthEffects {
             fullName: loadedUser.fullName
           });
          
-          // this.autoLogout(expirationDuration);
         }
 
         return {type: '[Auth] TokenExpires'};
