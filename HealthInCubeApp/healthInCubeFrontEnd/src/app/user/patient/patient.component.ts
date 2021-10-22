@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { tap } from 'rxjs/operators';
 import { AppState } from 'src/app/_store/models/AppState';
+import * as PatientActionsBundle from '../patient/store/patient.actions';
+
 
 @Component({
   selector: 'app-patient',
@@ -10,12 +11,15 @@ import { AppState } from 'src/app/_store/models/AppState';
 })
 export class PatientComponent implements OnInit {
 
-  constructor() { 
+  @Input() userId;
+
+
+  constructor(private store: Store<AppState>) { 
     
   }
 
   ngOnInit(): void {
-   
+   this.store.dispatch(new PatientActionsBundle.IsActivated(this.userId));
   }
 
 }

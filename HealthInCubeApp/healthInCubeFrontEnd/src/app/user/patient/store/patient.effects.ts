@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { ToastrService } from "ngx-toastr";
 import { of } from "rxjs";
-import { catchError, switchMap } from "rxjs/operators";
+import { catchError, map, switchMap } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import * as PatientActionsBundle from './patient.actions';
 
@@ -15,9 +15,12 @@ export class PatientEffects {
 
     isActivated = createEffect(() => 
     this.actions$.pipe(
-        ofType(PatientActionsBundle.IS_ACTIVATED),
+        ofType(PatientActionsBundle.GET_IS_ACTIVATED),
         switchMap((userId: PatientActionsBundle.IsActivated) => {
-            return this.http.get<boolean>(fetchUrl + `pouzivatel/${userId.payload}`)
+            return this.http.get<boolean>(fetchUrl + `pouzivatel/${userId.payload}/activated`)
+        }),
+        map((isAcitvated) => {
+            return new PatientActionsBundle.SetIstActivated(isAcitvated);
         }),
         catchError((error) => {
             // returning non error observable

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { tap } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 import { AppState } from '../_store/models/AppState';
 
 @Component({
@@ -10,7 +10,14 @@ import { AppState } from '../_store/models/AppState';
 })
 export class UserComponent implements OnInit {
 
-  constructor() { }
+  userId: number;
+  constructor(private store: Store<AppState>) { 
+    this.store.select('auth').pipe(take(1),map(userData => {
+      return userData.user.userId;
+    })).subscribe(id => {
+      this.userId = +id;
+    })
+  }
 
   ngOnInit(): void {
     

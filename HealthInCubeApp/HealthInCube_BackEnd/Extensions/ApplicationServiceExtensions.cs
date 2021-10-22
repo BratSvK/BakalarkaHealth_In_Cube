@@ -23,6 +23,8 @@ namespace HealthInCube_BackEnd.Extensions
             services.AddScoped<ILekarRepository, LekarRepository>();
             services.AddScoped<IFotoRepository, FotoRepository>();
             services.AddScoped<IZiadankaRepository, ZiadankaRepository>();
+            services.AddScoped<IPacientRepository, PacientRepository>();
+
 
 
 

@@ -5,8 +5,14 @@ using System;
 
 namespace HealthInCube_BackEnd.Helpers
 {
+    /// <summary>
+    /// Auto mapper profiles.
+    /// </summary>
     public class AutoMapperProfiles : Profile
     {
+        /// <summary>
+        /// Ctor.
+        /// </summary>
         public AutoMapperProfiles()
         {
             CreateMap<Nemocnica,NemocnicaDto>();
@@ -33,13 +39,18 @@ namespace HealthInCube_BackEnd.Helpers
             // Create z on the end.
             CreateMap<DateTime, DateTime>().ConstructUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
 
+            CreateMap<Pacient, PacientDto>();
 
+            CreateMap<PacientDto, Pacient>();
 
+            CreateMap<ZdravotnaKartum, ZdratovnaKartaDto>();
+
+            CreateMap<ZdravPoistenie, ZdravotnePoistenieDto>();
 
 
 
 
         }
-        
+
     }
 }

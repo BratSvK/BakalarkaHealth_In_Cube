@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { map, take } from 'rxjs/operators';
 import { Pouzivatel } from '../models/pouzivatel';
 import { AppState } from '../_store/models/AppState';
 import * as AuthActionsBundle from '../auth/store/auth.actions';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -11,11 +12,15 @@ import * as AuthActionsBundle from '../auth/store/auth.actions';
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
-export class NavComponent implements OnInit {
+export class NavComponent implements OnInit, OnDestroy {
 
   user: Pouzivatel;
+  isActivatedPatientFlag: boolean;
+
+  sub: Subscription;
 
   constructor(private store: Store<AppState>) { }
+ 
 
   ngOnInit(): void {
     
@@ -24,6 +29,14 @@ export class NavComponent implements OnInit {
     })).subscribe(user => {
       this.user = user;
     });
+
+    this.sub = this.store.select('patient').pipe(map(patientData => {
+      return patientData.isActivated;
+    })).subscribe(isActivated => {
+      this.isActivatedPatientFlag = isActivated;
+    })
+
+
   }
 
 
@@ -38,7 +51,11 @@ export class NavComponent implements OnInit {
 
 
   isActivatedPatient() {
-    
+
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
 }

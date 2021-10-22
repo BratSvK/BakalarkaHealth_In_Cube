@@ -11,10 +11,10 @@ const initialState: PatientState = {
 
 export function patientReducer(state: PatientState = initialState, action: PatientActionsBundle.PatientActions) {
     switch (action.type) {
-        case PatientActionsBundle.IS_ACTIVATED:
+        case PatientActionsBundle.SET_IS_ACTIVATED:
             return {
                 ...state,
-                isActivated: true
+                isActivated: action.payload
             }
         default:
             return state;
