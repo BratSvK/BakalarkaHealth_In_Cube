@@ -31,4 +31,14 @@ export class NavComponent implements OnInit {
     this.store.dispatch(new AuthActionsBundle.Logout());
   }
 
+
+  isPatient() {
+   return this.user.roleStoreBase[0].trim().toLowerCase() === 'pacient'
+  }
+
+
+  isActivatedPatient() {
+    
+  }
+
 }

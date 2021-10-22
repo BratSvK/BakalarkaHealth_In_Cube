@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthEffects } from './auth/store/auth.effects';
 import {ToastrModule} from 'ngx-toastr';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { PatientEffects } from './user/patient/store/patient.effects';
 
 
 
@@ -33,7 +34,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
       positionClass: 'toast-bottom-right'
     }),
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([RegisterEffects, AuthEffects]),
+    EffectsModule.forRoot([RegisterEffects, AuthEffects, PatientEffects]),
     StoreDevtoolsModule.instrument({logOnly: environment.production})
 
   ],
