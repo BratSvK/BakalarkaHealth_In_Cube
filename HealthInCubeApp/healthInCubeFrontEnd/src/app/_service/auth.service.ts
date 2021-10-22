@@ -16,6 +16,7 @@ export class AuthService {
   // token: string = null;
   // new type of subject -> behaviourSubject(store a value inside) -> call/sub -> difference is -> get acces to the latest user without subscribe in the time 
   // user = new BehaviorSubject<User>(null);
+  
 
   private tokenExpirationTimer: any;
 

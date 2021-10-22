@@ -5,27 +5,30 @@ export class Pouzivatel {
         public userId: string,
         public fullName: string,
         public fotka: any,
-        private _token: string,
-        private _tokenExpirationDate: Date,
+        public token: string,
+        public tokenExpi: Date,
         public roleStoreBase: string [],
       ) {}
 
       // check validity 
 
   // getter user.token -> special type of property with code 
-  get token() {
+  // get token() {
 
-    // token expired
-    if (!this._tokenExpirationDate ||new Date() > this._tokenExpirationDate) {
-        return null;
-    }
+  //   console.log(this._tokenExpirationDate);
+  //   console.log("som tu");
 
-    return this._token;
-  }
+  //   // token expired
+  //   if (!this._tokenExpirationDate || new Date().getTime() > this._tokenExpirationDate.getTime()) {
+  //       return null;
+  //   }
 
-  get tokenExpi() {
-    return this._tokenExpirationDate;
-  }
+  //   return this._token;
+  // }
+
+  // get tokenExpi() {
+  //   return this._tokenExpirationDate;
+  // }
 
     
 }
