@@ -8,7 +8,6 @@ import { RegisterComponent } from '../auth/register/register.component';
 export class PreventUnsavedChangesGuard implements CanDeactivate<unknown> {
   canDeactivate(component: RegisterComponent): boolean {
     if (component.registerForm.dirty) {
-      console.log(component.registerForm);
       // only without modal for now 
       return confirm('Are you sure you want to continue? Any unsaved changes will be lost');      //Yes/NO
     }

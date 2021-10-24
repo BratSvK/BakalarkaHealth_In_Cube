@@ -7,6 +7,7 @@ const authRoutes: Routes = [
     { path: '', component: UserComponent},
     {
         path:'practitioner',
+        
         loadChildren: () => import('./lekar/lekar.module').then((m)=>m.LekarModule)
     }
 
