@@ -23,13 +23,13 @@
 
           <ng-container *ngIf="!isPatient()">
             <li class="nav-item mr-2">
-              <a class="nav-link" routerLink='/ziadanky' routerLinkActive='active'><fa-icon  [icon]="userCheck"></fa-icon>Žiadanky</a>
+              <a class="nav-link" [routerLink]="['practitioner','requests']"  routerLinkActive='active'><fa-icon  [icon]="userCheck"></fa-icon>Žiadanky</a>
             </li>
             <li class="nav-item mr-2">
-              <a class="nav-link" routerLink='/pacienti' routerLinkActive='active'><fa-icon  [icon]="users"></fa-icon>Pacienti</a>
+              <a class="nav-link" [routerLink]="['practitioner','pacienti-list']" routerLinkActive='active'><fa-icon  [icon]="users"></fa-icon>Pacienti</a>
             </li>
             <li class="nav-item mr-2">
-              <a class="nav-link " routerLink='/messages' routerLinkActive='active'><fa-icon  [icon]="stethoscope"></fa-icon>Vyšetrenia</a>
+              <a class="nav-link " [routerLink]="['practitioner','vysetrenia']"  routerLinkActive='active'><fa-icon  [icon]="stethoscope"></fa-icon>Vyšetrenia</a>
             </li>
           </ng-container>
   
@@ -54,5 +54,6 @@
     </div>
   
   </nav>
+
 
 

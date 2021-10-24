@@ -14,7 +14,6 @@ import { RegisterEffects } from './auth/register/store/register.effects';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthEffects } from './auth/store/auth.effects';
 import {ToastrModule} from 'ngx-toastr';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { PatientEffects } from './user/patient/store/patient.effects';
 
 
@@ -23,6 +22,7 @@ import { PatientEffects } from './user/patient/store/patient.effects';
 @NgModule({
   declarations: [
     AppComponent
+
   ],
   imports: [
     BrowserModule,
