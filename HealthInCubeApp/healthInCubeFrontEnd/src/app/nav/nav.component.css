@@ -8,3 +8,42 @@ img {
     border: 2px solid white;
     display: inline;
 }
+
+.logo {
+    max-height: 90px;
+    border: none;
+    display: inline;
+    padding: 0;
+    margin: 0;
+}
+
+
+.space {
+    width: 10%;
+}
+
+
+fa-icon {
+    font-size: 2rem;
+    margin-right: 1rem;
+}
+
+
+a {
+    color: black;
+}
+/* a {
+    color: black;
+    border: 1px dotted black;
+    border-radius: 0.6rem;
+    background-color: grey;
+} */
+
+a:hover {
+    color:red;
+    border: 1px solid black;
+    border-radius: 0.6rem;
+}
+.dropdown-menu {
+    background-color: lightblue;
+}

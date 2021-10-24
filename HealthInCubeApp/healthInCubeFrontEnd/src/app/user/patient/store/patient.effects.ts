@@ -17,7 +17,7 @@ export class PatientEffects {
     this.actions$.pipe(
         ofType(PatientActionsBundle.GET_IS_ACTIVATED),
         switchMap((userId: PatientActionsBundle.IsActivated) => {
-            return this.http.get<boolean>(fetchUrl + `pouzivatel/${userId.payload}/activated`)
+            return this.http.get<boolean>(fetchUrl + `pacient/${userId.payload}/activated`)
         }),
         map((isAcitvated) => {
             return new PatientActionsBundle.SetIstActivated(isAcitvated);

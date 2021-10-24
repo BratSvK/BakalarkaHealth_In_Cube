@@ -89,9 +89,9 @@ namespace HealthInCube_BackEnd.Controllers
                 return Ok(new PouzivatelDto
                 {
                     Email = user.Email,
-                    Token = await _tokenService.CreateToken(user),
+                    Token = _tokenService.CreateToken(user).Result,
                     FullName = user.GetFullName(),
-                    FotkaBlob = _fotoRepository.GetFotkaByUserId(user.Id).Result?.Fotka,
+                    Fotka = _fotoRepository.GetFotkaByUserId(user.Id).Result?.Fotka,
                     UserId = user.Id
                 });
             }
@@ -124,7 +124,7 @@ namespace HealthInCube_BackEnd.Controllers
                 Email = user.Email,
                 Token = await _tokenService.CreateToken(user),
                 FullName = user.GetFullName(),
-                FotkaBlob = _fotoRepository.GetFotkaByUserId(user.Id).Result?.Fotka,
+                Fotka = _fotoRepository.GetFotkaByUserId(user.Id).Result?.Fotka,
                 UserId = user.Id
             });
         }

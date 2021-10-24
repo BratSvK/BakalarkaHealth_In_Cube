@@ -5,6 +5,8 @@ import { Pouzivatel } from '../models/pouzivatel';
 import { AppState } from '../_store/models/AppState';
 import * as AuthActionsBundle from '../auth/store/auth.actions';
 import { Subscription } from 'rxjs';
+import { faUserCheck, faStethoscope, faUsers } from '@fortawesome/free-solid-svg-icons';
+
 
 
 @Component({
@@ -14,8 +16,15 @@ import { Subscription } from 'rxjs';
 })
 export class NavComponent implements OnInit, OnDestroy {
 
+  isCollapsed = false;
   user: Pouzivatel;
   isActivatedPatientFlag: boolean;
+  image: any;
+
+  users = faUsers;
+  userCheck = faUserCheck;
+  stethoscope = faStethoscope;
+
 
   sub: Subscription;
 
@@ -28,6 +37,7 @@ export class NavComponent implements OnInit, OnDestroy {
       return resData.user;
     })).subscribe(user => {
       this.user = user;
+      
     });
 
     this.sub = this.store.select('patient').pipe(map(patientData => {

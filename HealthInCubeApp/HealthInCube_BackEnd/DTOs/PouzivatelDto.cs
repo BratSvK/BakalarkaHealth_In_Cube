@@ -9,7 +9,7 @@ namespace HealthInCube_BackEnd.DTOs
         public decimal UserId { get; set; }
         public string Email { get; set; }
         public string Token { get; set; }
-        public byte[] FotkaBlob { get; set; }
+        public byte[] Fotka { get; set; }
 
         public string FullName { get; set; }
 

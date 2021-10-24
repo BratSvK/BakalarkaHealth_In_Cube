@@ -25,6 +25,7 @@ export function authReducer(state: AuthState = initialState, action: AuthActions
              action.payload.expirationDateToken,
              action.payload.roleStoreBase
           );
+
         return {
             ...state,
             authError: null,

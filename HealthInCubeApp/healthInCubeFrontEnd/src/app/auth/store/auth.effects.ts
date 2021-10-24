@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { Actions, createEffect, Effect, ofType } from "@ngrx/effects";
 import { ToastrService } from "ngx-toastr";
@@ -8,6 +9,7 @@ import { catchError, map, switchMap, tap } from "rxjs/operators";
 import { Pouzivatel } from "src/app/models/pouzivatel";
 import { PrihlaseniePouzivatel } from "src/app/models/prihlaseniePouzivatel";
 import { UserToLogin } from "src/app/models/userToLogin";
+import { extractFotoFromApi } from "src/app/shared/foto-extract";
 import { AuthService } from "src/app/_service/auth.service";
 import { environment } from "src/environments/environment";
 import * as AuthActionsBundle from './auth.actions';
@@ -107,12 +109,20 @@ export class AuthEffects {
            const expirationDuration = new Date(loadedUser.tokenExpi).getTime() - new Date().getTime();
            this.authService.setLogoutTimer(expirationDuration);
 
+
+           let image: any;
+           if (loadedUser.fotka) {
+             image = extractFotoFromApi(loadedUser.fotka, this.sanitizer);
+           } else {
+             image = loadedUser.fotka
+           }
+
           return new AuthActionsBundle.AuthentificateSuccess({
             email: loadedUser.email,
             userId: loadedUser.userId,
             token: loadedUser.token,
             expirationDateToken: loadedUser.tokenExpi,
-            fotka: loadedUser.fotka,
+            fotka: image,
             roleStoreBase: loadedUser.roleStoreBase,
             fullName: loadedUser.fullName
           });
@@ -133,7 +143,8 @@ export class AuthEffects {
     private http: HttpClient,
     private router: Router,
     private authService: AuthService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private sanitizer: DomSanitizer
   ) {}
 
   private handleError(errorRes: HttpErrorResponse) {
@@ -187,12 +198,21 @@ export class AuthEffects {
 
     localStorage.setItem('userData', JSON.stringify(user));
 
+    let image: any;
+    if (resData.fotka) {
+      image = extractFotoFromApi(resData.fotka, this.sanitizer);
+    } else {
+      image = resData.fotka
+    }
+
+
+
     return new AuthActionsBundle.AuthentificateSuccess({
       email: resData.email,
       userId: resData.userId,
       token: resData.token,
       expirationDateToken: expirationDate,
-      fotka: resData.fotka,
+      fotka: image,
       fullName: resData.fullName,
       roleStoreBase: resData.roleStoreBase,
     });
