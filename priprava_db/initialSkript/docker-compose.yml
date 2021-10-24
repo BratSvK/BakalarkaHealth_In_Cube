@@ -1,0 +1,13 @@
+version: '3'
+services:
+  oracle_db:
+    container_name: oracle_local
+    # using newly created image
+    image: custom_oracle_healthincube:latest
+    ports:
+      - "1521:1521"
+      - "5500:5500"
+    # mounting volume from our PC (./startup/scripts) to directory inside the container (/home/oracle/setup/custom_scripts),
+    # wich we crated in Dockerfile
+    volumes:
+      - ./startup/scripts:/home/oracle/setup/custom_scripts
