@@ -21,6 +21,9 @@ const fetchUrl = environment.apiUrl; // ....../api/
 @Injectable()
 export class LekarEffects {
 
+
+    // TO DO : dorobit craete account 
+
     fetchRequests = createEffect(() => 
      this.actions$.pipe(
         ofType(LekarActionsBundle.FETCH_REQUESTS),

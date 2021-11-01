@@ -229,6 +229,89 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GetLekarByUserId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{tokenLekar}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{GateWayApi}}/{{EndPoint}}/user/2",
+							"host": [
+								"{{GateWayApi}}"
+							],
+							"path": [
+								"{{EndPoint}}",
+								"user",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreatePatient",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{tokenLekar}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idUser\": 3,\r\n    \"idMiestoNarodenia\": 2083      \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{GateWayApi}}/{{EndPoint}}/1/createPatientAccount",
+							"host": [
+								"{{GateWayApi}}"
+							],
+							"path": [
+								"{{EndPoint}}",
+								"1",
+								"createPatientAccount"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeletePatient",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{tokenLekar}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{GateWayApi}}/{{EndPoint}}/1",
+							"host": [
+								"{{GateWayApi}}"
+							],
+							"path": [
+								"{{EndPoint}}",
+								"1"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -305,6 +388,51 @@
 								"pacient",
 								"3",
 								"activated"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Nemocnica",
+			"item": [
+				{
+					"name": "GetVseobecnyLekary",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idCity\": 2086,\r\n    \"age\": 30\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{GateWayApi}}/nemocnica/vseobecnyLekary?idCity=2083&age=30",
+							"host": [
+								"{{GateWayApi}}"
+							],
+							"path": [
+								"nemocnica",
+								"vseobecnyLekary"
+							],
+							"query": [
+								{
+									"key": "idCity",
+									"value": "2083"
+								},
+								{
+									"key": "age",
+									"value": "30"
+								}
 							]
 						}
 					},

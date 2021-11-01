@@ -8,7 +8,7 @@
       <tr *ngFor="let req of requests">
         <td>{{req.pouzivatel.fullName}}</td>
         <td style="text-align: center;">{{req.createdAt | date: 'medium'}}</td>
-        <td style="text-align: center;" ><button class="btn btn-success" (click)="onApprovePatient(req.idUser)">Approve</button></td>
+        <td style="text-align: center;" ><button class="btn btn-success" (click)="onApprovePatient(req.idUser)"><fa-icon  [icon]="checkIcon"></fa-icon></button></td>
       </tr>
     </tbody>
   </table>

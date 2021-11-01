@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using HealthInCube_BackEnd.DTOs;
 using Microsoft.AspNetCore.Identity;
 
 #nullable disable
@@ -29,6 +30,11 @@ namespace HealthInCube_BackEnd.Entities
         public string Mobil { get; set; }
         public DateTime? PoslednePrihlasenie { get; set; }  = DateTime.Now;
         public string Pohlavie { get; set; }
+
+
+        public decimal IdMestoNarodenia { get; set; }
+
+        public virtual Mesto IdMestoNarodeniaNavigation { get; set;}
 
         public virtual FotkaPouzivatel FotkaPouzivatel { get; set; }
         public virtual ICollection<Bydlisko> Bydliskos { get; set; }

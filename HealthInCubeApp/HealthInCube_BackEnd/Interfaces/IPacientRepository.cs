@@ -10,5 +10,7 @@ namespace HealthInCube_BackEnd.Interfaces
     public interface IPacientRepository : IRepository<Pacient, PacientDto>
     {
         Task<bool> IsActivated(decimal userId);
+
+        Task<Pacient> GetPacient(decimal patientId);
     }
 }

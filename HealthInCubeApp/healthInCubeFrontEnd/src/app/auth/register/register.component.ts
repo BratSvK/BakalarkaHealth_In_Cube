@@ -15,6 +15,9 @@ import { RegisterPouzivatel } from 'src/app/models/pouzivatelRegistracia';
 import { Adresa } from 'src/app/models/adresa';
 import { Mail } from 'src/app/models/mail';
 
+import { faBaby } from '@fortawesome/free-solid-svg-icons';
+
+
 
 
 @Component({
@@ -24,9 +27,14 @@ import { Mail } from 'src/app/models/mail';
 })
 export class RegisterComponent implements OnInit, OnDestroy {
 
+  babyIcon = faBaby;
+
   genders: string[] = ["M", "F"];
   okresy: Okres[] = [];
   mesta: Mesto[] = [];
+
+  okresyBirth: Okres[] = [];
+  mestaBirth: Mesto[] = [];
   practitioners: Lekar[] = [];
   chooseLekar: Lekar;
 
@@ -48,6 +56,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
       this.okresy = registerFormData.okresy;
       this.mesta = registerFormData.mesta;
       this.practitioners = registerFormData.practitioners;
+      this.okresyBirth = registerFormData.okresyBirth;
+      this.mestaBirth = registerFormData.mestaBirth;
       if (this.practitioners.length > 0) {
         this.registerForm.controls['practitioner'].enable();
       };
@@ -99,7 +109,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       receiverFullName: `${registerPouzivatel.meno.trim()} ${registerPouzivatel.priezvisko}`,
     }
     this.store.dispatch(new RegisterBundleActions.RegisterUserStart(registerPouzivatel));
-    
   }
 
   onReturn() {
@@ -134,6 +143,20 @@ export class RegisterComponent implements OnInit, OnDestroy {
   onChangePractitioner() {
     let lekar = this.registerForm.get('practitioner').value as Lekar;
     this.chooseLekar = lekar;
+  }
+
+
+  onCountryBirthChange() {
+    let country: string = this.registerForm.get('birthPlace.countryBirth').value;
+    if (country && country.toLocaleLowerCase() === "slovakia") {
+    this.store.dispatch(new RegisterBundleActions.FetchOkresyBirth);
+  }
+  }
+
+
+  onChangeBirthOkres() {
+    var idOkres: number = this.registerForm.get('birthPlace.districtBirth').value;
+    this.store.dispatch(new RegisterBundleActions.FetchMestaBirth(idOkres));
   }
 
 
@@ -184,6 +207,11 @@ export class RegisterComponent implements OnInit, OnDestroy {
         street: new FormControl('', Validators.required),
         isPernamentAddress: new FormControl(null),
       }),
+      birthPlace: new FormGroup({
+        countryBirth: new FormControl(null, [Validators.required]),
+        districtBirth: new FormControl(null, Validators.required),
+        cityBirth: new FormControl(null, Validators.required)
+      }),
       practitioner: new FormControl({value: null, disabled: true}, Validators.required),
       
     });
@@ -208,6 +236,10 @@ export class RegisterComponent implements OnInit, OnDestroy {
       trvale: this.registerForm.get('userAddress.isPernamentAddress').value,
       ulica: this.registerForm.get('userAddress.street').value
     };
+    var mesto: Mesto = {
+      idMesto: +this.registerForm.get('birthPlace.cityBirth').value,
+      nazov: this.mestaBirth.find(o => o.idMesto == +this.registerForm.get('birthPlace.cityBirth').value).nazov
+    };
 
     return {
       meno: this.registerForm.get('userData.firstName').value,
@@ -220,7 +252,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
       pohlavie: this.registerForm.get('userData.gender').value,
       password: this.registerForm.get('userData.password').value,
       idDoctor: this.registerForm.get('practitioner').value.idLekar,
-      adresa: adresa
+      adresa: adresa,
+      mesto: mesto
       }
     };
   
