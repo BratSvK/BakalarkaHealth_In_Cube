@@ -1,7 +1,9 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-primary">
     <div class="container-fluid">
   
-      <button class=" btn btn-primary navbar-brand" routerLink='/user' routerLinkActive='active'><img class="logo" src="../../assets/logo.png" alt="logo"></button>
+      <div>
+        <i class="brand-zone-text" [inlineSVG]="'assets/brand.svg'"></i>
+      </div>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse"  (click)="isCollapsed = !isCollapsed"
       [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic"
         aria-controls="collapseBasic" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,11 +42,11 @@
   
           <div class="dropdown" *ngIf="user" dropdown>
             <img [src]="user.fotka || './assets/user.png'" alt="{{user.fullName}}" class="text-light mr-2" />
-            <a class="dropdown-toggle text-light ml-2" dropdownToggle>{{user.fullName  | titlecase}}</a>
+            <a class="dropdown-toggle text-body ml-2" dropdownToggle>{{user.fullName  | titlecase}}</a>
             <div class="dropdown-menu mt-3" *dropdownMenu>
-              <a class="dropdown-item" routerLink='/member/edit'>Edit Profile</a>
+              <a class="dropdown-item" routerLink='/member/edit'>Moje konto</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item" (click)="logout()">Logout</a>
+              <a class="dropdown-item" (click)="logout()">Odhlásiť</a>
             </div>
           </div>
           

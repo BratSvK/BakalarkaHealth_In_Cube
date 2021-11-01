@@ -16,13 +16,9 @@ import { AuthEffects } from './auth/store/auth.effects';
 import {ToastrModule} from 'ngx-toastr';
 import { PatientEffects } from './user/patient/store/patient.effects';
 
-
-
-
 @NgModule({
   declarations: [
     AppComponent
-
   ],
   imports: [
     BrowserModule,
@@ -35,8 +31,7 @@ import { PatientEffects } from './user/patient/store/patient.effects';
     }),
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([RegisterEffects, AuthEffects, PatientEffects]),
-    StoreDevtoolsModule.instrument({logOnly: environment.production})
-
+    StoreDevtoolsModule.instrument({logOnly: environment.production}),
   ],
   providers: [],
   bootstrap: [AppComponent]
