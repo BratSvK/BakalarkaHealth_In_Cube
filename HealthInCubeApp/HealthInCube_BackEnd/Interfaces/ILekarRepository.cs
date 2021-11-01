@@ -10,6 +10,9 @@ namespace HealthInCube_BackEnd.Interfaces
 
         Task<Lekar> GetLekarEntity(decimal lekarId);
 
+        Task<LekarDto> GetLekarEntityByUserId(decimal userId);
+
+
         Task<IEnumerable<ZiadankaDto>> GetAllRequetsByDoctorId(decimal lekarId);
 
 

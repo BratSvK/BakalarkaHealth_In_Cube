@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/_store/models/AppState';
+
+import * as LekarActionsBundle from './store/lekar.actions';
 
 @Component({
   selector: 'app-lekar',
@@ -7,7 +11,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LekarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private store: Store<AppState>) { 
+    this.store.dispatch(new LekarActionsBundle.FetchPractitioner());
+  }
 
   ngOnInit(): void {
   }

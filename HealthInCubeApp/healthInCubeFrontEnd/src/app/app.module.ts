@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AuthEffects } from './auth/store/auth.effects';
 import {ToastrModule} from 'ngx-toastr';
 import { PatientEffects } from './user/patient/store/patient.effects';
+import { LekarEffects } from './user/lekar/store/lekar.effects';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { PatientEffects } from './user/patient/store/patient.effects';
       positionClass: 'toast-bottom-right'
     }),
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([RegisterEffects, AuthEffects, PatientEffects]),
+    EffectsModule.forRoot([RegisterEffects, AuthEffects, PatientEffects, LekarEffects]),
     StoreDevtoolsModule.instrument({logOnly: environment.production}),
   ],
   providers: [],

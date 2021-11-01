@@ -68,6 +68,34 @@ namespace HealthInCube_BackEnd.Data
             return await _context.Lekar.FindAsync(lekarId);
         }
 
+        public async Task<LekarDto> GetLekarEntityByUserId(decimal userId)
+        {
+            var lekar = _context.Lekar
+                .Include(l => l.IdPouzivatelNavigation)
+                .ThenInclude(us => us.FotkaPouzivatel)
+                .Include(l => l.AtestacieLekars)
+                .Include(l => l.Oddelenies)
+                .ThenInclude(od => od.IdNemNavigation)
+                .Where(l => l.IdPouzivatel == userId)
+                .Select(l => new LekarDto
+                {
+                    IdLekar = l.IdLekar,
+                    Meno = l.IdPouzivatelNavigation.Meno,
+                    Priezvisko = l.IdPouzivatelNavigation.Priezvisko,
+                    Mobil = l.IdPouzivatelNavigation.Mobil,
+                    Email = l.IdPouzivatelNavigation.Email,
+                    Nemocnica = l.IdOddelNavigation.IdNemNavigation.Nazov,
+                    OddelenieNazov = l.IdOddelNavigation.NazovOdd,
+                    AtestacieId = l.AtestacieLekars.Select(a => a.IdTyp).ToList(),
+                    Fotka = l.IdPouzivatelNavigation.FotkaPouzivatel.Fotka
+                })
+                .AsNoTracking().AsQueryable();
+
+
+            return await lekar.SingleOrDefaultAsync();
+
+        }
+
         public async Task<IEnumerable<ZiadankaDto>> GetAllRequetsByDoctorId(decimal lekarId)
         {
             var requests =  await _context.Ziadanka
@@ -75,6 +103,7 @@ namespace HealthInCube_BackEnd.Data
                 .Where(z => z.IdLekar == lekarId && z.AcceptedAt == null)
                 .OrderBy(z => z.CreatedAt)
                 .ToListAsync();
+
 
 
             return _mapper.Map<List<Ziadanka>, IEnumerable<ZiadankaDto>>(requests);

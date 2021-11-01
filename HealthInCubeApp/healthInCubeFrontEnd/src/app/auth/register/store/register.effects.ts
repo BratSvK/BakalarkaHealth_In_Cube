@@ -6,22 +6,16 @@ import { environment } from "src/environments/environment";
 import { HttpClient, HttpErrorResponse, HttpParams } from "@angular/common/http";
 import * as RegisterAcitonsBundle from './register.actions';
 
-import { catchError, map, switchMap, switchMapTo, tap } from "rxjs/operators";
+import { catchError, map, switchMap, tap } from "rxjs/operators";
 import { Okres } from "src/app/models/okres";
 import { Mesto } from "src/app/models/mesto";
 import { Lekar } from "src/app/models/lekar";
-import { Observable, of } from "rxjs";
-import { Pouzivatel } from "src/app/models/pouzivatel";
+import { of } from "rxjs";
 import { RegisterPouzivatel } from "src/app/models/pouzivatelRegistracia";
 import { UserToLogin } from "src/app/models/userToLogin";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { Mail } from "src/app/models/mail";
-
-
-
-
-
 
 
 const fetchUrl = environment.apiUrl; // ....../api/

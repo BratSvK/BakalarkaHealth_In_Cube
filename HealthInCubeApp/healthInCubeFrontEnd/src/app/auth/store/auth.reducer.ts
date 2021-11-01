@@ -18,7 +18,7 @@ export function authReducer(state: AuthState = initialState, action: AuthActions
       case AuthActionsBundle.LOGIN:
           const userToSend = new Pouzivatel(
             action.payload.email,
-            action.payload.userId,
+            action.payload.id,
              action.payload.fullName,
              action.payload.fotka,
              action.payload.token,

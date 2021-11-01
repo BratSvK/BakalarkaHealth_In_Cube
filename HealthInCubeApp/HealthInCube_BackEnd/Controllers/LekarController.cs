@@ -42,7 +42,7 @@ namespace HealthInCube_BackEnd.Controllers
         }
 
         /// <summary>
-        /// 
+        /// Get all request by doctor.
         /// </summary>
         /// <param name="idLekar"></param>
         /// <returns></returns>
@@ -56,6 +56,23 @@ namespace HealthInCube_BackEnd.Controllers
             if (requests.IsNullOrEmpty()) return NotFound("Nothing to look!");
 
             return Ok(requests);
+        }
+
+
+
+        /// <summary>
+        /// Get Lekar by userId.
+        /// </summary>
+        /// <param name="idLekar"></param>
+        /// <returns></returns>
+        [HttpGet("user/{idUser}")]
+        public async Task<ActionResult<LekarDto>> GetDoctorByUserId(decimal idUser)
+        {
+            var doctor = await _lekarRepo.GetLekarEntityByUserId(idUser);
+
+            if (doctor == null) return NotFound("Practitioner not exists");
+
+            return Ok(doctor);
         }
     }
 }
