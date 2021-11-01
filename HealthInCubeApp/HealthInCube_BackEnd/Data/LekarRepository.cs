@@ -109,6 +109,8 @@ namespace HealthInCube_BackEnd.Data
             return _mapper.Map<List<Ziadanka>, IEnumerable<ZiadankaDto>>(requests);
         }
 
+        
+
         public void InsertItem(Lekar item)
         {
             throw new System.NotImplementedException();

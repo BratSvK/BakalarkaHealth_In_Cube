@@ -132,7 +132,7 @@
                             <select class="custom-select d-block w-100" id="district" formControlName="district"
                                 (ngModelChange)="onChangeOkres()">
                                 <option [disabled]="true" [selected]="true" value="">Choose...</option>
-                                <option [ngValue]="district.idOkres" *ngFor="let district of okresy">{{district.nazov}} - {{district.idOkres}}
+                                <option [ngValue]="district.idOkres" *ngFor="let district of okresy">{{district.nazov}}
                                 </option>
                             </select>
                             <!-- <div class="invalid-feedback">
@@ -144,7 +144,7 @@
                             <label for="city">City*</label>
                             <select class="custom-select d-block w-100" id="city" formControlName="city" (ngModelChange)="onChangeCity()">
                                 <option [disabled]="true" [selected]="true" value="">Choose...</option>
-                                <option [ngValue]="mesto.idMesto" *ngFor="let mesto of mesta">{{mesto.nazov}} - {{mesto.idMesto}}</option>
+                                <option [ngValue]="mesto.idMesto" *ngFor="let mesto of mesta">{{mesto.nazov}}</option>
                             </select>
                             <!-- <div class="invalid-feedback">
                             Please provide a valid state.
@@ -167,6 +167,51 @@
                     </div>
                 </div>
 
+                <hr class="mb-4">
+
+                <div formGroupName="birthPlace">
+
+                    <hr class="mb-4">
+
+                    <h4 class="mb-3 text-uppercase"><fa-icon class="mr-2"  [icon]="babyIcon"></fa-icon>Place of birth</h4>
+
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <label for="countryBirth">Country*</label>
+                            <select class="custom-select d-block w-100" id="countryBirth" formControlName="countryBirth" (ngModelChange)="onCountryBirthChange()">
+                                <option [selected]="true" [ngValue]="">Choose...</option>
+                                <option >Slovakia</option>
+                            </select>
+                            <!-- <div class="invalid-feedback">
+                            Please select a valid country.
+                        </div> -->
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="districtBirth">District*</label>
+                            <select class="custom-select d-block w-100" id="districtBirth" formControlName="districtBirth"
+                                (ngModelChange)="onChangeBirthOkres()">
+                                <option [disabled]="true" [selected]="true" value="">Choose...</option>
+                                <option [ngValue]="district.idOkres" *ngFor="let district of okresyBirth">{{district.nazov}}
+                                </option>
+                            </select>
+                            <!-- <div class="invalid-feedback">
+                            Please provide a valid state.
+                        </div> -->
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="cityBirth">City*</label>
+                            <select class="custom-select d-block w-100" id="cityBirth" formControlName="cityBirth">
+                                <option [disabled]="true" [selected]="true" value="">Choose...</option>
+                                <option [ngValue]="mesto.idMesto" *ngFor="let mesto of mestaBirth">{{mesto.nazov}}</option>
+                            </select>
+                            <!-- <div class="invalid-feedback">
+                            Please provide a valid state.
+                        </div> -->
+                        </div>
+                    </div>
+                </div>
+                
                 <hr class="mb-4">
 
                 <div class="row">

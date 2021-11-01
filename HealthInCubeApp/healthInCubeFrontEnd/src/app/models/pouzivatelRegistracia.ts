@@ -1,4 +1,5 @@
 import { Adresa } from "./adresa";
+import { Mesto } from "./mesto";
 
 export interface RegisterPouzivatel {
     meno: string;
@@ -12,5 +13,6 @@ export interface RegisterPouzivatel {
     password: string;
     idDoctor: number;
     adresa : Adresa;
+    mesto: Mesto;
    
 }

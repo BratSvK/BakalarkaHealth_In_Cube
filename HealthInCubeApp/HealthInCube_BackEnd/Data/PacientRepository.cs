@@ -70,5 +70,10 @@ namespace HealthInCube_BackEnd.Data
         {
             return await _context.Pacient.AnyAsync(p => p.IdPouzivatel == userId);
         }
+
+        public async Task<Pacient> GetPacient(decimal patientId)
+        {
+            return await _context.Pacient.Include(p => p.ZdravotnaKartum).SingleOrDefaultAsync(p => p.IdPacient == patientId);
+        }
     }
 }

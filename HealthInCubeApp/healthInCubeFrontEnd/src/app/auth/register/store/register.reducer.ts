@@ -4,6 +4,8 @@ import * as RegisterAcitonsBundle from './register.actions';
 const initialRegisterState: RegisterState = {
   okresy: [],
   mesta: [],
+  okresyBirth: [],
+  mestaBirth: [],
   practitioners: []
   
 };
@@ -27,6 +29,18 @@ export function registerReducer(
         ...state,
         mesta: [...action.payload],
       };
+
+      case RegisterAcitonsBundle.SET_OKRESY_BIRTH:
+        return {
+          ...state,
+          okresyBirth: [...action.payload],
+        };
+  
+      case RegisterAcitonsBundle.SET_MESTA_BIRTH:
+        return {
+          ...state,
+          mestaBirth: [...action.payload],
+        };
 
       case RegisterAcitonsBundle.SET_PRACTITIONERS:
         return {

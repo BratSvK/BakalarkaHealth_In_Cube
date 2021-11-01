@@ -50,6 +50,34 @@ export class RegisterEffects {
   );
 
 
+
+  fetchOkresyBirth = createEffect(() =>
+  this.actions$.pipe(
+    ofType(RegisterAcitonsBundle.FETCH_OKRESY_BIRTH),
+    switchMap(() => {
+      return this.http.get<Okres[]>(fetchUrl + 'clenenieSlovenska/okresy');
+    }),
+    map((okresy) => {
+      return new RegisterAcitonsBundle.SetOkresyBBirth(okresy);
+    })
+  )
+);
+
+fetchMestaBirth = createEffect(() =>
+  this.actions$.pipe(
+    ofType(RegisterAcitonsBundle.FETCH_MESTA_BIRTH),
+    switchMap((action: RegisterAcitonsBundle.FetchMestaBirth) => {
+      return this.http.get<Mesto[]>(
+        fetchUrl + `clenenieSlovenska/okres/${action.payload}/mesta`
+      );
+    }),
+    map((mesta) => {
+      return new RegisterAcitonsBundle.SetMestaBirth(mesta);
+    })
+  )
+);
+
+
   
 
   fetchPractitioner = createEffect(() =>
@@ -151,7 +179,8 @@ export class RegisterEffects {
       pohlavie: signUpForm.pohlavie,
       email: signUpForm.email,
       password: signUpForm.password,
-      adresa: signUpForm.adresa
+      adresa: signUpForm.adresa,
+      mesto: signUpForm.mesto
     };
   }
 

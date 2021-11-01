@@ -27,6 +27,14 @@ export const FETCH_MESTA = '[Register] Fetch mesta';
 export const SET_MESTA = '[Register] Set mesta';
 
 
+
+export const FETCH_OKRESY_BIRTH = '[Register] Fetch BIRTH okresy'; // async
+export const SET_OKRESY_BIRTH = '[Register] Set BIRTH okresy';        // sync
+
+export const FETCH_MESTA_BIRTH = '[Register] Fetch BIRTH mesta';
+export const SET_MESTA_BIRTH = '[Register] Set BIRTH mesta';
+
+
 export const FETCH_PRACTITIONERS = '[Register] Fetch practitioners';
 export const SET_PRACTITIONERS = '[Register] Set practitioners';
 
@@ -106,6 +114,34 @@ export class SetMesta implements Action {
 
 }
 
+export class FetchOkresyBirth implements Action {
+    readonly type = FETCH_OKRESY_BIRTH;
+
+}
+
+
+export class SetOkresyBBirth implements Action {
+    readonly type = SET_OKRESY_BIRTH;
+
+    constructor(public payload: Okres[]) {}
+
+}
+
+export class FetchMestaBirth implements Action {
+    readonly type = FETCH_MESTA_BIRTH;
+    
+    constructor(public payload: number) {}
+
+}
+
+
+export class SetMestaBirth implements Action {
+    readonly type = SET_MESTA_BIRTH;
+
+    constructor(public payload: Mesto[]) {}
+
+}
+
 
 
 export class FetchPractitioners implements Action {
@@ -138,7 +174,11 @@ export type RegisterActions =
   | RegisterUserStart
   | RegisterUserSuccess
   | RegisterUserFailed
-  | SendingEmailToUser;
+  | SendingEmailToUser
+  | FetchOkresyBirth
+  | SetOkresyBBirth
+  | FetchMestaBirth
+  | SetMestaBirth;
  
 
 

@@ -591,6 +591,12 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("NUMBER(1)");
 
+                    b.Property<decimal>("IdMestoNarodenia")
+                        .HasColumnType("DECIMAL(18, 2)");
+
+                    b.Property<decimal?>("IdMestoNarodeniaNavigationIdMesto")
+                        .HasColumnType("NUMBER(38)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("NUMBER(1)");
 
@@ -646,6 +652,8 @@ namespace HealthInCube_BackEnd.Migrations
                         .HasColumnType("NVARCHAR2(2000)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdMestoNarodeniaNavigationIdMesto");
 
                     b.ToTable("Users");
                 });
@@ -1260,6 +1268,15 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Navigation("IdPouzivatelNavigation");
 
                     b.Navigation("IdVseobecnyLekarNavigation");
+                });
+
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.Pouzivatel", b =>
+                {
+                    b.HasOne("HealthInCube_BackEnd.Entities.Mesto", "IdMestoNarodeniaNavigation")
+                        .WithMany()
+                        .HasForeignKey("IdMestoNarodeniaNavigationIdMesto");
+
+                    b.Navigation("IdMestoNarodeniaNavigation");
                 });
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.PredpLiecba", b =>
