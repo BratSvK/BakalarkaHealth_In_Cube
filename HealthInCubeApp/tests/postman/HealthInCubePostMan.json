@@ -1,0 +1,320 @@
+{
+	"info": {
+		"_postman_id": "2d26ad8b-0ae7-420f-9dd3-029457e9a496",
+		"name": "HealthInCube",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Pouzivatel/Login/Register",
+			"item": [
+				{
+					"name": "RegisterUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"idPouzivatel\": 1,\r\n  \"idTyp\": 1,\r\n  \"registrovany\": \"0001-01-01T00:00:00\",\r\n  \"meno\": \"Martin\",\r\n  \"priezvisko\": \"Gajdoš\",\r\n  \"rodPriezvisko\": null,\r\n  \"rodCislo\": \"981124/4168\",\r\n  \"datNarodenia\": \"2019-07-26T00:00:00\",\r\n  \"email\": \"martingajdos.zs@gmail.com\",\r\n  \"mobil\": \"0904362907\",\r\n  \"poslednePrihlasenie\": null,\r\n  \"pohlavie\": \"M\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/pouzivatel/registerUser",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"pouzivatel",
+								"registerUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AllRoles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LoginUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"motivationgajdy@gmail.com\",\r\n    \"password\": \"Peter1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/ucet/login",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"ucet",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPractitionerByCity",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SendEmail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"recieverUserName\": \"martingajdos.zs\",\r\n    \"recieverEmail\": \"martingajdos.zs@gmail.com\",\r\n    \"reveiverFullName\": \"Martin Gajdoš\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:5001/api/pouzivatel/mail",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"pouzivatel",
+								"mail"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "GetUsersAndRoles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/admin/nemocnice",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"admin",
+								"nemocnice"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetNemocnice",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Lekar",
+			"item": [
+				{
+					"name": "GetLekarById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GateWayApi}}/{{EndPoint}}/1",
+							"host": [
+								"{{GateWayApi}}"
+							],
+							"path": [
+								"{{EndPoint}}",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPatients",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyIiwiZW1haWwiOiJtb3RpdmF0aW9uZ2FqZHlAZ21haWwuY29tIiwicm9sZSI6Ikxla2FyIiwibmJmIjoxNjM0OTI4NjM1LCJleHAiOjE2MzU1MzM0MzUsImlhdCI6MTYzNDkyODYzNX0.OXOIhGZYwMLnm-g6VqICJuVCQYq3JgDG2-n0CZTDQMdNGcadEYrcEZYco1kh6-dHKecmFPFWuWkvZ-FDXHDjTw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{GateWayApi}}/{{EndPoint}}/all",
+							"host": [
+								"{{GateWayApi}}"
+							],
+							"path": [
+								"{{EndPoint}}",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getRequests",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GateWayApi}}/{{EndPoint}}/requests/all",
+							"host": [
+								"{{GateWayApi}}"
+							],
+							"path": [
+								"{{EndPoint}}",
+								"requests",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pouzivatel",
+			"item": [
+				{
+					"name": "AddPhoto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyIiwiZW1haWwiOiJtb3RpdmF0aW9uZ2FqZHlAZ21haWwuY29tIiwicm9sZSI6Ikxla2FyIiwibmJmIjoxNjM0MTk5MzgyLCJleHAiOjE2MzQ4MDQxODIsImlhdCI6MTYzNDE5OTM4Mn0.Y9DBsppBLk8Jx9iObtjOCOeefhyEsvxJweo2NXa2IXyS8Fuiqk9jcu0MeSLvlqIlON9LClyjTz-x6aJdZ_zKWw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:5001/api/pouzivatel/add-photo",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"pouzivatel",
+								"add-photo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBydlisko",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/pouzivatel/bydliska",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"pouzivatel",
+								"bydliska"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pacient",
+			"item": [
+				{
+					"name": "isActivated",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:5001/api/pacient/3/activated",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "5001",
+							"path": [
+								"api",
+								"pacient",
+								"3",
+								"activated"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "getOkresy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	]
+}

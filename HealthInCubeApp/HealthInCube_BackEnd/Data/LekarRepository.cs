@@ -68,6 +68,18 @@ namespace HealthInCube_BackEnd.Data
             return await _context.Lekar.FindAsync(lekarId);
         }
 
+        public async Task<IEnumerable<ZiadankaDto>> GetAllRequetsByDoctorId(decimal lekarId)
+        {
+            var requests =  await _context.Ziadanka
+                .Include(z => z.IdPouzivatelNavigation)
+                .Where(z => z.IdLekar == lekarId && z.AcceptedAt == null)
+                .OrderBy(z => z.CreatedAt)
+                .ToListAsync();
+
+
+            return _mapper.Map<List<Ziadanka>, IEnumerable<ZiadankaDto>>(requests);
+        }
+
         public void InsertItem(Lekar item)
         {
             throw new System.NotImplementedException();

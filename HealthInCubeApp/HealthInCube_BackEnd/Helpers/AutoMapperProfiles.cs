@@ -46,10 +46,12 @@ namespace HealthInCube_BackEnd.Helpers
             CreateMap<ZdravotnaKartum, ZdratovnaKartaDto>();
 
             CreateMap<ZdravPoistenie, ZdravotnePoistenieDto>();
+            CreateMap<Ziadanka, ZiadankaDto>();
 
+            CreateMap<Pouzivatel, PouzivatelDto>().ForMember(dest => dest.FullName, opt => opt.MapFrom(p => $"{p.Meno} {p.Priezvisko}"));
 
-
-
+            CreateMap<Ziadanka, ZiadankaDto>()
+                .ForMember(dest => dest.Pouzivatel, conf => conf.MapFrom(z => z.IdPouzivatelNavigation));
         }
 
     }
