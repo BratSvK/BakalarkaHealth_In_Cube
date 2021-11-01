@@ -13,7 +13,7 @@ export class UserComponent implements OnInit {
   userId: number;
   constructor(private store: Store<AppState>) { 
     this.store.select('auth').pipe(take(1),map(userData => {
-      return userData.user.userId;
+      return userData.user.id;
     })).subscribe(id => {
       this.userId = +id;
     })

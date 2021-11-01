@@ -95,7 +95,7 @@ export class AuthEffects {
 
         const loadedUser = new Pouzivatel(
           userDataToSend.email,
-          userDataToSend.userId,
+          userDataToSend.id,
           userDataToSend.fullName,
           userDataToSend.fotka,
           userDataToSend.token,
@@ -119,7 +119,7 @@ export class AuthEffects {
 
           return new AuthActionsBundle.AuthentificateSuccess({
             email: loadedUser.email,
-            userId: loadedUser.userId,
+            id: loadedUser.id,
             token: loadedUser.token,
             expirationDateToken: loadedUser.tokenExpi,
             fotka: image,
@@ -180,7 +180,7 @@ export class AuthEffects {
     Array.isArray(roles) ? resData.roleStoreBase = roles : resData.roleStoreBase.push(roles);
     const user = new Pouzivatel(
         resData.email,
-        resData.userId,
+        resData.id,
         resData.fullName,
         resData.fotka,
         resData.token,
@@ -209,7 +209,7 @@ export class AuthEffects {
 
     return new AuthActionsBundle.AuthentificateSuccess({
       email: resData.email,
-      userId: resData.userId,
+      id: resData.id,
       token: resData.token,
       expirationDateToken: expirationDate,
       fotka: image,

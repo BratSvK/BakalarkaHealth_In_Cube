@@ -1,14 +1,14 @@
-<table class="table table-striped table-dark">
-    <thead >
+<table class="table table-striped">
+    <thead class="thead-dark">
       <th >Patien name</th>
       <th style="text-align: center;">Request date</th>
       <th style="text-align: center;">Approve</th>
     </thead>
     <tbody>
       <tr *ngFor="let req of requests">
-        <td>{{req.FullName}}</td>
-        <td>{{req.Date}}</td>
-        <td ><button class="btn btn-primary"></button></td>
+        <td>{{req.pouzivatel.fullName}}</td>
+        <td style="text-align: center;">{{req.createdAt | date: 'medium'}}</td>
+        <td style="text-align: center;" ><button class="btn btn-success" (click)="onApprovePatient(req.idUser)">Approve</button></td>
       </tr>
     </tbody>
   </table>

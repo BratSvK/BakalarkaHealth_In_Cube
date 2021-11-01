@@ -1,6 +1,6 @@
 export interface UserToLogin  {
     email: string;
-    userId: string;  
+    id: string;  
     fotka: any;
     token: string;
     fullName: string;

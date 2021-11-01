@@ -7,7 +7,7 @@ namespace HealthInCube_BackEnd.DTOs
     /// </summary>
     public class ZiadankaDto
     {
-        public decimal IdPacient { get; set; }
+        public decimal IdUser { get; set; }
 
         public decimal IdLekar { get; set; }
 

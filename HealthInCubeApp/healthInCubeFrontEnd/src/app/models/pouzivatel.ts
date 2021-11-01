@@ -2,7 +2,7 @@ export class Pouzivatel {
 
     constructor(
         public email: string,
-        public userId: string,
+        public id: string,
         public fullName: string,
         public fotka: any,
         public token: string,

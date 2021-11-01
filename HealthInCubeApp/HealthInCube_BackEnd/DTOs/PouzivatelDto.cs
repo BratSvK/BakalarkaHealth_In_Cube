@@ -6,7 +6,7 @@ namespace HealthInCube_BackEnd.DTOs
 {
     public class PouzivatelDto
     {
-        public decimal UserId { get; set; }
+        public decimal Id { get; set; }
         public string Email { get; set; }
         public string Token { get; set; }
         public byte[] Fotka { get; set; }
