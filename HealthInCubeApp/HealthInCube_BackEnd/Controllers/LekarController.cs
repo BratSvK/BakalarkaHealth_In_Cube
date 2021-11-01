@@ -55,12 +55,7 @@ namespace HealthInCube_BackEnd.Controllers
 
             if (requests.IsNullOrEmpty()) return NotFound("Nothing to look!");
 
-
-
             return Ok(requests);
         }
-
-
-
     }
 }
