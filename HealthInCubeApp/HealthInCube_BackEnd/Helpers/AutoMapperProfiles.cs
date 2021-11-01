@@ -16,6 +16,7 @@ namespace HealthInCube_BackEnd.Helpers
         public AutoMapperProfiles()
         {
             CreateMap<Nemocnica,NemocnicaDto>();
+
             CreateMap<Pouzivatel,RegisterPouzivatelDto>();
 
             CreateMap<RegisterPouzivatelDto, Pouzivatel>().ForMember(dest => dest.RodPriezvisko, opt => opt.MapFrom(src => string.IsNullOrWhiteSpace(src.RodPriezvisko) ? src.Priezvisko : src.RodPriezvisko));
@@ -28,13 +29,9 @@ namespace HealthInCube_BackEnd.Helpers
             CreateMap<BydliskoDto,Bydlisko>().ForMember(dest => dest.Trvale, opt => opt.MapFrom(src => src.Trvale ? "Y" : "N"));
             CreateMap<Bydlisko,BydliskoDto>().ForMember(dest => dest.Trvale, opt => opt.MapFrom(src => src.Trvale == "Y" ? true : false));;
 
-
-
-
             CreateMap<Oddelenie,OddelenieDto>();
 
             CreateMap<FotkaPouzivatel,FotkaDto>();
-
             // Datetime with utc helper -> if it's utc or local time.  
             // Create z on the end.
             CreateMap<DateTime, DateTime>().ConstructUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
@@ -46,13 +43,12 @@ namespace HealthInCube_BackEnd.Helpers
             CreateMap<ZdravotnaKartum, ZdratovnaKartaDto>();
 
             CreateMap<ZdravPoistenie, ZdravotnePoistenieDto>();
+
             CreateMap<Ziadanka, ZiadankaDto>();
 
             CreateMap<Pouzivatel, PouzivatelDto>().ForMember(dest => dest.FullName, opt => opt.MapFrom(p => $"{p.Meno} {p.Priezvisko}"));
-
             CreateMap<Ziadanka, ZiadankaDto>()
                 .ForMember(dest => dest.Pouzivatel, conf => conf.MapFrom(z => z.IdPouzivatelNavigation));
         }
-
     }
 }
