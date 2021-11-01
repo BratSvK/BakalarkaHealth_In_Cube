@@ -3,18 +3,10 @@
 }
 
 
-img {
+.dropdown img {
     max-height: 50px;
-    border: 2px solid white;
+    border: 2px solid black;
     display: inline;
-}
-
-.logo {
-    max-height: 90px;
-    border: none;
-    display: inline;
-    padding: 0;
-    margin: 0;
 }
 
 
@@ -22,33 +14,50 @@ img {
     width: 10%;
 }
 
-
-fa-icon {
-    font-size: 2rem;
-    margin-right: 1rem;
+.navbar {
+    height: 70px;
 }
 
+.navbar-brand {
+    cursor: default;
+    width: 29.9rem;
+}
+
+.brand-zone-text {
+    line-height: 5.8rem;
+}
+
+.navbar-brand img {
+    width: 10rem;
+    background-color: #007bff;
+}
+
+fa-icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
 
 a {
     color: black;
 }
-/* a {
-    color: black;
-    border: 1px dotted black;
-    border-radius: 0.6rem;
-    background-color: grey;
-} */
 
 a:hover {
-    color:red;
-    border: 1px solid black;
-    border-radius: 0.6rem;
+    color:white;
+    
 }
 .dropdown-menu {
-    background-color: lightblue;
+    background-color: white;
+    transform: translate(40%,-20%) !important;
 }
 
 .nav-link.active {
-    background-color: crimson;
+    background-color: black;
     border-radius: 1;
 }
+
+
+/* .nav-link.active {
+    border-radius: 1;
+    border-bottom: 3px solid crimson;
+} */
+

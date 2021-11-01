@@ -5,10 +5,10 @@ import { UserComponent } from './user.component';
 import { PatientComponent } from './patient/patient.component';
 import { LekarComponent } from './lekar/lekar.component';
 import { NavComponent } from '../nav/nav.component';
-
+import { InlineSVGModule } from 'ng-inline-svg';
 
 @NgModule({
   declarations: [UserComponent,NavComponent, PatientComponent, LekarComponent],
-  imports: [SharedModule, UserRouting],
+  imports: [SharedModule, UserRouting, InlineSVGModule.forRoot()],
 })
 export class UserModule {}

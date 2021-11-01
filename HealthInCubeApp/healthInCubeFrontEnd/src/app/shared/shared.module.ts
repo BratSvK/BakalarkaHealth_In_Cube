@@ -9,7 +9,7 @@ import { CollapseModule } from 'ngx-bootstrap/collapse';
 
 @NgModule({
   declarations: [HasRoleDirective],
-  imports: [CommonModule,    BsDropdownModule.forRoot(), FontAwesomeModule,CollapseModule.forRoot()],
+  imports: [CommonModule, BsDropdownModule.forRoot(), FontAwesomeModule,CollapseModule.forRoot()],
   exports: [CommonModule, HasRoleDirective,FontAwesomeModule, CollapseModule, BsDropdownModule]
 })
 export class SharedModule {}
