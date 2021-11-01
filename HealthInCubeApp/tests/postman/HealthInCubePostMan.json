@@ -208,15 +208,22 @@
 					"name": "getRequests",
 					"request": {
 						"method": "GET",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{tokenLekar}}",
+								"type": "text"
+							}
+						],
 						"url": {
-							"raw": "{{GateWayApi}}/{{EndPoint}}/requests/all",
+							"raw": "{{GateWayApi}}/{{EndPoint}}/1/request/all",
 							"host": [
 								"{{GateWayApi}}"
 							],
 							"path": [
 								"{{EndPoint}}",
-								"requests",
+								"1",
+								"request",
 								"all"
 							]
 						}
