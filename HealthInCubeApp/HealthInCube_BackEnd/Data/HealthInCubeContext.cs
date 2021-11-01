@@ -1181,7 +1181,7 @@ namespace HealthInCube_BackEnd.Data
                 entity.HasOne(d => d.IdPacientNavigation)
                     .WithOne(p => p.ZdravotnaKartum)
                     .HasForeignKey<ZdravotnaKartum>(d => d.IdPacient)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("RELATIONSHIP42");
             });
 

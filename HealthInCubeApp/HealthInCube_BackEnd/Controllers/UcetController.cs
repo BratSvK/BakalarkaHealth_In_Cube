@@ -28,6 +28,7 @@ namespace HealthInCube_BackEnd.Controllers
         private readonly IFotoRepository _fotoRepository;
         private readonly IPouzivatelRepository _pouzivatelRepository;
         private readonly IConfiguration _config;
+
         public UcetController(UserManager<Pouzivatel> userManager, SignInManager<Pouzivatel> signInManager, IConfiguration config, IPouzivatelRepository pouzivatelRepository, IFotoRepository fotoRepository, ITokenService tokenService, IMapper mapper, IZiadankaRepository ziadankaRepository)
         {
             _config = config;
@@ -64,6 +65,7 @@ namespace HealthInCube_BackEnd.Controllers
             adresaRegister.IdBydliska = this.PridelIdToNewBydliskoAsync(user.Id).Result;
             var bydliskoToUser = _mapper.Map<Bydlisko>(adresaRegister);
             user.Bydliskos.Add(bydliskoToUser);
+            user.IdMestoNarodenia = registeredUser.Mesto.IdMesto;
 
             //EF uses 
             var result = await _userManager.CreateAsync(user, registeredUser.Password);     // create user and save changes to DB 

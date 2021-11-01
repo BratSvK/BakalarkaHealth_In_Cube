@@ -31,6 +31,7 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<IEnumerable<LekarDto>> GetAllPractitionersByCityAsync(decimal cityID)
         {
+            
             var nemocnica = await _context.Nemocnica.Where(n => n.IdMesto == cityID)
                                             .Include(n => n.Oddelenies.Where(o => o.NazovOdd == "Všeobecný lekár"))
                                             .ThenInclude(od => od.Lekars)

@@ -6,6 +6,8 @@ import { Rola } from "src/app/models/rola";
 export interface RegisterState {
     mesta: Mesto[];
     okresy: Okres[];
+    mestaBirth: Mesto[];
+    okresyBirth: Okres[];
     practitioners: Lekar[]
     
 

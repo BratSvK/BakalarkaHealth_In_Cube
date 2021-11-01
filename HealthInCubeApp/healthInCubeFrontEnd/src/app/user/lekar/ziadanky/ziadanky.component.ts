@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { Ziadanka } from 'src/app/models/ziadanka';
 import { AppState } from 'src/app/_store/models/AppState';
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
+
 import * as LekarActionsBundle from '../store/lekar.actions';
 
 @Component({
@@ -12,6 +14,8 @@ import * as LekarActionsBundle from '../store/lekar.actions';
   styleUrls: ['./ziadanky.component.css']
 })
 export class ZiadankyComponent implements OnInit, OnDestroy {
+
+  checkIcon = faCheck;
 
   requests: Ziadanka[] = [];
   ziadankaSub: Subscription;
@@ -33,13 +37,14 @@ export class ZiadankyComponent implements OnInit, OnDestroy {
 
   }
 
-  ngOnDestroy(): void {
-    
-  }
 
 
   onApprovePatient(idUser: number) {
 
     console.log(`lets create user with id: ${idUser}`);
+  }
+
+  ngOnDestroy(): void {
+    
   }
 }

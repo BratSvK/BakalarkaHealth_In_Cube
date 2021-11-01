@@ -32,7 +32,7 @@ namespace HealthInCube_BackEnd.Controllers
 
 
         [HttpGet("all")]
-        public async Task<ActionResult<BydliskoDto>> GetAllPatients()
+        public async Task<ActionResult<ICollection<PacientDto>>> GetAllPatients()
         {
 
             var pacienti = await _pacientRepository.GetItemsAsync();

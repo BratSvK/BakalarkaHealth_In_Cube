@@ -7,16 +7,20 @@ namespace HealthInCube_BackEnd.DTOs
     {
         [Required]
         public string Meno { get; set; }
-        [Required]
 
+        [Required]
         public string Priezvisko { get; set; }
+
         public string RodPriezvisko { get; set; }
+
         public string RodCislo { get; set; }
+
         public DateTime? DatNarodenia { get; set;}
         [Required]
-
         public string Email { get; set; }
+
         public string Mobil { get; set; }
+
         [Required]
         public string Pohlavie { get; set; }
 
@@ -28,5 +32,8 @@ namespace HealthInCube_BackEnd.DTOs
 
         [Required]
         public BydliskoDto Adresa { get; set; }
+
+        [Required]
+        public MestoDto Mesto { get; set; }
     }
 }

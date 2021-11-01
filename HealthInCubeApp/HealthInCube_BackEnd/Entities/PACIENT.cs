@@ -16,7 +16,7 @@ namespace HealthInCube_BackEnd.Entities
         public decimal IdPacient { get; set; }
         public decimal IdPouzivatel { get; set; }
         public decimal IdVseobecnyLekar { get; set; }
-        public DateTime Od { get; set; }
+        public DateTime Od { get; set; } = DateTime.Now;
         public DateTime? Do { get; set; }
 
         public virtual Pouzivatel IdPouzivatelNavigation { get; set; }
