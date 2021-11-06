@@ -1,13 +1,19 @@
 using System;
+using System.Globalization;
 using System.Linq;
+using System.Net.Mail;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using AutoMapper;
+using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Extensions;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace HealthInCube_BackEnd.Controllers
@@ -21,16 +27,24 @@ namespace HealthInCube_BackEnd.Controllers
         private readonly ILekarRepository _lekarRepo;
         private readonly IPacientRepository _pacientRepository;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _config;
+        private readonly UserManager<Pouzivatel> _userManager;
 
         /// <summary>
-        /// ctor.
+        /// Ctor.
         /// </summary>
-        /// <param name="lekarRepo"></param>
-        public LekarController(ILekarRepository lekarRepo, IPacientRepository pacientRepository, IMapper mapper)
+        /// <param name="lekarRepo">Doctor repository.</param>
+        /// <param name="pacientRepository">Pacient repository.</param>
+        /// <param name="mapper">Mapper</param>
+        /// <param name="config">Data from config file app config.</param>
+        /// <param name="userManager">Get users from db</param>
+        public LekarController(ILekarRepository lekarRepo, IPacientRepository pacientRepository, IMapper mapper , IConfiguration config, UserManager<Pouzivatel> userManager)
         {
             _lekarRepo = lekarRepo;
             _pacientRepository = pacientRepository;
             _mapper = mapper;
+            _config = config;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -84,28 +98,34 @@ namespace HealthInCube_BackEnd.Controllers
         /// <summary>
         ///  Create an patient account.
         /// </summary>
-        [HttpPost("{idLekar}/createPatientAccount")]
-        public async Task<ActionResult<PacientDto>> CreatePatientAccount(decimal idLekar, [FromBody] CreatePatientAccountDto createPatientAccount)
+        [HttpPost("createPatientAccount")]
+        public async Task<ActionResult> CreatePatientAccount([FromBody] CreatePatientAccountDto createPatientAccount)
         {
-            var patientId =  _pacientRepository.GetItemsAsync().Result.Count();
+            var patientId =  _pacientRepository.GetItemsAsync().GetAwaiter().GetResult().Count();
+
+            var userToPatient = await _userManager.FindByIdAsync(createPatientAccount.IdUser.ToString(CultureInfo.InvariantCulture));
 
             var patient = new Pacient
             {
-                IdPouzivatel = createPatientAccount.IdUser,
+                IdPouzivatel = userToPatient.Id,
                 IdPacient = patientId + 1,
-                IdVseobecnyLekar = idLekar
+                IdVseobecnyLekar = createPatientAccount.IdLekar
             };
 
             var zdravotnaKarta = new ZdravotnaKartum
             {
                 IdPacient = patient.IdPacient,
-                IdMestoNarodenia = createPatientAccount.IdMiestoNarodenia
+                IdMestoNarodenia = userToPatient.IdMestoNarodenia
             };
 
             patient.ZdravotnaKartum = zdravotnaKarta;
             _pacientRepository.InsertItem(patient);
 
-            if (await _pacientRepository.SaveAllAsync()) return Ok(_mapper.Map<PacientDto>(patient));
+            if (await _pacientRepository.SaveAllAsync())
+            {
+                SendConfirmationCreationEmailToPatient(userToPatient);
+                return Ok();
+            }
 
             return BadRequest("Failed to create and account for patient");
         }
@@ -125,5 +145,60 @@ namespace HealthInCube_BackEnd.Controllers
             return BadRequest("Problem deleting the patient");
 
         }
+
+
+         private void SendConfirmationCreationEmailToPatient(Pouzivatel userToPatient)
+         {
+
+            if (userToPatient == null)
+            {
+                return;
+            }
+            var smtpAddress = _config["Smtp:Host"];
+            var portNumber = int.Parse(_config["Smtp:Port"]);
+            var enableSSL = true;
+            var emailFromAddress = _config["Smtp:Username"]; //Sender Email Address  
+            var password = _config["Smtp:Password"]; //Sender Password  
+            var emailToAddress = userToPatient.Email;
+
+            string filePath = $"{System.IO.Directory.GetCurrentDirectory()}\\Assets\\logo.jpg";
+
+            var linkedResource = new LinkedResource(filePath, MediaTypeNames.Image.Jpeg);
+
+            var subject = "Your patient account has been created";
+            var body = "<div style='text-align: center; background-color:  rgba(255, 230, 208, 0.363); width: 50%; position: absolute; margin-left: 25%; border-style: solid; border-width: 1px;border-color: rgba(255, 68, 0, 0.37);" +
+             "border-radius:3px; padding: 10px;'>" + $"<div><img style='background: #ffe6d0; width: 100px; height: 100px;'" +
+             $"src=\"cid:{linkedResource.ContentId}\"></img></div>" +
+             "<br>" +
+             "<div style ='font-size: large; color: dimgray;'>Dear " + userToPatient.GetFullName() + ",</div>" +
+             "<br>" +
+             "<div style ='font-size: meddium; color: dimgray;'> Your patient account has been created successfully! </div> " +
+             "<br>" +
+            "<div style ='font-size: meddium; color: dimgray;'> Please update your profile and set your health insurance company</div> " +
+             "<br>" +
+             "<div style ='font-size: meddium; color: dimgray;'> Have a nice day!  </div> " +
+             "<div style ='font-size: meddium; color: dimgray;'> The HealthInCube Team </div> "
+            + "</div>";
+
+            var alternativeView = AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Html);
+            alternativeView.LinkedResources.Add(linkedResource);
+
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress(emailFromAddress);
+                mail.To.Add(emailToAddress);
+                mail.Subject = subject;
+                mail.AlternateViews.Add(alternativeView);
+                mail.IsBodyHtml = true;
+                //mail.Attachments.Add(new Attachment("D:\\TestFile.txt"));//--Uncomment this to send any attachment  
+                using (SmtpClient smtp = new SmtpClient(smtpAddress, portNumber))
+                {
+                    smtp.Credentials = new System.Net.NetworkCredential(emailFromAddress, password);
+                    smtp.EnableSsl = enableSSL;
+                    smtp.Send(mail);
+                }
+            }
+         }
+         
     }
 }

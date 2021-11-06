@@ -1,10 +1,9 @@
-import { formatDate } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as moment from 'moment';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Mesto } from 'src/app/models/mesto';
 import { Okres } from 'src/app/models/okres';
 import { Lekar } from 'src/app/models/lekar';
@@ -13,12 +12,8 @@ import { AppState } from 'src/app/_store/models/AppState';
 import * as RegisterBundleActions from './store/register.actions';
 import { RegisterPouzivatel } from 'src/app/models/pouzivatelRegistracia';
 import { Adresa } from 'src/app/models/adresa';
-import { Mail } from 'src/app/models/mail';
 
 import { faBaby } from '@fortawesome/free-solid-svg-icons';
-
-
-
 
 @Component({
   selector: 'app-register',
@@ -26,6 +21,8 @@ import { faBaby } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit, OnDestroy {
+
+  @ViewChild('autofocus',{ static: true}) menoInput: ElementRef;
 
   babyIcon = faBaby;
 
@@ -40,14 +37,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   isShowenSelectionOfPractitioners = false;
 
-
   registerSub: Subscription;
   registerForm: FormGroup;
 
-  constructor(private store: Store<AppState>, private router: Router, private route: ActivatedRoute) { 
+  isSubmitted = false;
 
-    
-  }
+  constructor(private store: Store<AppState>, private router: Router, private route: ActivatedRoute) {}
  
 
   ngOnInit(): void {
@@ -63,10 +58,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
       };
     });
 
-
     this.initForm();
-
-    
 
   }
 
@@ -77,37 +69,27 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   onCountryChange() {
     let country: string = this.registerForm.get('userAddress.country').value;
-      if (country && country.toLocaleLowerCase() === "slovakia") {
+      if (country && country.toLocaleLowerCase() === "slovensko") {
       this.store.dispatch(new RegisterBundleActions.FetchOkresy);
     }
   }
   
-
   onChangeOkres() {
     var idOkres: number = this.registerForm.get('userAddress.district').value;
     this.store.dispatch(new RegisterBundleActions.FetchMesta(idOkres));
   }
 
-
-
   onChangeCity() {
     var idCity = this.registerForm.get('userAddress.city').value as number;
     var vekPacienta = this.getAgeByDateBirth();
-    
 
     if (vekPacienta !== -1)
     this.store.dispatch(new RegisterBundleActions.FetchPractitioners({idMesto: idCity, vek: vekPacienta}));
   }
 
-
-
   onSubmit() {
-
     var registerPouzivatel = this.createModelToSingUp();
-    var email : Mail = {
-      receiverEmail: registerPouzivatel.email,
-      receiverFullName: `${registerPouzivatel.meno.trim()} ${registerPouzivatel.priezvisko}`,
-    }
+    this.isSubmitted = true;
     this.store.dispatch(new RegisterBundleActions.RegisterUserStart(registerPouzivatel));
   }
 
@@ -115,7 +97,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.store.dispatch(new RegisterBundleActions.ResetForm());
     this.router.navigate(['../'], {relativeTo: this.route});
   }
-
 
   onCalculateFromBIDToBirthDate() {
   
@@ -131,29 +112,24 @@ export class RegisterComponent implements OnInit, OnDestroy {
       }
 
       let dateStr = `19${BID.substr(0,2)}-${BID.substr(2,2)}-${BID.substr(4,2)}}`;
-      
-      //905124/4168
-      
+
       this.registerForm.get('userData.birthDate')?.setValue(this.getDateByBID(dateStr));
       this.registerForm.get('userData.gender')?.setValue(this.genders[pohlavie]);
     }
   }
-
 
   onChangePractitioner() {
     let lekar = this.registerForm.get('practitioner').value as Lekar;
     this.chooseLekar = lekar;
   }
 
-
   onCountryBirthChange() {
     let country: string = this.registerForm.get('birthPlace.countryBirth').value;
-    if (country && country.toLocaleLowerCase() === "slovakia") {
+    if (country && country.toLocaleLowerCase() === "slovensko") {
     this.store.dispatch(new RegisterBundleActions.FetchOkresyBirth);
   }
   }
-
-
+  
   onChangeBirthOkres() {
     var idOkres: number = this.registerForm.get('birthPlace.districtBirth').value;
     this.store.dispatch(new RegisterBundleActions.FetchMestaBirth(idOkres));
@@ -195,7 +171,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         ]),
         birthDate: new FormControl(null, [Validators.required]),
         email: new FormControl('', [Validators.required, Validators.email]),
-        phoneNumber: new FormControl(null),
+        phoneNumber: new FormControl(null, [Validators.maxLength(12)]),
         gender: new FormControl(null, [Validators.required]),
         password: new FormControl('', [Validators.required, Validators.maxLength(10), Validators.minLength(4)]),
         confirmPassword: new FormControl('', [Validators.required, this.matchValues('password')]),
@@ -220,6 +196,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.registerForm.get('userData.password').valueChanges.subscribe(() => {
       this.registerForm.get('userData.confirmPassword').updateValueAndValidity();
     });
+
+    this.focusNameInput();
+  }
+
+  private focusNameInput() {
+    this.menoInput?.nativeElement.focus();
+    window.scrollTo(0, 0);
   }
 
 
@@ -253,18 +236,14 @@ export class RegisterComponent implements OnInit, OnDestroy {
       password: this.registerForm.get('userData.password').value,
       idDoctor: this.registerForm.get('practitioner').value.idLekar,
       adresa: adresa,
-      mesto: mesto
+      mesto: mesto,
+      idMestoNarodenia: +this.registerForm.get('birthPlace.cityBirth').value
       }
     };
   
-
-
-
   ngOnDestroy(): void {
     if(this.registerSub) {
       this.registerSub.unsubscribe();
     }
   }
 }
-
-

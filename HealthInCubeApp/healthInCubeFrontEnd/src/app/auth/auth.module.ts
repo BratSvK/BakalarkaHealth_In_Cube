@@ -12,7 +12,6 @@ import { PractitionerInfoComponent } from './register/practitioner-info/practiti
         AuthComponent,
         RegisterComponent,
         PractitionerInfoComponent
-        
     ],
     imports: [
         ReactiveFormsModule,

@@ -6,7 +6,7 @@ import { Store } from "@ngrx/store";
 import { ToastrService } from "ngx-toastr";
 import { merge, of } from "rxjs";
 import { Action } from "rxjs/internal/scheduler/Action";
-import { catchError, map, switchMap, withLatestFrom } from "rxjs/operators";
+import { catchError, map, switchMap, switchMapTo, withLatestFrom } from "rxjs/operators";
 import { Lekar } from "src/app/models/lekar";
 import { Ziadanka } from "src/app/models/ziadanka";
 import { AppState } from "src/app/_store/models/AppState";
@@ -20,9 +20,6 @@ const fetchUrl = environment.apiUrl; // ....../api/
 
 @Injectable()
 export class LekarEffects {
-
-
-    // TO DO : dorobit craete account 
 
     fetchRequests = createEffect(() => 
      this.actions$.pipe(
@@ -38,8 +35,6 @@ export class LekarEffects {
             return new LekarActionsBundle.SetRequests(ziadanky);
         })
         ));
-
-
 
     fetchPractitioner = createEffect(() =>
         this.actions$.pipe(
@@ -61,11 +56,24 @@ export class LekarEffects {
             })
             );
         }),
-        )
-  );
+        ));
 
-
-
+        acceptRequestAndCreatePatient = createEffect(() => 
+        this.actions$.pipe(
+            ofType(LekarActionsBundle.ACCEPT_REQUEST),
+            switchMap((action: LekarActionsBundle.AcceptRequest) => {
+                return this.http.post(fetchUrl + `lekar/createPatientAccount`, action.payload).pipe(
+                    map(() => {
+                        this.toastr.success("Pacient vytvorený");
+                    }),
+                    catchError((error) => {
+                        this.toastr.error("Nastala chyba" + error?.error);
+                        return of(error?.error);
+                })
+                );
+            })
+        ), {dispatch: false});
+  
 
     constructor(
         private actions$: Actions,

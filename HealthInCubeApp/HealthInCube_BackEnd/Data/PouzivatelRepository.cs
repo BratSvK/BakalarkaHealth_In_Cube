@@ -43,6 +43,11 @@ namespace HealthInCube_BackEnd.Data
            return await query.ProjectTo<BydliskoDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
         }
 
+        public async Task<int> GetCountNumber()
+        {
+            return await _context.Bydlisko.CountAsync();
+        }
+
         // public async Task<IEnumerable<RolaDTO>> GetAllRoles()
         // {
         //     var query =  _context.Rola.AsQueryable();

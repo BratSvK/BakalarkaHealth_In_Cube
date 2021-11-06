@@ -22,10 +22,14 @@ set u."RodPriezvisko" = 'Stanik'
 where u."Id" = 2;
 
 
+select * from "Users";
+
 select * from "Users" u
 join bydlisko b on (b.id_pouzivatel = u."Id")
 where u."Id" = 3;
 
+select * from mesto m 
+where m.id_mesto = 2889;
 
 commit;
 
@@ -35,37 +39,61 @@ select * from bydlisko;
 
 
 select * from "Users";
+desc "Users";
 
 
-select * from ziadanka;
+select u."Meno" from "Users" u
+join bydlisko b on (b.id_pouzivatel =u."Id")
+where exists(select 'x'
+             from mesto m 
+             where m.id_mesto = b.id_mesto and 
+             m.nazov = 'Rado¾a');
+
+
 
 select * from fotka_pouzivatel;
 
 -- delete User-testovaci id=3
-delete from ziadanka;
-delete from bydlisko;
+delete from ziadanka z 
+where z.id_pacient = 4;
+
+
+rollback;
+delete from bydlisko b 
+where b.id_pouzivatel = 4;
 
 delete from "UserRoles" ur
-where ur."UserId" = 3;
+where ur."UserId" = 4;
 
 delete from "Users" u
-where u."Id" = 3;
+where u."Id" = 4;
 commit;
 
 
+select * from ziadanka;
 
 select * from bydlisko;
 
 select * from "UserRoles";
 
-
-
-
 desc ziadanka;
 
+-- check created pacient
 
-select * from pacient p
-join ziadanka z on(z.id_pacient = p.id_pacient);
+select * from pacient p;
+
+select * from zdravotna_karta;
+delete from pacient p 
+where p.id_pouzivatel = 4;
+
+
+delete from zdravotna_karta z
+where z.id_pacient = 1;
+
+select * from ziadanka;
+
+
+
 
 
 select  
@@ -198,6 +226,70 @@ where od.id_nem = 2;
 
 
 commit;
+
+
+
+-- 01.11.2021
+
+select * from lekar;
+
+select * from ziadanka;
+
+select * from "Users";
+
+desc ziadanka;
+
+select * from ziadanka z
+where z.id_lekar = 1 and z.akceptovana is null;
+
+desc pacient;
+
+desc "Users";
+desc zdravotna_karta;
+
+desc ziadanka;
+
+desc mesto;
+
+select * from mesto m 
+where m.nazov like 'Rad%';
+
+select * from pacient;
+
+select * from zdravotna_karta;
+
+desc mesto;
+
+select * from nemocnica;
+
+desc lekar;
+
+desc mesto;
+
+desc nemocnica;
+
+alter table zdravotna_karta modify KRV_SKUPINA null;
+
+commit;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
