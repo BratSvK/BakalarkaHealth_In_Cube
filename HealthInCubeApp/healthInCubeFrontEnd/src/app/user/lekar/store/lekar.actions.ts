@@ -1,5 +1,6 @@
 import { Actions } from "@ngrx/effects";
 import { Action } from "@ngrx/store";
+import { CreatePatient } from "src/app/models/createPatient";
 import { Lekar } from "src/app/models/lekar";
 import { Ziadanka } from "src/app/models/ziadanka";
 
@@ -13,14 +14,14 @@ export const FETCH_PRACTITIONER = '[Lekar] Fetch practitioner';
 export const SET_PRACTITIONER = '[Lekar] Set practitioner';
 
 
-export const CREATE_PATIENT = '[Lekar] Create patient';
+export const ACCEPT_REQUEST = '[Lekar] Accept request and create patient';
 
 
 
-export class CreatePatient implements Action {
-    readonly type = CREATE_PATIENT;
+export class AcceptRequest implements Action {
+    readonly type = ACCEPT_REQUEST;
 
-    constructor(public payload: number) {}
+    constructor(public payload: CreatePatient) {}
 }
 
 
@@ -67,5 +68,5 @@ export type LekarActions =
     | SetLekarId
     | FetchPractitioner
     | SetPractitioner
-    | CreatePatient;
+    | AcceptRequest;
     

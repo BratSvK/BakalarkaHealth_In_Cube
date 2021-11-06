@@ -180,7 +180,8 @@ fetchMestaBirth = createEffect(() =>
       email: signUpForm.email,
       password: signUpForm.password,
       adresa: signUpForm.adresa,
-      mesto: signUpForm.mesto
+      mesto: signUpForm.mesto,
+      idMestoNarodenia: signUpForm.idMestoNarodenia
     };
   }
 

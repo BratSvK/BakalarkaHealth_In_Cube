@@ -3,7 +3,7 @@
         <div class="form-signin ">
             <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
                 <img src="../../assets/logo.png" alt="logo">
-                <h1 class="h3 mb-3 text-muted">Please sign in</h1>
+                <h1 class="h3 mb-3 text-muted">Prihlásenie</h1>
                 <label for="inputEmail" class="sr-only">Email address</label>
                 <input type="email" id="inputEmail" class="form-control" placeholder="Email address" formControlName="email">
                 <label for="inputPassword" class="sr-only">Password</label>
@@ -14,11 +14,11 @@
           </label>
         </div> -->
                 <div class="my-2">
-                    <a class="nav-link" (click)="onRegisterPage()">Are you new ?</a>
+                    <a class="nav-link text-danger" (click)="onRegisterPage()">Vytvoriť účet</a>
                 </div>
                 <button class="btn btn-lg btn-primary btn-block" type="submit" [disabled]="!this.loginForm.valid">Sign in</button>
                 <div class="my-2">
-                    <a href="#">Forgot password</a>
+                    <a href="#" >Zabudnuté heslo</a>
                 </div>
             </form>
         </div>

@@ -14,5 +14,6 @@ export interface RegisterPouzivatel {
     idDoctor: number;
     adresa : Adresa;
     mesto: Mesto;
+    idMestoNarodenia: number;
    
 }

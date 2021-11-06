@@ -7,6 +7,7 @@ import { AppState } from 'src/app/_store/models/AppState';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 import * as LekarActionsBundle from '../store/lekar.actions';
+import { CreatePatient } from 'src/app/models/createPatient';
 
 @Component({
   selector: 'app-ziadanky',
@@ -27,7 +28,7 @@ export class ZiadankyComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    this.store.select('lekar').pipe(
+   this.ziadankaSub =  this.store.select('lekar').pipe(
       map(lekarData => {
         return lekarData.ziadanky;
       })
@@ -40,11 +41,31 @@ export class ZiadankyComponent implements OnInit, OnDestroy {
 
 
   onApprovePatient(idUser: number) {
+    var createPatienModel = this.createModelToCreationPatient(idUser);
+    this.store.dispatch(new LekarActionsBundle.AcceptRequest(createPatienModel));
+  }
 
-    console.log(`lets create user with id: ${idUser}`);
+  private createModelToCreationPatient(idUser: number): CreatePatient {
+    return {
+      idLekar: this.getLekarId(),
+      idUser: idUser
+    };
+  }
+
+  private getLekarId(): number {
+    let lekarId: number;
+
+    this.store.select('lekar').pipe(take(1), map(lekarData => {
+      return lekarData.practitioner.idLekar;
+    })).subscribe(id => {
+      lekarId = id;
+    });
+
+    return lekarId;
   }
 
   ngOnDestroy(): void {
-    
+    if (this.ziadankaSub)
+    this.ziadankaSub.unsubscribe();
   }
 }

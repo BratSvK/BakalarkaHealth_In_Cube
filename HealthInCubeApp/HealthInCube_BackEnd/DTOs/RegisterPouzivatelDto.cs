@@ -34,6 +34,6 @@ namespace HealthInCube_BackEnd.DTOs
         public BydliskoDto Adresa { get; set; }
 
         [Required]
-        public MestoDto Mesto { get; set; }
+        public decimal IdMestoNarodenia { get; set; }
     }
 }

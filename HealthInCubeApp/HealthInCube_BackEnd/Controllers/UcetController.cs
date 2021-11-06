@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using System.Net.Mail;
+using System.Net.Mime;
 
 namespace HealthInCube_BackEnd.Controllers
 {
@@ -62,10 +63,9 @@ namespace HealthInCube_BackEnd.Controllers
             user.UserName = user.Email.Split('@')[0];
             user.Id = await this.PridelIdToNewUserAsync();
             var adresaRegister = registeredUser.Adresa;
-            adresaRegister.IdBydliska = this.PridelIdToNewBydliskoAsync(user.Id).Result;
+            adresaRegister.IdBydliska = this.PridelIdToNewBydliskoAsync().Result;
             var bydliskoToUser = _mapper.Map<Bydlisko>(adresaRegister);
             user.Bydliskos.Add(bydliskoToUser);
-            user.IdMestoNarodenia = registeredUser.Mesto.IdMesto;
 
             //EF uses 
             var result = await _userManager.CreateAsync(user, registeredUser.Password);     // create user and save changes to DB 
@@ -152,9 +152,16 @@ namespace HealthInCube_BackEnd.Controllers
             var password = _config["Smtp:Password"]; //Sender Password  
             var emailToAddress = mailToSend.ReceiverEmail;
 
+            string filePath = $"{System.IO.Directory.GetCurrentDirectory()}\\Assets\\logo.jpg";
+            
+            var linkedResource = new LinkedResource(filePath, MediaTypeNames.Image.Jpeg);
+
             var subject = "Your Account has been created";
             var body = "<div style='text-align: center; background-color:  rgba(255, 230, 208, 0.363); width: 50%; position: absolute; margin-left: 25%; border-style: solid; border-width: 1px;border-color: rgba(255, 68, 0, 0.37);" +
-             "border-radius:3px; padding: 10px;'>" + "<div style ='font-size: large; color: dimgray;'>Dear " + mailToSend.ReceiverFullName + ",</div>" +
+             "border-radius:3px; padding: 10px;'>" + $"<div><img style='background: #ffe6d0; width: 100px; height: 100px;'" +
+             $"src=\"cid:{linkedResource.ContentId}\"></img></div>" +
+             "<br>" +
+             "<div style ='font-size: large; color: dimgray;'>Dear " + mailToSend.ReceiverFullName + ",</div>" +
              "<br>" +
              "<div style ='font-size: meddium; color: dimgray;'> Thank you for your creation. </div> " +
              "<br>" +
@@ -165,12 +172,16 @@ namespace HealthInCube_BackEnd.Controllers
              "<div style ='font-size: meddium; color: dimgray;'> Have a nice day!  </div> " +
              "<div style ='font-size: meddium; color: dimgray;'> The HealthInCube Team </div> "
             + "</div>";
+
+            var alternativeView = AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Html);
+            alternativeView.LinkedResources.Add(linkedResource);
+
             using (MailMessage mail = new MailMessage())
             {
                 mail.From = new MailAddress(emailFromAddress);
                 mail.To.Add(emailToAddress);
                 mail.Subject = subject;
-                mail.Body = body;
+                mail.AlternateViews.Add(alternativeView);
                 mail.IsBodyHtml = true;
                 //mail.Attachments.Add(new Attachment("D:\\TestFile.txt"));//--Uncomment this to send any attachment  
                 using (SmtpClient smtp = new SmtpClient(smtpAddress, portNumber))
@@ -189,14 +200,10 @@ namespace HealthInCube_BackEnd.Controllers
             return await _userManager.Users.AnyAsync(x => x.Email == email.ToLower());
 
         }
-        private async Task<decimal> PridelIdToNewBydliskoAsync(decimal pouzivatelId)
+        private async Task<decimal> PridelIdToNewBydliskoAsync()
         {
-            var bydliska = await _pouzivatelRepository.GetBydliskaAsync(pouzivatelId);
-            if (bydliska == null)
-            {
-                return 1;
-            }
-            return bydliska.Count() + 1;
+            var countOfBydlisla = await _pouzivatelRepository.GetCountNumber();
+            return countOfBydlisla + 1;
         }
         private async Task<decimal> PridelIdToNewUserAsync()
         {
