@@ -27,6 +27,14 @@ export function lekarReducer(state: LekarState = initialLekarState, action: Leka
           ...state,
           practitioner: {...action.payload},
         };
+
+        case LekarActionsBundle.DELETE_REQUEST:
+            return {
+                ...state,
+                ziadanky: state.ziadanky.filter((ziadanka, index) => {
+                    return ziadanka.idUser !== action.payload.idUser;
+                })
+            }
             
         default:
             return state;

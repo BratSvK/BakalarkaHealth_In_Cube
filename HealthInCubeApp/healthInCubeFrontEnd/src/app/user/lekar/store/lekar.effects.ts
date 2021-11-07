@@ -62,9 +62,10 @@ export class LekarEffects {
         this.actions$.pipe(
             ofType(LekarActionsBundle.ACCEPT_REQUEST),
             switchMap((action: LekarActionsBundle.AcceptRequest) => {
-                return this.http.post(fetchUrl + `lekar/createPatientAccount`, action.payload).pipe(
-                    map(() => {
+                return this.http.post<Ziadanka>(fetchUrl + `lekar/createPatientAccount`, action.payload).pipe(
+                    map((ziadanka) => {
                         this.toastr.success("Pacient vytvorený");
+                        return new LekarActionsBundle.DeleteRequest(ziadanka);
                     }),
                     catchError((error) => {
                         this.toastr.error("Nastala chyba" + error?.error);
@@ -72,7 +73,7 @@ export class LekarEffects {
                 })
                 );
             })
-        ), {dispatch: false});
+        ));
   
 
     constructor(

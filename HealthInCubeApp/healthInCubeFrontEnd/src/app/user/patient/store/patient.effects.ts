@@ -25,10 +25,9 @@ export class PatientEffects {
         catchError((error) => {
             // returning non error observable
             this.toastr.error(error?.error);
-            return of(); // creating a new observable without error
+            return of(error.error); // creating a new observable without error
           })
-    ), {dispatch: false}
-    )
+    ));
 
 
     constructor(
