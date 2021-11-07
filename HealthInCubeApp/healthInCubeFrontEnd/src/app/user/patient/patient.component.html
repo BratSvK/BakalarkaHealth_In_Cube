@@ -1,4 +1,4 @@
-<ng-container *ngIf="!isActivated">
+<ng-container *ngIf="(isActivated$ | async) === false">
   <div class="container my-5">
     <div class="alert alert-warning" role="alert">
         <h4 class="alert-heading">Výborne!</h4>

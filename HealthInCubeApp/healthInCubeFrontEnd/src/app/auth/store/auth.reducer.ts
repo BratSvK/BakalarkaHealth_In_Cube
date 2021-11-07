@@ -1,7 +1,4 @@
-import { nullSafeIsEquivalent } from '@angular/compiler/src/output/output_ast';
 import { Pouzivatel } from 'src/app/models/pouzivatel';
-import { UserToLogin } from 'src/app/models/userToLogin';
-import { AuthRoutingModule } from '../auth-routing.module';
 import * as AuthActionsBundle from './auth.actions';
 import { AuthState } from './modelStore/AuthState';
 
@@ -37,7 +34,7 @@ export function authReducer(state: AuthState = initialState, action: AuthActions
         return {
             ...state,
             user: null
-        };
+          };
 
       case AuthActionsBundle.LOGIN_START:
         return {
