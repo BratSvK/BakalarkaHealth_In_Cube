@@ -16,6 +16,7 @@ import { AuthEffects } from './auth/store/auth.effects';
 import {ToastrModule} from 'ngx-toastr';
 import { PatientEffects } from './user/patient/store/patient.effects';
 import { LekarEffects } from './user/lekar/store/lekar.effects';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { LekarEffects } from './user/lekar/store/lekar.effects';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
+    NgxSpinnerModule,
     CoreModule,
     ToastrModule.forRoot({      // config options 
       positionClass: 'toast-bottom-right'
