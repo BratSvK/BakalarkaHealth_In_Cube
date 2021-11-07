@@ -1,8 +1,11 @@
-<div class="container my-5">
+<ng-container *ngIf="!isActivated">
+  <div class="container my-5">
     <div class="alert alert-warning" role="alert">
-        <h4 class="alert-heading">Well done!</h4>
-        <p>Aww yeah, you successfully create an account</p>
+        <h4 class="alert-heading">Výborne!</h4>
+        <p>Účet úspešne vytvorený</p>
         <hr>
-        <p class="mb-0">Hovever you need to wait for your practitioner aproval</p>
+        <p class="mb-0">Avšak je nutné počkať na potvrdenie od Vášho všeobecného lekára.</p>
+        <p class="mb-0 alert-bottom text-muted">Po potvrdení, očakávajte email od lekára</p>
       </div>
-</div>
+  </div>
+</ng-container>

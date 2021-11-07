@@ -7,11 +7,10 @@ namespace HealthInCube_BackEnd.Interfaces
 {
     public interface ILekarRepository : IRepository<Lekar, LekarDto>
     {
-
         Task<Lekar> GetLekarEntity(decimal lekarId);
 
         Task<LekarDto> GetLekarEntityByUserId(decimal userId);
-
+        
         Task<IEnumerable<ZiadankaDto>> GetAllRequetsByDoctorId(decimal lekarId);
     }
 }

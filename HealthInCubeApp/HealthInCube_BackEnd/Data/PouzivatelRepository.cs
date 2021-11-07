@@ -31,6 +31,15 @@ namespace HealthInCube_BackEnd.Data
             _context.Users.Remove(pouzivatel);
         }
 
+        public async Task<Pouzivatel> GetPouzivatelWithRequests(decimal pouzivatelId)
+        {
+            var userWithRequest = await _context.Users
+                .Include(u => u.Ziadanky)
+                .SingleOrDefaultAsync(u => u.Id == pouzivatelId);
+
+            return userWithRequest;
+        }
+
         public async Task<IEnumerable<BydliskoDto>> GetBydliskaAsync(decimal pouzivatelId)
         {
            if (!_context.Bydlisko.Any(b => b.IdPouzivatel == pouzivatelId))
@@ -48,12 +57,6 @@ namespace HealthInCube_BackEnd.Data
             return await _context.Bydlisko.CountAsync();
         }
 
-        // public async Task<IEnumerable<RolaDTO>> GetAllRoles()
-        // {
-        //     var query =  _context.Rola.AsQueryable();
-
-        //     return await query.ProjectTo<RolaDTO>(_mapper.ConfigurationProvider).ToListAsync();
-        // }
 
         public async Task<RegisterPouzivatelDto> GetItemAsync(decimal itemId)
         {

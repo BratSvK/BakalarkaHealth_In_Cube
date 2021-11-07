@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using AutoMapper;
 using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
@@ -28,7 +30,8 @@ namespace HealthInCube_BackEnd.Controllers
         private readonly IPacientRepository _pacientRepository;
         private readonly IMapper _mapper;
         private readonly IConfiguration _config;
-        private readonly UserManager<Pouzivatel> _userManager;
+        private readonly IPouzivatelRepository _pouzivatelRepository;
+        private readonly IZiadankaRepository _ziadankaRepository;
 
         /// <summary>
         /// Ctor.
@@ -37,14 +40,15 @@ namespace HealthInCube_BackEnd.Controllers
         /// <param name="pacientRepository">Pacient repository.</param>
         /// <param name="mapper">Mapper</param>
         /// <param name="config">Data from config file app config.</param>
-        /// <param name="userManager">Get users from db</param>
-        public LekarController(ILekarRepository lekarRepo, IPacientRepository pacientRepository, IMapper mapper , IConfiguration config, UserManager<Pouzivatel> userManager)
+        /// <param name="pouzivatelRepository">User repository.</param>
+        public LekarController(ILekarRepository lekarRepo, IPacientRepository pacientRepository, IMapper mapper , IConfiguration config, IPouzivatelRepository pouzivatelRepository, IZiadankaRepository ziadankaRepository)
         {
             _lekarRepo = lekarRepo;
             _pacientRepository = pacientRepository;
             _mapper = mapper;
             _config = config;
-            _userManager = userManager;
+            _pouzivatelRepository = pouzivatelRepository;
+            _ziadankaRepository = ziadankaRepository;
         }
 
         /// <summary>
@@ -99,11 +103,11 @@ namespace HealthInCube_BackEnd.Controllers
         ///  Create an patient account.
         /// </summary>
         [HttpPost("createPatientAccount")]
-        public async Task<ActionResult> CreatePatientAccount([FromBody] CreatePatientAccountDto createPatientAccount)
+        public async Task<ActionResult<ZiadankaDto>> CreatePatientAccount([FromBody] CreatePatientAccountDto createPatientAccount)
         {
             var patientId =  _pacientRepository.GetItemsAsync().GetAwaiter().GetResult().Count();
 
-            var userToPatient = await _userManager.FindByIdAsync(createPatientAccount.IdUser.ToString(CultureInfo.InvariantCulture));
+            var userToPatient = await _pouzivatelRepository.GetPouzivatelWithRequests(createPatientAccount.IdUser);
 
             var patient = new Pacient
             {
@@ -124,10 +128,29 @@ namespace HealthInCube_BackEnd.Controllers
             if (await _pacientRepository.SaveAllAsync())
             {
                 SendConfirmationCreationEmailToPatient(userToPatient);
-                return Ok();
+                // may have more request to more doctors 
+                var requestToDelete = await RemoveFromRequest(userToPatient.Ziadanky, createPatientAccount.IdLekar);
+
+                if (requestToDelete == null) return BadRequest("Failed to remove from requests");
+
+                return Ok(requestToDelete);
             }
 
             return BadRequest("Failed to create and account for patient");
+        }
+
+        private async Task<ZiadankaDto> RemoveFromRequest(ICollection<Ziadanka> ziadanky, decimal idLekar)
+        {
+            var requestToDelete = ziadanky.SingleOrDefault(z => z.IdLekar == idLekar);
+            if (requestToDelete == null) return null;
+
+            requestToDelete.AcceptedAt = DateTime.Now;
+
+            _ziadankaRepository.UpdateItem(requestToDelete);
+            
+            if (await _ziadankaRepository.SaveAllAsync()) return _mapper.Map<ZiadankaDto>(requestToDelete);
+
+            return null;
         }
 
 
