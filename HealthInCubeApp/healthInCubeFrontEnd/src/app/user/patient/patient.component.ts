@@ -1,9 +1,9 @@
-import { AfterContentInit, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { take } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AppState } from 'src/app/_store/models/AppState';
 import * as PatientActionsBundle from '../patient/store/patient.actions';
-
 
 @Component({
   selector: 'app-patient',
@@ -13,22 +13,18 @@ import * as PatientActionsBundle from '../patient/store/patient.actions';
 export class PatientComponent implements OnInit {
 
   @Input() userId;
-  isActivated = false;
-
+  isActivated$: Observable<boolean>;
 
   constructor(private store: Store<AppState>) { 
+    
   }
-
+ 
   ngOnInit(): void {
     this.store.dispatch(new PatientActionsBundle.IsActivated(this.userId));
 
-    this.store.select('patient').pipe(take(1)).subscribe(patientData => {
-      this.isActivated = patientData.isActivated;
-    });
+    this.isActivated$ = this.store.select('patient').pipe(map(patientState => {
+      return patientState.isActivated;
+    }));
 
-    console.log(this.isActivated);
   }
-
-  
-
 }

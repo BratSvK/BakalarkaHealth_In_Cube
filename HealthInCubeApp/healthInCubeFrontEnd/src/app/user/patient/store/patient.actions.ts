@@ -5,8 +5,12 @@ export const GET_IS_ACTIVATED = '[Patient] Is activated';
 
 export const SET_IS_ACTIVATED = '[Patient] set is activated';
 
+export const RESET_PATIENT = '[Patient] reset';
 
 
+export class ResetPatient implements Action {
+    readonly type = RESET_PATIENT;
+}
 
 export class IsActivated implements Action {
     readonly type = GET_IS_ACTIVATED
@@ -21,6 +25,4 @@ export class SetIstActivated implements Action {
     constructor(public payload: boolean) {}
 }
 
-
-
-export type PatientActions = IsActivated | SetIstActivated;
+export type PatientActions = IsActivated | SetIstActivated | ResetPatient;
