@@ -21,10 +21,7 @@ export class ZiadankyComponent implements OnInit, OnDestroy {
   requests: Ziadanka[] = [];
   ziadankaSub: Subscription;
 
-  constructor(private store: Store<AppState>) { 
-    this.store.dispatch(new LekarActionsBundle.FetchRequests());
-  }
-  
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
 
@@ -37,8 +34,6 @@ export class ZiadankyComponent implements OnInit, OnDestroy {
     });
 
   }
-
-
 
   onApprovePatient(idUser: number) {
     var createPatienModel = this.createModelToCreationPatient(idUser);
