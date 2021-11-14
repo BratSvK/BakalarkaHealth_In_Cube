@@ -17,10 +17,14 @@ import {ToastrModule} from 'ngx-toastr';
 import { PatientEffects } from './user/patient/store/patient.effects';
 import { LekarEffects } from './user/lekar/store/lekar.effects';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { ServerErrorComponent } from './errors/server-error/server-error.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NotFoundComponent,
+    ServerErrorComponent
   ],
   imports: [
     BrowserModule,

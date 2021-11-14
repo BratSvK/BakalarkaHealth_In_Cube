@@ -1,44 +1,39 @@
 import { NgModule } from "@angular/core";
 import { PreloadAllModules, RouterModule, Routes } from "@angular/router";
+import { NotFoundComponent } from "./errors/not-found/not-found.component";
+import { ServerErrorComponent } from "./errors/server-error/server-error.component";
+import { IsActivatedResolver } from "./user/patient/isActivated-resolver.service";
 import { AuthGuard } from "./_guards/auth.guard";
 
-
-
-// tu budu nase routes v aplikacii-> najlepsie pouzit lazy loading a AuthGuard pre admina -> a pouzivatela 
+// lazy loading for modules in our app
 const appRoutes: Routes = [
-    // PRIKLAD AKO TO POUZIT
-    // { path: '', redirectTo: '/recipes', pathMatch: 'full' },
-    // {
-    //     path: 'recipes',
-    //     loadChildren: () =>
-    //       import('./recipes/recipes.module').then((m) => m.RecipesModule),
-    //   }, // lazy loading -> please only laod module when user visits this path only;
-
     {path: '', redirectTo: '/auth', pathMatch: 'full'},
     {
         path: 'auth',
-        loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)                      // lazy loading, nedaveme to do appModule
+        loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)                      
     }, 
-    {
-        path:'user',
+    {   
+        path:'practitioner/:id',
         canActivate: [AuthGuard],
-        loadChildren: () => import('./user/user.module').then((m)=>m.UserModule)
-    }
+       
+        loadChildren: () => import('./user/lekar/lekar.module').then((m)=>m.LekarModule)
+    },
+    {
+        path:'patient/:id',
+        canActivate: [AuthGuard],
+        resolve: [IsActivatedResolver],
+        loadChildren: () => import('./user/patient/patient.module').then((m)=>m.PatientModule)
+    },
+    {path: 'not-found', component: NotFoundComponent},
+    {path: 'server-error', component: ServerErrorComponent},
+    {path: '**', component:NotFoundComponent,  pathMatch: 'full'}
 ];
-
-
-
 
 @NgModule({
     imports: [
         // strategy -> preloadAllModules -> telling Angular in general use lazy loading but prepare other components when we need them 
          RouterModule.forRoot(appRoutes, {preloadingStrategy: PreloadAllModules, initialNavigation: 'enabled'})
-       
-
     ],
     exports: [RouterModule]
 })
 export class AppRoutingModule {}
-
-
-

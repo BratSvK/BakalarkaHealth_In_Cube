@@ -9,7 +9,6 @@
     display: inline;
 }
 
-
 .space {
     width: 10%;
 }
@@ -54,10 +53,3 @@ a:hover {
     background-color: black;
     border-radius: 1;
 }
-
-
-/* .nav-link.active {
-    border-radius: 1;
-    border-bottom: 3px solid crimson;
-} */
-

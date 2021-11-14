@@ -13,7 +13,7 @@
       <div class="collapse navbar-collapse" id="collapseBasic" [collapse]="isCollapsed">
         <ul class="nav nav-pills me-auto mb-2 mb-md-0">
   
-          <ng-container *ngIf="isPatient() && isActivatedPatientFlag">
+          <ng-container *ngIf="isActivatedPatientFlag">
             <li class="nav-item mr-2">
               <a class="nav-link" routerLink='/zdravotnaKarta' routerLinkActive='active'>Zdravotná karta</a>
             </li>
@@ -22,20 +22,6 @@
             </li>
           </ng-container>
 
-
-          <ng-container *ngIf="!isPatient()">
-            <li class="nav-item mr-2">
-              <a class="nav-link" [routerLink]="['practitioner','requests']"  routerLinkActive='active'><fa-icon  [icon]="userCheck"></fa-icon>Žiadanky</a>
-            </li>
-            <li class="nav-item mr-2">
-              <a class="nav-link" [routerLink]="['practitioner','pacienti-list']" routerLinkActive='active'><fa-icon  [icon]="users"></fa-icon>Pacienti</a>
-            </li>
-            <li class="nav-item mr-2">
-              <a class="nav-link " [routerLink]="['practitioner','vysetrenia']"  routerLinkActive='active'><fa-icon  [icon]="stethoscope"></fa-icon>Vyšetrenia</a>
-            </li>
-          </ng-container>
-  
-          
         </ul>
   
         <ul class="navbar-nav flex-row flex-wrap ms-md-auto" style="margin-left: auto!important">
@@ -44,7 +30,7 @@
             <img [src]="user.fotka || './assets/user.png'" alt="{{user.fullName}}" class="text-light mr-2" />
             <a class="dropdown-toggle text-body ml-2" dropdownToggle>{{user.fullName  | titlecase}}</a>
             <div class="dropdown-menu mt-3" *dropdownMenu>
-              <a class="dropdown-item" routerLink='/member/edit'>Moje konto</a>
+              <a class="dropdown-item" [routerLink]="['patient','edit']">Moje konto</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" (click)="logout()">Odhlásiť</a>
             </div>

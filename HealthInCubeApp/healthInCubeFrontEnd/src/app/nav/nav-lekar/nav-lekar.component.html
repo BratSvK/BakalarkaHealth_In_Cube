@@ -1,0 +1,48 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+    <div class="container-fluid">
+  
+      <div>
+        <i class="brand-zone-text" [inlineSVG]="'assets/brand.svg'"></i>
+      </div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"  (click)="isCollapsed = !isCollapsed"
+      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic"
+        aria-controls="collapseBasic" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <span class="space"></span>
+      <div class="collapse navbar-collapse" id="collapseBasic" [collapse]="isCollapsed">
+        <ul class="nav nav-pills me-auto mb-2 mb-md-0">
+
+          <ng-container>
+            <li class="nav-item mr-2">
+              <a class="nav-link" [routerLink]="['pacienti-list']" routerLinkActive='active'><fa-icon  [icon]="users"></fa-icon>Pacienti</a>
+            </li>
+            <li class="nav-item mr-2">
+              <a class="nav-link " [routerLink]="['vysetrenia']"  routerLinkActive='active'><fa-icon  [icon]="stethoscope"></fa-icon>Vyšetrenia</a>
+            </li>
+            <li class="nav-item mr-2">
+              <a class="nav-link" [routerLink]="['requests']"  routerLinkActive='active'><fa-icon  [icon]="userCheck"></fa-icon>Žiadanky</a>
+            </li>
+          </ng-container>
+        </ul>
+  
+        <ul class="navbar-nav flex-row flex-wrap ms-md-auto" style="margin-left: auto!important">
+  
+          <div class="dropdown" *ngIf="user" dropdown>
+            <img [src]="user.fotka || './assets/user.png'" alt="{{user.fullName}}" class="text-light mr-2" />
+            <a class="dropdown-toggle text-body ml-2" dropdownToggle>{{user.fullName  | titlecase}}</a>
+            <div class="dropdown-menu mt-3" *dropdownMenu>
+              <a class="dropdown-item" [routerLink]="['patient','edit']">Moje konto</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" (click)="logout()">Odhlásiť</a>
+            </div>
+          </div>
+          
+        </ul>
+      </div>
+  
+    </div>
+  
+  </nav>
+
+

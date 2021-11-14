@@ -1,11 +1,20 @@
-<ng-container *ngIf="(isActivated$ | async) === false">
-  <div class="container my-5">
-    <div class="alert alert-warning" role="alert">
-        <h4 class="alert-heading">Výborne!</h4>
-        <p>Účet úspešne vytvorený</p>
-        <hr>
-        <p class="mb-0">Avšak je nutné počkať na potvrdenie od Vášho všeobecného lekára.</p>
-        <p class="mb-0 alert-bottom text-muted">Po potvrdení, očakávajte email od lekára</p>
-      </div>
-  </div>
-</ng-container>
+<app-nav-patient></app-nav-patient>
+
+<div class="container" style="margin-top: 50px;">
+
+  <ng-container *ngIf="(isActivated$ | async) === false">
+    <div class="container my-5">
+      <div class="alert alert-warning" role="alert">
+          <h4 class="alert-heading">Výborne!</h4>
+          <p>Účet úspešne vytvorený</p>
+          <hr>
+          <p class="mb-0">Avšak je nutné počkať na potvrdenie od Vášho všeobecného lekára.</p>
+          <p class="mb-0 alert-bottom text-muted">Po potvrdení, očakávajte email od lekára</p>
+        </div>
+    </div>
+  </ng-container>
+
+
+</div>
+
+

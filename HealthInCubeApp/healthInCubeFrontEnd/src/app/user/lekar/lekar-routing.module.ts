@@ -9,17 +9,18 @@ import { ZiadankyComponent } from "./ziadanky/ziadanky.component";
 
 
 const lekarRoutes: Routes = [
-    { path: '', component: LekarComponent},
-    { path: 'requests',  component: ZiadankyComponent, resolve: [ZiadankyResolverService]},
-    { path: 'pacienti-list',  component: PacientiListComponent},
-    { path: 'vysetrenia',  component: VysetreniaComponent}
-];
+    { path: '', component: LekarComponent,
+    children: [
+        { path: '' , pathMatch: 'full', redirectTo: 'pacienti-list'},
+        { path: 'pacienti-list',  component: PacientiListComponent},
+        { path: 'requests', component: ZiadankyComponent, resolve: [ZiadankyResolverService]},
+        { path: 'vysetrenia',  component: VysetreniaComponent}
+    ]},
 
+]
 
 @NgModule({
     imports: [RouterModule.forChild(lekarRoutes)],
     exports: [RouterModule]
-
-
 })
-export class LekarRouting {}
+export class LekarRoutingModule {}

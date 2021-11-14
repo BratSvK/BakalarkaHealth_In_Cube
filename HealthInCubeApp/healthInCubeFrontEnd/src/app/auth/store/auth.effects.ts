@@ -8,24 +8,20 @@ import { of } from "rxjs";
 import { catchError, map, switchMap, tap } from "rxjs/operators";
 import { Pouzivatel } from "src/app/models/pouzivatel";
 import { PrihlaseniePouzivatel } from "src/app/models/prihlaseniePouzivatel";
+import { Role } from "src/app/models/user";
 import { UserToLogin } from "src/app/models/userToLogin";
 import { extractFotoFromApi } from "src/app/shared/foto-extract";
 import { AuthService } from "src/app/_service/auth.service";
 import { environment } from "src/environments/environment";
 import * as AuthActionsBundle from './auth.actions';
 
-
 const fetchUrl = environment.apiUrl; // ....../api/
-
-
 
 // we are injetinc actions and http client 
 @Injectable()
 export class AuthEffects {
   // actions -> one big observable with all dispatch actions and work with them(No change state)
-  // stram of dispatch actions
-
- 
+  // stream of dispatch actions
   // register first effect handler
   // this effects automaticly dispatch a new action
   authLogin = createEffect(() =>
@@ -48,7 +44,6 @@ export class AuthEffects {
             catchError((error) => {
               // returning non error observable
               const errorToSend = this.handleError(error);
-              this.toastr.error(errorToSend);
               return of(new AuthActionsBundle.LoginFail(errorToSend)); // creating a new observable without error
             })
           );
@@ -57,14 +52,13 @@ export class AuthEffects {
   );
 
   // not yield dispatchable action
-
   authRedirect = createEffect(
     () =>
       this.actions$.pipe(
         ofType(AuthActionsBundle.LOGIN),
-        tap(() => {
+        tap((action: AuthActionsBundle.AuthentificateSuccess) => {
             this.toastr.success("Succesfully logged");
-            this.router.navigate(['/user']);
+            this.handleRedirectUser(action.payload.roleStoreBase, +action.payload.id);
         })
       ),
     { dispatch: false } // just create a effect to UI
@@ -134,10 +128,6 @@ export class AuthEffects {
     )
   );
 
-
-
-
-
   constructor(
     private actions$: Actions,
     private http: HttpClient,
@@ -146,6 +136,18 @@ export class AuthEffects {
     private toastr: ToastrService,
     private sanitizer: DomSanitizer
   ) {}
+
+
+  private handleRedirectUser(userRoles: string[], id: number) {
+
+    if (userRoles.some(r => r === Role.Patient) ) {
+      this.router.navigate(['/patient', id]);
+    } else if (userRoles.some(r => r === Role.Practitioner)) {
+      this.router.navigate(['/practitioner', id]);
+    } else {
+      this.router.navigate(['/admin' , id])
+    }
+  }
 
   private handleError(errorRes: HttpErrorResponse) {
     let errorMessage = 'An uknown error occured!';
@@ -205,8 +207,6 @@ export class AuthEffects {
       image = resData.fotka
     }
 
-
-
     return new AuthActionsBundle.AuthentificateSuccess({
       email: resData.email,
       id: resData.id,
@@ -217,8 +217,6 @@ export class AuthEffects {
       roleStoreBase: resData.roleStoreBase,
     });
   }
-
-
 
   private getDecodedToken(token: string) {
    // token -> header , payload, signature 

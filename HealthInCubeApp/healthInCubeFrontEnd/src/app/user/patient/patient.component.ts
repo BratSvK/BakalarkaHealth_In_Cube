@@ -20,8 +20,6 @@ export class PatientComponent implements OnInit {
   }
  
   ngOnInit(): void {
-    this.store.dispatch(new PatientActionsBundle.IsActivated(this.userId));
-
     this.isActivated$ = this.store.select('patient').pipe(map(patientState => {
       return patientState.isActivated;
     }));

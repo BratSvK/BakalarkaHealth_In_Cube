@@ -1,71 +1,63 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { map, take } from 'rxjs/operators';
-import { Pouzivatel } from '../models/pouzivatel';
-import { AppState } from '../_store/models/AppState';
-import * as AuthActionsBundle from '../auth/store/auth.actions';
-import { Subscription } from 'rxjs';
-import { faUserCheck, faStethoscope, faUsers } from '@fortawesome/free-solid-svg-icons';
+// import { Component, OnDestroy, OnInit } from '@angular/core';
+// import { Store } from '@ngrx/store';
+// import { map, take } from 'rxjs/operators';
+// import { Pouzivatel } from '../models/pouzivatel';
+// import { AppState } from '../_store/models/AppState';
+// import * as AuthActionsBundle from '../auth/store/auth.actions';
+// import { Subscription } from 'rxjs';
+// import { faUserCheck, faStethoscope, faUsers } from '@fortawesome/free-solid-svg-icons';
 
 
 
-@Component({
-  selector: 'app-nav',
-  templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
-})
-export class NavComponent implements OnInit, OnDestroy {
+// @Component({
+//   selector: 'app-nav',
+//   templateUrl: './nav.component.html'
+// })
+// export class NavComponent implements OnInit, OnDestroy {
 
-  isCollapsed = false;
-  user: Pouzivatel;
-  isActivatedPatientFlag: boolean;
-  image: any;
+//   isCollapsed = false;
+//   user: Pouzivatel;
+//   isActivatedPatientFlag: boolean;
+//   image: any;
 
-  users = faUsers;
-  userCheck = faUserCheck;
-  stethoscope = faStethoscope;
+//   users = faUsers;
+//   userCheck = faUserCheck;
+//   stethoscope = faStethoscope;
 
 
-  sub: Subscription;
+//   sub: Subscription;
 
-  constructor(private store: Store<AppState>) { }
+//   constructor(private store: Store<AppState>) { }
  
 
-  ngOnInit(): void {
+//   ngOnInit(): void {
     
-    this.store.select('auth').pipe(take(1),map(resData => {
-      return resData.user;
-    })).subscribe(user => {
-      this.user = user;
-      
-    });
-
-    this.sub = this.store.select('patient').pipe(map(patientData => {
-      return patientData.isActivated;
-    })).subscribe(isActivated => {
-      this.isActivatedPatientFlag = isActivated;
-    })
+//     this.store.select('auth').pipe(take(1),map(resData => {
+//       return resData.user;
+//     })).subscribe(user => {
+//       this.user = user;
+//     });
 
 
-  }
+//   }
 
 
-  logout() {
-    this.store.dispatch(new AuthActionsBundle.Logout());
-  }
+//   logout() {
+//     this.store.dispatch(new AuthActionsBundle.Logout());
+//   }
 
 
-  isPatient() {
-   return this.user.roleStoreBase[0].trim().toLowerCase() === 'pacient'
-  }
+//   isPatient() {
+//    return this.user.roleStoreBase[0].trim().toLowerCase() === 'pacient'
+//   }
 
 
-  isActivatedPatient() {
+//   isActivatedPatient() {
 
-  }
+//   }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
-  }
+//   ngOnDestroy(): void {
+//     this.sub.unsubscribe();
+//   }
 
-}
+// }

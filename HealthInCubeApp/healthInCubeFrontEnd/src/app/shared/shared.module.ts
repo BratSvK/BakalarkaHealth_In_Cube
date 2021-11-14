@@ -6,10 +6,11 @@ import { BsDropdownModule } from "ngx-bootstrap/dropdown";
 import { HasRoleDirective } from "../_directives/has-role.directive";
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { InlineSVGModule } from "ng-inline-svg";
 
 @NgModule({
   declarations: [HasRoleDirective],
-  imports: [CommonModule, BsDropdownModule.forRoot(), FontAwesomeModule,CollapseModule.forRoot()],
-  exports: [CommonModule, HasRoleDirective,FontAwesomeModule, CollapseModule, BsDropdownModule]
+  imports: [CommonModule, BsDropdownModule.forRoot(), FontAwesomeModule,CollapseModule.forRoot(),InlineSVGModule.forRoot()],
+  exports: [CommonModule, HasRoleDirective,FontAwesomeModule, CollapseModule, BsDropdownModule, InlineSVGModule]
 })
 export class SharedModule {}
