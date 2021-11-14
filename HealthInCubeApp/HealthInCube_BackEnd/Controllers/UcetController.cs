@@ -128,7 +128,9 @@ namespace HealthInCube_BackEnd.Controllers
                 FullName = user.GetFullName(),
                 Fotka =  _fotoRepository.GetFotkaByUserId(user.Id).Result?.Fotka,
                 Id = user.Id,
-                LivingCity = await _pouzivatelRepository.GetTrvaleMesto(user.Id)
+                Bydliskos = await _pouzivatelRepository.GetBydliskaAsync(user.Id),
+                DatNarodenia = user.DatNarodenia,
+                Registrovany = user.Registrovany
             });
         }
 

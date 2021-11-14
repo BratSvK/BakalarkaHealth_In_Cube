@@ -12,7 +12,7 @@ namespace HealthInCube_BackEnd.Interfaces
 
         Task<Pouzivatel> GetPouzivatelWithRequests(decimal pouzivatelId);
 
-        Task<IEnumerable<BydliskoDto>> GetBydliskaAsync(decimal pouzivatelId);
+        Task<ICollection<BydliskoDto>> GetBydliskaAsync(decimal pouzivatelId);
 
         Task<int> GetCountNumber();
 

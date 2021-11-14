@@ -1,5 +1,6 @@
 import { Pouzivatel } from 'src/app/models/pouzivatel';
 import * as AuthActionsBundle from './auth.actions';
+import { createUser } from './auth.effects';
 import { AuthState } from './modelStore/AuthState';
 
 // only state is a user 
@@ -13,16 +14,7 @@ export function authReducer(state: AuthState = initialState, action: AuthActions
     
     switch (action.type) {
       case AuthActionsBundle.LOGIN:
-          const userToSend = new Pouzivatel(
-            action.payload.email,
-            action.payload.id,
-             action.payload.fullName,
-             action.payload.fotka,
-             action.payload.token,
-             action.payload.expirationDateToken,
-             action.payload.roleStoreBase,
-             action.payload.livingCity
-          );
+          const userToSend = createUser(action.payload);
 
         return {
             ...state,

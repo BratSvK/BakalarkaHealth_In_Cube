@@ -10,8 +10,6 @@ import { Pouzivatel } from '../models/pouzivatel';
 import { AppState } from '../_store/models/AppState';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs/operators';
-import { UserToLogin } from '../models/userToLogin';
-
 
 
 // we are storing cuurent user a token 

@@ -1,35 +1,15 @@
-export class Pouzivatel {
+import { Bydlisko } from "./bydlisko";
 
-    constructor(
-        public email: string,
-        public id: string,
-        public fullName: string,
-        public fotka: any,
-        public token: string,
-        public tokenExpi: Date,
-        public roleStoreBase: string [],
-        public livingCity: string
-      ) {}
-
-      // check validity 
-
-  // getter user.token -> special type of property with code 
-  // get token() {
-
-  //   console.log(this._tokenExpirationDate);
-  //   console.log("som tu");
-
-  //   // token expired
-  //   if (!this._tokenExpirationDate || new Date().getTime() > this._tokenExpirationDate.getTime()) {
-  //       return null;
-  //   }
-
-  //   return this._token;
-  // }
-
-  // get tokenExpi() {
-  //   return this._tokenExpirationDate;
-  // }
-
-    
+export interface Pouzivatel {
+  id: number;
+  email: string;
+  token: string;
+  fotka: string;
+  fullName: string;
+  expirationDateToken: Date;
+  poslednePrihlasenie: Date | null;
+  datNarodenia: Date | null;
+  bydliskos: Bydlisko[];
+  roleStoreBase: string[];
+  registrovany: Date
 }

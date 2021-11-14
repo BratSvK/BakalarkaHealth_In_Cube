@@ -3,3 +3,4 @@ export interface Adresa {
     ulica: string;
     trvale: boolean;
 }
+

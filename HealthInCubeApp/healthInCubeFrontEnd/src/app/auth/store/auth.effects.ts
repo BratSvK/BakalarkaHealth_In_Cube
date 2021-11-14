@@ -9,7 +9,6 @@ import { catchError, map, switchMap, tap } from "rxjs/operators";
 import { Pouzivatel } from "src/app/models/pouzivatel";
 import { PrihlaseniePouzivatel } from "src/app/models/prihlaseniePouzivatel";
 import { Role } from "src/app/models/user";
-import { UserToLogin } from "src/app/models/userToLogin";
 import { extractFotoFromApi } from "src/app/shared/foto-extract";
 import { AuthService } from "src/app/_service/auth.service";
 import { environment } from "src/environments/environment";
@@ -33,7 +32,7 @@ export class AuthEffects {
 
         const signInObject = this.createModelToSend(authData.payload);
         return this.http
-          .post<UserToLogin>(fetchUrl + 'ucet/login',
+          .post<Pouzivatel>(fetchUrl + 'ucet/login',
             signInObject
           )
           .pipe(
@@ -87,21 +86,11 @@ export class AuthEffects {
           return {type: '[Auth] No User'};
         }
 
-        const loadedUser = new Pouzivatel(
-          userDataToSend.email,
-          userDataToSend.id,
-          userDataToSend.fullName,
-          userDataToSend.fotka,
-          userDataToSend.token,
-          new Date(userDataToSend.tokenExpi),
-          userDataToSend.roleStoreBase,
-          userDataToSend.livingCity
-        );
-
-
+        const loadedUser = createUser(userDataToSend);
+          
         // using get -> validation
         if (loadedUser.token) {
-           const expirationDuration = new Date(loadedUser.tokenExpi).getTime() - new Date().getTime();
+           const expirationDuration = new Date(loadedUser.expirationDateToken).getTime() - new Date().getTime();
            this.authService.setLogoutTimer(expirationDuration);
 
 
@@ -112,17 +101,9 @@ export class AuthEffects {
              image = loadedUser.fotka
            }
 
-          return new AuthActionsBundle.AuthentificateSuccess({
-            email: loadedUser.email,
-            id: loadedUser.id,
-            token: loadedUser.token,
-            expirationDateToken: loadedUser.tokenExpi,
-            fotka: image,
-            roleStoreBase: loadedUser.roleStoreBase,
-            fullName: loadedUser.fullName,
-            livingCity: loadedUser.livingCity
-          });
-         
+           loadedUser.fotka = image;
+
+          return new AuthActionsBundle.AuthentificateSuccess(loadedUser);
         }
 
         return {type: '[Auth] TokenExpires'};
@@ -172,7 +153,7 @@ export class AuthEffects {
     return errorMessage;
   }
 
-  private handleAuthentification(resData: UserToLogin) {
+  private handleAuthentification(resData: Pouzivatel) {
     resData.roleStoreBase = [];
 
     const expirationDate = new Date(
@@ -182,17 +163,8 @@ export class AuthEffects {
     // check roles for user to save 
     const roles = this.getDecodedToken(resData.token).role;
     Array.isArray(roles) ? resData.roleStoreBase = roles : resData.roleStoreBase.push(roles);
-    const user = new Pouzivatel(
-        resData.email,
-        resData.id,
-        resData.fullName,
-        resData.fotka,
-        resData.token,
-        expirationDate,
-        resData.roleStoreBase,
-        resData.livingCity
-    );
-
+    const user = createUser(resData);
+    
     const today = new Date();
     const endDateTokenMiliseconds = expirationDate.getTime() - today.getTime(); 
 
@@ -210,16 +182,9 @@ export class AuthEffects {
       image = resData.fotka
     }
 
-    return new AuthActionsBundle.AuthentificateSuccess({
-      email: resData.email,
-      id: resData.id,
-      token: resData.token,
-      expirationDateToken: expirationDate,
-      fotka: image,
-      fullName: resData.fullName,
-      roleStoreBase: resData.roleStoreBase,
-      livingCity: resData.livingCity
-    });
+    user.fotka = image;
+
+    return new AuthActionsBundle.AuthentificateSuccess(user);
   }
 
   private getDecodedToken(token: string) {
@@ -235,4 +200,21 @@ export class AuthEffects {
       returnSecureToken: true,
     };
   }
+}
+
+
+export function createUser(userDataToSend: Pouzivatel): Pouzivatel {
+  return {
+    id: userDataToSend.id,
+    email: userDataToSend.email,
+    fotka: userDataToSend.fotka,
+    fullName: userDataToSend.fullName,
+    token: userDataToSend.token,
+    expirationDateToken: new Date(userDataToSend.expirationDateToken),
+    bydliskos:userDataToSend.bydliskos,
+    poslednePrihlasenie:  new Date(userDataToSend.poslednePrihlasenie),
+    roleStoreBase: userDataToSend.roleStoreBase,
+    datNarodenia: new Date(userDataToSend.datNarodenia),
+    registrovany: new Date(userDataToSend.registrovany),
+  };
 }

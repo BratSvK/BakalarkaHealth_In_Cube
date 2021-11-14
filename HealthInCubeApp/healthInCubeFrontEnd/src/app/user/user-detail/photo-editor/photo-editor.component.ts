@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { take } from 'rxjs/operators';
+import { FileUploader } from 'ng2-file-upload';
 import { Photo } from 'src/app/models/photo';
 import { Pouzivatel } from 'src/app/models/pouzivatel';
 import { AppState } from 'src/app/_store/models/AppState';
@@ -16,12 +16,14 @@ export class PhotoEditorComponent implements OnInit {
   @Input() user: Pouzivatel;
   hasBaseDropzoneOver = false;
   baseUrl = environment.apiUrl;
+  uploader: FileUploader;
+
 
   constructor(private store: Store<AppState>) {
-    this.initializeUploader();
    }
 
   ngOnInit(): void {
+    this.initializeUploader();
   }
 
   // update dropzone 
@@ -48,33 +50,30 @@ export class PhotoEditorComponent implements OnInit {
   }
 
   initializeUploader(){
-    // this.uploader = new FileUploader({
-    //   url: this.baseUrl + 'users/add-photo',
-    //   authToken: 'Bearer ' +  this.user.token,
-    //   isHTML5: true,
-    //   allowedFileType: ['image'],
-    //   removeAfterUpload: true,
-    //   autoUpload: false,
-    //   maxFileSize: 10 * 1024 * 1024, // 10MB is upload server max
-    // });
+    this.uploader = new FileUploader({
+      url: this.baseUrl + 'pouzivatel/add-photo',
+      authToken: 'Bearer ' +  this.user.token,
+      isHTML5: true,
+      allowedFileType: ['image'],
+      removeAfterUpload: true,
+      autoUpload: false,
+      maxFileSize: 10 * 1024 * 1024, // 10MB is upload server max
+    });
 
-    // // we are using a bearer token so we dont need it 
-    // this.uploader.onAfterAddingFile = (file) => {
-    //   file.withCredentials = false;
-    // }
+    // we are using a bearer token so we dont need it 
+    this.uploader.onAfterAddingFile = (file) => {
+      file.withCredentials = false;
+    }
 
-    // // component code 
-    // this.uploader.onSuccessItem = (item, response, status, headers) => {
-    //   if (response){
-    //     const photo: Photo = JSON.parse(response);
-    //     this.member.photos.push(photo);
-    //     if (photo.isMain){
-    //       this.user.photoUrl = photo.url;
-    //       this.member.photourl = photo.url;
-    //       this.accountService.setCurrentUser(this.user);
-    //     }
-    //   }
-    // }
+    // component code 
+    this.uploader.onSuccessItem = (item, response, status, headers) => {
+      if (response){
+        const photo: Photo = JSON.parse(response);
+        if (photo.fotka){
+          this.user.fotka = photo.fotka;
+        }
+      }
+    }
   }
 
 }

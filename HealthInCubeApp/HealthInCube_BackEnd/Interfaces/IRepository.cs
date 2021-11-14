@@ -9,8 +9,6 @@ namespace HealthInCube_BackEnd.Interfaces
 
         Task<U> GetItemAsync(decimal itemId);
 
-
-
         void InsertItem(T item);
 
         void DeleteItem(T item);

@@ -1,6 +1,6 @@
 <div class="row" *ngIf="user">
     <div class="col-4">
-        <h1>Your profile</h1>
+        <h2>Tvoj profil</h2>
     </div>
     <div class="col-8">
         <div class="alert alert-info" *ngIf="editForm.dirty">
@@ -13,16 +13,16 @@
                 class="card-img-top img-thumbnail">
             <div class="card-body">
                 <div>
-                    <strong>Location:</strong>
-                    <p>{{user.livingCity}}
+                    <strong>Poloha:</strong>
+                    <p>{{getLivingCity(user.bydliskos)}}
                 </div>
                 <div>
-                    <strong>Age:</strong>
-                    <!-- <p>{{member.age}}</p> -->
+                    <strong>Vek:</strong>
+                    <p>{{getAgeByBirthDate(user.datNarodenia)}}</p>
                 </div>
                 <div>
-                    <strong>Member since:</strong>
-                    <!-- <p>{{member.created | date}}</p> -->
+                    <strong>Pacient od:</strong>
+                    <p>{{user.registrovany | date}}</p>
                 </div>
             </div>
             <div class="card-footer">

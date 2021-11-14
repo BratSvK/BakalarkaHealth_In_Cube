@@ -12,10 +12,10 @@ import { Mesto } from "src/app/models/mesto";
 import { Lekar } from "src/app/models/lekar";
 import { of } from "rxjs";
 import { RegisterPouzivatel } from "src/app/models/pouzivatelRegistracia";
-import { UserToLogin } from "src/app/models/userToLogin";
 import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { Mail } from "src/app/models/mail";
+import { Pouzivatel } from "src/app/models/pouzivatel";
 
 
 const fetchUrl = environment.apiUrl; // ....../api/
@@ -117,7 +117,7 @@ fetchMestaBirth = createEffect(() =>
         // const signInObject = this.createModelToSend(authSignData.payload);
 
         return this.http
-          .post<UserToLogin>(fetchUrl + 'ucet/register',
+          .post<Pouzivatel>(fetchUrl + 'ucet/register',
             authSignData.payload
           )
           .pipe(

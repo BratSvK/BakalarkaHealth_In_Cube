@@ -1,7 +1,6 @@
 import { Action } from "@ngrx/store";
 import { Pouzivatel } from "src/app/models/pouzivatel";
 import { PrihlaseniePouzivatel } from "src/app/models/prihlaseniePouzivatel";
-import { UserToLogin } from "src/app/models/userToLogin";
 
 
 export const LOGIN = '[Auth] Login';
@@ -21,7 +20,7 @@ export class AuthentificateSuccess implements Action {
     readonly type = LOGIN;
 
 
-    constructor(public payload: UserToLogin) {}
+    constructor(public payload: Pouzivatel) {}
 }
 
 

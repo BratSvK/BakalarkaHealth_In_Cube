@@ -30,7 +30,11 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<IEnumerable<PacientDto>> GetItemsAsync()
         {
-            var pecienti = await _context.Pacient.Include(p => p.ZdravotnaKartum).Include(p => p.ZdravPoistenies)
+            var pecienti = await _context.Pacient
+                .Include(p => p.ZdravotnaKartum)
+                .Include(p => p.ZdravPoistenies)
+                .Include(p => p.IdPouzivatelNavigation)
+                .ThenInclude(u => u.Bydliskos)
                 .ToListAsync();
 
 
@@ -39,8 +43,12 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<PacientDto> GetItemAsync(decimal itemId)
         {
-            return await _context.Pacient.Include(p => p.ZdravotnaKartum).Include(p => p.ZdravPoistenies)
-                .ProjectTo<PacientDto>(_mapper.ConfigurationProvider).SingleOrDefaultAsync();
+           var queryPatient = await _context.Pacient
+                .Include(p => p.ZdravotnaKartum)
+                .Include(p => p.ZdravPoistenies)
+                .SingleOrDefaultAsync(p => p.IdPacient == itemId);
+
+           return _mapper.Map<PacientDto>(queryPatient);
         }
 
         public void InsertItem(Pacient item)

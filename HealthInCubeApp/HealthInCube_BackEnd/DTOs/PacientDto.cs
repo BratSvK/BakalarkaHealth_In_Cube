@@ -42,5 +42,10 @@ namespace HealthInCube_BackEnd.DTOs
         /// All insurance of patient
         /// </summary>
         public ICollection<ZdravotnePoistenieDto> ZdravotnePoistenia { get; set; }
+
+        /// <summary>
+        /// Data about user.
+        /// </summary>
+        public PouzivatelDto PouzivatelData { get; set; }
     }
 }

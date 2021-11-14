@@ -40,16 +40,19 @@ namespace HealthInCube_BackEnd.Data
             return userWithRequest;
         }
 
-        public async Task<IEnumerable<BydliskoDto>> GetBydliskaAsync(decimal pouzivatelId)
+        public async Task<ICollection<BydliskoDto>> GetBydliskaAsync(decimal pouzivatelId)
         {
            if (!_context.Bydlisko.Any(b => b.IdPouzivatel == pouzivatelId))
            {
                return null;
            }
 
-           var query = _context.Bydlisko.Where(b => b.IdPouzivatel == pouzivatelId).AsQueryable();
+           var query = await _context.Bydlisko
+               .Include(b => b.IdMestoNavigation)
+               .Where(b => b.IdPouzivatel == pouzivatelId)
+               .ToListAsync();
 
-           return await query.ProjectTo<BydliskoDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
+           return _mapper.Map<ICollection<BydliskoDto>>(query);
         }
 
         public async Task<int> GetCountNumber()
@@ -95,7 +98,7 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<Pouzivatel> GetPouzivatelEntity(decimal pouzivatelId)
         {
-            return  await _context.Users.FindAsync(pouzivatelId);
+            return  await _context.Users.Include(u => u.FotkaPouzivatel).SingleOrDefaultAsync(p => p.Id == pouzivatelId);
         }
 
         public void InsertItem(Pouzivatel item)

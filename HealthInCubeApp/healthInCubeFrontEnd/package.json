@@ -29,6 +29,7 @@
     "moment": "^2.29.1",
     "ng-animated-border": "^2.0.0",
     "ng-inline-svg": "^13.1.0",
+    "ng2-file-upload": "^1.4.0",
     "ngx-bootstrap": "^7.1.0",
     "ngx-spinner": "^12.0.0",
     "ngx-toastr": "^14.1.3",

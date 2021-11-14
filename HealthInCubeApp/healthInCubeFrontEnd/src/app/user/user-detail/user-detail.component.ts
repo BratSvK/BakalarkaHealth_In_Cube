@@ -2,8 +2,8 @@ import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { map, take } from 'rxjs/operators';
+import { Bydlisko } from 'src/app/models/bydlisko';
 import { Pouzivatel } from 'src/app/models/pouzivatel';
-import { User } from 'src/app/models/user';
 import { AppState } from 'src/app/_store/models/AppState';
 
 @Component({
@@ -39,6 +39,21 @@ export class UserDetailComponent implements OnInit {
     })).subscribe(user => {
       this.user = user;
     });
+  }
+
+  getLivingCity(bydliskos: Bydlisko[]): string {
+    if (bydliskos.length <= 0) {
+      return undefined;
+    }
+    return bydliskos.filter(b => b.trvale === true)[0].idMestoNavigation.nazov;
+  }
+
+
+  getAgeByBirthDate(datNarodenia: Date): number {
+
+    let timeDiff = Math.abs(Date.now() - datNarodenia.getTime());
+    let age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25); 
+    return age;
   }
 
 }

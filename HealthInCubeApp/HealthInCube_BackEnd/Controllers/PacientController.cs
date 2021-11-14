@@ -15,7 +15,7 @@ namespace HealthInCube_BackEnd.Controllers
     /// Patient controller.
     /// Working with all entities relative to patient.
     /// </summary>
-    //[Authorize(Roles = "Pacient")]
+    [Authorize(Roles = "Pacient")]
     public class PacientController : BaseApiController
     {
         private readonly IPacientRepository _pacientRepository;
@@ -28,6 +28,20 @@ namespace HealthInCube_BackEnd.Controllers
         {
             _pacientRepository = pacientRepository;
             _mapper = mapper;
+        }
+
+
+
+
+
+        [HttpGet("{idPacient}")]
+        public async Task<ActionResult<PacientDto>> GetPatient(decimal idPacient)
+        {
+            var pacient = await _pacientRepository.GetItemAsync(idPacient);
+
+            if (pacient == null) return NotFound("You have no patient records");
+
+            return Ok(pacient);
         }
 
 

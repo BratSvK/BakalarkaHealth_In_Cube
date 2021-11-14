@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -68,7 +69,7 @@ namespace HealthInCube_BackEnd.Controllers
 
         [Authorize(Roles = "Pacient, Lekar")]
         [HttpGet("bydliska")]
-        public async Task<ActionResult<BydliskoDto>> GetBydliskaAsync()
+        public async Task<ActionResult<IEnumerable<BydliskoDto>>> GetBydliskaAsync()
         {
             var userId = User.GetUserId();
 
