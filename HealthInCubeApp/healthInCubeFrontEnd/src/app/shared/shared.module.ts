@@ -10,10 +10,13 @@ import { InlineSVGModule } from "ng-inline-svg";
 import { NavUserToolboxComponent } from "../nav/nav-user-toolbox/nav-user-toolbox.component";
 import { AlertModule } from "ngx-bootstrap/alert";
 import { RouterModule } from "@angular/router";
+import { UserDetailComponent } from "../user/user-detail/user-detail.component";
+import { FormsModule } from "@angular/forms";
+import { PhotoEditorComponent } from "../user/user-detail/photo-editor/photo-editor.component";
 
 @NgModule({
-  declarations: [HasRoleDirective, NavUserToolboxComponent],
-  imports: [CommonModule, BsDropdownModule.forRoot(), FontAwesomeModule,CollapseModule.forRoot(),InlineSVGModule.forRoot(), AlertModule.forRoot(), RouterModule],
-  exports: [CommonModule, HasRoleDirective,FontAwesomeModule, CollapseModule, BsDropdownModule, InlineSVGModule, NavUserToolboxComponent, AlertModule]
+  declarations: [HasRoleDirective, NavUserToolboxComponent, UserDetailComponent, PhotoEditorComponent],
+  imports: [CommonModule, FormsModule,  BsDropdownModule.forRoot(), FontAwesomeModule,CollapseModule.forRoot(),InlineSVGModule.forRoot(), AlertModule.forRoot(), RouterModule],
+  exports: [CommonModule ,FormsModule, PhotoEditorComponent, HasRoleDirective,FontAwesomeModule, CollapseModule, BsDropdownModule, InlineSVGModule, NavUserToolboxComponent, AlertModule, UserDetailComponent]
 })
 export class SharedModule {}

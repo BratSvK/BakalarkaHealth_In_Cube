@@ -33,7 +33,7 @@ namespace HealthInCube_BackEnd.Controllers
         // get all cities by derelict
 
         [HttpGet("okres/{idOkres}/mesta")]
-        public async Task<ActionResult<IEnumerable<MestoDto>>> GetAllDistricts(decimal idOkres)
+        public async Task<ActionResult<IEnumerable<MestoDto>>> GetAllCities(decimal idOkres)
         {
             var cities = await _clenenieSlovenskaRepository.GetAllCitysByDistrict(idOkres);
             if (cities == null) return NotFound("Nothing find");

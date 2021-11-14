@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -11,8 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using System.Net.Mail;
-using Microsoft.Extensions.Configuration;
 
 namespace HealthInCube_BackEnd.Controllers
 {
@@ -29,17 +26,6 @@ namespace HealthInCube_BackEnd.Controllers
             _pouzivatelRepository = pouzivatelRepository;
 
         }
-
-
-
-        // [HttpGet("roles")]
-        // public async Task<ActionResult<IEnumerable<RolaDTO>>> GetAllRoles()
-        // {
-        //     var role = await _pouzivatelRepository.GetAllRoles();
-        //     if (role == null) return NotFound("Nothing find");
-
-        //     return Ok(role);
-        // }
 
 
         // zatia funguje len pre lekara pridame poliocy pre admin lekar pacient vsetci 
@@ -80,12 +66,13 @@ namespace HealthInCube_BackEnd.Controllers
 
         }
 
-        [Authorize(Roles = "Pacient")]
-        [HttpGet("{pacientId}/bydliska")]
-        public async Task<ActionResult<BydliskoDto>> GetBydliskaAsync(decimal pacientId)
+        [Authorize(Roles = "Pacient, Lekar")]
+        [HttpGet("bydliska")]
+        public async Task<ActionResult<BydliskoDto>> GetBydliskaAsync()
         {
+            var userId = User.GetUserId();
 
-            var bydliska = await _pouzivatelRepository.GetBydliskaAsync(pacientId);
+            var bydliska = await _pouzivatelRepository.GetBydliskaAsync(userId);
 
             if (bydliska.Any()) return NotFound("You have no addresses");
 
@@ -94,13 +81,34 @@ namespace HealthInCube_BackEnd.Controllers
         }
 
 
-       
+        [Authorize(Roles = "Pacient, Lekar")]
+        [HttpGet("bydlisko/trvale")]
+        public async Task<ActionResult<BydliskoDto>> GetTrvaleBydlisko()
+        {
+            var userId = User.GetUserId();
+
+            var trvaleBydlisko = await _pouzivatelRepository.GetTrvaleBydlisko(userId);
+
+            if (trvaleBydlisko == null) return NotFound("You have no actual living address");
+
+            return Ok(trvaleBydlisko);
+
+        }
 
 
+        [Authorize(Roles = "Pacient, Lekar")]
+        [HttpGet("bydlisko/trvale/mesto")]
+        public async Task<ActionResult<BydliskoDto>> GetTrvaleBydliskoMesto()
+        {
+            var userId = User.GetUserId();
 
+            var trvaleBydlisko = await _pouzivatelRepository.GetTrvaleMesto(userId);
 
+            if (trvaleBydlisko == null) return NotFound("You have no actual living address");
 
+            return Ok(trvaleBydlisko);
 
+        }
 
     }
 }

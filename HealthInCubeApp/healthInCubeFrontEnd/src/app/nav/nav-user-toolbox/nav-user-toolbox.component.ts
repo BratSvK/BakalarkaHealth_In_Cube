@@ -25,7 +25,4 @@ export class NavUserToolboxComponent implements OnInit {
     this.store.dispatch(new AuthActionsBundle.Logout());
   }
 
-  onEditPage() {
-    this.router.navigate(['edit'], {relativeTo: this.route});
-  }
 }

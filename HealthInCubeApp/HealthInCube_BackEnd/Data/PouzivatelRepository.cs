@@ -57,6 +57,26 @@ namespace HealthInCube_BackEnd.Data
             return await _context.Bydlisko.CountAsync();
         }
 
+        public async Task<BydliskoDto> GetTrvaleBydlisko(decimal pouzivatelId)
+        {
+            var trvaleBydlisko = await _context.Bydlisko
+                .Include(b => b.IdMestoNavigation)
+                .SingleOrDefaultAsync(b => b.IdPouzivatel == pouzivatelId && b.Trvale.Equals("Y"));
+
+            return _mapper.Map<BydliskoDto>(trvaleBydlisko);
+        }
+
+        public async Task<string> GetTrvaleMesto(decimal pouzivatelId)
+        {
+            var aktualneMesto = _context.Bydlisko
+                .Include(b => b.IdMestoNavigation)
+                .AsQueryable();
+
+            aktualneMesto = aktualneMesto.Where(b => b.IdPouzivatel == pouzivatelId && b.Trvale.Equals("Y"));
+
+            return await aktualneMesto.Select(b => b.IdMestoNavigation.Nazov).SingleOrDefaultAsync();
+        }
+
 
         public async Task<RegisterPouzivatelDto> GetItemAsync(decimal itemId)
         {

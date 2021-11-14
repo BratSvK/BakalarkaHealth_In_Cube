@@ -6,6 +6,5 @@ export interface UserToLogin  {
     fullName: string;
     expirationDateToken: Date;
     roleStoreBase: string[];
-
-    
+    livingCity: string;
 }

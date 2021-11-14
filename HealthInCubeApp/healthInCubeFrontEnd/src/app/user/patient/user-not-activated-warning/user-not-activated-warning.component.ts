@@ -13,4 +13,8 @@ export class UserNotActivatedWarningComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
 }
+  
+
+

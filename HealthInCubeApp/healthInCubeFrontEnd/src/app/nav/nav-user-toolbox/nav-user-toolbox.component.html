@@ -2,7 +2,7 @@
       <img [src]="user.fotka || './assets/user.png'" alt="{{user.fullName}}" class="text-light mr-2" />
       <a class="dropdown-toggle text-body ml-2" dropdownToggle>{{user.fullName  | titlecase}}</a>
       <div class="dropdown-menu mt-3" *dropdownMenu>
-        <a class="dropdown-item" [routerLink]="['edit']"  routerLinkActive='active'>Moje konto</a>
+        <a class="dropdown-item" [routerLink]="['edit']">Moje konto</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" (click)="logout()">Odhlásiť</a>
       </div>

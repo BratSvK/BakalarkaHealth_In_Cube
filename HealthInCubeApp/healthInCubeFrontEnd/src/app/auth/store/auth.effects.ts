@@ -94,7 +94,8 @@ export class AuthEffects {
           userDataToSend.fotka,
           userDataToSend.token,
           new Date(userDataToSend.tokenExpi),
-          userDataToSend.roleStoreBase
+          userDataToSend.roleStoreBase,
+          userDataToSend.livingCity
         );
 
 
@@ -118,7 +119,8 @@ export class AuthEffects {
             expirationDateToken: loadedUser.tokenExpi,
             fotka: image,
             roleStoreBase: loadedUser.roleStoreBase,
-            fullName: loadedUser.fullName
+            fullName: loadedUser.fullName,
+            livingCity: loadedUser.livingCity
           });
          
         }
@@ -187,7 +189,8 @@ export class AuthEffects {
         resData.fotka,
         resData.token,
         expirationDate,
-        resData.roleStoreBase
+        resData.roleStoreBase,
+        resData.livingCity
     );
 
     const today = new Date();
@@ -215,6 +218,7 @@ export class AuthEffects {
       fotka: image,
       fullName: resData.fullName,
       roleStoreBase: resData.roleStoreBase,
+      livingCity: resData.livingCity
     });
   }
 

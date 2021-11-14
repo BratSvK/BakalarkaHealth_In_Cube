@@ -8,6 +8,7 @@ export class Pouzivatel {
         public token: string,
         public tokenExpi: Date,
         public roleStoreBase: string [],
+        public livingCity: string
       ) {}
 
       // check validity 

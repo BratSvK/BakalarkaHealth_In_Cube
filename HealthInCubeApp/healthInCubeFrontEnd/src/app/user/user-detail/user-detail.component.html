@@ -1,1 +1,46 @@
-<p>user-detail works!</p>
+<div class="row" *ngIf="user">
+    <div class="col-4">
+        <h1>Your profile</h1>
+    </div>
+    <div class="col-8">
+        <div class="alert alert-info" *ngIf="editForm.dirty">
+            <strong>Information: </strong> You have made changes. Any unsaved changes will be lost
+        </div>
+    </div>
+    <div class="col-4">
+        <div class="card">
+            <img [src]="user.fotka || '../../../assets/user.png'" alt="{{user.fullName}}"
+                class="card-img-top img-thumbnail">
+            <div class="card-body">
+                <div>
+                    <strong>Location:</strong>
+                    <p>{{user.livingCity}}
+                </div>
+                <div>
+                    <strong>Age:</strong>
+                    <!-- <p>{{member.age}}</p> -->
+                </div>
+                <div>
+                    <strong>Member since:</strong>
+                    <!-- <p>{{member.created | date}}</p> -->
+                </div>
+            </div>
+            <div class="card-footer">
+                <button [disabled]="!editForm.dirty" form="editForm" type="submit" class="btn btn-success btn-block">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-8">
+        <tabset class="member-tabset">
+            <tab heading='About {{user.fullName}}'>
+                <form #editForm="ngForm" id="editForm">
+                   
+                </form>
+            </tab>
+            <tab heading='Edit Photos'>
+                <app-photo-editor [user]="user"></app-photo-editor>
+            </tab>
+        </tabset>
+    </div>
+</div>

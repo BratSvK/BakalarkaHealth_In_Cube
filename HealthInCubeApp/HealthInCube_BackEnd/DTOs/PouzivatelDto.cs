@@ -15,6 +15,8 @@ namespace HealthInCube_BackEnd.DTOs
 
         public DateTime ExpirationDateToken {get; set;} = DateTime.UtcNow.AddHours(1);
 
+        public string LivingCity { get; set; }
+
 
         // public ICollection<Bydlisko> Bydliskos { get; set; }
 

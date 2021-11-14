@@ -10,6 +10,6 @@ namespace HealthInCube_BackEnd.DTOs
         public DateTime AdresaOd { get; set; } = DateTime.Now;
         public DateTime? AdresaDo { get; set; }
         public bool Trvale { get; set; }
-        public decimal IdMesto { get; set; }
+        public MestoDto IdMestoNavigation { get; set; }
     }
 }

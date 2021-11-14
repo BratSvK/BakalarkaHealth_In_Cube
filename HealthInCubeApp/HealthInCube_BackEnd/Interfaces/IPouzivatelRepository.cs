@@ -8,7 +8,6 @@ namespace HealthInCube_BackEnd.Interfaces
     public interface IPouzivatelRepository : IRepository<Pouzivatel,RegisterPouzivatelDto>
     {
          
-        // Task<IEnumerable<RolaDTO>> GetAllRoles();
         Task<Pouzivatel> GetPouzivatelEntity(decimal pouzivatelId);
 
         Task<Pouzivatel> GetPouzivatelWithRequests(decimal pouzivatelId);
@@ -17,7 +16,9 @@ namespace HealthInCube_BackEnd.Interfaces
 
         Task<int> GetCountNumber();
 
+        Task<BydliskoDto> GetTrvaleBydlisko(decimal pouzivatelId);
 
+        Task<string> GetTrvaleMesto(decimal pouzivatelId);
 
     }
 }

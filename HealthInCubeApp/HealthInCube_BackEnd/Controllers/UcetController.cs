@@ -126,8 +126,9 @@ namespace HealthInCube_BackEnd.Controllers
                 Email = user.Email,
                 Token = await _tokenService.CreateToken(user),
                 FullName = user.GetFullName(),
-                Fotka = _fotoRepository.GetFotkaByUserId(user.Id).Result?.Fotka,
-                Id = user.Id
+                Fotka =  _fotoRepository.GetFotkaByUserId(user.Id).Result?.Fotka,
+                Id = user.Id,
+                LivingCity = await _pouzivatelRepository.GetTrvaleMesto(user.Id)
             });
         }
 
