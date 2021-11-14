@@ -5,7 +5,6 @@ import { map, take } from 'rxjs/operators';
 import { Pouzivatel } from 'src/app/models/pouzivatel';
 import { AppState } from 'src/app/_store/models/AppState';
 
-import * as AuthActionsBundle from '../../auth/store/auth.actions';
 
 
 @Component({
@@ -36,9 +35,7 @@ export class NavLekarComponent implements OnInit {
 
 
 
-  logout() {
-    this.store.dispatch(new AuthActionsBundle.Logout());
-  }
+
 
 
 }

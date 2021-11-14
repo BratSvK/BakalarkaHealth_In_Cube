@@ -3,12 +3,15 @@ import { RouterModule, Routes } from "@angular/router";
 import { UserDetailComponent } from "../user-detail/user-detail.component";
 import { PatientComponent } from "./patient.component";
 
-
-
 const patientRoutes: Routes = [
-    { path: '', component: PatientComponent},
-    { path: 'edit', component: UserDetailComponent}
-
+  {
+    path: '',
+    component: PatientComponent,
+    children: [
+      { path: '', pathMatch: 'full', redirectTo: 'pacienti-list' },
+      { path: 'edit', component: UserDetailComponent },
+    ],
+  },
 ];
 
 

@@ -19,6 +19,8 @@ import { LekarEffects } from './user/lekar/store/lekar.effects';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
+import { NavUserToolboxComponent } from './nav/nav-user-toolbox/nav-user-toolbox.component';
+import { AlertModule } from 'ngx-bootstrap/alert';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
     StoreModule.forRoot(appReducer),
     EffectsModule.forRoot([RegisterEffects, AuthEffects, PatientEffects, LekarEffects]),
     StoreDevtoolsModule.instrument({logOnly: environment.production}),
+    AlertModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

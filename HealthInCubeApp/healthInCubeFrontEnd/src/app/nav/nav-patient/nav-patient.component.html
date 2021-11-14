@@ -23,24 +23,12 @@
           </ng-container>
 
         </ul>
-  
         <ul class="navbar-nav flex-row flex-wrap ms-md-auto" style="margin-left: auto!important">
-  
-          <div class="dropdown" *ngIf="user" dropdown>
-            <img [src]="user.fotka || './assets/user.png'" alt="{{user.fullName}}" class="text-light mr-2" />
-            <a class="dropdown-toggle text-body ml-2" dropdownToggle>{{user.fullName  | titlecase}}</a>
-            <div class="dropdown-menu mt-3" *dropdownMenu>
-              <a class="dropdown-item" [routerLink]="['patient','edit']">Moje konto</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" (click)="logout()">Odhlásiť</a>
-            </div>
-          </div>
-          
-        </ul>
+        
+        <app-nav-user-toolbox [user]="user"></app-nav-user-toolbox>
+      </ul>
       </div>
-  
     </div>
-  
   </nav>
 
 

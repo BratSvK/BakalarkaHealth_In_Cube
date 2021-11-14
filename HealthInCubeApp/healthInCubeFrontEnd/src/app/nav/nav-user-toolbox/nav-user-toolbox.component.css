@@ -1,0 +1,19 @@
+.dropdown-toggle, .dropdown-item{
+    cursor: pointer;
+}
+
+
+.dropdown img {
+    max-height: 50px;
+    border: 2px solid black;
+    display: inline;
+}
+
+.dropdown-menu {
+    background-color: white;
+    transform: translate(40%,-20%) !important;
+}
+
+.space {
+    width: 10%;
+}
