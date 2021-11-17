@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using HealthInCube_BackEnd.Entities;
 
 namespace HealthInCube_BackEnd.DTOs
 {
@@ -20,14 +18,5 @@ namespace HealthInCube_BackEnd.DTOs
         public string FullName { get; set; }
 
         public DateTime ExpirationDateToken {get; set;} = DateTime.Now.AddHours(1);
-
-        public DateTime? PoslednePrihlasenie { get; set; } = DateTime.Now;
-
-        public DateTime? DatNarodenia { get; set; }
-
-        public DateTime Registrovany { get; set; }
-
-        public ICollection<BydliskoDto> Bydliskos { get; set; }
-
     }
 }

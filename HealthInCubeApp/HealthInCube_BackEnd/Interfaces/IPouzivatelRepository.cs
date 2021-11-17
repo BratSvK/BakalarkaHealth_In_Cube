@@ -19,5 +19,8 @@ namespace HealthInCube_BackEnd.Interfaces
         Task<BydliskoDto> GetTrvaleBydlisko(decimal pouzivatelId);
 
         Task<string> GetTrvaleMesto(decimal pouzivatelId);
+
+        Task<PouzivatelDetailDto> GetPouzivatelDetail(decimal pouzivatelId);
+
     }
 }

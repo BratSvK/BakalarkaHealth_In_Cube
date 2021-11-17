@@ -4,12 +4,12 @@
     </div>
     <div class="col-8">
         <div class="alert alert-info" *ngIf="editForm.dirty">
-            <strong>Information: </strong> You have made changes. Any unsaved changes will be lost
+            <strong>Informácia: </strong> Spravil si zmeny. Všetko neuložené sa zmaže.
         </div>
     </div>
     <div class="col-4">
-        <div class="card">
-            <img [src]="user.fotka || '../../../assets/user.png'" alt="{{user.fullName}}"
+        <div class="card" *ngIf="(userAuth$ | async) as userAuth">
+            <img [src]="userAuth.fotka || '../../../assets/user.png'" alt="{{userAuth.fullName}}"
                 class="card-img-top img-thumbnail">
             <div class="card-body">
                 <div>
@@ -19,6 +19,10 @@
                 <div>
                     <strong>Vek:</strong>
                     <p>{{getAgeByBirthDate(user.datNarodenia)}}</p>
+                </div>
+                <div>
+                    <strong>Posledne prihlasenie:</strong>
+                    <p>{{user.poslednePrihlasenie | timeago}}</p>
                 </div>
                 <div>
                     <strong>Pacient od:</strong>
@@ -33,12 +37,12 @@
 
     <div class="col-8">
         <tabset class="member-tabset">
-            <tab heading='About {{user.fullName}}'>
+            <tab heading='Informácie'>
                 <form #editForm="ngForm" id="editForm">
                    
                 </form>
             </tab>
-            <tab heading='Edit Photos'>
+            <tab heading='Fotka'>
                 <app-photo-editor [user]="user"></app-photo-editor>
             </tab>
         </tabset>

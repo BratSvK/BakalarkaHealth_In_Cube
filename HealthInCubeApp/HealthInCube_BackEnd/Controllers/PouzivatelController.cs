@@ -17,7 +17,7 @@ namespace HealthInCube_BackEnd.Controllers
     /// <summary>
     /// Pouzivatel controller.
     /// </summary>
-    [Authorize]
+    [Authorize(Roles = "Lekar,Pacient")]
     public class PouzivatelController : BaseApiController
     {
         private readonly IPouzivatelRepository _pouzivatelRepository;
@@ -34,10 +34,21 @@ namespace HealthInCube_BackEnd.Controllers
             _pouzivatelRepository = pouzivatelRepository;
         }
 
+        #region Pouzivatel-Detail
+
+        
+        [HttpGet("detail")]
+        public async Task<ActionResult<PouzivatelDetailDto>> GetUserDetail() => await _pouzivatelRepository.GetPouzivatelDetail(User.GetUserId());
+        
+
+        
+
+        #endregion
+
+
 
         #region Fotka
 
-        [Authorize(Roles = "Lekar,Pacient")]
         [HttpPost("add-photo")]
         public async Task<ActionResult> AddPhoto(IFormFile file)
         {
@@ -121,54 +132,6 @@ namespace HealthInCube_BackEnd.Controllers
 
 
 
-        #region Bydlisko
-
-        [Authorize(Roles = "Pacient, Lekar")]
-        [HttpGet("bydliska")]
-        public async Task<ActionResult<IEnumerable<BydliskoDto>>> GetBydliskaAsync()
-        {
-            var userId = User.GetUserId();
-
-            var bydliska = await _pouzivatelRepository.GetBydliskaAsync(userId);
-
-            if (bydliska.Any()) return NotFound("You have no addresses");
-
-            return Ok(bydliska);
-
-        }
-
-
-        [Authorize(Roles = "Pacient, Lekar")]
-        [HttpGet("bydlisko/trvale")]
-        public async Task<ActionResult<BydliskoDto>> GetTrvaleBydlisko()
-        {
-            var userId = User.GetUserId();
-
-            var trvaleBydlisko = await _pouzivatelRepository.GetTrvaleBydlisko(userId);
-
-            if (trvaleBydlisko == null) return NotFound("You have no actual living address");
-
-            return Ok(trvaleBydlisko);
-
-        }
-
-
-        [Authorize(Roles = "Pacient, Lekar")]
-        [HttpGet("bydlisko/trvale/mesto")]
-        public async Task<ActionResult<BydliskoDto>> GetTrvaleBydliskoMesto()
-        {
-            var userId = User.GetUserId();
-
-            var trvaleBydlisko = await _pouzivatelRepository.GetTrvaleMesto(userId);
-
-            if (trvaleBydlisko == null) return NotFound("You have no actual living address");
-
-            return Ok(trvaleBydlisko);
-
-        }
-
-
-        #endregion
 
     }
 }

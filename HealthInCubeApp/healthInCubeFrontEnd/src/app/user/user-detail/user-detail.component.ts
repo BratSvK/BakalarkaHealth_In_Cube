@@ -1,9 +1,11 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { Bydlisko } from 'src/app/models/bydlisko';
 import { Pouzivatel } from 'src/app/models/pouzivatel';
+import { PouzivatelDetail } from 'src/app/models/pouzivatel-detail';
 import { AppState } from 'src/app/_store/models/AppState';
 
 @Component({
@@ -23,9 +25,14 @@ export class UserDetailComponent implements OnInit {
     }
   }
 
-  user: Pouzivatel;
+  user: PouzivatelDetail;
+  userAuth$ : Observable<Pouzivatel>;
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>) { 
+    this.userAuth$ = this.store.select('auth').pipe(take(1), map(userAuth => {
+      return userAuth.user;
+    }));
+  }
 
   ngOnInit(): void {
     this.loadUser();
@@ -34,8 +41,8 @@ export class UserDetailComponent implements OnInit {
 
   
    loadUser() {
-    this.store.select('auth').pipe(take(1), map(userData => {
-      return userData.user;
+    this.store.select('userDetail').pipe(take(1), map(userData => {
+      return userData.userDetail;
     })).subscribe(user => {
       this.user = user;
     });
@@ -50,8 +57,8 @@ export class UserDetailComponent implements OnInit {
 
 
   getAgeByBirthDate(datNarodenia: Date): number {
-
-    let timeDiff = Math.abs(Date.now() - datNarodenia.getTime());
+   
+    let timeDiff = Math.abs(Date.now() - new Date(datNarodenia).getTime());
     let age = Math.floor((timeDiff / (1000 * 3600 * 24))/365.25); 
     return age;
   }

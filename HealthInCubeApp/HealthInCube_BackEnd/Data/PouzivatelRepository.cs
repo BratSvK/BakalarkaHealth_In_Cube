@@ -80,7 +80,17 @@ namespace HealthInCube_BackEnd.Data
             return await aktualneMesto.Select(b => b.IdMestoNavigation.Nazov).SingleOrDefaultAsync();
         }
 
-        
+        public async Task<PouzivatelDetailDto> GetPouzivatelDetail(decimal pouzivatelId)
+        {
+            var pouzivatel =  await _context.Users
+                .Include(u => u.Bydliskos)
+                .ThenInclude(b =>b.IdMestoNavigation)
+                .Where(u => u.Id == pouzivatelId)
+                .SingleOrDefaultAsync();
+
+            return _mapper.Map<PouzivatelDetailDto>(pouzivatel);
+
+        }
 
 
         public async Task<RegisterPouzivatelDto> GetItemAsync(decimal itemId)

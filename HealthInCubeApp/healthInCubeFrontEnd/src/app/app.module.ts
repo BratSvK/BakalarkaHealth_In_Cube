@@ -19,8 +19,9 @@ import { LekarEffects } from './user/lekar/store/lekar.effects';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
-import { NavUserToolboxComponent } from './nav/nav-user-toolbox/nav-user-toolbox.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
+import { UserDetailEffects } from './user/user-detail/store/user-detail.effects';
+import { TimeagoModule } from 'ngx-timeago';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
       positionClass: 'toast-bottom-right'
     }),
     StoreModule.forRoot(appReducer),
-    EffectsModule.forRoot([RegisterEffects, AuthEffects, PatientEffects, LekarEffects]),
+    EffectsModule.forRoot([RegisterEffects, AuthEffects, PatientEffects, LekarEffects, UserDetailEffects]),
     StoreDevtoolsModule.instrument({logOnly: environment.production}),
     AlertModule.forRoot(),
   ],

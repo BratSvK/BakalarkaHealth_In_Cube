@@ -121,16 +121,15 @@ namespace HealthInCube_BackEnd.Controllers
 
             if (!result.Succeeded) return Unauthorized("INVALID_CREDENTIALS");
 
+            await _userManager.RememberLoginDate(user);
+
             return Ok(new PouzivatelDto
             {
                 Email = user.Email,
                 Token = await _tokenService.CreateToken(user),
                 FullName = user.GetFullName(),
                 Fotka =  _fotoRepository.GetFotkaByUserId(user.Id).Result?.Fotka,
-                Id = user.Id,
-                Bydliskos = await _pouzivatelRepository.GetBydliskaAsync(user.Id),
-                DatNarodenia = user.DatNarodenia,
-                Registrovany = user.Registrovany
+                Id = user.Id
             });
         }
 

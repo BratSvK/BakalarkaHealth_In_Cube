@@ -13,6 +13,7 @@ import { extractFotoFromApi } from "src/app/shared/foto-extract";
 import { AuthService } from "src/app/_service/auth.service";
 import { environment } from "src/environments/environment";
 import * as AuthActionsBundle from './auth.actions';
+import * as UserDetailActions from '../../user/user-detail/store/user-detail.actions';
 
 const fetchUrl = environment.apiUrl; // ....../api/
 
@@ -71,9 +72,11 @@ export class AuthEffects {
           this.authService.clearLoggoutTimer();
           localStorage.removeItem('userData');
           this.router.navigate(['/auth']);
+        }),
+        map(() => {
+          return new UserDetailActions.ResetUserDetail();
         })
       ),
-    { dispatch: false }
   );
 
   autoLogin = createEffect(() =>
@@ -211,10 +214,6 @@ export function createUser(userDataToSend: Pouzivatel): Pouzivatel {
     fullName: userDataToSend.fullName,
     token: userDataToSend.token,
     expirationDateToken: new Date(userDataToSend.expirationDateToken),
-    bydliskos:userDataToSend.bydliskos,
-    poslednePrihlasenie:  new Date(userDataToSend.poslednePrihlasenie),
     roleStoreBase: userDataToSend.roleStoreBase,
-    datNarodenia: new Date(userDataToSend.datNarodenia),
-    registrovany: new Date(userDataToSend.registrovany),
   };
 }

@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { UserDetailResolver } from "../user-detail/user-detail-resolver.service";
 import { UserDetailComponent } from "../user-detail/user-detail.component";
 import { LekarComponent } from "./lekar.component";
 import { PacientiListComponent } from "./pacienti-list/pacienti-list.component";
@@ -16,7 +17,7 @@ const lekarRoutes: Routes = [
         { path: 'pacienti-list',  component: PacientiListComponent},
         { path: 'requests', component: ZiadankyComponent, resolve: [ZiadankyResolverService]},
         { path: 'vysetrenia',  component: VysetreniaComponent},
-        { path: 'edit',  component: UserDetailComponent}
+        { path: 'edit', resolve: [UserDetailResolver], component: UserDetailComponent}
 
     ]},
 

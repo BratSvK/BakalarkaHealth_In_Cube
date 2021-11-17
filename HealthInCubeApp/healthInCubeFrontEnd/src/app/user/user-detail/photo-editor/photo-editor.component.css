@@ -5,9 +5,13 @@ img.img-thumbnail {
 }
 
 .nv-file-over {
-    border: dotted 3px red;
+    border: dotted 3px red !important;
 }
 
 input[type=file] {
     color:transparent;
+}
+
+.my-drop-zone {
+    border: dashed 3px black;
 }

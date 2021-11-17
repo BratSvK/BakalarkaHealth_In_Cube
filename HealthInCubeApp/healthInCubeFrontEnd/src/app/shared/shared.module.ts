@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { PhotoEditorComponent } from '../user/user-detail/photo-editor/photo-editor.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FileUploadModule } from 'ng2-file-upload';
+import { TimeagoModule } from 'ngx-timeago';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     AlertModule.forRoot(),
     RouterModule,
     TabsModule.forRoot(),
+    TimeagoModule.forRoot(),
     FileUploadModule
   ],
   exports: [
@@ -48,7 +50,8 @@ import { FileUploadModule } from 'ng2-file-upload';
     AlertModule,
     UserDetailComponent,
     TabsModule,
-    FileUploadModule
+    FileUploadModule,
+    TimeagoModule
   ],
 })
 export class SharedModule {}

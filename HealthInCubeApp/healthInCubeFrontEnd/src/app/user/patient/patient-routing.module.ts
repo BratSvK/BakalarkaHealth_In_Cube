@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { UserDetailResolver } from "../user-detail/user-detail-resolver.service";
 import { UserDetailComponent } from "../user-detail/user-detail.component";
 import { PatientComponent } from "./patient.component";
 
@@ -9,7 +10,7 @@ const patientRoutes: Routes = [
     component: PatientComponent,
     children: [
       { path: '', pathMatch: 'full', redirectTo: 'pacienti-list' },
-      { path: 'edit', component: UserDetailComponent },
+      { path: 'edit', resolve: [UserDetailResolver], component: UserDetailComponent },
     ],
   },
 ];
