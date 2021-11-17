@@ -68,6 +68,11 @@ namespace HealthInCube_BackEnd.Data
             return nemocnica;
         }
 
+        public async Task<bool> EntityExists(decimal itemId)
+        {
+            return await _context.Nemocnica.AnyAsync(l => l.IdNem == itemId);
+        }
+
         public async Task<IEnumerable<NemocnicaDto>> GetItemsAsync()
         {
             var query = _context.Nemocnica.Include(x => x.Oddelenies).AsQueryable();

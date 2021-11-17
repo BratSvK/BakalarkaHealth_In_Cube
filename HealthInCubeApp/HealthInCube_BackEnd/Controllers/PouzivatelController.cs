@@ -14,26 +14,35 @@ using System.Linq;
 
 namespace HealthInCube_BackEnd.Controllers
 {
+    /// <summary>
+    /// Pouzivatel controller.
+    /// </summary>
     [Authorize]
     public class PouzivatelController : BaseApiController
     {
         private readonly IPouzivatelRepository _pouzivatelRepository;
         private readonly IMapper _mapper;
+        private readonly IFotoRepository _fotoRepository;
 
-        public PouzivatelController(IPouzivatelRepository pouzivatelRepository, IMapper mapper)
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        public PouzivatelController(IPouzivatelRepository pouzivatelRepository, IMapper mapper, IFotoRepository fotoRepository)
         {
-            
             _mapper = mapper;
+            _fotoRepository = fotoRepository;
             _pouzivatelRepository = pouzivatelRepository;
-
         }
 
 
-        // zatia funguje len pre lekara pridame poliocy pre admin lekar pacient vsetci 
+        #region Fotka
+
         [Authorize(Roles = "Lekar,Pacient")]
         [HttpPost("add-photo")]
         public async Task<ActionResult> AddPhoto(IFormFile file)
         {
+            var userId = User.GetUserId();
+            if (!_pouzivatelRepository.EntityExists(userId).Result) return NotFound("User not exits");
             // Full path to file in temp location
             var filePath = Path.GetTempFileName();
 
@@ -43,29 +52,76 @@ namespace HealthInCube_BackEnd.Controllers
 
             var fotkaBlob = await ImageParser.GetImageBytesAsync(filePath);
 
-            // var fotkaBlob = await ImageParser.GetImageBytesAsync(imagePath);
-
-            var sourceUserId = User.GetUserId();
-            var userToAddPhoto = await _pouzivatelRepository.GetPouzivatelEntity(sourceUserId);
-
-            if (userToAddPhoto == null) return NotFound("User not found");
-
-            if (userToAddPhoto.FotkaPouzivatel != null) return BadRequest("You cannot add your main photo");
-
-            var fotkaPouzivatel = new FotkaPouzivatel
+            var fotka = new FotkaPouzivatel
             {
-                IdPouzivatel = sourceUserId,
+                IdPouzivatel = userId,
                 Fotka = fotkaBlob
             };
 
-            userToAddPhoto.FotkaPouzivatel = fotkaPouzivatel;
+            _fotoRepository.InsertItem(fotka);
 
-            // this is temporary -> look for implementation patter unit world
-            if (await _pouzivatelRepository.SaveAllAsync()) return Ok();
+            if (await _fotoRepository.SaveAllAsync()) return Ok();
 
             return BadRequest("Failed to save photo");
-
         }
+
+        [Authorize(Roles = "Lekar,Pacient")]
+        [HttpPut("update-photo")]
+        public async Task<ActionResult> UpdateFotka(IFormFile file)
+        {
+            var userId = User.GetUserId();
+            if (!_fotoRepository.EntityExists(userId).Result) return NotFound("Photo not exits");
+            // Full path to file in temp location
+            var filePath = Path.GetTempFileName();
+
+            if (file.Length > 0)
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                    await file.CopyToAsync(stream);
+
+            var fotkaBlob = await ImageParser.GetImageBytesAsync(filePath);
+
+            var fotka = new FotkaPouzivatel
+            {
+                IdPouzivatel = userId,
+                Fotka = fotkaBlob
+            };
+
+            _fotoRepository.UpdateItem(fotka);
+
+            if (await _fotoRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Failed to update photo");
+        }
+
+
+
+        [Authorize(Roles = "Lekar,Pacient")]
+        [HttpDelete("delete-photo")]
+        public async Task<ActionResult> DeleteFotka()
+        {
+            var userId = User.GetUserId();
+            var fotka = await _fotoRepository.GetItemAsync(userId);
+            if (fotka == null) return NotFound("Photo not exits");
+
+            var fotkaToDelete = _mapper.Map<FotkaPouzivatel>(fotka);
+
+            _fotoRepository.DeleteItem(fotkaToDelete);
+
+            if (await _fotoRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Failed to update photo");
+        }
+
+
+
+
+
+
+        #endregion
+
+
+
+        #region Bydlisko
 
         [Authorize(Roles = "Pacient, Lekar")]
         [HttpGet("bydliska")]
@@ -110,6 +166,9 @@ namespace HealthInCube_BackEnd.Controllers
             return Ok(trvaleBydlisko);
 
         }
+
+
+        #endregion
 
     }
 }

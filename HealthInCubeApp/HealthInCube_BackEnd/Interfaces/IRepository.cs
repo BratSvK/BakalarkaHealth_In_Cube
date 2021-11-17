@@ -9,6 +9,8 @@ namespace HealthInCube_BackEnd.Interfaces
 
         Task<U> GetItemAsync(decimal itemId);
 
+        Task<bool> EntityExists(decimal itemId);
+
         void InsertItem(T item);
 
         void DeleteItem(T item);

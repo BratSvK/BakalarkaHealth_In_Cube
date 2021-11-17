@@ -8,6 +8,6 @@ namespace HealthInCube_BackEnd.Interfaces
     {
 
         Task<FotkaDto> GetFotkaByUserId(decimal userId);
-         
+
     }
 }

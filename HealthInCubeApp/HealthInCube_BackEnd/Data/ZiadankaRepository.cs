@@ -32,6 +32,11 @@ namespace HealthInCube_BackEnd.Data
            
         }
 
+        public async Task<bool> EntityExists(decimal itemId)
+        {
+            return await _context.Ziadanka.AnyAsync(l => l.IdUser == itemId);
+        }
+
         public async Task<IEnumerable<ZiadankaDto>> GetItemsAsync()
         {
             return await _context.Ziadanka

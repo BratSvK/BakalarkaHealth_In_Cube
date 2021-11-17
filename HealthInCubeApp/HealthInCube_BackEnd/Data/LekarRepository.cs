@@ -22,8 +22,6 @@ namespace HealthInCube_BackEnd.Data
             _context = context;
 
         }
-
-      
           
 
         // pozriet sa na triggre 
@@ -56,6 +54,11 @@ namespace HealthInCube_BackEnd.Data
                                 
 
             return await lekar.SingleOrDefaultAsync();
+        }
+
+        public async Task<bool> EntityExists(decimal itemId)
+        {
+          return await  _context.Lekar.AnyAsync(l => l.IdLekar == itemId);
         }
 
         public Task<IEnumerable<LekarDto>> GetItemsAsync()

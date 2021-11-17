@@ -22,9 +22,9 @@ namespace HealthInCube_BackEnd.Data
         }
 
 
-        public void DeleteItem(FotkaPouzivatel itemId)
+        public void DeleteItem(FotkaPouzivatel item)
         {
-            throw new System.NotImplementedException();
+            _context.FotkaPouzivatel.Remove(item);
         }
 
         public async Task<FotkaDto> GetFotkaByUserId(decimal userId)
@@ -35,20 +35,25 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<FotkaDto> GetItemAsync(decimal itemId)
         {
-            var fotka = await _context.FotkaPouzivatel.FindAsync(itemId);
+            var fotka = await _context.FotkaPouzivatel.AsNoTracking().SingleOrDefaultAsync(f => f.IdPouzivatel == itemId);
             return _mapper.Map<FotkaDto>(fotka);
+        }
+
+        public async Task<bool> EntityExists(decimal itemId)
+        {
+            return await _context.FotkaPouzivatel.AnyAsync(f => f.IdPouzivatel == itemId);
         }
 
         public async Task<IEnumerable<FotkaDto>> GetItemsAsync()
         {
             var query = _context.FotkaPouzivatel.AsQueryable();
 
-            return await query.ProjectTo<FotkaDto>(_mapper.ConfigurationProvider).ToListAsync();
+            return await query.ProjectTo<FotkaDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
         }
 
         public void InsertItem(FotkaPouzivatel item)
         {
-            throw new System.NotImplementedException();
+            _context.FotkaPouzivatel.Add(item);
         }
 
         public async Task<bool> SaveAllAsync()
@@ -58,7 +63,7 @@ namespace HealthInCube_BackEnd.Data
 
         public void UpdateItem(FotkaPouzivatel item)
         {
-            throw new System.NotImplementedException();
+            _context.Entry(item).State = EntityState.Modified;
         }
     }
 }

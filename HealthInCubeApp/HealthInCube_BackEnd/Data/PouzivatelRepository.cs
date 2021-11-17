@@ -80,6 +80,8 @@ namespace HealthInCube_BackEnd.Data
             return await aktualneMesto.Select(b => b.IdMestoNavigation.Nazov).SingleOrDefaultAsync();
         }
 
+        
+
 
         public async Task<RegisterPouzivatelDto> GetItemAsync(decimal itemId)
         {
@@ -87,6 +89,11 @@ namespace HealthInCube_BackEnd.Data
             var uzivatelToSend = _mapper.Map<RegisterPouzivatelDto>(uzivatel);
             
             return uzivatelToSend; 
+        }
+
+        public async Task<bool> EntityExists(decimal itemId)
+        { 
+            return await _context.Users.AnyAsync(u => u.Id == itemId);
         }
 
         public async Task<IEnumerable<RegisterPouzivatelDto>> GetItemsAsync()

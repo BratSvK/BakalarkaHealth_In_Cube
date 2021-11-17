@@ -32,6 +32,8 @@ namespace HealthInCube_BackEnd.Helpers
             CreateMap<Oddelenie,OddelenieDto>();
 
             CreateMap<FotkaPouzivatel,FotkaDto>();
+            CreateMap<FotkaDto, FotkaPouzivatel>();
+
             // Datetime with utc helper -> if it's utc or local time.  
             // Create z on the end.
             CreateMap<DateTime, DateTime>().ConstructUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));

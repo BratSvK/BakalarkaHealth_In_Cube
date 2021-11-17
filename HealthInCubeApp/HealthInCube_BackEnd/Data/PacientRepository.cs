@@ -51,6 +51,11 @@ namespace HealthInCube_BackEnd.Data
            return _mapper.Map<PacientDto>(queryPatient);
         }
 
+        public async Task<bool> EntityExists(decimal itemId)
+        {
+            return await _context.Pacient.AnyAsync(l => l.IdPacient == itemId);
+        }
+
         public void InsertItem(Pacient item)
         {
             _context.Pacient.Add(item);

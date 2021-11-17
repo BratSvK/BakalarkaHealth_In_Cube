@@ -70,14 +70,21 @@ where u."Id" = 4;
 commit;
 
 
+select u."Id", u."Meno" from "Users" u;
 select * from ziadanka;
 
 select * from bydlisko;
 
+desc bydlisko;
+insert into bydlisko 
+values(3,2,'Rado¾a 51', CURRENT_DATE,null,'Y',2083);
+
 select * from "UserRoles";
 
 desc ziadanka;
+commit;
 
+select * from fotka_pouzivatel;
 -- check created pacient
 
 select * from pacient p;
