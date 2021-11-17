@@ -15,27 +15,23 @@ export function authReducer(state: AuthState = initialState, action: AuthActions
     switch (action.type) {
       case AuthActionsBundle.LOGIN:
           const userToSend = createUser(action.payload);
-
         return {
             ...state,
             authError: null,
             user: userToSend,
             isLoading: false
         };
-
       case AuthActionsBundle.LOGOUT:
         return {
             ...state,
             user: null
           };
-
       case AuthActionsBundle.LOGIN_START:
         return {
           ...state,
           authError: null,
           isLoading: true
         };
-
       case AuthActionsBundle.LOGIN_FAIL: 
         return {
           ...state,
@@ -48,7 +44,21 @@ export function authReducer(state: AuthState = initialState, action: AuthActions
           ...state,
           authEror: null
         };
+      case AuthActionsBundle.SET_USER_PHOTO:
+        let usertoUpdate = {...state.user};
+        usertoUpdate.fotka = action.payload.fotka;
+        return {
+          ...state,
+          user: usertoUpdate
+        };
 
+      case AuthActionsBundle.REMOVE_USER_PHOTO:
+        let usertoDelete = {...state.user};
+        usertoDelete.fotka = null;
+        return {
+          ...state,
+          user: usertoDelete
+        }
       default:
         return state;           // send one initial action so at first go to default case and we take initailState 
     }

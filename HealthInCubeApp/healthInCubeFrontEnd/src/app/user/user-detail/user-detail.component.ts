@@ -38,7 +38,16 @@ export class UserDetailComponent implements OnInit {
     this.loadUser();
   }
 
+   getLastActive(poslednePrihlasenie: Date) {
+    const userDateLastActive = new Date(poslednePrihlasenie);
+    var userTimezoneOffset = userDateLastActive.getTimezoneOffset() * 60000;
+    const localTime = new Date(userDateLastActive.getTime() - (-userTimezoneOffset));
+    return localTime;
+  }
 
+  isPacient(user: Pouzivatel) {
+    return user.roleStoreBase.includes("Pacient");
+  }
   
    loadUser() {
     this.store.select('userDetail').pipe(take(1), map(userData => {

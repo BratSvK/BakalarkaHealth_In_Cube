@@ -242,7 +242,7 @@ select * from lekar;
 
 select * from ziadanka;
 
-select * from "Users";
+select u."PoslednePrihlasenie" from "Users" u ;
 
 desc ziadanka;
 
@@ -278,6 +278,14 @@ desc nemocnica;
 alter table zdravotna_karta modify KRV_SKUPINA null;
 
 commit;
+
+
+-- fotka
+
+
+select * from fotka_pouzivatel;
+
+
 
 
 

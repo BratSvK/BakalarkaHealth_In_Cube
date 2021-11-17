@@ -49,11 +49,14 @@ namespace HealthInCube_BackEnd.Controllers
 
         #region Fotka
 
+        [HttpGet("main-photo")]
+        public async Task<ActionResult<FotkaDto>> GetMainUserPhoto() => await _fotoRepository.GetItemAsync(User.GetUserId());
+        
+
         [HttpPost("add-photo")]
         public async Task<ActionResult> AddPhoto(IFormFile file)
         {
             var userId = User.GetUserId();
-            if (!_pouzivatelRepository.EntityExists(userId).Result) return NotFound("User not exits");
             // Full path to file in temp location
             var filePath = Path.GetTempFileName();
 
@@ -69,41 +72,21 @@ namespace HealthInCube_BackEnd.Controllers
                 Fotka = fotkaBlob
             };
 
-            _fotoRepository.InsertItem(fotka);
+            if (await _fotoRepository.EntityExists(userId))
+            {
+                _fotoRepository.UpdateItem(fotka);
+
+            } 
+            else
+            {
+                _fotoRepository.InsertItem(fotka);
+
+            }
 
             if (await _fotoRepository.SaveAllAsync()) return Ok();
 
             return BadRequest("Failed to save photo");
         }
-
-        [Authorize(Roles = "Lekar,Pacient")]
-        [HttpPut("update-photo")]
-        public async Task<ActionResult> UpdateFotka(IFormFile file)
-        {
-            var userId = User.GetUserId();
-            if (!_fotoRepository.EntityExists(userId).Result) return NotFound("Photo not exits");
-            // Full path to file in temp location
-            var filePath = Path.GetTempFileName();
-
-            if (file.Length > 0)
-                using (var stream = new FileStream(filePath, FileMode.Create))
-                    await file.CopyToAsync(stream);
-
-            var fotkaBlob = await ImageParser.GetImageBytesAsync(filePath);
-
-            var fotka = new FotkaPouzivatel
-            {
-                IdPouzivatel = userId,
-                Fotka = fotkaBlob
-            };
-
-            _fotoRepository.UpdateItem(fotka);
-
-            if (await _fotoRepository.SaveAllAsync()) return Ok();
-
-            return BadRequest("Failed to update photo");
-        }
-
 
 
         [Authorize(Roles = "Lekar,Pacient")]
@@ -122,10 +105,6 @@ namespace HealthInCube_BackEnd.Controllers
 
             return BadRequest("Failed to update photo");
         }
-
-
-
-
 
 
         #endregion

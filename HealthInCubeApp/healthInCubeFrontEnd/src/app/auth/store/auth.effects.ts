@@ -14,6 +14,7 @@ import { AuthService } from "src/app/_service/auth.service";
 import { environment } from "src/environments/environment";
 import * as AuthActionsBundle from './auth.actions';
 import * as UserDetailActions from '../../user/user-detail/store/user-detail.actions';
+import { Photo } from "src/app/models/photo";
 
 const fetchUrl = environment.apiUrl; // ....../api/
 
@@ -57,7 +58,7 @@ export class AuthEffects {
       this.actions$.pipe(
         ofType(AuthActionsBundle.LOGIN),
         tap((action: AuthActionsBundle.AuthentificateSuccess) => {
-            this.toastr.success("Succesfully logged");
+            this.toastr.success("Úspešné prihlásenie");
             this.handleRedirectUser(action.payload.roleStoreBase, +action.payload.id);
         })
       ),
@@ -88,14 +89,11 @@ export class AuthEffects {
         if (!userDataToSend) {
           return {type: '[Auth] No User'};
         }
-
         const loadedUser = createUser(userDataToSend);
-          
         // using get -> validation
         if (loadedUser.token) {
            const expirationDuration = new Date(loadedUser.expirationDateToken).getTime() - new Date().getTime();
            this.authService.setLogoutTimer(expirationDuration);
-
 
            let image: any;
            if (loadedUser.fotka) {
@@ -103,7 +101,6 @@ export class AuthEffects {
            } else {
              image = loadedUser.fotka
            }
-
            loadedUser.fotka = image;
 
           return new AuthActionsBundle.AuthentificateSuccess(loadedUser);
@@ -113,6 +110,48 @@ export class AuthEffects {
       })
     )
   );
+
+  fetchUserPhoto = createEffect(() => 
+      this.actions$.pipe(
+        ofType(AuthActionsBundle.FET_USER_PHOTO),
+        switchMap(() => {
+          return this.http.get<Photo>(fetchUrl + 'pouzivatel/main-photo').pipe(
+          map((photo) => {
+            this.toastr.success("Fotka nastavená, refresh stránky");
+             //Retrieve the object from localStorage
+            this.setPhotoLocalStorage(photo); 
+            return new AuthActionsBundle.SetUserPhoto(photo);
+          }),
+          catchError((error) => {
+            this.toastr.error(error.error);
+            return of(error);
+          })
+        );
+        })
+      )
+  );
+
+  removeUserPhoto = createEffect(() => 
+      this.actions$.pipe(
+        ofType(AuthActionsBundle.REMOVE_USER_PHOTO),
+        switchMap(() => {
+          return this.http.delete(fetchUrl + 'pouzivatel/delete-photo').pipe(
+            tap(() => {
+              this.toastr.success("Fotka vymazaná, refresh stránky");
+              this.setPhotoLocalStorage(null); 
+            }),
+            catchError((error) => {
+              this.toastr.error(error.error);
+              return of(error);
+            })
+          );
+        })
+      )
+      , {dispatch: false}
+  );
+
+
+
 
   constructor(
     private actions$: Actions,
@@ -203,7 +242,21 @@ export class AuthEffects {
       returnSecureToken: true,
     };
   }
+
+  private setPhotoLocalStorage(photo: Photo) {
+    let userData = JSON.parse(localStorage.getItem("userData"));
+    //Change the username property
+    if (photo) {
+      userData.fotka = photo.fotka;
+    } else {
+      userData.fotka = null;
+    }
+    //And put the editted object back to cache
+    localStorage.setItem("userData", JSON.stringify(userData));
+  }
 }
+
+
 
 
 export function createUser(userDataToSend: Pouzivatel): Pouzivatel {

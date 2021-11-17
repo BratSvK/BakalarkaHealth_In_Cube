@@ -27,15 +27,10 @@ namespace HealthInCube_BackEnd.Data
             _context.FotkaPouzivatel.Remove(item);
         }
 
-        public async Task<FotkaDto> GetFotkaByUserId(decimal userId)
-        {
-            var fotka =  await _context.FotkaPouzivatel.SingleOrDefaultAsync(f => f.IdPouzivatel == userId);
-            return  _mapper.Map<FotkaDto>(fotka);
-        }
 
-        public async Task<FotkaDto> GetItemAsync(decimal itemId)
+        public async Task<FotkaDto> GetItemAsync(decimal userId)
         {
-            var fotka = await _context.FotkaPouzivatel.AsNoTracking().SingleOrDefaultAsync(f => f.IdPouzivatel == itemId);
+            var fotka = await _context.FotkaPouzivatel.AsNoTracking().SingleOrDefaultAsync(f => f.IdPouzivatel == userId);
             return _mapper.Map<FotkaDto>(fotka);
         }
 

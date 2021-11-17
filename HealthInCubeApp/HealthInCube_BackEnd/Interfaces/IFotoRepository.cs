@@ -7,7 +7,5 @@ namespace HealthInCube_BackEnd.Interfaces
     public interface IFotoRepository : IRepository<FotkaPouzivatel, FotkaDto>
     {
 
-        Task<FotkaDto> GetFotkaByUserId(decimal userId);
-
     }
 }

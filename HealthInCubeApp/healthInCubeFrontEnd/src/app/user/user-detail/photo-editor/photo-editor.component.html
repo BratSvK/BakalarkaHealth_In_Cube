@@ -1,4 +1,4 @@
-<ng-container *ngIf="user">
+<ng-container *ngIf="user | async as user">
     <div class="card">
         <div class="row">
             <div class="col-2" *ngIf="user.fotka">

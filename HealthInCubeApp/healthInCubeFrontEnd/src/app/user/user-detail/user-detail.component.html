@@ -22,12 +22,16 @@
                 </div>
                 <div>
                     <strong>Posledne prihlasenie:</strong>
-                    <p>{{user.poslednePrihlasenie | timeago}}</p>
+                    <p>{{getLastActive(user.poslednePrihlasenie) | timeago}}</p>
                 </div>
-                <div>
+                <div *ngIf="isPacient(userAuth); else lekar">
                     <strong>Pacient od:</strong>
                     <p>{{user.registrovany | date}}</p>
                 </div>
+                <ng-template #lekar>
+                    <strong>Lekar od:</strong>
+                    <p>{{user.registrovany | date}}</p>
+                </ng-template>
             </div>
             <div class="card-footer">
                 <button [disabled]="!editForm.dirty" form="editForm" type="submit" class="btn btn-success btn-block">Save Changes</button>
@@ -43,7 +47,7 @@
                 </form>
             </tab>
             <tab heading='Fotka'>
-                <app-photo-editor [user]="user"></app-photo-editor>
+                <app-photo-editor [user]="userAuth$"></app-photo-editor>
             </tab>
         </tabset>
     </div>

@@ -3,8 +3,8 @@ import { PouzivatelDetail } from "src/app/models/pouzivatel-detail";
 
 export const FET_USER_DETAIL = '[User-Detail] Fetch user detail';
 export const SET_USER_DETAIL = '[User-Detail] set user detail';
-
 export const RESET_USER_DETAIL = '[User-Detail] reset user detail';
+
 
 export class ResetUserDetail implements Action {
     readonly type = RESET_USER_DETAIL;
