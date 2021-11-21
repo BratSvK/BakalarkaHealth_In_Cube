@@ -29,6 +29,8 @@ namespace HealthInCube_BackEnd.Helpers
             CreateMap<BydliskoDto,Bydlisko>().ForMember(dest => dest.Trvale, opt => opt.MapFrom(src => src.Trvale ? "Y" : "N"));
             CreateMap<Bydlisko,BydliskoDto>().ForMember(dest => dest.Trvale, opt => opt.MapFrom(src => src.Trvale == "Y" ? true : false));;
 
+            CreateMap<UserUpdateBydliskoDto, Bydlisko>().ForMember(dest => dest.Trvale, opt => opt.MapFrom(src => src.Trvale ? "Y" : "N"));
+            
             CreateMap<Oddelenie,OddelenieDto>();
 
             CreateMap<FotkaPouzivatel,FotkaDto>();

@@ -20,22 +20,35 @@ namespace HealthInCube_BackEnd.Controllers
     /// </summary>
     public class UcetController : BaseApiController
     {
-
         private readonly ITokenService _tokenService;
         private readonly IMapper _mapper;
         private readonly UserManager<Pouzivatel> _userManager;
         private readonly SignInManager<Pouzivatel> _signInManager;
         private readonly IZiadankaRepository _ziadankaRepository;
+        private readonly IBydliskoRepository _bydliskoRepository;
         private readonly IFotoRepository _fotoRepository;
         private readonly IPouzivatelRepository _pouzivatelRepository;
         private readonly IConfiguration _config;
 
-        public UcetController(UserManager<Pouzivatel> userManager, SignInManager<Pouzivatel> signInManager, IConfiguration config, IPouzivatelRepository pouzivatelRepository, IFotoRepository fotoRepository, ITokenService tokenService, IMapper mapper, IZiadankaRepository ziadankaRepository)
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="userManager"></param>
+        /// <param name="signInManager"></param>
+        /// <param name="config"></param>
+        /// <param name="pouzivatelRepository"></param>
+        /// <param name="fotoRepository"></param>
+        /// <param name="tokenService"></param>
+        /// <param name="mapper"></param>
+        /// <param name="ziadankaRepository"></param>
+        /// <param name="bydliskoRepository"></param>
+        public UcetController(UserManager<Pouzivatel> userManager, SignInManager<Pouzivatel> signInManager, IConfiguration config, IPouzivatelRepository pouzivatelRepository, IFotoRepository fotoRepository, ITokenService tokenService, IMapper mapper, IZiadankaRepository ziadankaRepository, IBydliskoRepository bydliskoRepository)
         {
             _config = config;
             _pouzivatelRepository = pouzivatelRepository;
             _fotoRepository = fotoRepository;
             _ziadankaRepository = ziadankaRepository;
+            _bydliskoRepository = bydliskoRepository;
             _signInManager = signInManager;
             _userManager = userManager;
             _mapper = mapper;
@@ -49,11 +62,11 @@ namespace HealthInCube_BackEnd.Controllers
         /// <param name="registeredUser">register object to work with</param>
         /// <returns></returns>
         [HttpPost("register")]
-        public async Task<ActionResult<PouzivatelDto>> Register(RegisterPouzivatelDto registeredUser)             
+        public async Task<ActionResult<PouzivatelDto>> Register(RegisterPouzivatelDto registeredUser)
         {
             // check if we have a username in db
             if (await UserExists(registeredUser.Email))
-                return BadRequest("Email is taken!!");     
+                return BadRequest("Email is taken!!");
 
             // create a user for transition to DB
             var user = _mapper.Map<Pouzivatel>(registeredUser);
@@ -61,9 +74,9 @@ namespace HealthInCube_BackEnd.Controllers
 
             user.Email = registeredUser.Email.ToLower();
             user.UserName = user.Email.Split('@')[0];
-            user.Id = await this.PridelIdToNewUserAsync();
+            user.Id = _pouzivatelRepository.GetCountAsync().Result + 1;
             var adresaRegister = registeredUser.Adresa;
-            adresaRegister.IdBydliska = this.PridelIdToNewBydliskoAsync().Result;
+            adresaRegister.IdBydliska = _bydliskoRepository.GetCountAsync().Result + 1;
             var bydliskoToUser = _mapper.Map<Bydlisko>(adresaRegister);
             user.Bydliskos.Add(bydliskoToUser);
 
@@ -101,7 +114,6 @@ namespace HealthInCube_BackEnd.Controllers
             return BadRequest("Failed to register !!");
         }
 
-      
         /// <summary>
         /// Login user to application.
         /// </summary>
@@ -128,12 +140,10 @@ namespace HealthInCube_BackEnd.Controllers
                 Email = user.Email,
                 Token = await _tokenService.CreateToken(user),
                 FullName = user.GetFullName(),
-                Fotka =  _fotoRepository.GetItemAsync(user.Id).Result?.Fotka,
+                Fotka = _fotoRepository.GetItemAsync(user.Id).Result?.Fotka,
                 Id = user.Id
             });
         }
-
-
 
         /// <summary>
         /// Sending email to user after account creation.
@@ -155,7 +165,7 @@ namespace HealthInCube_BackEnd.Controllers
             var emailToAddress = mailToSend.ReceiverEmail;
 
             string filePath = $"{System.IO.Directory.GetCurrentDirectory()}\\Assets\\logo.jpg";
-            
+
             var linkedResource = new LinkedResource(filePath, MediaTypeNames.Image.Jpeg);
 
             var subject = "Your Account has been created";
@@ -196,20 +206,6 @@ namespace HealthInCube_BackEnd.Controllers
             return Ok();
         }
 
-        private async Task<bool> UserExists(string email)
-        {
-            // check if any username in Users table matches this name 
-            return await _userManager.Users.AnyAsync(x => x.Email == email.ToLower());
-
-        }
-        private async Task<decimal> PridelIdToNewBydliskoAsync()
-        {
-            var countOfBydlisla = await _pouzivatelRepository.GetCountNumber();
-            return countOfBydlisla + 1;
-        }
-        private async Task<decimal> PridelIdToNewUserAsync()
-        {
-            return await _userManager.Users.CountAsync() + 1;
-        }
+        private async Task<bool> UserExists(string email)  => await _userManager.Users.AnyAsync(x => x.Email == email.ToLower());
     }
 }

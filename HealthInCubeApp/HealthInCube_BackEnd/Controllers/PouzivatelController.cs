@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using HealthInCube_BackEnd.DTOs.Bydlisko;
+using System;
 
 namespace HealthInCube_BackEnd.Controllers
 {
@@ -23,25 +25,80 @@ namespace HealthInCube_BackEnd.Controllers
         private readonly IPouzivatelRepository _pouzivatelRepository;
         private readonly IMapper _mapper;
         private readonly IFotoRepository _fotoRepository;
+        private readonly IBydliskoRepository _bydliskoRepository;
 
         /// <summary>
         /// Ctor.
         /// </summary>
-        public PouzivatelController(IPouzivatelRepository pouzivatelRepository, IMapper mapper, IFotoRepository fotoRepository)
+        public PouzivatelController(IPouzivatelRepository pouzivatelRepository, IMapper mapper, IFotoRepository fotoRepository, IBydliskoRepository bydliskoRepository)
         {
             _mapper = mapper;
             _fotoRepository = fotoRepository;
+            _bydliskoRepository = bydliskoRepository;
             _pouzivatelRepository = pouzivatelRepository;
         }
 
         #region Pouzivatel-Detail
 
-        
         [HttpGet("detail")]
         public async Task<ActionResult<PouzivatelDetailDto>> GetUserDetail() => await _pouzivatelRepository.GetPouzivatelDetail(User.GetUserId());
-        
 
-        
+        [HttpGet("addresses")]
+        public async Task<ActionResult<IEnumerable<BydliskoDto>>> GetAllAdressessByUser()
+        {
+            var userId = User.GetUserId();
+            var bydliska = await _bydliskoRepository.GetAllAdressessByUser(userId);
+
+            if (!bydliska.Any()) return NotFound("User don't have any adressess");
+
+            return Ok(bydliska); 
+        }
+
+        [HttpPut("address/{idAddress}/update")]
+        public async Task<ActionResult> UpdateUserAddress([FromBody] UserUpdateBydliskoDto updateBydliskoDto, decimal idAddress)
+        {
+            var originBydlisko =  await _bydliskoRepository.GetOriginItemAsync(idAddress);
+
+            _mapper.Map(updateBydliskoDto, originBydlisko);
+
+            _bydliskoRepository.UpdateItem(originBydlisko);
+
+            if (await _bydliskoRepository.SaveAllAsync()) return NoContent();
+
+            return BadRequest("Failed to update your address"); 
+        }
+
+
+        [HttpPost("address/create")]
+        public async Task<ActionResult<BydliskoDto>> CreateBydlisko(CreateBydliskoDto createBydlisko)
+        {
+            var userId = User.GetUserId();
+
+            var bydlisko = new Bydlisko
+            {
+                IdBydliska =  _bydliskoRepository.GetCountAsync().Result + 1,
+                IdPouzivatel = userId,
+                Ulica = createBydlisko.Ulica,
+                IdMesto = createBydlisko.IdMesto,
+                Trvale = createBydlisko.TrvalaAddresa
+            };
+
+            _bydliskoRepository.InsertItem(bydlisko);
+
+            // update existing address to not actuall living address
+            var actualLivingAddress =  await _bydliskoRepository.GetTrvaleBydlisko(userId);
+
+            if (actualLivingAddress != null)
+            {
+                actualLivingAddress.AdresaDo = DateTime.Now;
+                actualLivingAddress.Trvale = "N";
+                _bydliskoRepository.UpdateItem(actualLivingAddress);
+            }
+
+            if (await _bydliskoRepository.SaveAllAsync()) return Ok(_mapper.Map<BydliskoDto>(bydlisko));
+
+            return BadRequest("Failed to create a address");
+        }
 
         #endregion
 

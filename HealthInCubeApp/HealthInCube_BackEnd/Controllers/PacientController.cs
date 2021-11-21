@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Castle.Core.Internal;
@@ -30,10 +28,6 @@ namespace HealthInCube_BackEnd.Controllers
             _mapper = mapper;
         }
 
-
-
-
-
         [HttpGet("{idPacient}")]
         public async Task<ActionResult<PacientDto>> GetPatient(decimal idPacient)
         {
@@ -43,7 +37,6 @@ namespace HealthInCube_BackEnd.Controllers
 
             return Ok(pacient);
         }
-
 
         [HttpGet("all")]
         public async Task<ActionResult<ICollection<PacientDto>>> GetAllPatients()
@@ -57,19 +50,12 @@ namespace HealthInCube_BackEnd.Controllers
 
         }
 
-
-
         [HttpGet("{userId}/activated")]
         public async Task<ActionResult<bool>> ChecIfIsActivated(decimal userId)
         {
             var isActivated = await _pacientRepository.IsActivated(userId);
             return Ok(isActivated);
         }
-
-
-
-
-
 
     }
 }

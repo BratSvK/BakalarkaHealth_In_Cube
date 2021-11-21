@@ -8,18 +8,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HealthInCube_BackEnd.Controllers
 {
-
-    public enum TypVseobecnyLekar
-    {
-        Detsky = 65,
-        Dospely = 66
-    }
-
-
+   
     [Authorize]
     public class NemocnicaController : BaseApiController
     {
         private readonly INemocnicaRepistory _nemocnicaRepository;
+
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="nemocnicaRepository"></param>
         public NemocnicaController(INemocnicaRepistory nemocnicaRepository)
         {
             _nemocnicaRepository = nemocnicaRepository;
@@ -81,23 +79,10 @@ namespace HealthInCube_BackEnd.Controllers
         //     return Ok(lekariByPacientAge);
         // }
 
-
-
-
-
-
-
-        
-
-
         private List<LekarDto> GetLekariByAge(IEnumerable<LekarDto> lekary , int typVseobecny)
         {
             return lekary.Where(l => l.AtestacieId.Any(atestacia => atestacia == typVseobecny)).ToList();
 
         }
-
-
-
-
     }
 }

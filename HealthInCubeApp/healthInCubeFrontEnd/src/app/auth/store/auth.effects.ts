@@ -256,9 +256,6 @@ export class AuthEffects {
   }
 }
 
-
-
-
 export function createUser(userDataToSend: Pouzivatel): Pouzivatel {
   return {
     id: userDataToSend.id,

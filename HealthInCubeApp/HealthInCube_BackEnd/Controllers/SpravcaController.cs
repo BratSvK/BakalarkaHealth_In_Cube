@@ -11,11 +11,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HealthInCube_BackEnd.Controllers
 {
+    /// <summary>
+    /// Admin controller.
+    /// </summary>
     public class SpravcaController : BaseApiController
     {
         private readonly INemocnicaRepistory _nemocnicaRepository;
         private readonly UserManager<Pouzivatel> _userManager;
 
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="nemocnicaRepository"></param>
+        /// <param name="userManager"></param>
         public SpravcaController(INemocnicaRepistory nemocnicaRepository, UserManager<Pouzivatel> userManager)
         {
             _userManager = userManager;
@@ -23,7 +31,7 @@ namespace HealthInCube_BackEnd.Controllers
         }
 
         #region User-Roles
-        // autohrized by policy 
+      
         [Authorize(Roles = "Spravca")]
         [HttpGet("users-with-roles")]
         public async Task<ActionResult> GetUsersWithRoles()

@@ -2,25 +2,30 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HealthInCube_BackEnd.Controllers
 {
-    // treba byt prihlaseny do systému 
-    // [Authorize]
+    /// <summary>
+    /// Division of slovak country.
+    /// </summary>
     public class ClenenieSlovenskaController : BaseApiController
     {
         private readonly IClenenieSlovenskaRepository _clenenieSlovenskaRepository;
+
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="clenenieSlovenskaRepository"></param>
         public ClenenieSlovenskaController(IClenenieSlovenskaRepository clenenieSlovenskaRepository)
         {
             _clenenieSlovenskaRepository = clenenieSlovenskaRepository;
         }
 
-
-
-        // get all derelict 
-        
+        /// <summary>
+        /// Get all derelicts in country
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("okresy")]
         public async Task<ActionResult<IEnumerable<RolaDTO>>> GetAllDistricts()
         {
@@ -30,8 +35,11 @@ namespace HealthInCube_BackEnd.Controllers
             return Ok(districts);
         }
 
-        // get all cities by derelict
-
+        /// <summary>
+        /// Get all cities deralict
+        /// </summary>
+        /// <param name="idOkres"></param>
+        /// <returns></returns>
         [HttpGet("okres/{idOkres}/mesta")]
         public async Task<ActionResult<IEnumerable<MestoDto>>> GetAllCities(decimal idOkres)
         {
@@ -40,10 +48,5 @@ namespace HealthInCube_BackEnd.Controllers
 
             return Ok(cities);
         }
-
-
-
-
-
     }
 }

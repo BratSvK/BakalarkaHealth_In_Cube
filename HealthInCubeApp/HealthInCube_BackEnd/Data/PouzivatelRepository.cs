@@ -1,4 +1,3 @@
-using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,14 +16,17 @@ namespace HealthInCube_BackEnd.Data
         private readonly HealthInCubeContext _context;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="mapper"></param>
         public PouzivatelRepository(HealthInCubeContext context, IMapper mapper)
         {
             _mapper = mapper;
             _context = context;
 
         }
-
-
 
         public void DeleteItem(Pouzivatel pouzivatel)
         {
@@ -38,36 +40,7 @@ namespace HealthInCube_BackEnd.Data
                 .SingleOrDefaultAsync(u => u.Id == pouzivatelId);
 
             return userWithRequest;
-        }
-
-        public async Task<ICollection<BydliskoDto>> GetBydliskaAsync(decimal pouzivatelId)
-        {
-           if (!_context.Bydlisko.Any(b => b.IdPouzivatel == pouzivatelId))
-           {
-               return null;
-           }
-
-           var query = await _context.Bydlisko
-               .Include(b => b.IdMestoNavigation)
-               .Where(b => b.IdPouzivatel == pouzivatelId)
-               .ToListAsync();
-
-           return _mapper.Map<ICollection<BydliskoDto>>(query);
-        }
-
-        public async Task<int> GetCountNumber()
-        {
-            return await _context.Bydlisko.CountAsync();
-        }
-
-        public async Task<BydliskoDto> GetTrvaleBydlisko(decimal pouzivatelId)
-        {
-            var trvaleBydlisko = await _context.Bydlisko
-                .Include(b => b.IdMestoNavigation)
-                .SingleOrDefaultAsync(b => b.IdPouzivatel == pouzivatelId && b.Trvale.Equals("Y"));
-
-            return _mapper.Map<BydliskoDto>(trvaleBydlisko);
-        }
+        }    
 
         public async Task<string> GetTrvaleMesto(decimal pouzivatelId)
         {
@@ -113,11 +86,6 @@ namespace HealthInCube_BackEnd.Data
             return await query.ProjectTo<RegisterPouzivatelDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
         }
 
-        public async Task<Pouzivatel> GetPouzivatelEntity(decimal pouzivatelId)
-        {
-            return  await _context.Users.Include(u => u.FotkaPouzivatel).SingleOrDefaultAsync(p => p.Id == pouzivatelId);
-        }
-
         public void InsertItem(Pouzivatel item)
         {
              _context.Users.Add(item);
@@ -133,6 +101,21 @@ namespace HealthInCube_BackEnd.Data
         {
             // only mark it for update to db 
             _context.Entry(item).State = EntityState.Modified;
+        }
+
+        public async Task<int> GetCountAsync()
+        {
+            return await _context.Users.CountAsync();
+        }
+
+        public Task<int> GetCountNumber()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<Pouzivatel> GetOriginItemAsync(decimal pouzivatelId)
+        {
+            return await _context.Users.Include(u => u.FotkaPouzivatel).SingleOrDefaultAsync(p => p.Id == pouzivatelId);
         }
     }
 }

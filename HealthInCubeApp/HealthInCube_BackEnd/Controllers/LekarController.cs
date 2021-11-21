@@ -1,19 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using System.Net.Mime;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using AutoMapper;
-using Castle.DynamicProxy.Generators.Emitters.SimpleAST;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Extensions;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -41,7 +37,7 @@ namespace HealthInCube_BackEnd.Controllers
         /// <param name="mapper">Mapper</param>
         /// <param name="config">Data from config file app config.</param>
         /// <param name="pouzivatelRepository">User repository.</param>
-        public LekarController(ILekarRepository lekarRepo, IPacientRepository pacientRepository, IMapper mapper , IConfiguration config, IPouzivatelRepository pouzivatelRepository, IZiadankaRepository ziadankaRepository)
+        public LekarController(ILekarRepository lekarRepo, IPacientRepository pacientRepository, IMapper mapper, IConfiguration config, IPouzivatelRepository pouzivatelRepository, IZiadankaRepository ziadankaRepository)
         {
             _lekarRepo = lekarRepo;
             _pacientRepository = pacientRepository;
@@ -82,8 +78,6 @@ namespace HealthInCube_BackEnd.Controllers
             return Ok(requests);
         }
 
-
-
         /// <summary>
         /// Get Lekar by userId.
         /// </summary>
@@ -105,7 +99,7 @@ namespace HealthInCube_BackEnd.Controllers
         [HttpPost("createPatientAccount")]
         public async Task<ActionResult<ZiadankaDto>> CreatePatientAccount([FromBody] CreatePatientAccountDto createPatientAccount)
         {
-            var patientId =  _pacientRepository.GetItemsAsync().GetAwaiter().GetResult().Count();
+            var patientId = _pacientRepository.GetItemsAsync().GetAwaiter().GetResult().Count();
 
             var userToPatient = await _pouzivatelRepository.GetPouzivatelWithRequests(createPatientAccount.IdUser);
 
@@ -147,12 +141,11 @@ namespace HealthInCube_BackEnd.Controllers
             requestToDelete.AcceptedAt = DateTime.Now;
 
             _ziadankaRepository.UpdateItem(requestToDelete);
-            
+
             if (await _ziadankaRepository.SaveAllAsync()) return _mapper.Map<ZiadankaDto>(requestToDelete);
 
             return null;
         }
-
 
         [HttpDelete("{idPatient}")]
         public async Task<ActionResult> DeletePatient(decimal idPatient)
@@ -169,9 +162,8 @@ namespace HealthInCube_BackEnd.Controllers
 
         }
 
-
-         private void SendConfirmationCreationEmailToPatient(Pouzivatel userToPatient)
-         {
+        private void SendConfirmationCreationEmailToPatient(Pouzivatel userToPatient)
+        {
 
             if (userToPatient == null)
             {
@@ -221,7 +213,7 @@ namespace HealthInCube_BackEnd.Controllers
                     smtp.Send(mail);
                 }
             }
-         }
-         
+        }
+
     }
 }

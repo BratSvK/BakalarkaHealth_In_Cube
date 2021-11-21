@@ -26,9 +26,6 @@ namespace HealthInCube_BackEnd.Data
             _context = context;
         }
 
-
-
-
         public async Task<IEnumerable<LekarDto>> GetAllPractitionersByCityAsync(decimal cityID)
         {
             
@@ -36,7 +33,6 @@ namespace HealthInCube_BackEnd.Data
                                             .Include(n => n.Oddelenies.Where(o => o.NazovOdd == "Všeobecný lekár"))
                                             .ThenInclude(od => od.Lekars)
                                             .ThenInclude(l => l.AtestacieLekars).AsNoTracking().SingleOrDefaultAsync();
-
 
             var lekari = new List<LekarDto>();
 
@@ -54,13 +50,10 @@ namespace HealthInCube_BackEnd.Data
             return lekari;
         }
 
-
         public void DeleteItem(Nemocnica nemocnica)
         {
             _context.Nemocnica.Remove(nemocnica);
         }
-
-
 
         public async Task<NemocnicaDto> GetItemAsync(decimal itemId)
         {
@@ -121,7 +114,6 @@ namespace HealthInCube_BackEnd.Data
                                             .Where(n => n.IdMestoNavigation.IdOkres == query.IdOkres)
                                             .SingleOrDefaultAsync();
 
-
             var lekari = new List<LekarDto>();
 
             if (nemocnica == null) return lekari;
@@ -141,6 +133,16 @@ namespace HealthInCube_BackEnd.Data
             }).ToList();
 
             return lekari;
+        }
+
+        public async Task<int> GetCountAsync()
+        {
+            return await _context.Nemocnica.CountAsync();
+        }
+
+        public async Task<Nemocnica> GetOriginItemAsync(decimal itemId)
+        {
+            return await _context.Nemocnica.FindAsync(itemId);
         }
     }
 }

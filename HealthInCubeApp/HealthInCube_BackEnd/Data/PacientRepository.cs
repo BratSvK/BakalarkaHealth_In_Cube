@@ -88,5 +88,18 @@ namespace HealthInCube_BackEnd.Data
         {
             return await _context.Pacient.Include(p => p.ZdravotnaKartum).SingleOrDefaultAsync(p => p.IdPacient == patientId);
         }
+
+        public async Task<int> GetCountAsync()
+        {
+            return await _context.Pacient.CountAsync();
+        }
+
+        public async Task<Pacient> GetOriginItemAsync(decimal itemId)
+        {
+            return await _context.Pacient
+                .Include(p => p.ZdravotnaKartum)
+                .Include(p => p.ZdravPoistenies)
+                .SingleOrDefaultAsync(p => p.IdPacient == itemId);
+        }
     }
 }

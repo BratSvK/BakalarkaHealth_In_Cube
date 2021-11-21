@@ -3,6 +3,12 @@ using HealthInCube_BackEnd.Entities;
 
 namespace HealthInCube_BackEnd.DTOs
 {
+    public enum TypVseobecnyLekar
+    {
+        Detsky = 65,
+        Dospely = 66
+    }
+
     public class LekarDto
     {
 

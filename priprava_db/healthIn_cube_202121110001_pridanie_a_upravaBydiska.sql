@@ -1,0 +1,1 @@
+-- uprava alebo pridanie bydliska pouzivatelovi 
