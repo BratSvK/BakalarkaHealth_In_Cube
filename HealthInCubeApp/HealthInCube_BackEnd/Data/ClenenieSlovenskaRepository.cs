@@ -7,6 +7,7 @@ using HealthInCube_BackEnd.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 using System.Linq;
+using System.Data.Entity;
 
 namespace HealthInCube_BackEnd.Data
 {
@@ -20,6 +21,13 @@ namespace HealthInCube_BackEnd.Data
             _mapper = mapper;
             _context = context;
 
+        }
+
+        public async Task<IEnumerable<MestoDto>> GetAllCities()
+        {
+            var mesta = await _context.Mesto.ToListAsync();
+
+            return _mapper.Map<IEnumerable<MestoDto>>(mesta);
         }
 
         public async Task<IEnumerable<MestoDto>> GetAllCitysByDistrict(decimal districtId)

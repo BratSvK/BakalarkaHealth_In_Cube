@@ -3,9 +3,7 @@
         <h2>Tvoj profil</h2>
     </div>
     <div class="col-8">
-        <div class="alert alert-info" *ngIf="editForm.dirty">
-            <strong>Informácia: </strong> Spravil si zmeny. Všetko neuložené sa zmaže.
-        </div>
+        
     </div>
     <div class="col-4">
         <div class="card" *ngIf="(userAuth$ | async) as userAuth">
@@ -24,27 +22,34 @@
                     <strong>Posledne prihlasenie:</strong>
                     <p>{{getLastActive(user.poslednePrihlasenie) | timeago}}</p>
                 </div>
-                <div *ngIf="isPacient(userAuth); else lekar">
-                    <strong>Pacient od:</strong>
+                <div>
+                    <strong>Uzivatel od:</strong>
                     <p>{{user.registrovany | date}}</p>
                 </div>
-                <ng-template #lekar>
-                    <strong>Lekar od:</strong>
-                    <p>{{user.registrovany | date}}</p>
-                </ng-template>
             </div>
-            <div class="card-footer">
+            <!-- <div class="card-footer">
                 <button [disabled]="!editForm.dirty" form="editForm" type="submit" class="btn btn-success btn-block">Save Changes</button>
-            </div>
+            </div> -->
         </div>
     </div>
 
     <div class="col-8">
         <tabset class="member-tabset">
-            <tab heading='Informácie'>
-                <form #editForm="ngForm" id="editForm">
-                   
-                </form>
+            <tab heading='Informácie o bydlisku'>
+                <div class="row mt-2">
+                    <div class="col-md-10">
+                        <app-user-bydlisko-editor></app-user-bydlisko-editor>
+                        <hr>
+
+                        <ul class="list-group">
+                            <h4 class="text-muted">Vyber a aktualizuj si adresu:</h4>
+                            <a class="list-group-item" style="cursor: pointer;" *ngFor="let bydlisko of (bydliska$ | async)"
+                                (click)="onEditItem(bydlisko.idBydliska)">
+                                {{bydlisko.ulica}} ({{bydlisko.idMestoNavigation.nazov}})
+                            </a>
+                        </ul>
+                    </div>
+                </div>
             </tab>
             <tab heading='Fotka'>
                 <app-photo-editor [user]="userAuth$"></app-photo-editor>

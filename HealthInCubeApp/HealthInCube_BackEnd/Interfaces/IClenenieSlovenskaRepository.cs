@@ -11,6 +11,6 @@ namespace HealthInCube_BackEnd.Interfaces
 
         Task<IEnumerable<MestoDto>> GetAllCitysByDistrict(decimal districtId);
 
-         
+        Task<IEnumerable<MestoDto>> GetAllCities();
     }
 }

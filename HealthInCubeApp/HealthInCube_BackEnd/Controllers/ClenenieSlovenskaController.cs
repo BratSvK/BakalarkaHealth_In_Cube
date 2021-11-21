@@ -41,9 +41,19 @@ namespace HealthInCube_BackEnd.Controllers
         /// <param name="idOkres"></param>
         /// <returns></returns>
         [HttpGet("okres/{idOkres}/mesta")]
-        public async Task<ActionResult<IEnumerable<MestoDto>>> GetAllCities(decimal idOkres)
+        public async Task<ActionResult<IEnumerable<MestoDto>>> GetAllCitiesByDistrict(decimal idOkres)
         {
             var cities = await _clenenieSlovenskaRepository.GetAllCitysByDistrict(idOkres);
+            if (cities == null) return NotFound("Nothing find");
+
+            return Ok(cities);
+        }
+
+
+        [HttpGet("mesta/all")]
+        public async Task<ActionResult<IEnumerable<MestoDto>>> GetAllCities()
+        {
+            var cities = await _clenenieSlovenskaRepository.GetAllCities();
             if (cities == null) return NotFound("Nothing find");
 
             return Ok(cities);

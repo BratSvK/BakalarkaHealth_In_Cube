@@ -74,12 +74,13 @@ namespace HealthInCube_BackEnd.Controllers
         {
             var userId = User.GetUserId();
 
+
             var bydlisko = new Bydlisko
             {
                 IdBydliska =  _bydliskoRepository.GetCountAsync().Result + 1,
                 IdPouzivatel = userId,
                 Ulica = createBydlisko.Ulica,
-                IdMesto = createBydlisko.IdMesto,
+                IdMesto = createBydlisko.IdMestoNavigation.IdMesto,
                 Trvale = createBydlisko.TrvalaAddresa
             };
 
