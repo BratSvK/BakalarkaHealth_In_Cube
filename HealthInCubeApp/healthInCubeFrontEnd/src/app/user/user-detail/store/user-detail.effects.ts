@@ -1,12 +1,13 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { faThList } from "@fortawesome/free-solid-svg-icons";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { Store } from "@ngrx/store";
 import { ToastrService } from "ngx-toastr";
 import { of } from "rxjs";
-import { catchError, map, switchMap } from "rxjs/operators";
-import { Bydlisko } from "src/app/models/bydlisko";
+import { catchError, map, switchMap, take, withLatestFrom } from "rxjs/operators";
+import { Mesto } from "src/app/models/mesto";
 import { PouzivatelDetail } from "src/app/models/pouzivatel-detail";
+import { AppState } from "src/app/_store/models/AppState";
 import { environment } from "src/environments/environment";
 import * as UserDetailActions from './user-detail.actions';
 
@@ -32,7 +33,27 @@ export class UserDetailEffects {
           })
     ));
 
-
+    fetchMesta = createEffect(() =>
+    this.actions$.pipe(
+      ofType(UserDetailActions.FET_USER_DETAIL),
+      withLatestFrom(this.store.select('userDetail').pipe(map(userData => {
+          return userData.mesta;
+      }))),
+      switchMap(([action, mesta]) => {
+          if (!mesta.length || mesta.length === 1) {
+            return this.http.get<Mesto[]>(
+                fetchUrl + `clenenieSlovenska/mesta`
+              ).pipe(
+                map((mesta) => {
+                    return new UserDetailActions.SetMestaAll(mesta);
+                  })
+              );
+          }
+          return of(new UserDetailActions.Dummy());
+      }),
+    )
+  );
+ 
     updateBydlisko = createEffect(() => 
         this.actions$.pipe(
             ofType(UserDetailActions.UPDATE_BYDLISKO),
@@ -64,7 +85,7 @@ export class UserDetailEffects {
             }),
             catchError((error) => {
                 // returning non error observable
-                this.toastr.error(error?.error);
+                this.toastr.error("Chyba pri pridavaní adresy");
                 return of(error.error); // creating a new observable without error
             })
 
@@ -74,7 +95,8 @@ export class UserDetailEffects {
     constructor(
         private actions$: Actions,
         private http: HttpClient,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private store: Store<AppState>
       ) {}
 
 }

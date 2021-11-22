@@ -9,8 +9,8 @@ namespace HealthInCube_BackEnd.DTOs.Bydlisko
     public class CreateBydliskoDto
     {
         public string Ulica { get; set; }
-        public string TrvalaAddresa { get; set; } = "Y";
+        public bool Trvale { get; set; }
         public DateTime AddresaOd { get; set; } = DateTime.Now;
-        public Mesto IdMestoNavigation { get; set; }
+        public decimal IdMesto { get; set; }
     }
 }

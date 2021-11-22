@@ -49,8 +49,8 @@ namespace HealthInCube_BackEnd.Controllers
             return Ok(cities);
         }
 
-
-        [HttpGet("mesta/all")]
+             
+        [HttpGet("mesta")]
         public async Task<ActionResult<IEnumerable<MestoDto>>> GetAllCities()
         {
             var cities = await _clenenieSlovenskaRepository.GetAllCities();

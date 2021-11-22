@@ -5,9 +5,7 @@ using AutoMapper.QueryableExtensions;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.EntityFrameworkCore;
-
 using System.Linq;
-using System.Data.Entity;
 
 namespace HealthInCube_BackEnd.Data
 {

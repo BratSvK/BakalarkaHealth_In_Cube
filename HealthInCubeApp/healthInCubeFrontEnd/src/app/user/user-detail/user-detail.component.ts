@@ -71,10 +71,15 @@ export class UserDetailComponent implements OnInit {
 
 
   getLivingCity(bydliskos: Bydlisko[]): string {
+    const nikde: string = "NEZNÁME";
     if (bydliskos.length <= 0) {
-      return undefined;
+      return nikde;
     }
-    return bydliskos.filter(b => b.trvale === true)[0].idMestoNavigation.nazov;
+    const mesto = bydliskos.filter(b => b.trvale === true)[0];
+    if (mesto) {
+      return mesto.idMestoNavigation.nazov;
+    } 
+    return nikde;
   }
 
 

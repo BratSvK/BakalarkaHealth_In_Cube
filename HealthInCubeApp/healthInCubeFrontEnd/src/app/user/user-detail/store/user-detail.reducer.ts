@@ -8,7 +8,8 @@ const initialState: UserDetailState = {
   userDetail: null as PouzivatelDetail,
   bydliska: [],
   editedBydlisko: null as Bydlisko,
-  editedBydliskoIndex: -1
+  editedBydliskoIndex: -1,
+  mesta: []
 };
 
 export function userDetailReducer(
@@ -20,21 +21,21 @@ export function userDetailReducer(
       return {
         ...state,
         userDetail: action.payload,
-        bydliska: action.payload.bydliskos
+        bydliska: action.payload.bydliskos,
       };
     case UserDetailActions.RESET_USER_DETAIL:
       return (state = { ...initialState });
-
-      case UserDetailActions.ADD_BYDLISKO:
+    case UserDetailActions.ADD_BYDLISKO:
       // return a new objects with old state add to new object -> copy of old state
       return {
         ...state, // copy old state ! always
         bydliska: [...state.bydliska, action.payload],
       };
-
-      case UserDetailActions.UPDATE_BYDLISKO:
+    case UserDetailActions.UPDATE_BYDLISKO:
       // IMUTABLE - logic
-      const bydlisko = state.bydliska[state.editedBydliskoIndex];
+      const bydliskaListToEDit = [...state.bydliska]; // it's a new array
+
+      const bydlisko = bydliskaListToEDit.filter(b => b.idBydliska === action.payload.idBydliska)[0]
 
       // ingredient.amount =  !! incorect data store in old object
       const updatedBydlisko = {
@@ -44,7 +45,9 @@ export function userDetailReducer(
 
       const updatedBydliska = [...state.bydliska]; // it's a new array
 
-      updatedBydliska[state.editedBydliskoIndex] = updatedBydlisko;
+      const indexInArray = updatedBydliska.findIndex(b => b.idBydliska === updatedBydlisko.idBydliska);
+
+      updatedBydliska[indexInArray] = updatedBydlisko;
 
       return {
         ...state,
@@ -52,18 +55,26 @@ export function userDetailReducer(
         editedBydlisko: null,
         editedBydliskoIndex: -1,
       };
+    case UserDetailActions.START_EDIT:
+      const bydliskaList = [...state.bydliska]; // it's a new array
 
-      case UserDetailActions.START_EDIT:
+      const bydliskoToEdit = bydliskaList.filter(b => b.idBydliska === action.payload)[0];
+
       return {
         ...state,
-        editedBydliskoIndex: action.payload - 1,
-        editedBydlisko: { ...state.bydliska[action.payload - 1] }, // IMUTABLE WAY
+        editedBydliskoIndex: action.payload,
+        editedBydlisko: { ...bydliskoToEdit}, // IMUTABLE WAY
       };
     case UserDetailActions.STOP_EDIT:
       return {
         ...state,
         editedBydliskoIndex: -1,
         editedBydlisko: null,
+      };
+    case UserDetailActions.SET_ALL_MESTA:
+      return {
+        ...state,
+        mesta: [...action.payload],
       };
     default:
       return state;

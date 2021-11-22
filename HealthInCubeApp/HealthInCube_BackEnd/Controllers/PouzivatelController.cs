@@ -80,8 +80,8 @@ namespace HealthInCube_BackEnd.Controllers
                 IdBydliska =  _bydliskoRepository.GetCountAsync().Result + 1,
                 IdPouzivatel = userId,
                 Ulica = createBydlisko.Ulica,
-                IdMesto = createBydlisko.IdMestoNavigation.IdMesto,
-                Trvale = createBydlisko.TrvalaAddresa
+                IdMesto = createBydlisko.IdMesto,
+                Trvale = createBydlisko.Trvale ? "Y" : "N"
             };
 
             _bydliskoRepository.InsertItem(bydlisko);
@@ -89,7 +89,7 @@ namespace HealthInCube_BackEnd.Controllers
             // update existing address to not actuall living address
             var actualLivingAddress =  await _bydliskoRepository.GetTrvaleBydlisko(userId);
 
-            if (actualLivingAddress != null)
+            if (actualLivingAddress != null && bydlisko.Trvale.Equals("Y"))
             {
                 actualLivingAddress.AdresaDo = DateTime.Now;
                 actualLivingAddress.Trvale = "N";
