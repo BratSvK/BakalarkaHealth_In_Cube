@@ -60,5 +60,15 @@ namespace HealthInCube_BackEnd.Data
         {
             _context.Entry(item).State = EntityState.Modified;
         }
+
+        public async Task<int> GetCountAsync()
+        {
+            return await _context.FotkaPouzivatel.CountAsync();        
+        }
+
+        public async Task<FotkaPouzivatel> GetOriginItemAsync(decimal userId)
+        {
+            return await _context.FotkaPouzivatel.AsNoTracking().SingleOrDefaultAsync(f => f.IdPouzivatel == userId); ;
+        }
     }
 }

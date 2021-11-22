@@ -7,6 +7,7 @@ using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace HealthInCube_BackEnd.Data
 {
     public class ZiadankaRepository : IZiadankaRepository
@@ -71,6 +72,16 @@ namespace HealthInCube_BackEnd.Data
         {
            // nothing to change only mark entity that has been modifity 
             _context.Entry(item).State = EntityState.Modified;
+        }
+
+        public async Task<int> GetCountAsync()
+        {
+            return await _context.Ziadanka.CountAsync();
+        }
+
+        public async Task<Ziadanka> GetOriginItemAsync(decimal userId)
+        {
+            return await _context.Ziadanka.FindAsync(userId);
         }
     }
 }

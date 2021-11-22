@@ -14,7 +14,7 @@ namespace HealthInCube_BackEnd.Extensions
 
         public static IServiceCollection AddApplicationServices(this IServiceCollection services, IConfiguration config)
         {
-            
+            #region Repositories DI
             services.AddScoped<ITokenService, TokenService>();
             
             services.AddScoped<INemocnicaRepistory, NemocnicaRepository>();
@@ -24,11 +24,9 @@ namespace HealthInCube_BackEnd.Extensions
             services.AddScoped<IFotoRepository, FotoRepository>();
             services.AddScoped<IZiadankaRepository, ZiadankaRepository>();
             services.AddScoped<IPacientRepository, PacientRepository>();
+            services.AddScoped<IBydliskoRepository, BydliskoRepository>();
 
-
-
-
-
+            #endregion
 
 
             // this is container for DB context 

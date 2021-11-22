@@ -16,6 +16,7 @@ import { PhotoEditorComponent } from '../user/user-detail/photo-editor/photo-edi
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FileUploadModule } from 'ng2-file-upload';
 import { TimeagoModule } from 'ngx-timeago';
+import { UserBydliskoEditorComponent } from '../user/user-detail/user-bydlisko-editor/user-bydlisko-editor.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { TimeagoModule } from 'ngx-timeago';
     NavUserToolboxComponent,
     UserDetailComponent,
     PhotoEditorComponent,
+    UserBydliskoEditorComponent
   ],
   imports: [
     CommonModule,
@@ -51,7 +53,8 @@ import { TimeagoModule } from 'ngx-timeago';
     UserDetailComponent,
     TabsModule,
     FileUploadModule,
-    TimeagoModule
+    TimeagoModule,
+    UserBydliskoEditorComponent
   ],
 })
 export class SharedModule {}

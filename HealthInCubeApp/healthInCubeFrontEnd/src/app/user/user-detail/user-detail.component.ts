@@ -8,6 +8,8 @@ import { Pouzivatel } from 'src/app/models/pouzivatel';
 import { PouzivatelDetail } from 'src/app/models/pouzivatel-detail';
 import { AppState } from 'src/app/_store/models/AppState';
 
+import * as UserDetailActionsBundle from './store/user-detail.actions';
+
 @Component({
   selector: 'app-user-detail',
   templateUrl: './user-detail.component.html',
@@ -15,18 +17,12 @@ import { AppState } from 'src/app/_store/models/AppState';
 })
 export class UserDetailComponent implements OnInit {
 
-
-  @ViewChild('editForm') editForm: NgForm;
-
-  // before bvrowser closed 
-  @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any){
-    if (this.editForm.dirty){
-      $event.returnValue = true;
-    }
-  }
-
   user: PouzivatelDetail;
   userAuth$ : Observable<Pouzivatel>;
+
+  bydliska$: Observable<Bydlisko[]>;
+
+
 
   constructor(private store: Store<AppState>) { 
     this.userAuth$ = this.store.select('auth').pipe(take(1), map(userAuth => {
@@ -35,7 +31,18 @@ export class UserDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.bydliska$ = this.store.select('userDetail').pipe(map(userDetail => {
+      return userDetail.bydliska;
+    }));
+
     this.loadUser();
+  }
+
+ 
+
+  onEditItem(index: number) {
+    //  this.shoppingService.startedEditing.next(index);
+    this.store.dispatch(new UserDetailActionsBundle.StartEdit(index));
   }
 
    getLastActive(poslednePrihlasenie: Date) {
@@ -55,13 +62,24 @@ export class UserDetailComponent implements OnInit {
     })).subscribe(user => {
       this.user = user;
     });
-  }
+    
+   
+   
+
+   }
+
+
 
   getLivingCity(bydliskos: Bydlisko[]): string {
+    const nikde: string = "NEZNÁME";
     if (bydliskos.length <= 0) {
-      return undefined;
+      return nikde;
     }
-    return bydliskos.filter(b => b.trvale === true)[0].idMestoNavigation.nazov;
+    const mesto = bydliskos.filter(b => b.trvale === true)[0];
+    if (mesto) {
+      return mesto.idMestoNavigation.nazov;
+    } 
+    return nikde;
   }
 
 

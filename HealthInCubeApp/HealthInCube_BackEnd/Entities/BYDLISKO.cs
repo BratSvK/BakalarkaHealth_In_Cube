@@ -10,7 +10,7 @@ namespace HealthInCube_BackEnd.Entities
         public decimal IdBydliska { get; set; }
         public decimal? IdPouzivatel { get; set; }
         public string Ulica { get; set; }
-        public DateTime AdresaOd { get; set; }
+        public DateTime AdresaOd { get; set; } = DateTime.Now;
         public DateTime? AdresaDo { get; set; }
         public string Trvale { get; set; }
         public decimal IdMesto { get; set; }

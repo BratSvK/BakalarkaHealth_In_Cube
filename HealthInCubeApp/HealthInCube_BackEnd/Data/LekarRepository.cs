@@ -11,20 +11,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HealthInCube_BackEnd.Data
 {
+    /// <summary>
+    /// Lekar repositrory.
+    /// </summary>
     public class LekarRepository : ILekarRepository
     {
         private readonly HealthInCubeContext _context;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="mapper"></param>
         public LekarRepository(HealthInCubeContext context, IMapper mapper)
         {
             _mapper = mapper;
             _context = context;
 
         }
-          
 
-        // pozriet sa na triggre 
         public void DeleteItem(Lekar itemId)
         {
             throw new System.NotImplementedException();
@@ -107,8 +113,6 @@ namespace HealthInCube_BackEnd.Data
                 .OrderBy(z => z.CreatedAt)
                 .ToListAsync();
 
-
-
             return _mapper.Map<List<Ziadanka>, IEnumerable<ZiadankaDto>>(requests);
         }
 
@@ -125,6 +129,23 @@ namespace HealthInCube_BackEnd.Data
         public void UpdateItem(Lekar item)
         {
             throw new System.NotImplementedException();
+        }
+
+        public async Task<int> GetCountAsync()
+        {
+            return await _context.Lekar.CountAsync();
+        }
+
+        public async Task<Lekar> GetOriginItemAsync(decimal lekarId)
+        {
+            return await _context.Lekar
+                                 .Include(l => l.IdPouzivatelNavigation)
+                                 .ThenInclude(us => us.FotkaPouzivatel)
+                                 .Include(l => l.AtestacieLekars)
+                                 .Include(l => l.Oddelenies)
+                                 .ThenInclude(od => od.IdNemNavigation)
+                                 .Where(l => l.IdLekar == lekarId)
+                                 .SingleOrDefaultAsync();
         }
     }
 }
