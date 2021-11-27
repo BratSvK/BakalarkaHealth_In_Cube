@@ -83,14 +83,12 @@ namespace HealthInCube_BackEnd.Controllers
         /// </summary>
         /// <param name="idLekar"></param>
         /// <returns></returns>
-        [HttpGet("{idLekar}/patient/all")]
-        public async Task<ActionResult<IEnumerable<PacientDto>>> GetAllPatient(decimal idLekar)
+        [HttpGet("{idLekar}/patient/list")]
+        public async Task<ActionResult<IEnumerable<PacientCardDto>>> GetAllPatient(decimal idLekar)
         {
             if (_lekarRepo.GetLekarEntity(idLekar).Result == null) return NotFound("Lekar neexistuje!");
 
             var patients = await _lekarRepo.GetAllPatientsByDoctorId(idLekar);
-
-            if (patients.IsNullOrEmpty()) return NotFound("");
 
             return Ok(patients);
         }
@@ -105,9 +103,25 @@ namespace HealthInCube_BackEnd.Controllers
         {
             var doctor = await _lekarRepo.GetLekarEntityByUserId(idUser);
 
-            if (doctor == null) return NotFound("Lekar neexistuje!");
+            if (doctor == null) return NotFound("Lekar neexistuj§e!");
 
             return Ok(doctor);
+        }
+
+
+        /// <summary>
+        /// Get Lekar by userId.
+        /// </summary>
+        /// <param name="idLekar"></param>
+        /// <returns></returns>
+        [HttpGet("id")]
+        public async Task<ActionResult<decimal>> GetDoctorIdByUser()
+        {
+            var doctorId = await _lekarRepo.GetLekarIdByUser(User.GetUserId());
+
+            if (!doctorId.HasValue) return NotFound("Lekar neexistuje!");
+
+            return Ok(doctorId);
         }
 
         /// <summary>

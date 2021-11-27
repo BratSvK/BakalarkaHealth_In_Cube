@@ -147,15 +147,22 @@ namespace HealthInCube_BackEnd.Data
                                  .SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<PacientDto>> GetAllPatientsByDoctorId(decimal lekarId)
+        public async Task<IEnumerable<PacientCardDto>> GetAllPatientsByDoctorId(decimal lekarId)
         {
             var query = await _context.Pacient
                    .Include(p => p.IdPouzivatelNavigation)
+                   .Include(p => p.ZdravotnaKartum)
+                   .ThenInclude(m => m.IdMestoNarodeniaNavigation)
                    .Where(p => p.IdVseobecnyLekar == lekarId)
                    .AsNoTracking()
                    .ToListAsync();
 
-            return _mapper.Map<IEnumerable<PacientDto>>(query);
+            return _mapper.Map<IEnumerable<PacientCardDto>>(query);
+        }
+
+        public async Task<decimal?> GetLekarIdByUser(decimal userId)
+        {
+            return await _context.Lekar.Where(l => l.IdPouzivatel == userId).Select(l => l.IdLekar).SingleOrDefaultAsync();
         }
     }
 }
