@@ -56,7 +56,7 @@ namespace HealthInCube_BackEnd.Controllers
         {
             var lekar = await _lekarRepo.GetItemAsync(idLekar);
 
-            if (lekar == null) return NotFound("Practitioner not found");
+            if (lekar == null) return NotFound("Lekar neexistuje!");
 
             return Ok(lekar);
         }
@@ -69,13 +69,28 @@ namespace HealthInCube_BackEnd.Controllers
         [HttpGet("{idLekar}/request/all")]
         public async Task<ActionResult<ZiadankaDto>> GetAllRequestByDoctor(decimal idLekar)
         {
-            if (_lekarRepo.GetLekarEntity(idLekar).Result == null) return NotFound("Practitioner not exists");
+            if (_lekarRepo.GetLekarEntity(idLekar).Result == null) return NotFound("Lekar neexistuje!");
 
             var requests = await _lekarRepo.GetAllRequetsByDoctorId(idLekar);
 
             if (requests.IsNullOrEmpty()) return NotFound("Nothing to look!");
 
             return Ok(requests);
+        }
+
+        /// <summary>
+        /// Get all patients by doctor.
+        /// </summary>
+        /// <param name="idLekar"></param>
+        /// <returns></returns>
+        [HttpGet("{idLekar}/patient/list")]
+        public async Task<ActionResult<IEnumerable<PacientCardDto>>> GetAllPatient(decimal idLekar)
+        {
+            if (_lekarRepo.GetLekarEntity(idLekar).Result == null) return NotFound("Lekar neexistuje!");
+
+            var patients = await _lekarRepo.GetAllPatientsByDoctorId(idLekar);
+
+            return Ok(patients);
         }
 
         /// <summary>
@@ -88,9 +103,25 @@ namespace HealthInCube_BackEnd.Controllers
         {
             var doctor = await _lekarRepo.GetLekarEntityByUserId(idUser);
 
-            if (doctor == null) return NotFound("Practitioner not exists");
+            if (doctor == null) return NotFound("Lekar neexistuj§e!");
 
             return Ok(doctor);
+        }
+
+
+        /// <summary>
+        /// Get Lekar by userId.
+        /// </summary>
+        /// <param name="idLekar"></param>
+        /// <returns></returns>
+        [HttpGet("id")]
+        public async Task<ActionResult<decimal>> GetDoctorIdByUser()
+        {
+            var doctorId = await _lekarRepo.GetLekarIdByUser(User.GetUserId());
+
+            if (!doctorId.HasValue) return NotFound("Lekar neexistuje!");
+
+            return Ok(doctorId);
         }
 
         /// <summary>
@@ -133,20 +164,11 @@ namespace HealthInCube_BackEnd.Controllers
             return BadRequest("Failed to create and account for patient");
         }
 
-        private async Task<ZiadankaDto> RemoveFromRequest(ICollection<Ziadanka> ziadanky, decimal idLekar)
-        {
-            var requestToDelete = ziadanky.SingleOrDefault(z => z.IdLekar == idLekar);
-            if (requestToDelete == null) return null;
-
-            requestToDelete.AcceptedAt = DateTime.Now;
-
-            _ziadankaRepository.UpdateItem(requestToDelete);
-
-            if (await _ziadankaRepository.SaveAllAsync()) return _mapper.Map<ZiadankaDto>(requestToDelete);
-
-            return null;
-        }
-
+        /// <summary>
+        /// Delete patient by id.
+        /// </summary>
+        /// <param name="idPatient"></param>
+        /// <returns></returns>
         [HttpDelete("{idPatient}")]
         public async Task<ActionResult> DeletePatient(decimal idPatient)
         {
@@ -160,6 +182,20 @@ namespace HealthInCube_BackEnd.Controllers
 
             return BadRequest("Problem deleting the patient");
 
+        }
+
+        private async Task<ZiadankaDto> RemoveFromRequest(ICollection<Ziadanka> ziadanky, decimal idLekar)
+        {
+            var requestToDelete = ziadanky.SingleOrDefault(z => z.IdLekar == idLekar);
+            if (requestToDelete == null) return null;
+
+            requestToDelete.AcceptedAt = DateTime.Now;
+
+            _ziadankaRepository.UpdateItem(requestToDelete);
+
+            if (await _ziadankaRepository.SaveAllAsync()) return _mapper.Map<ZiadankaDto>(requestToDelete);
+
+            return null;
         }
 
         private void SendConfirmationCreationEmailToPatient(Pouzivatel userToPatient)
@@ -214,6 +250,5 @@ namespace HealthInCube_BackEnd.Controllers
                 }
             }
         }
-
     }
 }

@@ -44,6 +44,12 @@ namespace HealthInCube_BackEnd.Helpers
 
             CreateMap<PacientDto, Pacient>();
 
+            CreateMap<Pacient, PacientCardDto>()
+                .ForMember(dest => dest.Fotka, opt => opt.MapFrom(src => src.IdPouzivatelNavigation.FotkaPouzivatel.Fotka))
+                .ForMember(dest => dest.DatNarodenia, opt => opt.MapFrom(src => src.IdPouzivatelNavigation.DatNarodenia.Value.Date))
+                .ForMember(dest => dest.MestoNarodenia, opt => opt.MapFrom(src => src.ZdravotnaKartum.IdMestoNarodeniaNavigation.Nazov))
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(p => $"{p.IdPouzivatelNavigation.Meno} {p.IdPouzivatelNavigation.Priezvisko}"));
+
             CreateMap<ZdravotnaKartum, ZdratovnaKartaDto>();
 
             CreateMap<ZdravPoistenie, ZdravotnePoistenieDto>();
