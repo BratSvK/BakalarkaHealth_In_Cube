@@ -126,7 +126,7 @@ namespace HealthInCube_BackEnd.Controllers
                 .SingleOrDefaultAsync(user => user.Email == loginUser.Email.ToLower());
 
             if (user == null)
-                return NotFound("EMAIL_NOT_FOUND");
+                return Unauthorized("EMAIL_NOT_FOUND");
 
             // prihalsenie cez singIn manazera
             var result = await _signInManager.CheckPasswordSignInAsync(user, loginUser.Password, false);        // dont lock out the user if has bas credentials 

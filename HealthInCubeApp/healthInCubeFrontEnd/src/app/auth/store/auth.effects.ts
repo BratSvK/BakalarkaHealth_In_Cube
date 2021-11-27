@@ -15,6 +15,7 @@ import { environment } from "src/environments/environment";
 import * as AuthActionsBundle from './auth.actions';
 import * as UserDetailActions from '../../user/user-detail/store/user-detail.actions';
 import { Photo } from "src/app/models/photo";
+import { handleError } from "src/app/shared/auth-common";
 
 const fetchUrl = environment.apiUrl; // ....../api/
 
@@ -44,7 +45,7 @@ export class AuthEffects {
             }),
             catchError((error) => {
               // returning non error observable
-              const errorToSend = this.handleError(error);
+              const errorToSend = handleError(error);
               return of(new AuthActionsBundle.LoginFail(errorToSend)); // creating a new observable without error
             })
           );
@@ -174,26 +175,6 @@ export class AuthEffects {
     }
   }
 
-  private handleError(errorRes: HttpErrorResponse) {
-    let errorMessage = 'An uknown error occured!';
-    if (!errorRes.error) {
-      return errorMessage;
-    }
-
-    switch (errorRes.error) {
-      case 'EMAIL_NOT_FOUND':
-        errorMessage = 'This account not exists!';
-        break;
-
-      case 'INVALID_CREDENTIALS':
-        errorMessage = 'This credentials are not right!';
-        break;
-
-      default:
-        break;
-    }
-    return errorMessage;
-  }
 
   private handleAuthentification(resData: Pouzivatel) {
     resData.roleStoreBase = [];

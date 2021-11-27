@@ -3,5 +3,8 @@
     "csharpextensions.useThisForCtorAssignments": false,
     "explorer.compactFolders": false,
     "extensions.autoUpdate": false,
-    "angular.view-engine": true
+    "angular.view-engine": true,
+    "files.exclude": {
+        "**/node_modules": true
+    }
 }

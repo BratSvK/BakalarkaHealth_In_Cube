@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Pouzivatel } from 'src/app/models/pouzivatel';
 import { AppState } from 'src/app/_store/models/AppState';
@@ -16,7 +15,7 @@ export class NavUserToolboxComponent implements OnInit {
 
   @Input() user: Pouzivatel;
 
-  constructor(private store: Store<AppState>, private router: Router, private route: ActivatedRoute) { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit(): void {
   }

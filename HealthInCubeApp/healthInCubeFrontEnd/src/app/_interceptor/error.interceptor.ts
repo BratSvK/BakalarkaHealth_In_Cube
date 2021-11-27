@@ -31,11 +31,11 @@ export class ErrorInterceptor implements HttpInterceptor {
                   }
                   throw modalStateErrors;
               } else {
-                this.toastr.error(error.statusText, error.status);
+                // this.toastr.error(error.error, error.status);
               }
               break;
             case 401:
-              this.toastr.error('Bad credentials');
+              this.toastr.error('Zlé prihlasovanie údaje!');
               break;
               case 404:
                 this.router.navigateByUrl('/not-found');
@@ -45,7 +45,7 @@ export class ErrorInterceptor implements HttpInterceptor {
                 this.router.navigateByUrl('/server-error', navigationExtras);
                 break;
             default:
-              this.toastr.error('Something unexpected went wrong');
+              this.toastr.error('Stalo sa niečo nečakané!');
               console.log(error);
               break;
           }
