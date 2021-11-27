@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from "@angular/router";
+import { ActivatedRouteSnapshot, Resolve } from "@angular/router";
 import { Observable, of } from "rxjs";
-import { map, mergeMap, switchMap } from "rxjs/operators";
+import { mergeMap } from "rxjs/operators";
 import { PacientCard } from "src/app/models/pacientCard";
 import { PatientsService } from "src/app/_service/patients.service";
 

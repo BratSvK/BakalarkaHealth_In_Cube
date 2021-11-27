@@ -151,6 +151,7 @@ namespace HealthInCube_BackEnd.Data
         {
             var query = await _context.Pacient
                    .Include(p => p.IdPouzivatelNavigation)
+                   .ThenInclude(p=> p.FotkaPouzivatel)
                    .Include(p => p.ZdravotnaKartum)
                    .ThenInclude(m => m.IdMestoNarodeniaNavigation)
                    .Where(p => p.IdVseobecnyLekar == lekarId)

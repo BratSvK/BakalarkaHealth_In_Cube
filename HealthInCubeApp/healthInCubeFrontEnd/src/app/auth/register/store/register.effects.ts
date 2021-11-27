@@ -16,6 +16,7 @@ import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { Mail } from "src/app/models/mail";
 import { Pouzivatel } from "src/app/models/pouzivatel";
+import { handleError } from "src/app/shared/auth-common";
 
 
 const fetchUrl = environment.apiUrl; // ....../api/
@@ -49,8 +50,6 @@ export class RegisterEffects {
     )
   );
 
-
-
   fetchOkresyBirth = createEffect(() =>
   this.actions$.pipe(
     ofType(RegisterAcitonsBundle.FETCH_OKRESY_BIRTH),
@@ -78,7 +77,6 @@ fetchMestaBirth = createEffect(() =>
 );
 
 
-  
 
   fetchPractitioner = createEffect(() =>
     this.actions$.pipe(
@@ -132,7 +130,7 @@ fetchMestaBirth = createEffect(() =>
             }),
             catchError((error) => {
               // returning non error observable
-              const errorToSend = this.handleError(error);
+              const errorToSend = handleError(error);
               this.toastr.error(errorToSend);
               return of(new RegisterAcitonsBundle.RegisterUserFailed());
             })
@@ -164,52 +162,6 @@ fetchMestaBirth = createEffect(() =>
     private router: Router,
     private toastr: ToastrService
   ) {}
-
-
-
-  private createModelToSend(signUpForm: RegisterPouzivatel) : RegisterPouzivatel {
-    return {
-      meno: signUpForm.meno,
-      priezvisko: signUpForm.priezvisko,
-      rodPriezvisko: signUpForm.rodPriezvisko,
-      rodCislo: signUpForm.rodCislo,
-      datNarodenia: signUpForm.datNarodenia,
-      idDoctor: signUpForm.idDoctor,
-      mobil: signUpForm.mobil,
-      pohlavie: signUpForm.pohlavie,
-      email: signUpForm.email,
-      password: signUpForm.password,
-      adresa: signUpForm.adresa,
-      mesto: signUpForm.mesto,
-      idMestoNarodenia: signUpForm.idMestoNarodenia
-    };
-  }
-
-  private handleError(errorRes: HttpErrorResponse) {
-    let errorMessage = 'An uknown error occured!';
-
-    if (!errorRes.error || !errorRes.error.error) {
-      return errorMessage;
-    }
-
-    switch (errorRes.error.error.message) {
-      case 'EMAIL_EXISTS':
-        errorMessage = 'This email exists!';
-        break;
-
-      case 'EMAIL_NOT_FOUND':
-        errorMessage = 'This account not exists!';
-        break;
-
-      case 'INVALID_PASSWORD':
-        errorMessage = 'This credentials are not right!';
-        break;
-
-      default:
-        break;
-    }
-    return errorMessage;
-  }
 
 }
 

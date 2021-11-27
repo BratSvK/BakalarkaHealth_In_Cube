@@ -1,3 +1,5 @@
+import { Mesto } from "./mesto";
+
 export interface Adresa {
     idMesto: number;
     ulica: string;
