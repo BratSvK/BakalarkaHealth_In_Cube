@@ -36,16 +36,16 @@ namespace HealthInCube_BackEnd.DTOs
         /// <summary>
         /// Health record of patient.
         /// </summary>
-        public ZdratovnaKartaDto ZdratovnaKarta { get; set; }
+        public ZdratovnaKartaDto ZdravotnaKartum { get; set; }
 
         /// <summary>
         /// All insurance of patient
         /// </summary>
-        public ICollection<ZdravotnePoistenieDto> ZdravotnePoistenia { get; set; }
+        public ICollection<ZdravotnePoistenieDto> ZdravPoistenies { get; set; }
 
         /// <summary>
         /// Data about user.
         /// </summary>
-        public PouzivatelDto PouzivatelData { get; set; }
+        public PouzivatelDto IdPouzivatelNavigation { get; set; }
     }
 }

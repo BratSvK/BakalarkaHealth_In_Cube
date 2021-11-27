@@ -5,7 +5,6 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.Entities;
-using HealthInCube_BackEnd.Helpers;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -146,6 +145,17 @@ namespace HealthInCube_BackEnd.Data
                                  .ThenInclude(od => od.IdNemNavigation)
                                  .Where(l => l.IdLekar == lekarId)
                                  .SingleOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<PacientDto>> GetAllPatientsByDoctorId(decimal lekarId)
+        {
+            var query = await _context.Pacient
+                   .Include(p => p.IdPouzivatelNavigation)
+                   .Where(p => p.IdVseobecnyLekar == lekarId)
+                   .AsNoTracking()
+                   .ToListAsync();
+
+            return _mapper.Map<IEnumerable<PacientDto>>(query);
         }
     }
 }

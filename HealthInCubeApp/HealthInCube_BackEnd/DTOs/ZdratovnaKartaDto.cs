@@ -1,7 +1,5 @@
-﻿using System;
+﻿using HealthInCube_BackEnd.Entities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HealthInCube_BackEnd.DTOs
 {
@@ -22,5 +20,15 @@ namespace HealthInCube_BackEnd.DTOs
         /// Place of birth.
         /// </summary>
         public MestoDto MiestoNarodenia { get; set; }
+
+        /// <summary>
+        /// All treatments.
+        /// </summary>
+        public ICollection<VykVysetrenium> VykVysetrenia { get; set; }
+
+        /// <summary>
+        /// All illnesses.
+        /// </summary>
+        public ICollection<ZapChoroby> ZapChorobies { get; set; }
     }
 }
