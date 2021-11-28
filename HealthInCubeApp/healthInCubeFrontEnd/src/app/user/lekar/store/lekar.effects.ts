@@ -1,14 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { Actions, createEffect, Effect, ofType } from "@ngrx/effects";
+import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { ToastrService } from "ngx-toastr";
-import { merge, of } from "rxjs";
-import { Action } from "rxjs/internal/scheduler/Action";
-import { catchError, map, switchMap, switchMapTo, withLatestFrom } from "rxjs/operators";
+import { of } from "rxjs";
+import { catchError, map, switchMap, withLatestFrom } from "rxjs/operators";
 import { Lekar } from "src/app/models/lekar";
 import { Ziadanka } from "src/app/models/ziadanka";
+import { LekarIdService } from "src/app/_service/lekar.service";
 import { AppState } from "src/app/_store/models/AppState";
 import { environment } from "src/environments/environment";
 
@@ -48,6 +48,7 @@ export class LekarEffects {
             .pipe(
                 map((pract) => {
                     // this.toastr.success("Lekar pridany");
+                    this.lekarIdService.setId(pract.idLekar);
                     return new LekarActionsBundle.SetPractitioner(pract);
                 }),
                 catchError((error) => {
@@ -81,7 +82,8 @@ export class LekarEffects {
         private http: HttpClient,
         private store$: Store<AppState>,
         private router: Router,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private lekarIdService: LekarIdService
       ) {}
 }
 

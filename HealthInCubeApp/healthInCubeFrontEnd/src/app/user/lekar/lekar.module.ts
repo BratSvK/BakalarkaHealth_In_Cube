@@ -11,6 +11,6 @@ import { PacientCardComponent } from './pacienti-list/pacient-card/pacient-card.
 @NgModule({
     declarations: [NavLekarComponent, LekarComponent ,ZiadankyComponent, PacientiListComponent, VysetreniaComponent, PacientCardComponent],
     imports: [SharedModule, LekarRoutingModule]
-  })
+   })
   export class LekarModule {}
   
