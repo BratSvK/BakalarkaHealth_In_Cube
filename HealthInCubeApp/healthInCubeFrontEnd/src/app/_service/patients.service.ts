@@ -3,44 +3,73 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { LekarParams } from '../models/lekarParams';
 import { PacientCard } from '../models/pacientCard';
 import { PaginatedResult, PAGINATION_HEADER_NAME } from '../models/pagination';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PatientsService {
   baseUrl = environment.apiUrl;
-  pagiantedResult = new PaginatedResult<PacientCard[]>();
-
   idLekar: number;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  getPatientsByDoctorId(idLekar: number, page?: number, itemsPerPage?: number) {
-    let params = new HttpParams();
+  getPatientsByDoctorId(idLekar: number, lekarParams: LekarParams) {
+    let apiUrl = this.baseUrl + `lekar/${idLekar}/patient/list`;
+    let params = this.getPaginationHeaders(
+      lekarParams.pageNumber,
+      lekarParams.pageSize
+    );
 
-    if (page !== null && itemsPerPage !== null) {
-      params = params.append('pageNumber', page.toString());
-      params = params.append('pageSize', itemsPerPage.toString());
+    params = params.append('ageFrom', lekarParams.ageFrom.toString());
+    params = params.append('ageTo', lekarParams.ageTo.toString());
+
+    if (lekarParams.lastName) {
+      params = params.append('lastName', lekarParams.lastName.toString());
+    }
+    if (lekarParams.bid) {
+      params = params.append('bid', lekarParams.bid.toString());
     }
 
-    // observe => we get full response not body like in normal http get request !! 
-    return this.http.get<PacientCard[]>(this.baseUrl + `lekar/${idLekar}/patient/list`, {observe: 'response', params})
-    .pipe(
-      map(response => {
-        this.pagiantedResult.result = response.body;
-        if (response.headers.get(PAGINATION_HEADER_NAME) !== null) {
-          this.pagiantedResult.pagination = JSON.parse(response.headers.get(PAGINATION_HEADER_NAME));
-        }
-        return this.pagiantedResult;
-      })
-    )
+    // observe => we get full response not body like in normal http get request !!
+    return this.getPaginatedResult<PacientCard[]>(apiUrl, params);
   }
-
-
 
   getDoctorIdByUserId() {
     return this.http.get<number>(this.baseUrl + `lekar/id`);
+  }
+
+  /*
+      Generic method for getting paginated result from api.
+  */
+  private getPaginatedResult<T>(url: string, params: HttpParams) {
+    const pagiantedResult = new PaginatedResult<T>();
+    return this.http
+      .get<T>(url, {
+        observe: 'response',
+        params,
+      })
+      .pipe(
+        map((response) => {
+          pagiantedResult.result = response.body;
+          if (response.headers.get(PAGINATION_HEADER_NAME) !== null) {
+            pagiantedResult.pagination = JSON.parse(
+              response.headers.get(PAGINATION_HEADER_NAME)
+            );
+          }
+          return pagiantedResult;
+        })
+      );
+  }
+
+  private getPaginationHeaders(pageNumber: number, pageSize: number) {
+    let params = new HttpParams();
+
+    params = params.append('pageNumber', pageNumber.toString());
+    params = params.append('pageSize', pageSize.toString());
+
+    return params;
   }
 }

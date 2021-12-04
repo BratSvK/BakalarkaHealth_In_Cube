@@ -1,16 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { map, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { LekarParams } from 'src/app/models/lekarParams';
 import { PacientCard } from 'src/app/models/pacientCard';
 import {
-  DEFUALT_ITEMS_PER_PAGE,
-  DEFUALT_PAGE_NUMBER,
-  Pagination,
+  Pagination
 } from 'src/app/models/pagination';
 import { LekarIdService } from 'src/app/_service/lekar.service';
 import { PatientsService } from 'src/app/_service/patients.service';
-import { AppState, lekarId } from 'src/app/_store/models/AppState';
 
 @Component({
   selector: 'app-pacienti-list',
@@ -20,15 +17,16 @@ import { AppState, lekarId } from 'src/app/_store/models/AppState';
 export class PacientiListComponent implements OnInit, OnDestroy {
   patients: PacientCard[];
   pagination: Pagination;
-  pageNumber = DEFUALT_PAGE_NUMBER;
-  pageSize = DEFUALT_ITEMS_PER_PAGE;
+  lekarParams: LekarParams;
 
   sub: Subscription;
 
   constructor(
     private patientService: PatientsService,
     private lekarIdService: LekarIdService
-  ) {}
+  ) {
+    this.lekarParams = new LekarParams();
+  }
 
   ngOnInit(): void {
     this.loadPatients();
@@ -39,11 +37,17 @@ export class PacientiListComponent implements OnInit, OnDestroy {
   }
 
   pageChanged(event: any) {
-    this.pageNumber = event.page;
+    this.lekarParams.pageNumber = event.page;
     this.loadPatients();
   }
 
-  private loadPatients() {
+
+  resetFilter() {
+    this.lekarParams = new LekarParams();
+    this.loadPatients();
+  }
+
+  loadPatients() {
     // httpResponse is typical complete call don't need unsub
     var lekarId = this.lekarIdService.getLekarId();
     if (!!lekarId === false) {
@@ -53,10 +57,8 @@ export class PacientiListComponent implements OnInit, OnDestroy {
           switchMap((lekarId) =>
             this.patientService.getPatientsByDoctorId(
               lekarId,
-              this.pageNumber,
-              this.pageSize
-            )
-          )
+              this.lekarParams
+            ))
         )
         .subscribe((response) => {
           this.patients = response.result;
@@ -64,7 +66,7 @@ export class PacientiListComponent implements OnInit, OnDestroy {
         });
     } else {
       this.patientService
-        .getPatientsByDoctorId(lekarId, this.pageNumber, this.pageSize)
+        .getPatientsByDoctorId(lekarId, this.lekarParams)
         .subscribe((response) => {
           this.patients = response.result;
           this.pagination = response.pagination;
