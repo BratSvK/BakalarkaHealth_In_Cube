@@ -9,34 +9,149 @@
 			"name": "Pouzivatel/Login/Register",
 			"item": [
 				{
-					"name": "RegisterUser",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n  \"idPouzivatel\": 1,\r\n  \"idTyp\": 1,\r\n  \"registrovany\": \"0001-01-01T00:00:00\",\r\n  \"meno\": \"Martin\",\r\n  \"priezvisko\": \"Gajdoš\",\r\n  \"rodPriezvisko\": null,\r\n  \"rodCislo\": \"981124/4168\",\r\n  \"datNarodenia\": \"2019-07-26T00:00:00\",\r\n  \"email\": \"martingajdos.zs@gmail.com\",\r\n  \"mobil\": \"0904362907\",\r\n  \"poslednePrihlasenie\": null,\r\n  \"pohlavie\": \"M\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "Login",
+					"item": [
+						{
+							"name": "LoginUserLekar",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Login lekar should return 200.\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"\r",
+											"    var jsonData = pm.response.json();\r",
+											"\r",
+											"    pm.environment.set(\"Temp.Lekar.Token\", jsonData.token);\r",
+											"    pm.environment.set(\"Temp.User.Id\", jsonData.id);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "https://localhost:5001/api/pouzivatel/registerUser",
-							"protocol": "https",
-							"host": [
-								"localhost"
 							],
-							"port": "5001",
-							"path": [
-								"api",
-								"pouzivatel",
-								"registerUser"
-							]
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"motivationgajdy@gmail.com\",\r\n    \"password\": \"Peter1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:5001/api/ucet/login",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"ucet",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "LoginUserPacient",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Login user should return 200.\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"\r",
+											"    var jsonData = pm.response.json();\r",
+											"\r",
+											"    pm.environment.set(\"Temp.User.Token\", jsonData.token);\r",
+											"    pm.environment.set(\"Temp.User.Id\", jsonData.id);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"martingajdos.zs@gmail.com\",\r\n    \"password\": \"Martin1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:5001/api/ucet/login",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"ucet",
+										"login"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
+				},
+				{
+					"name": "Register",
+					"item": [
+						{
+							"name": "RegisterUser",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"idPouzivatel\": 1,\r\n  \"idTyp\": 1,\r\n  \"registrovany\": \"0001-01-01T00:00:00\",\r\n  \"meno\": \"Martin\",\r\n  \"priezvisko\": \"Gajdoš\",\r\n  \"rodPriezvisko\": null,\r\n  \"rodCislo\": \"981124/4168\",\r\n  \"datNarodenia\": \"2019-07-26T00:00:00\",\r\n  \"email\": \"martingajdos.zs+01@gmail.com\",\r\n  \"mobil\": \"0904362907\",\r\n  \"poslednePrihlasenie\": null,\r\n  \"pohlavie\": \"M\",\r\n  \"idMestoNarodenia\": 2889,\r\n  \"adresa\": {\r\n\r\n  },\r\n  \"password\": \"asdfsfas1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:5001/api/ucet/register",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"ucet",
+										"register"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				},
 				{
 					"name": "AllRoles",
@@ -45,36 +160,6 @@
 						"header": [],
 						"url": {
 							"raw": ""
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "LoginUser",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"motivationgajdy@gmail.com\",\r\n    \"password\": \"Peter1\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "https://localhost:5001/api/ucet/login",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "5001",
-							"path": [
-								"api",
-								"ucet",
-								"login"
-							]
 						}
 					},
 					"response": []
@@ -97,7 +182,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"recieverUserName\": \"martingajdos.zs\",\r\n    \"recieverEmail\": \"martingajdos.zs@gmail.com\",\r\n    \"reveiverFullName\": \"Martin Gajdoš\"\r\n}",
+							"raw": "{\r\n    \"receiverUserName\": \"martingajdos.zs\",\r\n    \"receiverEmail\": \"martingajdos.zs@gmail.com\",\r\n    \"receiverFullName\": \"Martin Gajdoš\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -105,7 +190,7 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:5001/api/pouzivatel/mail",
+							"raw": "https://localhost:5001/api/ucet/mail",
 							"protocol": "https",
 							"host": [
 								"localhost"
@@ -113,9 +198,20 @@
 							"port": "5001",
 							"path": [
 								"api",
-								"pouzivatel",
+								"ucet",
 								"mail"
 							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOkresy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
 						}
 					},
 					"response": []
@@ -163,155 +259,495 @@
 			"name": "Lekar",
 			"item": [
 				{
-					"name": "GetLekarById",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{GateWayApi}}/{{EndPoint}}/1",
-							"host": [
-								"{{GateWayApi}}"
-							],
-							"path": [
-								"{{EndPoint}}",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetPatients",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyIiwiZW1haWwiOiJtb3RpdmF0aW9uZ2FqZHlAZ21haWwuY29tIiwicm9sZSI6Ikxla2FyIiwibmJmIjoxNjM0OTI4NjM1LCJleHAiOjE2MzU1MzM0MzUsImlhdCI6MTYzNDkyODYzNX0.OXOIhGZYwMLnm-g6VqICJuVCQYq3JgDG2-n0CZTDQMdNGcadEYrcEZYco1kh6-dHKecmFPFWuWkvZ-FDXHDjTw",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{GateWayApi}}/{{EndPoint}}/all",
-							"host": [
-								"{{GateWayApi}}"
-							],
-							"path": [
-								"{{EndPoint}}",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getRequests",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{tokenLekar}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{GateWayApi}}/{{EndPoint}}/1/request/all",
-							"host": [
-								"{{GateWayApi}}"
-							],
-							"path": [
-								"{{EndPoint}}",
-								"1",
-								"request",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetLekarByUserId",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{tokenLekar}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{GateWayApi}}/{{EndPoint}}/user/2",
-							"host": [
-								"{{GateWayApi}}"
-							],
-							"path": [
-								"{{EndPoint}}",
-								"user",
-								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "CreatePatient",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{tokenLekar}}",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"idUser\": 3,\r\n    \"idMiestoNarodenia\": 2083      \r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"name": "SeedLekarId",
+					"item": [
+						{
+							"name": "LoginUserLekar",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Login lekar should return 200.\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"\r",
+											"    var jsonData = pm.response.json();\r",
+											"\r",
+											"    pm.environment.set(\"Temp.Lekar.Token\", jsonData.token);\r",
+											"    pm.environment.set(\"Temp.User.Id\", jsonData.id);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "{{GateWayApi}}/{{EndPoint}}/1/createPatientAccount",
-							"host": [
-								"{{GateWayApi}}"
 							],
-							"path": [
-								"{{EndPoint}}",
-								"1",
-								"createPatientAccount"
-							]
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"motivationgajdy@gmail.com\",\r\n    \"password\": \"Peter1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:5001/api/ucet/login",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"ucet",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetLekarId",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get lekar should return 200.\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"\r",
+											"    var jsonData = pm.response.json();\r",
+											"\r",
+											"    pm.environment.set(\"Temp.Lekar.Id\", jsonData);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{Temp.Lekar.Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/id",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"id"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetLekarById",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get lekar should return 200.\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"\r",
+											"    var jsonData = pm.response.json();\r",
+											"\r",
+											"    pm.environment.set(\"Temp.Lekar.Id\", jsonData.idLekar);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/{{Temp.Lekar.Id}}",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"{{Temp.Lekar.Id}}"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "DeletePatient",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{tokenLekar}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{GateWayApi}}/{{EndPoint}}/1",
-							"host": [
-								"{{GateWayApi}}"
-							],
-							"path": [
-								"{{EndPoint}}",
-								"1"
+					"name": "Pacient",
+					"item": [
+						{
+							"name": "Filter",
+							"item": [
+								{
+									"name": "Get Patients no filter",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{Temp.Lekar.Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{GateWayApi}}/{{EndPoint}}/{{Temp.Lekar.Id}}/patient/list?pageNumber=1&pageSize=5",
+											"host": [
+												"{{GateWayApi}}"
+											],
+											"path": [
+												"{{EndPoint}}",
+												"{{Temp.Lekar.Id}}",
+												"patient",
+												"list"
+											],
+											"query": [
+												{
+													"key": "pageNumber",
+													"value": "1"
+												},
+												{
+													"key": "pageSize",
+													"value": "5"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Patients with filter last name ",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{Temp.Lekar.Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{GateWayApi}}/{{EndPoint}}/{{Temp.Lekar.Id}}/patient/list?pageNumber=1&pageSize=5&lastName=Gajdošová",
+											"host": [
+												"{{GateWayApi}}"
+											],
+											"path": [
+												"{{EndPoint}}",
+												"{{Temp.Lekar.Id}}",
+												"patient",
+												"list"
+											],
+											"query": [
+												{
+													"key": "pageNumber",
+													"value": "1"
+												},
+												{
+													"key": "pageSize",
+													"value": "5"
+												},
+												{
+													"key": "lastName",
+													"value": "Gajdošová"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Patients with filter age to from",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{Temp.Lekar.Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{GateWayApi}}/{{EndPoint}}/{{Temp.Lekar.Id}}/patient/list?pageNumber=1&pageSize=5&ageTo=60&ageFrom=40",
+											"host": [
+												"{{GateWayApi}}"
+											],
+											"path": [
+												"{{EndPoint}}",
+												"{{Temp.Lekar.Id}}",
+												"patient",
+												"list"
+											],
+											"query": [
+												{
+													"key": "pageNumber",
+													"value": "1"
+												},
+												{
+													"key": "pageSize",
+													"value": "5"
+												},
+												{
+													"key": "lastName",
+													"value": "Gajdošová",
+													"disabled": true
+												},
+												{
+													"key": "ageTo",
+													"value": "60"
+												},
+												{
+													"key": "ageFrom",
+													"value": "40"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get patients with filter BID",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{Temp.Lekar.Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{GateWayApi}}/{{EndPoint}}/{{Temp.Lekar.Id}}/patient/list?pageNumber=1&pageSize=5&bid=905111/4168",
+											"host": [
+												"{{GateWayApi}}"
+											],
+											"path": [
+												"{{EndPoint}}",
+												"{{Temp.Lekar.Id}}",
+												"patient",
+												"list"
+											],
+											"query": [
+												{
+													"key": "pageNumber",
+													"value": "1"
+												},
+												{
+													"key": "pageSize",
+													"value": "5"
+												},
+												{
+													"key": "lastName",
+													"value": "Gajdošová",
+													"disabled": true
+												},
+												{
+													"key": "bid",
+													"value": "905111/4168"
+												}
+											]
+										}
+									},
+									"response": []
+								}
 							]
+						},
+						{
+							"name": "GetAllPatients",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/all",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetAllPatientsByLekarId",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{Temp.Lekar.Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/{{Temp.Lekar.Id}}/patient/list?pageNumber=1&pageSize=5",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"{{Temp.Lekar.Id}}",
+										"patient",
+										"list"
+									],
+									"query": [
+										{
+											"key": "pageNumber",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getRequests",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenLekar}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/1/request/all",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"1",
+										"request",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CreatePatient",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenLekar}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idUser\": 3,\r\n    \"idMiestoNarodenia\": 2083      \r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/1/createPatientAccount",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"1",
+										"createPatientAccount"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeletePatient",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{tokenLekar}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/1",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"1"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
+				},
+				{
+					"name": "Patient request",
+					"item": [
+						{
+							"name": "GetAllPatientsByLekarId",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{Temp.Lekar.Token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"idLekar\": 1,\r\n    \"idUser\":4\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/createPatientAccount",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"createPatientAccount"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -319,52 +755,327 @@
 			"name": "Pouzivatel",
 			"item": [
 				{
-					"name": "AddPhoto",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIyIiwiZW1haWwiOiJtb3RpdmF0aW9uZ2FqZHlAZ21haWwuY29tIiwicm9sZSI6Ikxla2FyIiwibmJmIjoxNjM0MTk5MzgyLCJleHAiOjE2MzQ4MDQxODIsImlhdCI6MTYzNDE5OTM4Mn0.Y9DBsppBLk8Jx9iObtjOCOeefhyEsvxJweo2NXa2IXyS8Fuiqk9jcu0MeSLvlqIlON9LClyjTz-x6aJdZ_zKWw",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "https://localhost:5001/api/pouzivatel/add-photo",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "5001",
-							"path": [
-								"api",
-								"pouzivatel",
-								"add-photo"
-							]
+					"name": "MainFoto",
+					"item": [
+						{
+							"name": "AddPhoto",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{Temp.User.Token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/marti/Desktop/DB_user_photos/gajdy.JPG"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/add-photo",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"add-photo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DeletePhoto",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{Temp.User.Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/delete-photo",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"delete-photo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateFoto",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{Temp.User.Token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/C:/Users/marti/Desktop/DB_user_photos/user_1.jpg"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/update-photo",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"update-photo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetMainPhoto",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{Temp.User.Token}}"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/main-photo",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"main-photo"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "GetBydlisko",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:5001/api/pouzivatel/bydliska",
-							"protocol": "https",
-							"host": [
-								"localhost"
-							],
-							"port": "5001",
-							"path": [
-								"api",
-								"pouzivatel",
-								"bydliska"
-							]
+					"name": "PouzivatelDetail",
+					"item": [
+						{
+							"name": "GetPouzivatelDetail",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{Temp.User.Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/detail",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"detail"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
+				},
+				{
+					"name": "Bydlisko",
+					"item": [
+						{
+							"name": "GetBydliska",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{Temp.User.Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/addresses",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"addresses"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetTrvaleBydliskoMesto",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzIiwiZW1haWwiOiJtYXJ0aW5nYWpkb3MuenNAZ21haWwuY29tIiwicm9sZSI6IlBhY2llbnQiLCJuYmYiOjE2MzY4OTU0NDQsImV4cCI6MTYzNzUwMDI0NCwiaWF0IjoxNjM2ODk1NDQ0fQ.FUZcGSKQHhdeDRN-gRFqn4FqxwrtWSMerOstmPSurGAqf_zDLBXej-Cb-DtM1Zp60DTBqitjbGe38kfSBGXMcg"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/bydlisko/trvale/mesto",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"bydlisko",
+										"trvale",
+										"mesto"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "CreateAddress",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Create address should return 200.\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"\r",
+											"    var jsonData = pm.response.json();\r",
+											"\r",
+											"    pm.environment.set(\"Temp.BydlliskoId\", jsonData.idBydliska);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{Temp.User.Token}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"ulica\": \"Štúrova 1305/30\",\r\n    \"idMesto\": 1328\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/address/create",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"address",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UpdateBydlisko",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Upadte address should return 204.\", function() {\r",
+											"    pm.response.to.have.status(204);\r",
+											"\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{Temp.User.Token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"ulica\": \"Radoľa 631\",\r\n    \"trvale\": true,\r\n    \"idMesto\": 2083\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/address/{{Temp.BydlliskoId}}/update",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"address",
+										"{{Temp.BydlliskoId}}",
+										"update"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetMesta",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/mesta",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"mesta"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -388,6 +1099,30 @@
 								"pacient",
 								"3",
 								"activated"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetPacient",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzIiwiZW1haWwiOiJtYXJ0aW5nYWpkb3MuenNAZ21haWwuY29tIiwicm9sZSI6IlBhY2llbnQiLCJuYmYiOjE2MzY4OTU0NDQsImV4cCI6MTYzNzUwMDI0NCwiaWF0IjoxNjM2ODk1NDQ0fQ.FUZcGSKQHhdeDRN-gRFqn4FqxwrtWSMerOstmPSurGAqf_zDLBXej-Cb-DtM1Zp60DTBqitjbGe38kfSBGXMcg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{GateWayApi}}/{{EndPoint}}/3",
+							"host": [
+								"{{GateWayApi}}"
+							],
+							"path": [
+								"{{EndPoint}}",
+								"3"
 							]
 						}
 					},
@@ -441,15 +1176,27 @@
 			]
 		},
 		{
-			"name": "getOkresy",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": ""
+			"name": "BuggyErrors",
+			"item": [
+				{
+					"name": "Get null Ref Error",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GateWayApi}}/{{EndPoint}}/server-error",
+							"host": [
+								"{{GateWayApi}}"
+							],
+							"path": [
+								"{{EndPoint}}",
+								"server-error"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	]
 }
