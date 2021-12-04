@@ -9,8 +9,18 @@ import { LekarComponent } from "./lekar.component";
 import { PacientCardComponent } from './pacienti-list/pacient-card/pacient-card.component';
 
 @NgModule({
-    declarations: [NavLekarComponent, LekarComponent ,ZiadankyComponent, PacientiListComponent, VysetreniaComponent, PacientCardComponent],
-    imports: [SharedModule, LekarRoutingModule]
+    declarations: [   
+        NavLekarComponent, 
+        LekarComponent,
+        ZiadankyComponent, 
+        PacientiListComponent, 
+        VysetreniaComponent, 
+        PacientCardComponent
+    ],
+    imports: [
+        SharedModule, 
+        LekarRoutingModule
+    ]  
    })
   export class LekarModule {}
   

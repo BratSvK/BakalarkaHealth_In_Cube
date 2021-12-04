@@ -4,24 +4,24 @@ import { PacientCard } from 'src/app/models/pacientCard';
 import { extractFotoFromApi } from 'src/app/shared/foto-extract';
 import { faNotesMedical } from '@fortawesome/free-solid-svg-icons';
 
-
 @Component({
   selector: 'app-pacient-card',
   templateUrl: './pacient-card.component.html',
-  styleUrls: ['./pacient-card.component.css']
+  styleUrls: ['./pacient-card.component.css'],
 })
 export class PacientCardComponent implements OnInit {
   @Input() patient: PacientCard;
 
   medicamentRecord = faNotesMedical;
 
-  constructor(private sanitizer: DomSanitizer) { }
+  constructor(private sanitizer: DomSanitizer) {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 
   get photo(): any {
-    return extractFotoFromApi(this.patient.fotka, this.sanitizer);
+    if (this.patient.fotka !== null) {
+      return extractFotoFromApi(this.patient.fotka, this.sanitizer);
+    }
+    return null;
   }
 }
