@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using HealthInCube_BackEnd.DTOs;
@@ -8,7 +7,6 @@ using HealthInCube_BackEnd.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 using Microsoft.Extensions.Configuration;
 using System.Net.Mail;
 using System.Net.Mime;

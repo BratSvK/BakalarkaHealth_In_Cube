@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.Entities;
+using HealthInCube_BackEnd.Helpers;
 
 namespace HealthInCube_BackEnd.Interfaces
 {
@@ -14,8 +15,8 @@ namespace HealthInCube_BackEnd.Interfaces
         Task<decimal?> GetLekarIdByUser(decimal userId);
 
 
-        Task<IEnumerable<ZiadankaDto>> GetAllRequetsByDoctorId(decimal lekarId);
+        Task<IEnumerable<ZiadankaDto>> GetAllRequetsByDoctorIdAsync(decimal lekarId);
 
-        Task<IEnumerable<PacientCardDto>> GetAllPatientsByDoctorId(decimal lekarId);
+        Task<PagedList<PacientCardDto>> GetAllPatientsByDoctorIdAsync(decimal lekarId, UserParams userParams);
     }
 }

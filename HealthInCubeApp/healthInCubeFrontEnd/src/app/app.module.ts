@@ -22,6 +22,7 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { UserDetailEffects } from './user/user-detail/store/user-detail.effects';
 import { TimeagoModule } from 'ngx-timeago';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { TimeagoModule } from 'ngx-timeago';
     EffectsModule.forRoot([RegisterEffects, AuthEffects, PatientEffects, LekarEffects, UserDetailEffects]),
     StoreDevtoolsModule.instrument({logOnly: environment.production}),
     AlertModule.forRoot(),
+    PaginationModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

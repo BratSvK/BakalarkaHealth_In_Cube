@@ -8,6 +8,7 @@ using AutoMapper;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Extensions;
+using HealthInCube_BackEnd.Helpers;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -71,7 +72,7 @@ namespace HealthInCube_BackEnd.Controllers
         {
             if (_lekarRepo.GetLekarEntity(idLekar).Result == null) return NotFound("Lekar neexistuje!");
 
-            var requests = await _lekarRepo.GetAllRequetsByDoctorId(idLekar);
+            var requests = await _lekarRepo.GetAllRequetsByDoctorIdAsync(idLekar);
 
             if (requests.IsNullOrEmpty()) return NotFound("Nothing to look!");
 
@@ -84,11 +85,13 @@ namespace HealthInCube_BackEnd.Controllers
         /// <param name="idLekar"></param>
         /// <returns></returns>
         [HttpGet("{idLekar}/patient/list")]
-        public async Task<ActionResult<IEnumerable<PacientCardDto>>> GetAllPatient(decimal idLekar)
+        public async Task<ActionResult<IEnumerable<PacientCardDto>>> GetAllPatient(decimal idLekar, [FromQuery] UserParams userParams)
         {
             if (_lekarRepo.GetLekarEntity(idLekar).Result == null) return NotFound("Lekar neexistuje!");
 
-            var patients = await _lekarRepo.GetAllPatientsByDoctorId(idLekar);
+            var patients = await _lekarRepo.GetAllPatientsByDoctorIdAsync(idLekar, userParams);
+
+            Response.AddPaginationHeader(patients.CurrentPage, patients.PageSize, patients.TotalCount, patients.TotalPages);
 
             return Ok(patients);
         }

@@ -16,6 +16,7 @@ import * as AuthActionsBundle from './auth.actions';
 import * as UserDetailActions from '../../user/user-detail/store/user-detail.actions';
 import { Photo } from "src/app/models/photo";
 import { handleError } from "src/app/shared/auth-common";
+import { LekarIdService } from "src/app/_service/lekar.service";
 
 const fetchUrl = environment.apiUrl; // ....../api/
 
@@ -73,6 +74,7 @@ export class AuthEffects {
         tap(() => {
           this.authService.clearLoggoutTimer();
           localStorage.removeItem('userData');
+          this.lekarService.clearLekarId();
           this.router.navigate(['/auth']);
         }),
         map(() => {
@@ -160,7 +162,8 @@ export class AuthEffects {
     private router: Router,
     private authService: AuthService,
     private toastr: ToastrService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private lekarService: LekarIdService
   ) {}
 
 

@@ -17,6 +17,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FileUploadModule } from 'ng2-file-upload';
 import { TimeagoModule } from 'ngx-timeago';
 import { UserBydliskoEditorComponent } from '../user/user-detail/user-bydlisko-editor/user-bydlisko-editor.component';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { UserBydliskoEditorComponent } from '../user/user-detail/user-bydlisko-e
     RouterModule,
     TabsModule.forRoot(),
     TimeagoModule.forRoot(),
-    FileUploadModule
+    FileUploadModule,
+    PaginationModule.forRoot()        // for any of angular boostrap components use forRoot 
   ],
   exports: [
     CommonModule,
@@ -54,7 +56,8 @@ import { UserBydliskoEditorComponent } from '../user/user-detail/user-bydlisko-e
     TabsModule,
     FileUploadModule,
     TimeagoModule,
-    UserBydliskoEditorComponent
+    UserBydliskoEditorComponent,
+    PaginationModule
   ],
 })
 export class SharedModule {}

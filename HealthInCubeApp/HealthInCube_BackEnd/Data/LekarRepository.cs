@@ -5,6 +5,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.Entities;
+using HealthInCube_BackEnd.Helpers;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -104,7 +105,7 @@ namespace HealthInCube_BackEnd.Data
 
         }
 
-        public async Task<IEnumerable<ZiadankaDto>> GetAllRequetsByDoctorId(decimal lekarId)
+        public async Task<IEnumerable<ZiadankaDto>> GetAllRequetsByDoctorIdAsync(decimal lekarId)
         {
             var requests =  await _context.Ziadanka
                 .Include(z => z.IdPouzivatelNavigation)
@@ -147,23 +148,24 @@ namespace HealthInCube_BackEnd.Data
                                  .SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<PacientCardDto>> GetAllPatientsByDoctorId(decimal lekarId)
-        {
-            var query = await _context.Pacient
-                   .Include(p => p.IdPouzivatelNavigation)
-                   .ThenInclude(p=> p.FotkaPouzivatel)
-                   .Include(p => p.ZdravotnaKartum)
-                   .ThenInclude(m => m.IdMestoNarodeniaNavigation)
-                   .Where(p => p.IdVseobecnyLekar == lekarId)
-                   .AsNoTracking()
-                   .ToListAsync();
-
-            return _mapper.Map<IEnumerable<PacientCardDto>>(query);
-        }
-
         public async Task<decimal?> GetLekarIdByUser(decimal userId)
         {
             return await _context.Lekar.Where(l => l.IdPouzivatel == userId).Select(l => l.IdLekar).SingleOrDefaultAsync();
+        }
+
+        public async Task<PagedList<PacientCardDto>> GetAllPatientsByDoctorIdAsync(decimal lekarId, UserParams userParams)
+        {
+            // only ready only query
+            var query = _context.Pacient
+                .Include(p => p.IdPouzivatelNavigation)
+                .ThenInclude(p => p.FotkaPouzivatel)
+                .Include(p => p.ZdravotnaKartum)
+                .ThenInclude(m => m.IdMestoNarodeniaNavigation)
+                .ProjectTo<PacientCardDto>(_mapper.ConfigurationProvider)
+                .AsNoTracking();
+
+            // pasing queriy to pageList class.
+            return await PagedList<PacientCardDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
         }
     }
 }
