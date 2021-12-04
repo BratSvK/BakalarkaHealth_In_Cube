@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -153,7 +154,7 @@ namespace HealthInCube_BackEnd.Data
             return await _context.Lekar.Where(l => l.IdPouzivatel == userId).Select(l => l.IdLekar).SingleOrDefaultAsync();
         }
 
-        public async Task<PagedList<PacientCardDto>> GetAllPatientsByDoctorIdAsync(decimal lekarId, UserParams userParams)
+        public async Task<PagedList<PacientCardDto>> GetAllPatientsByDoctorIdAsync(decimal lekarId, LekarParams userParams)
         {
             // only ready only query
             var query = _context.Pacient
@@ -161,11 +162,30 @@ namespace HealthInCube_BackEnd.Data
                 .ThenInclude(p => p.FotkaPouzivatel)
                 .Include(p => p.ZdravotnaKartum)
                 .ThenInclude(m => m.IdMestoNarodeniaNavigation)
-                .ProjectTo<PacientCardDto>(_mapper.ConfigurationProvider)
-                .AsNoTracking();
+                .AsQueryable();
+
+            // -1 getting accurate year 
+            var dateOfBirthMin = DateTime.Today.AddYears(-userParams.AgeTo - 1);
+            var dateOfBirthMax = DateTime.Today.AddYears(-userParams.AgeFrom);
+
+            query = query.Where(p => p.IdPouzivatelNavigation.DatNarodenia >= dateOfBirthMin 
+                                  && p.IdPouzivatelNavigation.DatNarodenia <= dateOfBirthMax);
+
+            if (userParams.LastName != null)
+            {
+                query = query.Where(p => p.IdPouzivatelNavigation.Priezvisko == userParams.LastName);
+            }
+
+            if (userParams.BID != null)
+            {
+                query = query.Where(p => p.IdPouzivatelNavigation.RodCislo == userParams.BID);
+            }
 
             // pasing queriy to pageList class.
-            return await PagedList<PacientCardDto>.CreateAsync(query, userParams.PageNumber, userParams.PageSize);
+            return await PagedList<PacientCardDto>.CreateAsync(
+                query.ProjectTo<PacientCardDto>(_mapper.ConfigurationProvider).AsNoTracking(), 
+                userParams.PageNumber, 
+                userParams.PageSize);
         }
     }
 }

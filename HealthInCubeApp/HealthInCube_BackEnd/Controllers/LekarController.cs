@@ -85,7 +85,7 @@ namespace HealthInCube_BackEnd.Controllers
         /// <param name="idLekar"></param>
         /// <returns></returns>
         [HttpGet("{idLekar}/patient/list")]
-        public async Task<ActionResult<IEnumerable<PacientCardDto>>> GetAllPatient(decimal idLekar, [FromQuery] UserParams userParams)
+        public async Task<ActionResult<IEnumerable<PacientCardDto>>> GetAllPatient(decimal idLekar, [FromQuery] LekarParams userParams)
         {
             if (_lekarRepo.GetLekarEntity(idLekar).Result == null) return NotFound("Lekar neexistuje!");
 

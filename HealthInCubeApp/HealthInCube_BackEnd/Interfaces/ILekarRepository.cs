@@ -17,6 +17,6 @@ namespace HealthInCube_BackEnd.Interfaces
 
         Task<IEnumerable<ZiadankaDto>> GetAllRequetsByDoctorIdAsync(decimal lekarId);
 
-        Task<PagedList<PacientCardDto>> GetAllPatientsByDoctorIdAsync(decimal lekarId, UserParams userParams);
+        Task<PagedList<PacientCardDto>> GetAllPatientsByDoctorIdAsync(decimal lekarId, LekarParams userParams);
     }
 }
