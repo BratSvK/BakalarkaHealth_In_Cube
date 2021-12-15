@@ -73,11 +73,8 @@ namespace HealthInCube_BackEnd.Controllers
         public async Task<ActionResult<BydliskoDto>> CreateBydlisko(CreateBydliskoDto createBydlisko)
         {
             var userId = User.GetUserId();
-
-
             var bydlisko = new Bydlisko
             {
-                IdBydliska =  _bydliskoRepository.GetCountAsync().Result + 1,
                 IdPouzivatel = userId,
                 Ulica = createBydlisko.Ulica,
                 IdMesto = createBydlisko.IdMesto,
@@ -85,17 +82,16 @@ namespace HealthInCube_BackEnd.Controllers
             };
 
             _bydliskoRepository.InsertItem(bydlisko);
-
-            // update existing address to not actuall living address
-            var actualLivingAddress =  await _bydliskoRepository.GetTrvaleBydlisko(userId);
-
-            if (actualLivingAddress != null && bydlisko.Trvale.Equals("Y"))
-            {
-                actualLivingAddress.AdresaDo = DateTime.Now;
-                actualLivingAddress.Trvale = "N";
-                _bydliskoRepository.UpdateItem(actualLivingAddress);
+            
+            if (createBydlisko.Trvale) {
+                var actualLivingAddress = await _bydliskoRepository.GetTrvaleBydliskoAsync(userId);
+                if (actualLivingAddress != null)
+                {
+                    actualLivingAddress.AdresaDo = DateTime.Now;
+                    actualLivingAddress.Trvale = "N";
+                    _bydliskoRepository.UpdateItem(actualLivingAddress);
+                }
             }
-
             if (await _bydliskoRepository.SaveAllAsync()) return Ok(_mapper.Map<BydliskoDto>(bydlisko));
 
             return BadRequest("Failed to create a address");

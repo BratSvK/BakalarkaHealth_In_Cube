@@ -94,7 +94,7 @@ namespace HealthInCube_BackEnd.Data
             _context.Entry(bydlisko).State = EntityState.Modified;
         }
 
-        public async Task<Bydlisko> GetTrvaleBydlisko(decimal pouzivatelId)
+        public async Task<Bydlisko> GetTrvaleBydliskoAsync(decimal pouzivatelId)
         {
             return await _context.Bydlisko
                 .Include(b => b.IdMestoNavigation)

@@ -3,6 +3,8 @@ import { PouzivatelDetail } from 'src/app/models/pouzivatel-detail';
 import { UserDetailState } from './modelStore/UserDetailState';
 import * as UserDetailActions from './user-detail.actions';
 
+import { cloneDeep } from 'lodash';
+
 // only state is a user
 const initialState: UserDetailState = {
   userDetail: null as PouzivatelDetail,
@@ -27,9 +29,13 @@ export function userDetailReducer(
       return (state = { ...initialState });
     case UserDetailActions.ADD_BYDLISKO:
       // return a new objects with old state add to new object -> copy of old state
+      const oldArrayOfBydlisko = [...state.bydliska];
+      let changeTrvalaInBydliska: Bydlisko[] = cloneDeep(oldArrayOfBydlisko)
+
+      changeTrvalaInBydliska.forEach(b => b.trvale = false);
       return {
         ...state, // copy old state ! always
-        bydliska: [...state.bydliska, action.payload],
+        bydliska: [...changeTrvalaInBydliska, action.payload],
       };
     case UserDetailActions.UPDATE_BYDLISKO:
       // IMUTABLE - logic

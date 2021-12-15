@@ -1,8 +1,7 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map, take} from 'rxjs/operators';
 import { Bydlisko } from 'src/app/models/bydlisko';
 import { Pouzivatel } from 'src/app/models/pouzivatel';
 import { PouzivatelDetail } from 'src/app/models/pouzivatel-detail';
@@ -19,10 +18,7 @@ export class UserDetailComponent implements OnInit {
 
   user: PouzivatelDetail;
   userAuth$ : Observable<Pouzivatel>;
-
   bydliska$: Observable<Bydlisko[]>;
-
-
 
   constructor(private store: Store<AppState>) { 
     this.userAuth$ = this.store.select('auth').pipe(take(1), map(userAuth => {
@@ -38,11 +34,16 @@ export class UserDetailComponent implements OnInit {
     this.loadUser();
   }
 
- 
-
   onEditItem(index: number) {
     //  this.shoppingService.startedEditing.next(index);
     this.store.dispatch(new UserDetailActionsBundle.StartEdit(index));
+  }
+
+  checkGetTrvale(bydlisko: Bydlisko): Observable<boolean> {
+    return this.bydliska$.pipe(
+      map((bydliska: Bydlisko[]) => {
+        return bydliska.filter(b => b.idBydliska == bydlisko.idBydliska ?? -1)[0].trvale
+      }));
   }
 
    getLastActive(poslednePrihlasenie: Date) {
@@ -62,13 +63,7 @@ export class UserDetailComponent implements OnInit {
     })).subscribe(user => {
       this.user = user;
     });
-    
-   
-   
-
    }
-
-
 
   getLivingCity(bydliskos: Bydlisko[]): string {
     const nikde: string = "NEZNÁME";
