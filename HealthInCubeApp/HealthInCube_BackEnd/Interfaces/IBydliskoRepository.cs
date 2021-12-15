@@ -12,7 +12,7 @@ namespace HealthInCube_BackEnd.Interfaces
     {
         Task<IEnumerable<BydliskoDto>> GetAllAdressessByUser(decimal userId);
 
-        Task<Bydlisko> GetTrvaleBydlisko(decimal pouizivatelId);
+        Task<Bydlisko> GetTrvaleBydliskoAsync(decimal pouizivatelId);
 
     }
 }
