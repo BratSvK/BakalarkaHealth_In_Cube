@@ -45,7 +45,7 @@
                             <h4 class="text-muted">Vyber a aktualizuj si adresu:</h4>
                             <a class="list-group-item" style="cursor: pointer;"  *ngFor="let bydlisko of (bydliska$ | async)"
                                 (click)="onEditItem(bydlisko.idBydliska)">
-                                <span *ngIf="checkGetTrvale(bydlisko) | async" class="badge badge-warning">Aktuálna</span>
+                                <span *ngIf="bydlisko.trvale" class="badge badge-warning">Aktuálna</span>
                                 {{bydlisko.ulica}} ({{bydlisko.idMestoNavigation.nazov}}) 
                             </a>
                         </ul>

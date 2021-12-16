@@ -13,7 +13,7 @@
       <div class="collapse navbar-collapse" id="collapseBasic" [collapse]="isCollapsed">
         <ul class="nav nav-pills me-auto mb-2 mb-md-0">
   
-          <ng-container *ngIf="isActivatedPatientFlag">
+          <ng-container *ngIf="(isActivatedPatientFlag$ | async)">
             <li class="nav-item mr-2">
               <a class="nav-link" routerLink='/zdravotnaKarta' routerLinkActive='active'>Zdravotná karta</a>
             </li>

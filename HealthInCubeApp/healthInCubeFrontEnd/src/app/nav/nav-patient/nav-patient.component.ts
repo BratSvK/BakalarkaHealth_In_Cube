@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { Pouzivatel } from 'src/app/models/pouzivatel';
 import { AppState } from 'src/app/_store/models/AppState';
@@ -13,20 +14,13 @@ import { AppState } from 'src/app/_store/models/AppState';
 })
 export class NavPatientComponent implements OnInit {
 
+  @Input() isActivatedPatientFlag$: Observable<boolean>;
   
   isCollapsed = false;
   user: Pouzivatel;
-  isActivatedPatientFlag: boolean;
   image: any;
 
   constructor(private store: Store<AppState>) {
-   this.store.select('patient').pipe(take(1),
-    map(patientData => {
-      return patientData.isActivated;
-    })).subscribe(isActivated => {
-      this.isActivatedPatientFlag = isActivated;
-    });
-
    }
 
   ngOnInit(): void {

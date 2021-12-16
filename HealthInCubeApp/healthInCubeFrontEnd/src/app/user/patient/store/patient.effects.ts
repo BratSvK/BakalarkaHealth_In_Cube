@@ -29,7 +29,6 @@ export class PatientEffects {
           })
     ));
 
-
     constructor(
         private actions$: Actions,
         private http: HttpClient,

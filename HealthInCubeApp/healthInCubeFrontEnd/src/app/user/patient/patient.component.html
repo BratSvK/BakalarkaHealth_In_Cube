@@ -1,10 +1,9 @@
-<app-nav-patient></app-nav-patient>
+<app-nav-patient [isActivatedPatientFlag$]="isActivated$"></app-nav-patient>
 
 <div class="container" style="margin-top: 50px;">
 
-  <ng-container *ngIf="(isActivated$ | async) === false">
-  <app-user-not-activated-warning></app-user-not-activated-warning>
-  </ng-container>
+  <app-user-not-activated-warning *ngIf="(isActivated$ | async) === false">
+  </app-user-not-activated-warning>
 
   <router-outlet></router-outlet>
 
