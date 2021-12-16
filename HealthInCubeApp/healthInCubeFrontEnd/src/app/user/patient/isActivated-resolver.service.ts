@@ -37,6 +37,5 @@ export class IsActivatedResolver implements Resolve<boolean> {
         }
       })
       );
-  }
-  
+  }  
 }

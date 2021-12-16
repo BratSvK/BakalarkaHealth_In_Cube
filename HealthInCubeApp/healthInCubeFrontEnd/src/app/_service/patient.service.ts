@@ -1,20 +1,22 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { LekarParams } from '../models/lekarParams';
 import { PacientCard } from '../models/pacientCard';
 import { PaginatedResult, PAGINATION_HEADER_NAME } from '../models/pagination';
+import { AppState } from '../_store/models/AppState';
 
 @Injectable({
   providedIn: 'root',
 })
-export class PatientsService {
+export class PatientService {
   baseUrl = environment.apiUrl;
   idLekar: number;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private store: Store<AppState>) {}
 
   getPatientsByDoctorId(idLekar: number, lekarParams: LekarParams) {
     let apiUrl = this.baseUrl + `lekar/${idLekar}/patient/list`;
@@ -41,6 +43,12 @@ export class PatientsService {
     return this.http.get<number>(this.baseUrl + `lekar/id`);
   }
 
+
+  checkIsActiveted$() : Observable<boolean> {
+    return this.store.select('patient').pipe(map(patientData => {
+      return patientData.isActivated
+    }));
+  } 
   /*
       Generic method for getting paginated result from api.
   */

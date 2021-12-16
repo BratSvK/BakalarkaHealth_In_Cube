@@ -7,7 +7,7 @@ import {
   Pagination
 } from 'src/app/models/pagination';
 import { LekarIdService } from 'src/app/_service/lekar.service';
-import { PatientsService } from 'src/app/_service/patients.service';
+import { PatientService } from 'src/app/_service/patient.service';
 
 @Component({
   selector: 'app-pacienti-list',
@@ -22,7 +22,7 @@ export class PacientiListComponent implements OnInit, OnDestroy {
   sub: Subscription;
 
   constructor(
-    private patientService: PatientsService,
+    private patientService: PatientService,
     private lekarIdService: LekarIdService
   ) {
     this.lekarParams = new LekarParams();
