@@ -1,12 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { LekarParams } from '../models/lekarParams';
 import { PacientCard } from '../models/pacientCard';
 import { PaginatedResult, PAGINATION_HEADER_NAME } from '../models/pagination';
+import { extractKeyFromParams } from '../shared/common';
 import { AppState } from '../_store/models/AppState';
 
 @Injectable({
@@ -15,10 +16,18 @@ import { AppState } from '../_store/models/AppState';
 export class PatientService {
   baseUrl = environment.apiUrl;
   idLekar: number;
+  patientCache = new Map();
 
   constructor(private http: HttpClient, private store: Store<AppState>) {}
 
-  getPatientsByDoctorId(idLekar: number, lekarParams: LekarParams) {
+  getPatientsByDoctorId(idLekar: number, lekarParams: LekarParams): Observable<PaginatedResult<PacientCard[]>> {
+    const keyFromParams = extractKeyFromParams(lekarParams);
+    var response = this.patientCache.get(keyFromParams);
+
+    if (response) {
+      return of(response);
+    }
+
     let apiUrl = this.baseUrl + `lekar/${idLekar}/patient/list`;
     let params = this.getPaginationHeaders(
       lekarParams.pageNumber,
@@ -36,7 +45,13 @@ export class PatientService {
     }
 
     // observe => we get full response not body like in normal http get request !!
-    return this.getPaginatedResult<PacientCard[]>(apiUrl, params);
+    return this.getPaginatedResult<PacientCard[]>(apiUrl, params)
+      .pipe(
+        map(response => {
+          this.patientCache.set(keyFromParams, response);
+          return response;
+        })
+      );
   }
 
   getDoctorIdByUserId() {
