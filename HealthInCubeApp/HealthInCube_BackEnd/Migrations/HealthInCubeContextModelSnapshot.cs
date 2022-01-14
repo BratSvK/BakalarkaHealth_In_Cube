@@ -272,6 +272,9 @@ namespace HealthInCube_BackEnd.Migrations
                         .HasColumnType("NUMBER(38)")
                         .HasColumnName("ID_LEKAR");
 
+                    b.Property<byte>("DlzkaVysetrenia")
+                        .HasColumnType("NUMBER(3)");
+
                     b.Property<DateTime?>("Do")
                         .HasColumnType("DATE")
                         .HasColumnName("DO");
@@ -658,6 +661,33 @@ namespace HealthInCube_BackEnd.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.PracovnaDoba", b =>
+                {
+                    b.Property<decimal>("IdLekar")
+                        .HasColumnType("NUMBER(38)");
+
+                    b.Property<int>("IdDen")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<TimeSpan>("ObedDo")
+                        .HasColumnType("INTERVAL DAY(8) TO SECOND(7)");
+
+                    b.Property<TimeSpan>("ObedOd")
+                        .HasColumnType("INTERVAL DAY(8) TO SECOND(7)");
+
+                    b.Property<TimeSpan>("PracDobaDo")
+                        .HasColumnType("INTERVAL DAY(8) TO SECOND(7)");
+
+                    b.Property<TimeSpan>("PracDobaOd")
+                        .HasColumnType("INTERVAL DAY(8) TO SECOND(7)");
+
+                    b.HasKey("IdLekar", "IdDen");
+
+                    b.HasIndex("IdDen");
+
+                    b.ToTable("PRAC_DOBA");
+                });
+
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.PredpLiecba", b =>
                 {
                     b.Property<decimal>("IdLiek")
@@ -754,6 +784,35 @@ namespace HealthInCube_BackEnd.Migrations
                     b.HasIndex(new[] { "IdLiek" }, "IX_RELATIONSHIP41");
 
                     b.ToTable("RECEPT");
+                });
+
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.Sprievodka", b =>
+                {
+                    b.Property<decimal>("IdLekar")
+                        .HasColumnType("NUMBER(38)");
+
+                    b.Property<decimal>("IdPacient")
+                        .HasColumnType("NUMBER(38)");
+
+                    b.Property<DateTimeOffset>("TerminOd")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.Property<decimal?>("IdTypLekarNavigationIdTyp")
+                        .HasColumnType("NUMBER(38)");
+
+                    b.Property<int>("IdTypVysetrenia")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<DateTimeOffset>("TerminDo")
+                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+
+                    b.HasKey("IdLekar", "IdPacient", "TerminOd");
+
+                    b.HasIndex("IdPacient");
+
+                    b.HasIndex("IdTypLekarNavigationIdTyp");
+
+                    b.ToTable("SPRIEVODKA");
                 });
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.TypLekara", b =>
@@ -861,6 +920,27 @@ namespace HealthInCube_BackEnd.Migrations
                     b.HasIndex(new[] { "IdPacient" }, "IX_RELATIONSHIP36");
 
                     b.ToTable("VYK_VYSETRENIA");
+                });
+
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.VystavenyTermin", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(10)")
+                        .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("DayOfYear")
+                        .HasColumnType("NUMBER(10)");
+
+                    b.Property<decimal>("IdLekar")
+                        .HasColumnType("DECIMAL(18, 2)");
+
+                    b.Property<decimal>("IdPacient")
+                        .HasColumnType("DECIMAL(18, 2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("VYSTAVENY_TERMIN");
                 });
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.ZapChoroby", b =>
@@ -996,6 +1076,23 @@ namespace HealthInCube_BackEnd.Migrations
                     b.HasIndex("IdLekar");
 
                     b.ToTable("ZIADANKA");
+                });
+
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.ZoznamDen", b =>
+                {
+                    b.Property<int>("IdDen")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(10)")
+                        .HasColumnName("ID_DEN")
+                        .HasAnnotation("Oracle:ValueGenerationStrategy", OracleValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Nazov")
+                        .HasColumnType("NVARCHAR2(2000)")
+                        .HasColumnName("NAZOV");
+
+                    b.HasKey("IdDen");
+
+                    b.ToTable("ZOZNAM_DEN");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<decimal>", b =>
@@ -1279,6 +1376,23 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Navigation("IdMestoNarodeniaNavigation");
                 });
 
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.PracovnaDoba", b =>
+                {
+                    b.HasOne("HealthInCube_BackEnd.Entities.ZoznamDen", "IdZoznamNavigation")
+                        .WithMany("PracovnaDobas")
+                        .HasForeignKey("IdDen")
+                        .IsRequired();
+
+                    b.HasOne("HealthInCube_BackEnd.Entities.Lekar", "IdLekarNavigation")
+                        .WithMany("PracovnaDobas")
+                        .HasForeignKey("IdLekar")
+                        .IsRequired();
+
+                    b.Navigation("IdLekarNavigation");
+
+                    b.Navigation("IdZoznamNavigation");
+                });
+
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.PredpLiecba", b =>
                 {
                     b.HasOne("HealthInCube_BackEnd.Entities.Liek", "IdLiekNavigation")
@@ -1334,6 +1448,31 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Navigation("IdLiekNavigation");
 
                     b.Navigation("IdVysetrenieNavigation");
+                });
+
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.Sprievodka", b =>
+                {
+                    b.HasOne("HealthInCube_BackEnd.Entities.Lekar", "IdLekarNavigation")
+                        .WithMany("Sprievodkas")
+                        .HasForeignKey("IdLekar")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HealthInCube_BackEnd.Entities.Pacient", "IdPacientNavigation")
+                        .WithMany("Sprievodkas")
+                        .HasForeignKey("IdPacient")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HealthInCube_BackEnd.Entities.TypLekara", "IdTypLekarNavigation")
+                        .WithMany()
+                        .HasForeignKey("IdTypLekarNavigationIdTyp");
+
+                    b.Navigation("IdLekarNavigation");
+
+                    b.Navigation("IdPacientNavigation");
+
+                    b.Navigation("IdTypLekarNavigation");
                 });
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.VykVysetrenium", b =>
@@ -1430,6 +1569,7 @@ namespace HealthInCube_BackEnd.Migrations
                         .WithOne("ZdravotnaKartum")
                         .HasForeignKey("HealthInCube_BackEnd.Entities.ZdravotnaKartum", "IdPacient")
                         .HasConstraintName("RELATIONSHIP42")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("IdMestoNarodeniaNavigation");
@@ -1473,6 +1613,10 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Navigation("Oddelenies");
 
                     b.Navigation("Pacients");
+
+                    b.Navigation("PracovnaDobas");
+
+                    b.Navigation("Sprievodkas");
 
                     b.Navigation("VykVysetrenia");
 
@@ -1525,6 +1669,8 @@ namespace HealthInCube_BackEnd.Migrations
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.Pacient", b =>
                 {
+                    b.Navigation("Sprievodkas");
+
                     b.Navigation("ZdravotnaKartum");
 
                     b.Navigation("ZdravPoistenies");
@@ -1586,6 +1732,11 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Navigation("ZapChorobies");
 
                     b.Navigation("ZdravKartaPovolenia");
+                });
+
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.ZoznamDen", b =>
+                {
+                    b.Navigation("PracovnaDobas");
                 });
 #pragma warning restore 612, 618
         }
