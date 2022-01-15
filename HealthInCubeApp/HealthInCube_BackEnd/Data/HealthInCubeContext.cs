@@ -1,10 +1,8 @@
-﻿using System.Collections.Immutable;
-using System;
+﻿using System;
 using HealthInCube_BackEnd.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
@@ -51,11 +49,19 @@ namespace HealthInCube_BackEnd.Data
         public virtual DbSet<Ziadanka> Ziadanka { get; set; }
         public virtual DbSet<ZoznamDen> ZoznamDen { get; set; }
         public virtual DbSet<VystavenyTermin> VystavenyTermins { get; set; }
+        public virtual DbSet<Sprievodka> Sprievodkas { get; set; }
+
         #endregion
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // user defined functions
+            modelBuilder.HasDbFunction(typeof(HealthInCubeContext).GetMethod(nameof(GetWeekNumberFromDb), new[] { typeof(DateTime) }))
+                .HasName("GETWEEKNUMBER");
+
+            #region Entities mapping
+
             modelBuilder.HasAnnotation("Relational:Collation", "USING_NLS_COMP");
 
             modelBuilder.Entity<Pouzivatel>()
@@ -1211,10 +1217,20 @@ namespace HealthInCube_BackEnd.Data
 
             modelBuilder.Entity<VystavenyTermin>()
                    .ToTable("VYSTAVENY_TERMIN");
+            #endregion
 
             OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        /// <summary>
+        /// Method inside sql.
+        /// For mapping purpose.
+        /// Date in YYYY-MM-DD format.
+        /// </summary>
+        /// <param name="date">YYYY-MM-DD format.</param>
+        /// <returns></returns>
+        public int GetWeekNumberFromDb(DateTime p_start_week_of) => throw new NotSupportedException("Mapping issue for GetWeekNumber function");
     }
 }

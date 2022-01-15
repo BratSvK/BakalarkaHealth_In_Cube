@@ -22,12 +22,12 @@ namespace HealthInCube_BackEnd.Entities
         /// </summary>
         public TypyLekara IdTypVysetrenia { get; set; }
 
-        public DateTimeOffset TerminOd { get; set; }
+        public DateTime TerminOd { get; set; }
 
         /// <summary>
         /// Added by specific time of doctor duration of one patient.
         /// </summary>
-        public DateTimeOffset TerminDo { get; set; }
+        public DateTime TerminDo { get; set; }
 
         public virtual  Lekar IdLekarNavigation { get; set; }
         public virtual Pacient IdPacientNavigation { get; set; }

@@ -1,3 +1,4 @@
+using AutoMapper;
 using HealthInCube_BackEnd.Data;
 using HealthInCube_BackEnd.Helpers;
 using HealthInCube_BackEnd.Interfaces;
@@ -25,6 +26,7 @@ namespace HealthInCube_BackEnd.Extensions
             services.AddScoped<IZiadankaRepository, ZiadankaRepository>();
             services.AddScoped<IPacientRepository, PacientRepository>();
             services.AddScoped<IBydliskoRepository, BydliskoRepository>();
+            services.AddScoped<ISprievodkaRepository, SprievodkaRepository>();
 
             #endregion
 
