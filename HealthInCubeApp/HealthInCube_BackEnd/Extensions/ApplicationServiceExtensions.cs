@@ -27,6 +27,7 @@ namespace HealthInCube_BackEnd.Extensions
             services.AddScoped<IPacientRepository, PacientRepository>();
             services.AddScoped<IBydliskoRepository, BydliskoRepository>();
             services.AddScoped<ISprievodkaRepository, SprievodkaRepository>();
+            services.AddScoped<IPracovnaDobaRepository, PracovnaDobaRepository>();
 
             #endregion
 

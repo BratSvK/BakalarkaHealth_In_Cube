@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HealthInCube_BackEnd.Entities
 {
@@ -31,6 +33,5 @@ namespace HealthInCube_BackEnd.Entities
 
         public virtual  Lekar IdLekarNavigation { get; set; }
         public virtual Pacient IdPacientNavigation { get; set; }
-        public virtual TypLekara IdTypLekarNavigation { get; set; }
     }
 }

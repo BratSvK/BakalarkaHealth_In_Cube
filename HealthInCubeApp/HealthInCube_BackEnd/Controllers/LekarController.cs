@@ -71,11 +71,7 @@ namespace HealthInCube_BackEnd.Controllers
         public async Task<ActionResult<ZiadankaDto>> GetAllRequestByDoctor(decimal idLekar)
         {
             if (_lekarRepo.GetLekarEntity(idLekar).Result == null) return NotFound("Lekar neexistuje!");
-
             var requests = await _lekarRepo.GetAllRequetsByDoctorIdAsync(idLekar);
-
-            if (requests.IsNullOrEmpty()) return NotFound("Nothing to look!");
-
             return Ok(requests);
         }
 

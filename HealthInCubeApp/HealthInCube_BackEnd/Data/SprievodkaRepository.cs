@@ -92,5 +92,10 @@ namespace HealthInCube_BackEnd.Data
 
             return await query.ProjectTo<SprievodkaDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
         }
+
+        public async Task<int> GetLastTerminCountInDayPerDoctorAsync(decimal idLekar, int dayOfYear)
+        {
+            return await _context.VystavenyTermins.CountAsync(t => t.IdLekar == idLekar && t.DayOfYear == dayOfYear);
+        }
     }
 }

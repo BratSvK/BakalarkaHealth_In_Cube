@@ -50,6 +50,8 @@ namespace HealthInCube_BackEnd.Data
         public virtual DbSet<ZoznamDen> ZoznamDen { get; set; }
         public virtual DbSet<VystavenyTermin> VystavenyTermins { get; set; }
         public virtual DbSet<Sprievodka> Sprievodkas { get; set; }
+        public virtual DbSet<PracovnaDoba> PracovnaDobas { get; set; }
+
 
         #endregion
 

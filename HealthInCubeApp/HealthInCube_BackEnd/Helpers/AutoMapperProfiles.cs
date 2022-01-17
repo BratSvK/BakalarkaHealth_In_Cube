@@ -1,5 +1,6 @@
 using AutoMapper;
 using HealthInCube_BackEnd.DTOs;
+using HealthInCube_BackEnd.DTOs.Lekar.PracovnaDoba;
 using HealthInCube_BackEnd.DTOs.Lekar.Sprievodka;
 using HealthInCube_BackEnd.Entities;
 using System;
@@ -46,6 +47,16 @@ namespace HealthInCube_BackEnd.Helpers
             CreateMap<Pouzivatel, PouzivatelDetailDto>();
             CreateMap<Sprievodka, SprievodkaDto>();
             CreateMap<SprievodkaDto, Sprievodka>();
+
+            CreateMap<PracovnaDobaDto, PracovnaDoba>()
+                .ForMember(dest => dest.PracDobaOd, opt => opt.MapFrom(src => TimeSpan.Parse(src.PracDobaOd)))
+                .ForMember(dest => dest.PracDobaDo, opt => opt.MapFrom(src => TimeSpan.Parse(src.PracDobaDo)))
+                .ForMember(dest => dest.ObedOd, opt => opt.MapFrom(src => TimeSpan.Parse(src.ObedOd)))
+                .ForMember(dest => dest.ObedDo, opt => opt.MapFrom(src => TimeSpan.Parse(src.ObedDo)));
+
+            CreateMap<PracovnaDoba, PracovnaDobaDto>();
+
+
         }
     }
 }
