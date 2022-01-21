@@ -20,6 +20,12 @@ export class PatientService {
 
   constructor(private http: HttpClient, private store: Store<AppState>) {}
 
+  clearPatientCache() {
+    if(this.patientCache.size > 0){
+      this.patientCache.clear();
+    }
+  }
+
   getPatientsByDoctorId(idLekar: number, lekarParams: LekarParams): Observable<PaginatedResult<PacientCard[]>> {
     const keyFromParams = extractKeyFromParams(lekarParams);
     var response = this.patientCache.get(keyFromParams);
