@@ -44,8 +44,7 @@ namespace HealthInCube_BackEnd.Controllers
         public async Task<ActionResult<SprievodkaDto>> CreateAppointmentByDoctor([FromBody] SprievodkaCreate sprievodkaCreate)
         {
             // enum from microsoft 0 -> Nedela
-            var cisloDna = sprievodkaCreate.TerminDatum.DayOfWeek;
-            PracovnaDoba pracovnaDoba = await _pracovnaDobaRepository.GetPracovnaDobaToDateAsync(sprievodkaCreate.IdLekar, cisloDna);
+            PracovnaDoba pracovnaDoba = await _pracovnaDobaRepository.GetPracovnaDobaToDateAsync(sprievodkaCreate.IdLekar, sprievodkaCreate.TerminDatum.DayOfWeek);
             
             IList<TerminSprievodka> vsetkyTerminyLekar = AppointmentScheduler.GetAppointmentScheduler(pracovnaDoba, sprievodkaCreate.DlzkaVysetrenia);
             var lastFreeAppointment = await _sprievodkaRepository.GetLastTerminCountInDayPerDoctorAsync(sprievodkaCreate.IdLekar, sprievodkaCreate.TerminDatum.DayOfYear);
