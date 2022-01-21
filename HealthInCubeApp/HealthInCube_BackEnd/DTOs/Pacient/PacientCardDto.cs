@@ -18,6 +18,11 @@ namespace HealthInCube_BackEnd.DTOs
         public DateTime? DatNarodenia { get; set; }
 
         /// <summary>
+        /// Birth identification number
+        /// </summary>
+        public string BID { get; set; }
+
+        /// <summary>
         /// Photo for card list.
         /// </summary>
         public byte[] Fotka { get; set; }

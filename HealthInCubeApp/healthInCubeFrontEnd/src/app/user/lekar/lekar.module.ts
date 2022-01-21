@@ -7,6 +7,7 @@ import { VysetreniaComponent } from './vysetrenia/vysetrenia.component';
 import { NavLekarComponent } from "../../nav/nav-lekar/nav-lekar.component";
 import { LekarComponent } from "./lekar.component";
 import { PacientCardComponent } from './pacienti-list/pacient-card/pacient-card.component';
+import { SprievodkaModalComponent } from './sprievodka/sprievodka-modal/sprievodka-modal.component';
 
 @NgModule({
     declarations: [   
@@ -15,12 +16,13 @@ import { PacientCardComponent } from './pacienti-list/pacient-card/pacient-card.
         ZiadankyComponent, 
         PacientiListComponent, 
         VysetreniaComponent, 
-        PacientCardComponent
+        PacientCardComponent, 
+        SprievodkaModalComponent
     ],
     imports: [
         SharedModule, 
         LekarRoutingModule
-    ]  
+    ]
    })
   export class LekarModule {}
   

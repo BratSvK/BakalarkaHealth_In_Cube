@@ -2,6 +2,9 @@
     cursor: pointer;
 }
 
+.nav-link {
+    cursor: pointer;
+}
 
 .dropdown img {
     max-height: 50px;
@@ -40,16 +43,20 @@ a {
     color: black;
 }
 
-a:hover {
-    color:white;
-    
+a:hover:not(.dropdown-item) {
+    color:white; 
 }
+
 .dropdown-menu {
     background-color: white;
     transform: translate(40%,-20%) !important;
 }
 
-.nav-link.active {
-    background-color: black;
-    border-radius: 1;
+fa-icon.arrow {
+    font-size: 0.7rem;
+}
+
+
+.nav-link.arrow {
+    padding-right: 0%;
 }
