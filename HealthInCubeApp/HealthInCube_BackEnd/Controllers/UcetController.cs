@@ -10,6 +10,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System.Net.Mail;
 using System.Net.Mime;
+using HealthInCube_BackEnd.DTOs.Lekar;
+using System.Collections.Generic;
 
 namespace HealthInCube_BackEnd.Controllers
 {
@@ -24,6 +26,7 @@ namespace HealthInCube_BackEnd.Controllers
         private readonly SignInManager<Pouzivatel> _signInManager;
         private readonly IZiadankaRepository _ziadankaRepository;
         private readonly IBydliskoRepository _bydliskoRepository;
+        private readonly ILekarRepository _lekarRepository;
         private readonly IFotoRepository _fotoRepository;
         private readonly IPouzivatelRepository _pouzivatelRepository;
         private readonly IConfiguration _config;
@@ -40,13 +43,15 @@ namespace HealthInCube_BackEnd.Controllers
         /// <param name="mapper"></param>
         /// <param name="ziadankaRepository"></param>
         /// <param name="bydliskoRepository"></param>
-        public UcetController(UserManager<Pouzivatel> userManager, SignInManager<Pouzivatel> signInManager, IConfiguration config, IPouzivatelRepository pouzivatelRepository, IFotoRepository fotoRepository, ITokenService tokenService, IMapper mapper, IZiadankaRepository ziadankaRepository, IBydliskoRepository bydliskoRepository)
+        /// <param name="lekarRepository"></param>
+        public UcetController(UserManager<Pouzivatel> userManager, SignInManager<Pouzivatel> signInManager, IConfiguration config, IPouzivatelRepository pouzivatelRepository, IFotoRepository fotoRepository, ITokenService tokenService, IMapper mapper, IZiadankaRepository ziadankaRepository, IBydliskoRepository bydliskoRepository, ILekarRepository lekarRepository)
         {
             _config = config;
             _pouzivatelRepository = pouzivatelRepository;
             _fotoRepository = fotoRepository;
             _ziadankaRepository = ziadankaRepository;
             _bydliskoRepository = bydliskoRepository;
+            _lekarRepository = lekarRepository;
             _signInManager = signInManager;
             _userManager = userManager;
             _mapper = mapper;
@@ -74,7 +79,6 @@ namespace HealthInCube_BackEnd.Controllers
             user.UserName = user.Email.Split('@')[0];
             user.Id = _pouzivatelRepository.GetCountAsync().Result + 1;
             var adresaRegister = registeredUser.Adresa;
-            adresaRegister.IdBydliska = _bydliskoRepository.GetCountAsync().Result + 1;
             var bydliskoToUser = _mapper.Map<Bydlisko>(adresaRegister);
             user.Bydliskos.Add(bydliskoToUser);
 
@@ -110,6 +114,66 @@ namespace HealthInCube_BackEnd.Controllers
             }
 
             return BadRequest("Failed to register !!");
+        }
+
+        /// <summary>
+        /// Register method.
+        /// Reason to failing we need to send a json object -> for now string username is null
+        /// </summary>
+        /// <param name="registeredUser">register object to work with</param>
+        /// <returns></returns>
+        [HttpPost("register/lekar")]
+        public async Task<ActionResult<PouzivatelDto>> RegisterDoctor(LekarRegisterDto lekarRegister)
+        {
+            // check if we have a username in db
+            if (await UserExists(lekarRegister.Email))
+                return BadRequest("Email is taken!!");
+
+            // create a user for transition to DB
+            var user = _mapper.Map<Pouzivatel>(lekarRegister);
+            // using is used for disposing a object when we finish the work with it 
+
+            user.Email = lekarRegister.Email.ToLower();
+            user.UserName = user.Email.Split('@')[0];
+            user.Id = _pouzivatelRepository.GetCountAsync().Result + 1;
+            var adresaRegister = lekarRegister.Adresa;
+            var bydliskoToUser = _mapper.Map<Bydlisko>(adresaRegister);
+            user.Bydliskos.Add(bydliskoToUser);
+
+            // EF uses 
+            var result = await _userManager.CreateAsync(user, lekarRegister.Password);     // create user and save changes to DB 
+
+            if (!result.Succeeded) return BadRequest(result.Errors);
+
+            // adding a member role to  new user -> registration is only for pacient
+            var roleResult = await _userManager.AddToRoleAsync(user, "Lekar");
+
+            if (!roleResult.Succeeded) return BadRequest(result.Errors);
+
+            var lekar = new Lekar
+            {
+                IdLekar = _lekarRepository.GetCountAsync().Result + 1,
+                IdPouzivatel = user.Id,
+                PracovnaDobas = _mapper.Map<ICollection<PracovnaDoba>>(lekarRegister.PracovnaDobas),
+                IdOddel = lekarRegister.IdOddel,
+                DlzkaVysetrenia = lekarRegister.DlzkaVysetrenia
+            };
+
+            _lekarRepository.InsertItem(lekar);
+
+            if (await _lekarRepository.SaveAllAsync())
+            {
+                return Ok(new PouzivatelDto
+                {
+                    Email = user.Email,
+                    Token = _tokenService.CreateToken(user).Result,
+                    FullName = user.GetFullName(),
+                    Fotka = _fotoRepository.GetItemAsync(user.Id).Result?.Fotka,
+                    Id = user.Id
+                });
+            }
+
+            return BadRequest("Failed to register lekar!!");
         }
 
         /// <summary>

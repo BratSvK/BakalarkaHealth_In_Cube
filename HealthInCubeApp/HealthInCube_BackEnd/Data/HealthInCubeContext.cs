@@ -1,22 +1,21 @@
-﻿using System.Collections.Immutable;
-using System;
+﻿using System;
 using HealthInCube_BackEnd.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
 namespace HealthInCube_BackEnd.Data
 {
     public partial class HealthInCubeContext : IdentityDbContext<Pouzivatel, AppRola, decimal
-        ,IdentityUserClaim<decimal>, AppPouzivatelRola, IdentityUserLogin<decimal>, IdentityRoleClaim<decimal>, IdentityUserToken<decimal>>
+        , IdentityUserClaim<decimal>, AppPouzivatelRola, IdentityUserLogin<decimal>, IdentityRoleClaim<decimal>, IdentityUserToken<decimal>>
     {
         public HealthInCubeContext(DbContextOptions options) : base(options)
         {
         }
 
+        #region Infrastructure DB
         public virtual DbSet<AtestacieLekar> AtestacieLekar { get; set; }
         public virtual DbSet<Bydlisko> Bydlisko { get; set; }
         public virtual DbSet<Choroba> Choroba { get; set; }
@@ -39,7 +38,6 @@ namespace HealthInCube_BackEnd.Data
         public virtual DbSet<PredpLiecba> PredpLiecba { get; set; }
         public virtual DbSet<Priznaky> Priznakie { get; set; }
         public virtual DbSet<Recept> Recept { get; set; }
-
         public virtual DbSet<TypLekara> TypLekara { get; set; }
         public virtual DbSet<TypSymptom> TypSymptom { get; set; }
         public virtual DbSet<UcinnaLatka> UcinnaLatka { get; set; }
@@ -48,19 +46,24 @@ namespace HealthInCube_BackEnd.Data
         public virtual DbSet<ZdravKartaPovolenium> ZdravKartaPovolenia { get; set; }
         public virtual DbSet<ZdravPoistenie> ZdravPoistenie { get; set; }
         public virtual DbSet<ZdravotnaKartum> ZdravotnaKarta { get; set; }
-
-
         public virtual DbSet<Ziadanka> Ziadanka { get; set; }
+        public virtual DbSet<ZoznamDen> ZoznamDen { get; set; }
+        public virtual DbSet<VystavenyTermin> VystavenyTermins { get; set; }
+        public virtual DbSet<Sprievodka> Sprievodkas { get; set; }
+        public virtual DbSet<PracovnaDoba> PracovnaDobas { get; set; }
 
 
-
-
-
-
+        #endregion
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // user defined functions
+            modelBuilder.HasDbFunction(typeof(HealthInCubeContext).GetMethod(nameof(GetWeekNumberFromDb), new[] { typeof(DateTime) }))
+                .HasName("GETWEEKNUMBER");
+
+            #region Entities mapping
+
             modelBuilder.HasAnnotation("Relational:Collation", "USING_NLS_COMP");
 
             modelBuilder.Entity<Pouzivatel>()
@@ -69,35 +72,35 @@ namespace HealthInCube_BackEnd.Data
                 .HasForeignKey(r => r.UserId)
                 .IsRequired();
 
+            modelBuilder.Entity<AppRola>()
+                 .HasMany(r => r.PouzivatelRole)
+                 .WithOne(u => u.PouzivatelRola)
+                 .HasForeignKey(r => r.RoleId)
+                 .IsRequired();
 
-
-                modelBuilder.Entity<AppRola>()
-                .HasMany(r => r.PouzivatelRole)
-                .WithOne(u => u.PouzivatelRola)
-                .HasForeignKey(r => r.RoleId)
-                .IsRequired();
-
-
-            modelBuilder.Entity<AppPouzivatelRola>(entity => {
-                entity.HasKey(r => new {r.RoleId, r.UserId});
+            modelBuilder.Entity<AppPouzivatelRola>(entity =>
+            {
+                entity.HasKey(r => new { r.RoleId, r.UserId });
             });
 
-             modelBuilder.Entity<IdentityUserLogin<decimal>>(entity => {
+            modelBuilder.Entity<IdentityUserLogin<decimal>>(entity =>
+            {
                 entity.HasKey(r => r.UserId);
             });
 
-             modelBuilder.Entity<IdentityUserToken<decimal>>(entity => {
+            modelBuilder.Entity<IdentityUserToken<decimal>>(entity =>
+            {
                 entity.HasKey(r => r.UserId);
             });
 
-
-            modelBuilder.Entity<Ziadanka>(entity => {
-                entity.HasKey(z => new { z.IdUser, z.IdLekar, z.CreatedAt});
+            modelBuilder.Entity<Ziadanka>(entity =>
+            {
+                entity.HasKey(z => new { z.IdUser, z.IdLekar, z.CreatedAt });
                 entity.ToTable("ZIADANKA");
 
-                 entity.Property(e => e.IdUser)
-                    .HasColumnType("NUMBER(38)")
-                    .HasColumnName("ID_PACIENT");
+                entity.Property(e => e.IdUser)
+                   .HasColumnType("NUMBER(38)")
+                   .HasColumnName("ID_PACIENT");
 
                 entity.Property(e => e.IdLekar)
                     .HasColumnType("NUMBER(38)")
@@ -112,63 +115,56 @@ namespace HealthInCube_BackEnd.Data
                     .HasColumnName("AKCEPTOVANA");
 
 
-            entity.HasOne(d => d.IdLekarNavigation)
-                    .WithMany(p => p.Ziadanky)
-                    .HasForeignKey(d => d.IdLekar)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("RELATIONSHIP200");
+                entity.HasOne(d => d.IdLekarNavigation)
+                        .WithMany(p => p.Ziadanky)
+                        .HasForeignKey(d => d.IdLekar)
+                        .OnDelete(DeleteBehavior.ClientSetNull)
+                        .HasConstraintName("RELATIONSHIP200");
 
                 entity.HasOne(d => d.IdPouzivatelNavigation)
-                    .WithMany(p => p.Ziadanky)
-                    .HasForeignKey(d => d.IdUser)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("RELATIONSHIP201");
+                       .WithMany(p => p.Ziadanky)
+                       .HasForeignKey(d => d.IdUser)
+                       .OnDelete(DeleteBehavior.ClientSetNull)
+                       .HasConstraintName("RELATIONSHIP201");
 
 
 
             });
-
-
-        
-
-
-
-
 
             modelBuilder.Entity<AtestacieLekar>(entity =>
-            {
-                entity.HasKey(e => new { e.IdAtestacia, e.IdLekar, e.IdTyp });
+              {
+                  entity.HasKey(e => new { e.IdAtestacia, e.IdLekar, e.IdTyp });
 
-                entity.ToTable("ATESTACIE_LEKAR");
+                  entity.ToTable("ATESTACIE_LEKAR");
 
-                entity.Property(e => e.IdAtestacia)
-                    .HasColumnType("NUMBER(38)")
-                    .HasColumnName("ID_ATESTACIA");
+                  entity.Property(e => e.IdAtestacia)
+                      .HasColumnType("NUMBER(38)")
+                      .HasColumnName("ID_ATESTACIA");
 
-                entity.Property(e => e.IdLekar)
-                    .HasColumnType("NUMBER(38)")
-                    .HasColumnName("ID_LEKAR");
+                  entity.Property(e => e.IdLekar)
+                      .HasColumnType("NUMBER(38)")
+                      .HasColumnName("ID_LEKAR");
 
-                entity.Property(e => e.IdTyp)
-                    .HasColumnType("NUMBER(38)")
-                    .HasColumnName("ID_TYP");
+                  entity.Property(e => e.IdTyp)
+                      .HasColumnType("NUMBER(38)")
+                      .HasColumnName("ID_TYP");
 
-                entity.Property(e => e.AtestaciaOd)
-                    .HasColumnType("DATE")
-                    .HasColumnName("ATESTACIA_OD");
+                  entity.Property(e => e.AtestaciaOd)
+                      .HasColumnType("DATE")
+                      .HasColumnName("ATESTACIA_OD");
 
-                entity.HasOne(d => d.IdLekarNavigation)
-                    .WithMany(p => p.AtestacieLekars)
-                    .HasForeignKey(d => d.IdLekar)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("RELATIONSHIP62");
+                  entity.HasOne(d => d.IdLekarNavigation)
+                      .WithMany(p => p.AtestacieLekars)
+                      .HasForeignKey(d => d.IdLekar)
+                      .OnDelete(DeleteBehavior.ClientSetNull)
+                      .HasConstraintName("RELATIONSHIP62");
 
-                entity.HasOne(d => d.IdTypNavigation)
-                    .WithMany(p => p.AtestacieLekars)
-                    .HasForeignKey(d => d.IdTyp)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("RELATIONSHIP63");
-            });
+                  entity.HasOne(d => d.IdTypNavigation)
+                      .WithMany(p => p.AtestacieLekars)
+                      .HasForeignKey(d => d.IdTyp)
+                      .OnDelete(DeleteBehavior.ClientSetNull)
+                      .HasConstraintName("RELATIONSHIP63");
+              });
 
             modelBuilder.Entity<Bydlisko>(entity =>
             {
@@ -199,8 +195,6 @@ namespace HealthInCube_BackEnd.Data
                 entity.Property(e => e.IdPouzivatel)
                     .HasColumnType("NUMBER(38)")
                     .HasColumnName("ID_POUZIVATEL");
-
-                
 
                 entity.Property(e => e.Trvale)
                     .IsRequired()
@@ -516,8 +510,6 @@ namespace HealthInCube_BackEnd.Data
                     .HasConstraintName("RELATIONSHIP70");
             });
 
-
-
             modelBuilder.Entity<Nemocnica>(entity =>
             {
                 entity.HasKey(e => e.IdNem);
@@ -743,7 +735,7 @@ namespace HealthInCube_BackEnd.Data
             //         .IsUnicode(false)
             //         .HasColumnName("EMAIL");
 
-                
+
             //     entity.Property(e => e.Meno)
             //         .IsRequired()
             //         .HasMaxLength(15)
@@ -785,8 +777,6 @@ namespace HealthInCube_BackEnd.Data
             //         .HasMaxLength(15)
             //         .IsUnicode(false)
             //         .HasColumnName("ROD_PRIEZVISKO");
-
-                
             // });
 
             modelBuilder.Entity<PredpLiecba>(entity =>
@@ -865,8 +855,6 @@ namespace HealthInCube_BackEnd.Data
                     .HasConstraintName("RELATIONSHIP68");
             });
 
-
-
             modelBuilder.Entity<Recept>(entity =>
             {
                 entity.HasKey(e => e.IdRecept);
@@ -918,7 +906,7 @@ namespace HealthInCube_BackEnd.Data
                     .HasConstraintName("RELATIONSHIP35");
             });
 
-           
+
 
             modelBuilder.Entity<TypLekara>(entity =>
             {
@@ -1185,10 +1173,66 @@ namespace HealthInCube_BackEnd.Data
                     .HasConstraintName("RELATIONSHIP42");
             });
 
+            modelBuilder.Entity<ZoznamDen>(entity =>
+            {
+                entity.HasKey(d => d.IdDen);
+
+                entity.ToTable("ZOZNAM_DEN");
+
+                entity.Property(e => e.IdDen)
+                  .HasColumnName("ID_DEN");
+
+                entity.Property(e => e.Nazov)
+                  .HasColumnName("NAZOV");
+            });
+              
+
+            modelBuilder.Entity<PracovnaDoba>(entity =>
+            {
+                entity.HasKey(p => new { p.IdLekar, p.IdDen });
+
+                entity.ToTable("PRAC_DOBA");
+
+                entity.HasOne(zd => zd.IdLekarNavigation)
+                    .WithMany(l => l.PracovnaDobas)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+                    
+                entity.HasOne(zd => zd.IdZoznamNavigation)
+                    .WithMany(d => d.PracovnaDobas)
+                    .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
+            modelBuilder.Entity<Sprievodka>(entity =>
+            {
+                entity.HasKey(s => new { s.IdLekar, s.IdPacient, s.TerminOd });
+
+                entity.ToTable("SPRIEVODKA");
+
+                entity.HasOne(s => s.IdLekarNavigation)
+                    .WithMany(l => l.Sprievodkas)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(s => s.IdPacientNavigation)
+                    .WithMany(p => p.Sprievodkas)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<VystavenyTermin>()
+                   .ToTable("VYSTAVENY_TERMIN");
+            #endregion
 
             OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+
+        /// <summary>
+        /// Method inside sql.
+        /// For mapping purpose.
+        /// Date in YYYY-MM-DD format.
+        /// </summary>
+        /// <param name="date">YYYY-MM-DD format.</param>
+        /// <returns></returns>
+        public int GetWeekNumberFromDb(DateTime p_start_week_of) => throw new NotSupportedException("Mapping issue for GetWeekNumber function");
     }
 }

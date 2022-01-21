@@ -8,7 +8,7 @@ namespace HealthInCube_BackEnd.Entities
 {
     public partial class Bydlisko
     {
-        public decimal IdBydliska { get; set; }
+        public decimal? IdBydliska { get; set; }
         public decimal? IdPouzivatel { get; set; }
         public string Ulica { get; set; }
         public DateTime AdresaOd { get; set; } = DateTime.Now;

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using HealthInCube_BackEnd.Entities;
 
 namespace HealthInCube_BackEnd.DTOs
 {
@@ -28,13 +27,8 @@ namespace HealthInCube_BackEnd.DTOs
         }
 
         public byte[] Fotka { get; set; }
-
         public string Nemocnica { get; set; }
         public string OddelenieNazov { get; set; }
-        public ICollection<decimal> AtestacieId { get; set; }
-
-
-        
-        
+        public ICollection<decimal> AtestacieId { get; set; }   
     }
 }

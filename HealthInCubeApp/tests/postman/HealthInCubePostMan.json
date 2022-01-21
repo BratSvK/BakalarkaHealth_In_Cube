@@ -748,6 +748,193 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Sprievodka",
+					"item": [
+						{
+							"name": "create",
+							"item": [
+								{
+									"name": "createSprievodka",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id_sprievodka\": 1,\r\n    \"id_pacient\": 1,\r\n    \"id_lekar\": 2,\r\n    \"id_typ\": 1,\r\n    \"termin_datum\": \"2022-01-14T00:00:00\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{GateWayApi}}/{{EndPoint}}/sprievodka",
+											"host": [
+												"{{GateWayApi}}"
+											],
+											"path": [
+												"{{EndPoint}}",
+												"sprievodka"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "getSprievodka",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{GateWayApi}}/{{EndPoint}}/sprievodka/1",
+											"host": [
+												"{{GateWayApi}}"
+											],
+											"path": [
+												"{{EndPoint}}",
+												"sprievodka",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Termin",
+							"item": [
+								{
+									"name": "create",
+									"item": [
+										{
+											"name": "createTermin",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n    \"id_termin\": 1,\r\n    \"id_lekar\": 2,\r\n    \"id_sprievodka\": 1,\r\n    \"dayOfYear\": 14\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{GateWayApi}}/{{EndPoint}}/termin",
+													"host": [
+														"{{GateWayApi}}"
+													],
+													"path": [
+														"{{EndPoint}}",
+														"termin"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "getAllTermin",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{GateWayApi}}/{{EndPoint}}/termin/all",
+											"host": [
+												"{{GateWayApi}}"
+											],
+											"path": [
+												"{{EndPoint}}",
+												"termin",
+												"all"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Pracovna doba",
+					"item": [
+						{
+							"name": "create",
+							"item": [
+								{
+									"name": "PridajPracovnaDobaNaKonretnyDen",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id_lekar\": 1,\r\n    \"id_den\": 1,\r\n    \"prac_od\": 420,\r\n    \"prac_do\": 900,\r\n    \"obed_od\": 660\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{GateWayApi}}/{{EndPoint}}/createWorkingDay/1",
+											"host": [
+												"{{GateWayApi}}"
+											],
+											"path": [
+												"{{EndPoint}}",
+												"createWorkingDay",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "GetAllPracovnaDoba",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/getAllWorkingDays",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"getAllWorkingDays"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "GetPracovnaDobaNaKonkretnyDen",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/getWorkingDay/1",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"getWorkingDay",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -987,7 +1174,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"ulica\": \"Štúrova 1305/30\",\r\n    \"idMesto\": 1328\r\n}",
+									"raw": "{\r\n    \"ulica\": \"Štúrova 1305/30\",\r\n    \"idMesto\": 1328,\r\n    \"trvale\": true\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"

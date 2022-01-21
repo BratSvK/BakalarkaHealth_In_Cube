@@ -119,7 +119,7 @@ namespace HealthInCube_BackEnd.Data
 
         public void InsertItem(Lekar item)
         {
-            throw new System.NotImplementedException();
+            _context.Lekar.Add(item);
         }
 
         public async Task<bool> SaveAllAsync()
@@ -167,6 +167,8 @@ namespace HealthInCube_BackEnd.Data
             // -1 getting accurate year 
             var dateOfBirthMin = DateTime.Today.AddYears(-userParams.AgeTo - 1);
             var dateOfBirthMax = DateTime.Today.AddYears(-userParams.AgeFrom);
+
+            query = query.Where(p => p.IdVseobecnyLekar == lekarId);
 
             query = query.Where(p => p.IdPouzivatelNavigation.DatNarodenia >= dateOfBirthMin 
                                   && p.IdPouzivatelNavigation.DatNarodenia <= dateOfBirthMax);
