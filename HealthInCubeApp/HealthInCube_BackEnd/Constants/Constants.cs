@@ -1,7 +1,13 @@
 ﻿namespace HealthInCube_BackEnd.Constants
 {
+    /// <summary>
+    /// Helpers values for application.
+    /// </summary>
     public static class Constants
     { 
-       public const double ObednaPrestavka = 30;
+        /// <summary>
+        /// Rest for lunch in general.
+        /// </summary>
+       public const double OBEDNAPRESTAVKA = 30;
     }
 }
