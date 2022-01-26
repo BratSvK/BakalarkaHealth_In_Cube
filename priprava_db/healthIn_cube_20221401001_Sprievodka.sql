@@ -164,6 +164,13 @@ order by v."Id";
 
 select * from sprievodka;
 
+select * from vystaveny_termin;
+
+select * from zdrav_karta_povolenia;
+
+select * from typ_lekara;
+
+
 delete from sprievodka;
 
 delete from vystaveny_termin;
@@ -188,6 +195,9 @@ commit;
   from dual;
  end;
 /
+
+
+
 
 
  

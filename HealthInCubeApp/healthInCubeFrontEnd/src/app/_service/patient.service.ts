@@ -7,6 +7,7 @@ import { environment } from 'src/environments/environment';
 import { LekarParams } from '../models/lekarParams';
 import { PacientCard } from '../models/pacientCard';
 import { PaginatedResult, PAGINATION_HEADER_NAME } from '../models/pagination';
+import { PatientSearch } from '../models/Sprievodka/pacientSearch';
 import { extractKeyFromParams } from '../shared/common';
 import { AppState } from '../_store/models/AppState';
 
@@ -64,6 +65,9 @@ export class PatientService {
     return this.http.get<number>(this.baseUrl + `lekar/id`);
   }
 
+  getPacientByBID(pacientBid: string) {
+    return this.http.get<PatientSearch>(this.baseUrl + `lekar/search/patientByBid/${pacientBid}`);
+  }
 
   checkIsActiveted$() : Observable<boolean> {
     return this.store.select('patient').pipe(map(patientData => {

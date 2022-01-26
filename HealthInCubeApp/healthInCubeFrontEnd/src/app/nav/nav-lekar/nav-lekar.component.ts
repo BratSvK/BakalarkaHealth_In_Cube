@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { faStethoscope, faUserCheck, faUsers, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
-import { BsModalRef, BsModalService, ModalOptions } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { map, take } from 'rxjs/operators';
 import { Pouzivatel } from 'src/app/models/pouzivatel';
 import { SprievodkaModalComponent } from 'src/app/user/lekar/sprievodka/sprievodka-modal/sprievodka-modal.component';
 import { AppState } from 'src/app/_store/models/AppState';
-import { SprievodkaFormModel } from 'src/app/models/sprievodkaFormModel';
 
 
 @Component({

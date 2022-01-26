@@ -1,4 +1,4 @@
-import { TypyLekara } from "./lekar";
+import { TypyLekara } from ".././lekar";
 
 export interface SprievodkaModel {
     idPacient: number;

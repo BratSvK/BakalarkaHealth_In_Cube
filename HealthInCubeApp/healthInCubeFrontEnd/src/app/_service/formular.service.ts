@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup, ValidatorFn } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { InputCommand, InputCommandType } from '../models/inputs.common';
 
@@ -40,5 +40,11 @@ export class FormularService {
         break;
       }
     }
+  }
+
+  matchLengthSize(matchToLength: number): ValidatorFn {
+    return (control: AbstractControl) => {
+      return control?.value?.length === matchToLength ? null : {isSameLength: true }
+    };
   }
 }

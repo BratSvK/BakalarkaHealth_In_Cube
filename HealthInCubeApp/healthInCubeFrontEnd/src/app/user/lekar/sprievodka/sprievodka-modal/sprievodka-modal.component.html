@@ -24,8 +24,14 @@
         <input type="text" 
                class="form-control" 
                id="BID" 
-               placeholder="etc. 981124/4168" 
-               formControlName="birthIDNumber">
+               placeholder="etc. 9811244168" 
+               formControlName="birthIDNumber"
+               [class.is-invalid]='(notFound$ | async)'>
+               
+          <div *ngIf='(notFound$ | async)'
+                class="invalid-feedback">
+            Pacient sa nenašiel
+          </div>
       </div>
       <div class="col-md-6 mb-3">
         <label for="patientName">
@@ -102,7 +108,8 @@
       </button>
       <button type="button" 
               class="btn btn-primary" 
-              (click)="createSprievodka()">
+              (click)="createSprievodka()"
+              [disabled]="sprievodkaForm.invalid">
               Vytvoriť
       </button>
     </div>

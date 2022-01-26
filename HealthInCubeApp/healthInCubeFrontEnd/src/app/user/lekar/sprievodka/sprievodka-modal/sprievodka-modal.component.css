@@ -27,3 +27,7 @@
     width: 7em;
     white-space: normal;
   }
+
+  input.ng-touched.ng-invalid {
+    border: 2px solid red;
+}

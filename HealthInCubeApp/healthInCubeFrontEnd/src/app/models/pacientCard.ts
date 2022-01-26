@@ -6,3 +6,5 @@ export interface PacientCard {
     fullName: string;
     mestoNarodenia: string;
 }
+
+export const BID_LENGHT = 10;
