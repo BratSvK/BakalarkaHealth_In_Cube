@@ -1,104 +1,124 @@
-<div class="modal-header">
-  <h4 class="modal-title pull-left">
-    {{sprievodkaHeaderText}}
-  </h4>
-  <button type="button" 
-          class="btn-close close pull-right" 
-          aria-label="Close" 
-          (click)="bsModalRef.hide()">
-    <span aria-hidden="true" 
-          class="visually-hidden">&times;</span>
-  </button>
-</div>
-<div class="modal-body">
-  <form [formGroup]="sprievodkaForm" 
-        autocomplete="off" 
-        bg-light 
-        (ngSubmit)="createSprievodka()">
+<div *ngIf="(typeOfDoctors$ | async) as doctorTypes" >
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{sprievodkaHeaderText}}
+    </h4>
+    <button type="button" 
+            class="btn-close close pull-right" 
+            aria-label="Close" 
+            (click)="bsModalRef.hide()">
+      <span aria-hidden="true" 
+            class="visually-hidden">&times;</span>
+    </button>
+  </div>
+   <div class="modal-body">
+    <form [formGroup]="sprievodkaForm" 
+          autocomplete="off" 
+          bg-light 
+          (ngSubmit)="createSprievodka()">
 
-    <div class="form-row">
-      <div class="col-md-6 mb-3">
-        <label for="BID">
-          Pacient rodné číslo
-        </label>
-        <input type="text" 
-               class="form-control" 
-               id="BID" 
-               placeholder="etc. 9811244168" 
-               formControlName="birthIDNumber"
-               [class.is-invalid]='(notFound$ | async)'>
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <label for="BID">
+            Pacient rodné číslo
+          </label>
+          <input type="text" 
+                class="form-control" 
                
-          <div *ngIf='(notFound$ | async)'
-                class="invalid-feedback">
-            Pacient sa nenašiel
+                id="BID" 
+                placeholder="etc. 9811244168" 
+                formControlName="birthIDNumber"
+                [class.is-invalid]='(notFound$ | async)'>
+                
+            <div *ngIf='(notFound$ | async)'
+                  class="invalid-feedback">
+              Pacient sa nenašiel
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="patientName">
+            Pacient
+          </label>
+          <input type="text" 
+                class="form-control" 
+                id="patientName" 
+                formControlName="patientName">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-10 mb-3">
+          <label for="idTypVysetrenia">
+            Typ vyšetrenia
+          </label>
+          <select class="custom-select d-block w-100" 
+                  id="idTypVysetrenia" 
+                  formControlName="idTypVysetrenia"
+                  (ngModelChange)="selectTypeInfo(doctorTypes)">
+            <option [disabled]="true" 
+                    [selected]="true" 
+                    value="">Vyber...
+            </option>
+            <option [ngValue]="typeDoc.idTyp" 
+                    *ngFor="let typeDoc of doctorTypes">
+                    {{typeDoc.nazov}}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-2 mb-3">
+          <button type="button" 
+                  class="btn info" 
+                  [tooltip]="infoTypeDoctor" 
+                  placement="right">
+          <fa-icon class="ml-3" 
+                  [icon]="infoTooltip">
+          </fa-icon>
+          </button>
+        </div>
+      </div>
+     <div class="form-row">
+        <div class="col-md-12 mb-3">
+            <label for="lekarId">
+              Lekár
+            </label>
+            <select class="custom-select d-block w-100 ellipsis" 
+                  id="lekarId" 
+                  formControlName="idLekar">
+            <option [disabled]="true" 
+                    [selected]="true" 
+                    value="">Vyber si typ lekára...
+            </option>
+            <option [ngValue]="doc.idLekar" 
+                    *ngFor="let doc of doctorsBySelectedType">
+                    {{doc.fullName}} - {{doc.pracovisko}}
+            </option>
+          </select>
+         </div>
+      </div>
+       <div class="form-row">
+         <div class="col-md-12 mb-3">
+            <label for="terminDatum">
+              Termín
+            </label>
+            <input type="text" 
+                  class="form-control" 
+                  id="terminDatum" 
+                  formControlName="terminDatum"
+                  placeholder="Vyber si deň" 
+                  [bsConfig]="{containerClass: 'theme-blue'}"
+                  bsDatepicker
+                  placement="right"
+                  [class.is-invalid]='!(isAvailable$ | async) && sprievodkaForm.controls.terminDatum.touched'
+                  [class.is-valid]='(isAvailable$ | async) && sprievodkaForm.controls.terminDatum.touched'>
+             <div *ngIf='!(isAvailable$ | async); else isAvailable'
+                  class="invalid-feedback">
+              Nieje voľný termín! Prosím vyberte iný deň.
+            </div>
+            <ng-template #isAvailable>
+              <span class="valid-feedback">Termín bude pridaný automaticky(FIFO).</span> 
+          </ng-template>
           </div>
-      </div>
-      <div class="col-md-6 mb-3">
-        <label for="patientName">
-          Pacient
-        </label>
-        <input type="text" 
-               class="form-control" 
-               id="patientName" 
-               formControlName="patientName" 
-               disabled>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="col-md-10 mb-3">
-        <label for="idTypVysetrenia">
-          Typ vyšetrenia
-        </label>
-        <select class="custom-select d-block w-100" 
-                id="idTypVysetrenia" 
-                formControlName="idTypVysetrenia">
-          <option [disabled]="true" 
-                  [selected]="true" 
-                  value="">Choose...
-          </option>
-          <option [ngValue]="typeDoc.id" 
-                  *ngFor="let typeDoc of typeOfDoctors">
-                  {{typeDoc.nazov}}
-          </option>
-        </select>
-      </div>
-      <div class="col-md-2 mb-3">
-        <button type="button" 
-                class="btn info" 
-                [tooltip]="infoVysetrenie" 
-                placement="right">
-        <fa-icon class="ml-3" 
-                 [icon]="infoTooltip">
-        </fa-icon>
-        </button>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="col-md-12 mb-3">
-        <label for="lekarName">
-          Lekár
-        </label>
-        <input type="text" 
-               class="form-control" 
-               id="lekarName" 
-               formControlName="lekarName" 
-               disabled>
-      </div>
-    </div>
-    <div class="form-row">
-      <div class="col-md-12 mb-3">
-        <label for="terminDatum">
-          Termín
-        </label>
-        <input type="text" 
-               class="form-control" 
-               id="terminDatum" 
-               formControlName="terminDatum"
-               placeholder="Vyber si deň" 
-               [bsConfig]="{containerClass: 'theme-blue'}"
-               bsDatepicker
-               placement="right">
-      </div>
+        </div>
+      </form>
     </div>
     <div class="modal-footer">
       <button type="button" 
@@ -113,3 +133,4 @@
               Vytvoriť
       </button>
     </div>
+ </div>

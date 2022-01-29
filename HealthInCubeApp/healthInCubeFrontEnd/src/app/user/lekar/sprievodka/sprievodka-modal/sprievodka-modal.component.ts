@@ -1,17 +1,21 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { SprievodkaFormModel } from 'src/app/models/Sprievodka/sprievodkaFormModel';
+import { SprievodkaFormModel } from 'src/app/models/sprievodka/sprievodkaFormModel';
 import { FormularService } from 'src/app/_service/formular.service';
 import { SubSink } from 'subsink';
 
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { BsDaterangepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BID_LENGHT } from 'src/app/models/pacientCard';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { PatientService } from 'src/app/_service/patient.service';
-import { BehaviorSubject, EMPTY, of } from 'rxjs';
-import { PatientSearch } from 'src/app/models/Sprievodka/pacientSearch';
+import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
+import { PatientSearch } from 'src/app/models/sprievodka/pacientSearch';
+import { LekarTyp } from 'src/app/models/lekar/typLekar';
+import { LekarService } from 'src/app/_service/lekar.service';
+import { LekarSprievodka } from 'src/app/models/lekar/lekarSprievodka';
+import { SprievodkaService } from 'src/app/_service/sprievodka.service';
 
 @Component({
   selector: 'app-sprievodka-modal',
@@ -20,38 +24,33 @@ import { PatientSearch } from 'src/app/models/Sprievodka/pacientSearch';
 })
 export class SprievodkaModalComponent implements OnInit, OnDestroy {
   sprievodkaHeaderText: string = 'Vytvoriť sprievodku';
-  list: any[] = [];
   closeBtnName: string;
+  title: string;
   sprievodkaForm: FormGroup;
   infoTooltip = faInfoCircle;
-  notFound$ = new BehaviorSubject(false);
-
-  infoVysetrenie = 'očný lekár, zaoberá sa výskumom, diagnózou, prevenciou a liečbou očných chorôb';
-
-  private subs = new SubSink();
-
   bsConfig?: Partial<BsDaterangepickerConfig>;
+  typeOfDoctors$: Observable<LekarTyp[]>;
+  doctorsBySelectedType: LekarSprievodka[];
+  infoTypeDoctor: string  = 'Vyber si typ lekára';
 
-  typeOfDoctors: {id: number, nazov: string}[] = [];
+  notFound$ = new BehaviorSubject(false);
+  isAvailable$ = new BehaviorSubject(true);
+  
   private readonly defaultSprievodkaData: SprievodkaFormModel;
+  private subs = new SubSink();
 
   constructor(
     public bsModalRef: BsModalRef, 
     fb: FormBuilder, 
     private formService: FormularService,
-    private pacientService: PatientService
+    private pacientService: PatientService,
+    private lekarService: LekarService,
+    private sprievodkaService: SprievodkaService
   ) {
-    this.sprievodkaForm = fb.group({
-      idPacient: ['', [Validators.required]],
-      birthIDNumber: ['',[Validators.required, this.formService.matchLengthSize(BID_LENGHT)]],
-      patientName: ['', [Validators.required]],
-      idTypVysetrenia: ['' , [Validators.required]],
-      idLekar: ['', [Validators.required]],
-      lekarName: ['', [Validators.required]],
-      dlzkaVysetrenia: ['', [Validators.required]],
-      terminDatum: ['', [Validators.required]]
-    });
+    this.initSprievodkaForm(fb);
+    this.listenToDoctorTypes();
   }
+  
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
@@ -59,10 +58,10 @@ export class SprievodkaModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.sprievodkaForm.patchValue({
       ...this.defaultSprievodkaData,
-      idTypVysetrenia: this.typeOfDoctors[0]?.id
     });
-
     this.subcribeToPacientBID();
+    this.subcribeToIsAvailableDate();
+    this.subscribeToDisabledTermin();
   } 
 
   createSprievodka() {
@@ -73,6 +72,37 @@ export class SprievodkaModalComponent implements OnInit, OnDestroy {
     }
   }
 
+  selectTypeInfo(doctorTypes: LekarTyp[]) {
+    let typeDoctor: LekarTyp = doctorTypes.find(type => type.idTyp === +this.sprievodkaForm.controls.idTypVysetrenia.value);
+    this.infoTypeDoctor = typeDoctor.popis;
+    this.subs.sink = this.lekarService.getDoctorsByType(typeDoctor.idTyp)
+    .subscribe(lekari => {
+      this.doctorsBySelectedType = lekari;
+    });
+  }
+
+  private subscribeToDisabledTermin() {
+    this.subs.sink = this.sprievodkaForm.controls.idLekar.valueChanges
+      .pipe(
+        tap(a => this.sprievodkaForm.controls.terminDatum.enable())
+      ).subscribe();
+  }
+
+  private listenToDoctorTypes() {
+    this.typeOfDoctors$ = this.lekarService.getLekarTypes();
+  }
+
+  private initSprievodkaForm(fb: FormBuilder) {
+    this.sprievodkaForm = fb.group({
+      idPacient: ['', [Validators.required]],
+      birthIDNumber: ['',[Validators.required, this.formService.matchLengthSize(BID_LENGHT)]],
+      patientName: [{value: '', disabled: true}, [Validators.required]],
+      idTypVysetrenia: ['' , [Validators.required]],
+      idLekar: ['', [Validators.required]],
+      terminDatum: [{value: '', disabled: true}, [Validators.required]]
+    });
+  }
+
   private subcribeToPacientBID() {
     this.subs.sink = this.sprievodkaForm.controls.birthIDNumber.valueChanges.pipe(
       switchMap((bid: string) => {
@@ -81,7 +111,7 @@ export class SprievodkaModalComponent implements OnInit, OnDestroy {
             map((patientSearch: PatientSearch) => {
               if (patientSearch.idPacient > -1)
               this.notFound$.next(false);
-              this.sprievodkaForm.patchValue({idPacient: patientSearch.idPacient, patientName: patientSearch.name })
+              this.sprievodkaForm.patchValue({idPacient: patientSearch.idPacient, patientName: patientSearch.fullName })
             }),
             catchError((error) => {
               this.notFound$.next(true);
@@ -91,6 +121,25 @@ export class SprievodkaModalComponent implements OnInit, OnDestroy {
           : of(EMPTY)
       })
     ).subscribe();
+  }
+
+  private subcribeToIsAvailableDate() {
+    if (this.sprievodkaForm.controls.terminDatum.touched) {
+    this.subs.sink = this.sprievodkaForm.controls.terminDatum.valueChanges.pipe(
+      switchMap((termin: Date) => {
+        let idLekar = +this.sprievodkaForm.controls.idLekar.value;
+        return this.sprievodkaService.chechAvailabilityInDay(idLekar, termin.toISOString()).pipe(
+            map((isAvailable: boolean) => {
+             this.isAvailable$.next(isAvailable);
+            }),
+            catchError((error) => {
+              this.isAvailable$.next(false);
+              return of(error);
+            })
+          )
+      })
+    ).subscribe();
+  }
   }
 
   @HostListener('document:keydown.escape')

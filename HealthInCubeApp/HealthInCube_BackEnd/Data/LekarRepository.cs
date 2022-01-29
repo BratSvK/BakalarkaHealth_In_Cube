@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using HealthInCube_BackEnd.DTOs;
+using HealthInCube_BackEnd.DTOs.Lekar;
+using HealthInCube_BackEnd.DTOs.Lekar.LekarTyp;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Helpers;
 using HealthInCube_BackEnd.Interfaces;
@@ -188,6 +190,38 @@ namespace HealthInCube_BackEnd.Data
                 query.ProjectTo<PacientCardDto>(_mapper.ConfigurationProvider).AsNoTracking(), 
                 userParams.PageNumber, 
                 userParams.PageSize);
+        }
+
+        public async Task<IEnumerable<LekarTypeDto>> GetLekarTypesAsync()
+        {
+            return await _context.TypLekara
+                .ProjectTo<LekarTypeDto>(_mapper.ConfigurationProvider)
+                .OrderBy(t => t.Nazov)
+                .AsNoTracking()
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<LekarSprievodkaDto>> GetLekarsByType(decimal idTyp)
+        {
+            return await _context.Lekar
+                .Include(l => l.AtestacieLekars)
+                .Include(l => l.IdPouzivatelNavigation)
+                .Include(l => l.Oddelenies)
+                .ThenInclude(od => od.IdNemNavigation)
+                .ThenInclude(n => n.IdMestoNavigation)
+                .Where(l => l.AtestacieLekars.Any(at => at.IdTyp == idTyp))
+                .OrderBy(l => l.IdOddelNavigation.IdNemNavigation.IdMestoNavigation.Nazov)
+                .AsNoTracking()
+                .ProjectTo<LekarSprievodkaDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
+
+        public async Task<int> GetAverageTimePerPatientAsync(decimal lekarId)
+        {
+            return await _context.Lekar
+                .Where(l => l.IdLekar == lekarId)
+                .Select(l => l.DlzkaVysetrenia)
+                .FirstOrDefaultAsync();
         }
     }
 }

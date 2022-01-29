@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { LekarParams } from 'src/app/models/lekarParams';
+import { LekarParams } from 'src/app/models/lekar/lekarParams';
 import { PacientCard } from 'src/app/models/pacientCard';
 import {
   Pagination
 } from 'src/app/models/pagination';
-import { LekarIdService } from 'src/app/_service/lekar.service';
+import { LekarIdService } from 'src/app/_service/lekar-id.service';
+import { LekarService } from 'src/app/_service/lekar.service';
 import { PatientService } from 'src/app/_service/patient.service';
 
 @Component({
@@ -23,7 +24,8 @@ export class PacientiListComponent implements OnInit, OnDestroy {
 
   constructor(
     private patientService: PatientService,
-    private lekarIdService: LekarIdService
+    private lekarIdService: LekarIdService,
+    private lekarService: LekarService
   ) {
     this.lekarParams = new LekarParams();
   }
@@ -51,7 +53,7 @@ export class PacientiListComponent implements OnInit, OnDestroy {
     // httpResponse is typical complete call don't need unsub
     var lekarId = this.lekarIdService.getLekarId();
     if (!!lekarId === false) {
-      this.sub = this.patientService
+      this.sub = this.lekarService
         .getDoctorIdByUserId()
         .pipe(
           switchMap((lekarId) =>

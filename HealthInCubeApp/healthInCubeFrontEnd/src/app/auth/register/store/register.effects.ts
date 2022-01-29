@@ -9,7 +9,7 @@ import * as RegisterAcitonsBundle from './register.actions';
 import { catchError, map, switchMap, tap } from "rxjs/operators";
 import { Okres } from "src/app/models/okres";
 import { Mesto } from "src/app/models/mesto";
-import { Lekar } from "src/app/models/lekar";
+import { Lekar } from "src/app/models/lekar/lekar";
 import { of } from "rxjs";
 import { RegisterPouzivatel } from "src/app/models/pouzivatelRegistracia";
 import { Router } from "@angular/router";

@@ -31,3 +31,9 @@
   input.ng-touched.ng-invalid {
     border: 2px solid red;
 }
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

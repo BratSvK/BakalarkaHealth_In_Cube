@@ -2,8 +2,6 @@ import { Action } from "@ngrx/store";
 import { Photo } from "src/app/models/photo";
 import { Pouzivatel } from "src/app/models/pouzivatel";
 import { PrihlaseniePouzivatel } from "src/app/models/prihlaseniePouzivatel";
-import { FET_USER_DETAIL } from "src/app/user/user-detail/store/user-detail.actions";
-
 
 export const LOGIN = '[Auth] Login';
 export const LOGOUT = '[Auth] Logout';

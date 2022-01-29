@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using HealthInCube_BackEnd.DTOs;
+using HealthInCube_BackEnd.DTOs.Lekar;
+using HealthInCube_BackEnd.DTOs.Lekar.LekarTyp;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Helpers;
 
@@ -14,9 +16,14 @@ namespace HealthInCube_BackEnd.Interfaces
 
         Task<decimal?> GetLekarIdByUser(decimal userId);
 
-
         Task<IEnumerable<ZiadankaDto>> GetAllRequetsByDoctorIdAsync(decimal lekarId);
 
         Task<PagedList<PacientCardDto>> GetAllPatientsByDoctorIdAsync(decimal lekarId, LekarParams userParams);
+
+        Task<IEnumerable<LekarTypeDto>> GetLekarTypesAsync();
+        
+        Task<IEnumerable<LekarSprievodkaDto>> GetLekarsByType(decimal idTyp);
+
+        Task<int> GetAverageTimePerPatientAsync(decimal lekarId);
     }
 }

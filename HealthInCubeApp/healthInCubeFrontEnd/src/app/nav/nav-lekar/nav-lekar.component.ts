@@ -40,27 +40,8 @@ export class NavLekarComponent implements OnInit {
     const config = {
       class: 'modal-dialog-centered',
       initialState: {
-        list: [
-          'Open a modal with component',
-          'Pass your data',
-          'Do something else',
-          '...'
-        ],
         title: 'Sprievodka',
-        closeBtbName: 'Close',
-        typeOfDoctors: [
-          {
-            id: 4,
-            nazov: 'Očný'
-          },
-          {
-            id: 60,
-            nazov: 'Morfológ'
-          }
-        ],
-        defaultSprievodkaData: {
-          idPacient: 2
-        }
+        closeBtbName: 'Close'
       }
     };
 

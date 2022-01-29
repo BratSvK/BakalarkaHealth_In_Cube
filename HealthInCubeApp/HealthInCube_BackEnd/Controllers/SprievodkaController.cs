@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using HealthInCube_BackEnd.DTOs.Lekar.PracovnaDoba;
 using HealthInCube_BackEnd.DTOs.Lekar.Sprievodka;
 using HealthInCube_BackEnd.DTOs.Lekar.Sprievodka.Termin;
 using HealthInCube_BackEnd.Entities;
@@ -18,12 +17,21 @@ namespace HealthInCube_BackEnd.Controllers
         private readonly IMapper _mapper;
         private readonly ISprievodkaRepository _sprievodkaRepository;
         private readonly IPracovnaDobaRepository _pracovnaDobaRepository;
+        private readonly ILekarRepository _lekarRepository;
+        private readonly IAppointmentSchedulerService _appointmentSchedulerService;
 
-        public SprievodkaController(IMapper mapper, ISprievodkaRepository sprievodkaRepository, IPracovnaDobaRepository pracovnaDobaRepository)
+        public SprievodkaController(
+            IMapper mapper, 
+            ISprievodkaRepository sprievodkaRepository, 
+            IPracovnaDobaRepository pracovnaDobaRepository,
+            ILekarRepository lekarRepository,
+            IAppointmentSchedulerService appointmentSchedulerService)
         {
             _mapper = mapper;
             _sprievodkaRepository = sprievodkaRepository;
             _pracovnaDobaRepository = pracovnaDobaRepository;
+            _lekarRepository = lekarRepository;
+            _appointmentSchedulerService = appointmentSchedulerService;
         }
 
         /// <summary>
@@ -38,15 +46,46 @@ namespace HealthInCube_BackEnd.Controllers
         }
 
         /// <summary>
+        /// Check availability in day.
+        /// </summary>
+        [HttpGet("availability")]
+        public async Task<ActionResult<bool>> ChceckAvailability([FromQuery] SprievodkaCreate sprievodkaCreate)
+        {
+            PracovnaDoba pracovnaDoba =
+               await _pracovnaDobaRepository.GetPracovnaDobaToDateAsync(sprievodkaCreate.IdLekar, sprievodkaCreate.TerminDatum.DayOfWeek);
+            int averageTimePerPatient = await _lekarRepository.GetAverageTimePerPatientAsync(sprievodkaCreate.IdLekar);
+
+            _appointmentSchedulerService.CreateAppointmentSchedulerByDay(
+                     new SchedulerBuilderModel(
+                         sprievodkaCreate.IdLekar,
+                         sprievodkaCreate.TerminDatum,
+                         averageTimePerPatient,
+                         pracovnaDoba));
+
+            var isAvailable = await _sprievodkaRepository.CheckIsAvailableTerminInDayOfYear(sprievodkaCreate.IdLekar, sprievodkaCreate.TerminDatum.DayOfYear);
+            return Ok(isAvailable);
+        }
+
+        /// <summary>
         /// Get appointmens in current week
         /// </summary>
         [HttpPost("create")]
         public async Task<ActionResult<SprievodkaDto>> CreateAppointmentByDoctor([FromBody] SprievodkaCreate sprievodkaCreate)
         {
             // enum from microsoft 0 -> Nedela
-            PracovnaDoba pracovnaDoba = await _pracovnaDobaRepository.GetPracovnaDobaToDateAsync(sprievodkaCreate.IdLekar, sprievodkaCreate.TerminDatum.DayOfWeek);
-            
-            IList<TerminSprievodka> vsetkyTerminyLekar = AppointmentScheduler.GetAppointmentScheduler(pracovnaDoba, sprievodkaCreate.DlzkaVysetrenia);
+
+            PracovnaDoba pracovnaDoba = 
+                await _pracovnaDobaRepository.GetPracovnaDobaToDateAsync(sprievodkaCreate.IdLekar, sprievodkaCreate.TerminDatum.DayOfWeek);
+            int averageTimePerPatient = await _lekarRepository.GetAverageTimePerPatientAsync(sprievodkaCreate.IdLekar);
+
+            IList<TerminSprievodkaDto> vsetkyTerminyLekar = 
+                 _appointmentSchedulerService.CreateAppointmentSchedulerByDay(
+                     new SchedulerBuilderModel(
+                         sprievodkaCreate.IdLekar,
+                         sprievodkaCreate.TerminDatum,
+                         averageTimePerPatient,
+                         pracovnaDoba));
+
             var lastFreeAppointment = await _sprievodkaRepository.GetLastTerminCountInDayPerDoctorAsync(sprievodkaCreate.IdLekar, sprievodkaCreate.TerminDatum.DayOfYear);
             if (lastFreeAppointment >= 0 && lastFreeAppointment < vsetkyTerminyLekar.Count)
             {

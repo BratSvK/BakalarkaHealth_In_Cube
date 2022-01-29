@@ -42,20 +42,10 @@ export class PacientCardComponent implements OnInit {
         ],
         title: 'Sprievodka',
         closeBtbName: 'Close',
-        typeOfDoctors: [
-          {
-            id: 4,
-            nazov: 'Očný'
-          },
-          {
-            id: 60,
-            nazov: 'Morfológ'
-          }
-        ],
         defaultSprievodkaData: {
           idPacient: this.patient.idPacient,
           patientName: this.patient.fullName,
-          birthIDNumber: this.patient.bid
+          birthIDNumber: this.patient.bid.replace('/', '')
         }
       }
     };

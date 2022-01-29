@@ -4,10 +4,10 @@ import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { LekarParams } from '../models/lekarParams';
+import { LekarParams } from '../models/lekar/lekarParams';
 import { PacientCard } from '../models/pacientCard';
 import { PaginatedResult, PAGINATION_HEADER_NAME } from '../models/pagination';
-import { PatientSearch } from '../models/Sprievodka/pacientSearch';
+import { PatientSearch } from '../models/sprievodka/pacientSearch';
 import { extractKeyFromParams } from '../shared/common';
 import { AppState } from '../_store/models/AppState';
 
@@ -59,10 +59,6 @@ export class PatientService {
           return response;
         })
       );
-  }
-
-  getDoctorIdByUserId() {
-    return this.http.get<number>(this.baseUrl + `lekar/id`);
   }
 
   getPacientByBID(pacientBid: string) {

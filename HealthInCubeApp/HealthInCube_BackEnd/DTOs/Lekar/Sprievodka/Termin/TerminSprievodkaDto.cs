@@ -2,7 +2,7 @@
 
 namespace HealthInCube_BackEnd.DTOs.Lekar.Sprievodka.Termin
 {
-    public class TerminSprievodka
+    public class TerminSprievodkaDto
     {
         /// <summary>
         /// Start of appointment Etc. 8:00:00.

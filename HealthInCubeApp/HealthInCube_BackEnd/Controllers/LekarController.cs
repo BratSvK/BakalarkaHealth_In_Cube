@@ -6,6 +6,8 @@ using System.Net.Mime;
 using System.Threading.Tasks;
 using AutoMapper;
 using HealthInCube_BackEnd.DTOs;
+using HealthInCube_BackEnd.DTOs.Lekar;
+using HealthInCube_BackEnd.DTOs.Lekar.LekarTyp;
 using HealthInCube_BackEnd.DTOs.Pacient;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Extensions;
@@ -192,7 +194,29 @@ namespace HealthInCube_BackEnd.Controllers
             return Ok(patientSearch);
         }
 
+        /// <summary>
+        /// Get all types of doctors.
+        /// </summary>
+        /// <param name="bid">BID in user table(unique id)</param>
+        /// <returns></returns>
+        [HttpGet("types")]
+        public async Task<ActionResult<IEnumerable<LekarTypeDto>>> GetTypesOfDoctors()
+        {
+            IEnumerable<LekarTypeDto> types = await _lekarRepo.GetLekarTypesAsync();
+            return Ok(types);
+        }
 
+        /// <summary>
+        /// Get all types of doctors.
+        /// </summary>
+        /// <param name="bid">BID in user table(unique id)</param>
+        /// <returns></returns>
+        [HttpGet("all/{idTyp}")]
+        public async Task<ActionResult<IEnumerable<LekarSprievodkaDto>>> GetDoctorsByType(decimal idTyp)
+        {
+            IEnumerable<LekarSprievodkaDto> doctors = await _lekarRepo.GetLekarsByType(idTyp);
+            return Ok(doctors);
+        }
 
         private async Task<ZiadankaDto> RemoveFromRequest(ICollection<Ziadanka> ziadanky, decimal idLekar)
         {
@@ -200,7 +224,6 @@ namespace HealthInCube_BackEnd.Controllers
             if (requestToDelete == null) return null;
 
             requestToDelete.AcceptedAt = DateTime.Now;
-
             _ziadankaRepository.UpdateItem(requestToDelete);
 
             if (await _ziadankaRepository.SaveAllAsync()) return _mapper.Map<ZiadankaDto>(requestToDelete);

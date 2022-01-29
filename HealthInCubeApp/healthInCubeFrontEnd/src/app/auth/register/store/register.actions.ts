@@ -1,7 +1,7 @@
 import { Action, createSelector } from "@ngrx/store";
 import { Mesto } from "src/app/models/mesto";
 import { Okres } from "src/app/models/okres";
-import { Lekar } from "src/app/models/lekar";
+import { Lekar } from "src/app/models/lekar/lekar";
 import { AppState } from "src/app/_store/models/AppState";
 import { RegisterState } from "./modelStore/RegisterState";
 import { Pouzivatel } from "src/app/models/pouzivatel";

@@ -1,5 +1,7 @@
 using AutoMapper;
 using HealthInCube_BackEnd.DTOs;
+using HealthInCube_BackEnd.DTOs.Lekar;
+using HealthInCube_BackEnd.DTOs.Lekar.LekarTyp;
 using HealthInCube_BackEnd.DTOs.Lekar.PracovnaDoba;
 using HealthInCube_BackEnd.DTOs.Lekar.Sprievodka;
 using HealthInCube_BackEnd.Entities;
@@ -30,7 +32,6 @@ namespace HealthInCube_BackEnd.Helpers
             CreateMap<Oddelenie, OddelenieDto>();
             CreateMap<FotkaPouzivatel, FotkaDto>();
             CreateMap<FotkaDto, FotkaPouzivatel>();
-            //CreateMap<DateTime, DateTime>().ConstructUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
             CreateMap<Pacient, PacientDto>();
             CreateMap<PacientDto, Pacient>();
             CreateMap<Pacient, PacientCardDto>()
@@ -54,10 +55,18 @@ namespace HealthInCube_BackEnd.Helpers
                 .ForMember(dest => dest.PracDobaDo, opt => opt.MapFrom(src => TimeSpan.Parse(src.PracDobaDo)))
                 .ForMember(dest => dest.ObedOd, opt => opt.MapFrom(src => TimeSpan.Parse(src.ObedOd)))
                 .ForMember(dest => dest.ObedDo, opt => opt.MapFrom(src => TimeSpan.Parse(src.ObedDo)));
-
             CreateMap<PracovnaDoba, PracovnaDobaDto>();
 
+            CreateMap<TypLekara, LekarTypeDto>()
+                .ForMember(dest => dest.IdTyp, opt => opt.MapFrom(src => (int)src.IdTyp));
 
+            CreateMap<Lekar, LekarSprievodkaDto>()
+                .ForMember(
+                    dest => dest.FullName, 
+                    opt => opt.MapFrom(src => $"{src.IdPouzivatelNavigation.Meno} {src.IdPouzivatelNavigation.Priezvisko}"))
+            .ForMember(
+                    dest => dest.Pracovisko,
+                    opt => opt.MapFrom(src => src.IdOddelNavigation.IdNemNavigation.IdMestoNavigation.Nazov));
         }
     }
 }

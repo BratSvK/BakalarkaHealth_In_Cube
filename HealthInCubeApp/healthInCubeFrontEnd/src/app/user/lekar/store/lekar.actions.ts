@@ -1,6 +1,6 @@
 import { Action } from "@ngrx/store";
 import { CreatePatient } from "src/app/models/createPatient";
-import { Lekar } from "src/app/models/lekar";
+import { Lekar } from "src/app/models/lekar/lekar";
 import { Ziadanka } from "src/app/models/ziadanka";
 
 export const FETCH_REQUESTS = '[Lekar] Fetch requests';                     // async

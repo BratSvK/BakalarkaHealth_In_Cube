@@ -1,4 +1,4 @@
-import { UserParams } from "./userParams";
+import { UserParams } from "./../userParams";
 
 export class LekarParams extends UserParams {
     ageFrom: number = 21;

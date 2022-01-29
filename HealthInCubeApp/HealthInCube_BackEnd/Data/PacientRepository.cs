@@ -109,7 +109,7 @@ namespace HealthInCube_BackEnd.Data
                 .Select(pat => new PacientSearchDto
                 {
                     IdPacient = pat.IdPacient,
-                    Name = pat.IdPouzivatelNavigation.Meno
+                    FullName = $"{pat.IdPouzivatelNavigation.Meno} {pat.IdPouzivatelNavigation.Priezvisko}"
                 })
                 .AsNoTracking()
                 .SingleOrDefaultAsync();

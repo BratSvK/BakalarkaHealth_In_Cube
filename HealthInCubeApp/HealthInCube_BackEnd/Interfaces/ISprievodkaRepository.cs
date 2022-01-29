@@ -9,6 +9,9 @@ namespace HealthInCube_BackEnd.Interfaces
     public interface ISprievodkaRepository : IRepository<Sprievodka, SprievodkaDto>
     {
         Task<IEnumerable<SprievodkaDto>> GetSprievodkyByWeek(SprievodkaParams sprievodkaParams);
+        
         Task<int> GetLastTerminCountInDayPerDoctorAsync(decimal idLekar, int dayOfYear);
+
+        Task<bool> CheckIsAvailableTerminInDayOfYear(decimal idLekar, int dayOfYear);
     }
 }

@@ -1,7 +1,6 @@
 import { Mesto } from "src/app/models/mesto";
 import { Okres } from "src/app/models/okres";
-import { Lekar } from "src/app/models/lekar";
-import { Rola } from "src/app/models/rola";
+import { Lekar } from "src/app/models/lekar/lekar";
 
 export interface RegisterState {
     mesta: Mesto[];
@@ -9,6 +8,4 @@ export interface RegisterState {
     mestaBirth: Mesto[];
     okresyBirth: Okres[];
     practitioners: Lekar[]
-    
-
 }
