@@ -1,7 +1,7 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { SprievodkaFormModel } from 'src/app/models/sprievodka/sprievodkaFormModel';
+import { SprievodkaCreateModelApi, SprievodkaFormModel } from 'src/app/models/sprievodka/sprievodkaFormModel';
 import { FormularService } from 'src/app/_service/formular.service';
 import { SubSink } from 'subsink';
 
@@ -16,6 +16,7 @@ import { LekarTyp } from 'src/app/models/lekar/typLekar';
 import { LekarService } from 'src/app/_service/lekar.service';
 import { LekarSprievodka } from 'src/app/models/lekar/lekarSprievodka';
 import { SprievodkaService } from 'src/app/_service/sprievodka.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sprievodka-modal',
@@ -39,18 +40,25 @@ export class SprievodkaModalComponent implements OnInit, OnDestroy {
   private readonly defaultSprievodkaData: SprievodkaFormModel;
   private subs = new SubSink();
 
+  @HostListener('document:keydown.escape')
+   closeSprievodkaForm() {
+    this.subs.unsubscribe();
+    this.bsModalRef.hide();
+  }
+
   constructor(
     public bsModalRef: BsModalRef, 
     fb: FormBuilder, 
     private formService: FormularService,
     private pacientService: PatientService,
     private lekarService: LekarService,
-    private sprievodkaService: SprievodkaService
+    private sprievodkaService: SprievodkaService,
+    private toastr: ToastrService
   ) {
     this.initSprievodkaForm(fb);
     this.listenToDoctorTypes();
   }
-  
+
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
@@ -70,6 +78,13 @@ export class SprievodkaModalComponent implements OnInit, OnDestroy {
       this.formService.focusAtFirstErrorInForm(this.sprievodkaForm);
       return;
     }
+    let sprievodkaModelForm = this.buildSprievodkaModalForm();
+   this.subs.sink = this.sprievodkaService.createSprievodka(sprievodkaModelForm).pipe(
+    tap(() => {
+      this.toastr.success("Sprievodka vytvorená a poslaná do kalendára.");
+      this.closeSprievodkaForm();
+    })
+   ).subscribe();
   }
 
   selectTypeInfo(doctorTypes: LekarTyp[]) {
@@ -81,10 +96,30 @@ export class SprievodkaModalComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  private fixDate(d: Date): Date {
+    var date = new Date(d.toDateString());
+    var userTimezoneOffset = date.getTimezoneOffset() * 60000;
+    return new Date(date.getTime() - userTimezoneOffset);
+  }
+
+  private buildSprievodkaModalForm(): SprievodkaCreateModelApi {
+    let fixedDated = this.fixDate(this.sprievodkaForm.controls.terminDatum.value);
+    console.log(fixedDated);
+    this.sprievodkaForm.patchValue({terminDatum: fixedDated});
+    return new SprievodkaCreateModelApi(this.sprievodkaForm.value);
+  }
+
   private subscribeToDisabledTermin() {
+    if (this.sprievodkaForm.controls.idLekar.value !== '' && this.sprievodkaForm.controls.idLekar.value !== undefined) {
+      console.log('som nastavený')
+    }
     this.subs.sink = this.sprievodkaForm.controls.idLekar.valueChanges
       .pipe(
-        tap(a => this.sprievodkaForm.controls.terminDatum.enable())
+        tap(a => this.sprievodkaForm.controls.terminDatum.enable({
+          onlySelf: true, 
+          emitEvent: false
+        }))
       ).subscribe();
   }
 
@@ -124,7 +159,6 @@ export class SprievodkaModalComponent implements OnInit, OnDestroy {
   }
 
   private subcribeToIsAvailableDate() {
-    if (this.sprievodkaForm.controls.terminDatum.touched) {
     this.subs.sink = this.sprievodkaForm.controls.terminDatum.valueChanges.pipe(
       switchMap((termin: Date) => {
         let idLekar = +this.sprievodkaForm.controls.idLekar.value;
@@ -139,12 +173,5 @@ export class SprievodkaModalComponent implements OnInit, OnDestroy {
           )
       })
     ).subscribe();
-  }
-  }
-
-  @HostListener('document:keydown.escape')
-  closeSprievodkaForm() {
-    this.subs.unsubscribe();
-    this.bsModalRef.hide();
   }
 }

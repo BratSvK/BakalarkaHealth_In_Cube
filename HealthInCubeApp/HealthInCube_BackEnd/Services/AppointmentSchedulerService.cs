@@ -63,11 +63,8 @@ namespace HealthInCube_BackEnd.Services
         private IList<TerminSprievodkaDto> PrepareTerminyByDay(PracovnaDoba pracovnaDoba, int averageTimePerPatient)
         {
             IList<TerminSprievodkaDto> terminSprievodkas = new List<TerminSprievodkaDto>();
-            if (pracovnaDoba == null)
-            {
-                return _terminy;
-            }
             var lastResultedTimeinMinutes = pracovnaDoba.PracDobaOd.TotalMinutes;
+
             while (lastResultedTimeinMinutes < pracovnaDoba.PracDobaDo.TotalMinutes)
             {
                 var resultOfnextTermin = lastResultedTimeinMinutes + averageTimePerPatient;
@@ -88,7 +85,6 @@ namespace HealthInCube_BackEnd.Services
                 }
             }
             _terminy = terminSprievodkas;
-
             return _terminy;
         }
     }

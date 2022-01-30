@@ -7,6 +7,7 @@ using HealthInCube_BackEnd.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace HealthInCube_BackEnd.Controllers
@@ -53,6 +54,10 @@ namespace HealthInCube_BackEnd.Controllers
         {
             PracovnaDoba pracovnaDoba =
                await _pracovnaDobaRepository.GetPracovnaDobaToDateAsync(sprievodkaCreate.IdLekar, sprievodkaCreate.TerminDatum.DayOfWeek);
+            if (pracovnaDoba == null)
+            {
+                return Ok(false);
+            }
             int averageTimePerPatient = await _lekarRepository.GetAverageTimePerPatientAsync(sprievodkaCreate.IdLekar);
 
             _appointmentSchedulerService.CreateAppointmentSchedulerByDay(
@@ -70,10 +75,9 @@ namespace HealthInCube_BackEnd.Controllers
         /// Get appointmens in current week
         /// </summary>
         [HttpPost("create")]
-        public async Task<ActionResult<SprievodkaDto>> CreateAppointmentByDoctor([FromBody] SprievodkaCreate sprievodkaCreate)
+        public async Task<IActionResult> CreateAppointmentByDoctor([FromBody] SprievodkaCreate sprievodkaCreate)
         {
             // enum from microsoft 0 -> Nedela
-
             PracovnaDoba pracovnaDoba = 
                 await _pracovnaDobaRepository.GetPracovnaDobaToDateAsync(sprievodkaCreate.IdLekar, sprievodkaCreate.TerminDatum.DayOfWeek);
             int averageTimePerPatient = await _lekarRepository.GetAverageTimePerPatientAsync(sprievodkaCreate.IdLekar);
@@ -102,7 +106,7 @@ namespace HealthInCube_BackEnd.Controllers
 
                 if (await _sprievodkaRepository.SaveAllAsync())
                 {
-                    return Ok(sprievodka);
+                    return StatusCode((int)HttpStatusCode.Created);
                 }
             }
 

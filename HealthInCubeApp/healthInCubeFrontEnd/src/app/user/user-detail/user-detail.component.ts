@@ -48,9 +48,10 @@ export class UserDetailComponent implements OnInit {
 
    getLastActive(poslednePrihlasenie: Date) {
     const userDateLastActive = new Date(poslednePrihlasenie);
-    var userTimezoneOffset = userDateLastActive.getTimezoneOffset() * 60000;
-    const localTime = new Date(userDateLastActive.getTime() - (-userTimezoneOffset));
-    return localTime;
+    // var userTimezoneOffset = userDateLastActive.getTimezoneOffset() * 60000;
+    // const localTime = new Date(userDateLastActive.getTime() - (-userTimezoneOffset));
+    // console.log(localTime);
+    return userDateLastActive;
   }
 
   isPacient(user: Pouzivatel) {

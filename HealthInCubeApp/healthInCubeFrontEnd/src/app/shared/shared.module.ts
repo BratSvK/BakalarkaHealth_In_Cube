@@ -20,11 +20,13 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { HasFocusDirective } from '../_directives/has-focus.directive';
 
 
 @NgModule({
   declarations: [
     HasRoleDirective,
+    HasFocusDirective,
     NavUserToolboxComponent,
     UserDetailComponent,
     PhotoEditorComponent,
@@ -55,6 +57,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
     BsDatepickerModule,
     PhotoEditorComponent,
     HasRoleDirective,
+    HasFocusDirective,
     FontAwesomeModule,
     CollapseModule,
     BsDropdownModule,

@@ -22,13 +22,14 @@
           <label for="BID">
             Pacient rodné číslo
           </label>
-          <input type="text" 
-                class="form-control" 
-               
-                id="BID" 
-                placeholder="etc. 9811244168" 
-                formControlName="birthIDNumber"
-                [class.is-invalid]='(notFound$ | async)'>
+          <input hasFocus="true"
+                 type="text" 
+                 class="form-control" 
+                 id="BID" 
+                 placeholder="etc. 9811244168" 
+                 formControlName="birthIDNumber"
+                 [class.is-invalid]='(notFound$ | async)'
+                >
                 
             <div *ngIf='(notFound$ | async)'
                   class="invalid-feedback">
@@ -85,7 +86,7 @@
                   formControlName="idLekar">
             <option [disabled]="true" 
                     [selected]="true" 
-                    value="">Vyber si typ lekára...
+                    value="">Vyber si lekára...
             </option>
             <option [ngValue]="doc.idLekar" 
                     *ngFor="let doc of doctorsBySelectedType">
@@ -100,15 +101,15 @@
               Termín
             </label>
             <input type="text" 
-                  class="form-control" 
-                  id="terminDatum" 
-                  formControlName="terminDatum"
-                  placeholder="Vyber si deň" 
-                  [bsConfig]="{containerClass: 'theme-blue'}"
-                  bsDatepicker
-                  placement="right"
-                  [class.is-invalid]='!(isAvailable$ | async) && sprievodkaForm.controls.terminDatum.touched'
-                  [class.is-valid]='(isAvailable$ | async) && sprievodkaForm.controls.terminDatum.touched'>
+                   class="form-control" 
+                   id="terminDatum" 
+                   formControlName="terminDatum"
+                   placeholder="Vyber si deň" 
+                   [bsConfig]="{containerClass: 'theme-blue'}"
+                   bsDatepicker
+                   placement="right"
+                   [class.is-invalid]='!(isAvailable$ | async) && sprievodkaForm.controls.terminDatum.touched'
+                   [class.is-valid]='(isAvailable$ | async) && sprievodkaForm.controls.terminDatum.touched'>
              <div *ngIf='!(isAvailable$ | async); else isAvailable'
                   class="invalid-feedback">
               Nieje voľný termín! Prosím vyberte iný deň.
