@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Lekar } from 'src/app/models/lekar';
+import { Lekar } from 'src/app/models/lekar/lekar';
 import { DomSanitizer } from '@angular/platform-browser';
 import { extractFotoFromApi } from 'src/app/shared/foto-extract';
 

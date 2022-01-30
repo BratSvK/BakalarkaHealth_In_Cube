@@ -1,8 +1,27 @@
 <div class="card mb-4">
     <div class="card-image-wrapper">
-        <img [src]="photo || './assets/user.png'" alt="{{patient.fullName}}" class="card-img-top" />
+        <img [src]="photo || './assets/user.png'" 
+             alt="{{patient.fullName}}" 
+             class="card-img-top" />
         <ul class="list-inline member-icons animate text-center">
-            <li class="list-inline-item"><button class="btn btn-primary medicIcon" routerLink='/members/{{patient.idPacient}}'><fa-icon  [icon]="medicamentRecord"></fa-icon></button></li>
+            <li class="list-inline-item">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button class="btn btn-primary medicIcon" 
+                                routerLink='/members/{{patient.idPacient}}'>
+                            <fa-icon [icon]="medicamentRecord">
+                            </fa-icon>
+                       </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button class="btn btn-primary medicIcon" 
+                                (click)="openSprievodkaModal()">
+                            <fa-icon [icon]="sprievodkaCreate">
+                            </fa-icon>
+                       </button>
+                    </div>
+                </div>
+            </li>
         </ul>
     </div>
     <div class="card-body p-1">

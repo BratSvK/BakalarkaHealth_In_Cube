@@ -2,7 +2,9 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PacientCard } from 'src/app/models/pacientCard';
 import { extractFotoFromApi } from 'src/app/shared/foto-extract';
-import { faNotesMedical } from '@fortawesome/free-solid-svg-icons';
+import { faNotesMedical, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { SprievodkaModalComponent } from '../../sprievodka/sprievodka-modal/sprievodka-modal.component';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-pacient-card',
@@ -12,9 +14,12 @@ import { faNotesMedical } from '@fortawesome/free-solid-svg-icons';
 export class PacientCardComponent implements OnInit {
   @Input() patient: PacientCard;
 
-  medicamentRecord = faNotesMedical;
+  bsModalRef: BsModalRef;
 
-  constructor(private sanitizer: DomSanitizer) {}
+  medicamentRecord = faNotesMedical;
+  sprievodkaCreate = faEdit;
+
+  constructor(private sanitizer: DomSanitizer, private modalService: BsModalService) {}
 
   ngOnInit(): void {}
 
@@ -23,5 +28,28 @@ export class PacientCardComponent implements OnInit {
       return extractFotoFromApi(this.patient.fotka, this.sanitizer);
     }
     return null;
+  }
+
+  openSprievodkaModal() {
+    const config = {
+      class: 'modal-dialog-centered',
+      initialState: {
+        list: [
+          'Open a modal with component',
+          'Pass your data',
+          'Do something else',
+          '...'
+        ],
+        title: 'Sprievodka',
+        closeBtbName: 'Close',
+        defaultSprievodkaData: {
+          idPacient: this.patient.idPacient,
+          patientName: this.patient.fullName,
+          birthIDNumber: this.patient.bid.replace('/', '')
+        }
+      }
+    };
+
+    this.bsModalRef = this.modalService.show(SprievodkaModalComponent, config);
   }
 }

@@ -13,14 +13,24 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HealthInCube_BackEnd.Data
 {
+    /// <summary>
+    /// Repo for sprievodky.
+    /// </summary>
     public class SprievodkaRepository : ISprievodkaRepository
     {
         private readonly HealthInCubeContext _context;
         private readonly IMapper _mapper;
+        private readonly IAppointmentSchedulerService _appointmentSchedulerService;
 
-        public SprievodkaRepository(HealthInCubeContext context, IMapper mapper)
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="mapper"></param>
+        public SprievodkaRepository(HealthInCubeContext context, IMapper mapper, IAppointmentSchedulerService appointmentSchedulerService)
         {
             _mapper = mapper;
+            _appointmentSchedulerService = appointmentSchedulerService;
             _context = context;
         }
 
@@ -45,7 +55,6 @@ namespace HealthInCube_BackEnd.Data
                                 .ProjectTo<SprievodkaDto>(_mapper.ConfigurationProvider)
                                 .ToListAsync();
         }
-
 
         public void InsertItem(Sprievodka item)
         {
@@ -73,6 +82,12 @@ namespace HealthInCube_BackEnd.Data
             return null;
         }
 
+        /// <summary>
+        /// Get sprievodka by week.
+        /// Client select in calendar current week.
+        /// </summary>
+        /// <param name="sprievodkaParams">Client params.</param>
+        /// <returns></returns>
         public async Task<IEnumerable<SprievodkaDto>> GetSprievodkyByWeek(SprievodkaParams sprievodkaParams)
         {
             var query = _context.Sprievodkas.AsQueryable();
@@ -93,9 +108,28 @@ namespace HealthInCube_BackEnd.Data
             return await query.ProjectTo<SprievodkaDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
         }
 
+        /// <summary>
+        /// Get number of last termin in paricular day.
+        /// </summary>
+        /// <param name="idLekar">Doctor id.</param>
+        /// <param name="dayOfYear">Day of year.</param>
+        /// <returns></returns>
         public async Task<int> GetLastTerminCountInDayPerDoctorAsync(decimal idLekar, int dayOfYear)
         {
             return await _context.VystavenyTermins.CountAsync(t => t.IdLekar == idLekar && t.DayOfYear == dayOfYear);
+        }
+
+        /// <summary>
+        /// Check for availability in particular day.
+        /// </summary>
+        /// <param name="idLekar">Doctor id.</param>
+        /// <param name="dayOfYear">Day of year.</param>
+        /// <returns>true/false</returns>
+        public async Task<bool> CheckIsAvailableTerminInDayOfYear(decimal idLekar, int dayOfYear)
+        {
+            var maxPocet = _appointmentSchedulerService.GetMaxNumberOfAppointmentsPerDay();
+            var pocetVDni = await GetLastTerminCountInDayPerDoctorAsync(idLekar, dayOfYear);
+            return (maxPocet - pocetVDni) > 0;
         }
     }
 }

@@ -164,15 +164,22 @@ order by v."Id";
 
 select * from sprievodka;
 
+select * from vystaveny_termin;
+
+select * from zdrav_karta_povolenia;
+
+select * from typ_lekara;
+
 delete from sprievodka;
 
 delete from vystaveny_termin;
+
+delete from zdrav_karta_povolenia;
 commit;
 
 
 delete from sprievodka;
 commit;
-
 
 drop sequence seqTermin_ID;
 
@@ -189,8 +196,57 @@ commit;
  end;
 /
 
+-- get pacient by bid
+----------------------
+select p.id_pacient, u."Meno" from  "Users" u
+join pacient p on (p.id_pouzivatel = u."Id")
+where u."RodCislo" = '621124/7336';
 
+select * from  "Users" u;
+
+update "Users" u
+set u."RodCislo" = '621124/7336'
+where u."Id" = 4;
+
+commit;
+
+ SELECT "p"."ID_PACIENT" "IdPacient", "u"."Meno" "Name"
+      FROM "PACIENT" "p"
+      INNER JOIN "Users" "u" ON "p"."ID_POUZIVATEL" = "u"."Id"
+      WHERE "u"."RodCislo" = '621124/7336'
+      FETCH FIRST 2 ROWS ONLY;
  
  
+select * from typ_lekara;
  
+select * from atestacie_lekar;
+
+desc nemocnica;
+desc oddelenie;
+
+select us."Meno" || ' ' || us."Priezvisko" as Meno, m.nazov as Mesto from lekar l 
+join atestacie_lekar atest on (atest.id_lekar = l.id_lekar)
+join "Users" us on (us."Id" = l.id_pouzivatel)
+join oddelenie od on (od.id_oddel = l.id_oddel)
+join nemocnica nem on (nem.id_nem = od.id_nem)
+join mesto m on (m.id_mesto = nem.id_mesto)
+where atest.id_typ = 44;
+
+
+ SELECT "u"."Meno", "u"."Priezvisko", "l"."ID_LEKAR"
+      FROM "LEKAR" "l"
+      INNER JOIN "Users" "u" ON "l"."ID_POUZIVATEL" = "u"."Id";
+
+select * from "Users";
+
+update "Users" u
+set u."Meno" = 'MUDr. Peter'
+where u."Id" = 2;
+      
+commit;
+
+------ zistiù poceù voæn˝ch termÌnov 
+
+
+select * from prac_doba;
  

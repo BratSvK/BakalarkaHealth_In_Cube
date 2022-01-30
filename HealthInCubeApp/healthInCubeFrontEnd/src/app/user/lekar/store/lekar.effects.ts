@@ -6,9 +6,9 @@ import { Store } from "@ngrx/store";
 import { ToastrService } from "ngx-toastr";
 import { of } from "rxjs";
 import { catchError, map, switchMap, withLatestFrom } from "rxjs/operators";
-import { Lekar } from "src/app/models/lekar";
+import { Lekar } from "src/app/models/lekar/lekar";
 import { Ziadanka } from "src/app/models/ziadanka";
-import { LekarIdService } from "src/app/_service/lekar.service";
+import { LekarIdService } from "src/app/_service/lekar-id.service";
 import { AppState } from "src/app/_store/models/AppState";
 import { environment } from "src/environments/environment";
 

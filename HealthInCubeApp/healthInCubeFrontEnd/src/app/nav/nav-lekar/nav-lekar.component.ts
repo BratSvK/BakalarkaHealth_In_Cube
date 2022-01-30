@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { faStethoscope, faUserCheck, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faStethoscope, faUserCheck, faUsers, faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { map, take } from 'rxjs/operators';
 import { Pouzivatel } from 'src/app/models/pouzivatel';
+import { SprievodkaModalComponent } from 'src/app/user/lekar/sprievodka/sprievodka-modal/sprievodka-modal.component';
 import { AppState } from 'src/app/_store/models/AppState';
-
 
 
 @Component({
@@ -13,6 +14,7 @@ import { AppState } from 'src/app/_store/models/AppState';
   styleUrls: ['./nav-lekar.component.css']
 })
 export class NavLekarComponent implements OnInit {
+  bsModalRef: BsModalRef;
 
   isCollapsed = false;
   user: Pouzivatel;
@@ -22,8 +24,9 @@ export class NavLekarComponent implements OnInit {
   users = faUsers;
   userCheck = faUserCheck;
   stethoscope = faStethoscope;
+  arrowDown = faChevronDown;
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>, private modalService: BsModalService) { }
 
   ngOnInit(): void {
     this.store.select('auth').pipe(take(1),map(resData => {
@@ -33,9 +36,15 @@ export class NavLekarComponent implements OnInit {
     });
   }
 
+  openSprievodkaModal() {
+    const config = {
+      class: 'modal-dialog-centered',
+      initialState: {
+        title: 'Sprievodka',
+        closeBtbName: 'Close'
+      }
+    };
 
-
-
-
-
+    this.bsModalRef = this.modalService.show(SprievodkaModalComponent, config);
+  }
 }

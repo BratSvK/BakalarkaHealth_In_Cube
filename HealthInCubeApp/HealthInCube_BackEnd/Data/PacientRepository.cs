@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using HealthInCube_BackEnd.DTOs;
+using HealthInCube_BackEnd.DTOs.Pacient;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -84,7 +83,7 @@ namespace HealthInCube_BackEnd.Data
             return await _context.Pacient.AnyAsync(p => p.IdPouzivatel == userId);
         }
 
-        public async Task<Pacient> GetPacient(decimal patientId)
+        public async Task<Pacient> GetPacientById(decimal patientId)
         {
             return await _context.Pacient.Include(p => p.ZdravotnaKartum).SingleOrDefaultAsync(p => p.IdPacient == patientId);
         }
@@ -100,6 +99,20 @@ namespace HealthInCube_BackEnd.Data
                 .Include(p => p.ZdravotnaKartum)
                 .Include(p => p.ZdravPoistenies)
                 .SingleOrDefaultAsync(p => p.IdPacient == itemId);
+        }
+
+        public async Task<PacientSearchDto> GetPacientByBidAsync(string patentBid)
+        {
+            return await _context.Pacient
+                .Include(u => u.IdPouzivatelNavigation)
+                .Where(p => p.IdPouzivatelNavigation.RodCislo == patentBid)
+                .Select(pat => new PacientSearchDto
+                {
+                    IdPacient = pat.IdPacient,
+                    FullName = $"{pat.IdPouzivatelNavigation.Meno} {pat.IdPouzivatelNavigation.Priezvisko}"
+                })
+                .AsNoTracking()
+                .SingleOrDefaultAsync();
         }
     }
 }
