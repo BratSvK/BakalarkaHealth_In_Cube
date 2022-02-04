@@ -8,6 +8,7 @@ import { NavLekarComponent } from "../../nav/nav-lekar/nav-lekar.component";
 import { LekarComponent } from "./lekar.component";
 import { PacientCardComponent } from './pacienti-list/pacient-card/pacient-card.component';
 import { SprievodkaModalComponent } from './sprievodka/sprievodka-modal/sprievodka-modal.component';
+import { UserDetailModule } from "../user-detail/user-detail.module";
 
 @NgModule({
     declarations: [   
@@ -21,7 +22,8 @@ import { SprievodkaModalComponent } from './sprievodka/sprievodka-modal/sprievod
     ],
     imports: [
         SharedModule, 
-        LekarRoutingModule
+        LekarRoutingModule,
+        UserDetailModule
     ]
    })
   export class LekarModule {}

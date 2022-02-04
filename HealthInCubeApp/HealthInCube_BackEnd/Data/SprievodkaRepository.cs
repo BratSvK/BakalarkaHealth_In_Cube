@@ -79,7 +79,7 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<Sprievodka> GetOriginItemAsync(decimal userId)
         {
-            return null;
+           return  await Task.FromResult<Sprievodka>(null);
         }
 
         /// <summary>
@@ -87,6 +87,7 @@ namespace HealthInCube_BackEnd.Data
         /// Client select in calendar current week.
         /// </summary>
         /// <param name="sprievodkaParams">Client params.</param>
+        /// 
         /// <returns></returns>
         public async Task<IEnumerable<SprievodkaDto>> GetSprievodkyByWeek(SprievodkaParams sprievodkaParams)
         {

@@ -1,0 +1,15 @@
+<div class="centerLayout">
+    
+    <ejs-schedule 
+        #scheduleObj
+        [eventSettings]="sprievodkyList$ | async"
+        (selectedDateChange)='showSprievodkyInSelectedWeek()'>
+        <e-views> 
+            <e-view 
+                option="Week" 
+                startHour="06:00" 
+                endHour="20:00">
+            </e-view>
+        </e-views>
+    </ejs-schedule>
+</div>

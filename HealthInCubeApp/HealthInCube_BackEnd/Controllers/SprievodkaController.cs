@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using HealthInCube_BackEnd.DTOs.Lekar.Sprievodka;
+﻿using HealthInCube_BackEnd.DTOs.Lekar.Sprievodka;
 using HealthInCube_BackEnd.DTOs.Lekar.Sprievodka.Termin;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Helpers;
@@ -15,20 +14,17 @@ namespace HealthInCube_BackEnd.Controllers
     [Authorize(Roles = "Lekar,Pacient")]
     public class SprievodkaController : BaseApiController
     {
-        private readonly IMapper _mapper;
         private readonly ISprievodkaRepository _sprievodkaRepository;
         private readonly IPracovnaDobaRepository _pracovnaDobaRepository;
         private readonly ILekarRepository _lekarRepository;
         private readonly IAppointmentSchedulerService _appointmentSchedulerService;
 
         public SprievodkaController(
-            IMapper mapper, 
             ISprievodkaRepository sprievodkaRepository, 
             IPracovnaDobaRepository pracovnaDobaRepository,
             ILekarRepository lekarRepository,
             IAppointmentSchedulerService appointmentSchedulerService)
         {
-            _mapper = mapper;
             _sprievodkaRepository = sprievodkaRepository;
             _pracovnaDobaRepository = pracovnaDobaRepository;
             _lekarRepository = lekarRepository;
@@ -43,6 +39,17 @@ namespace HealthInCube_BackEnd.Controllers
         {
             var sprievodkyByWeek = await _sprievodkaRepository.GetSprievodkyByWeek(sprievodkaParams);
             
+            return Ok(sprievodkyByWeek);
+        }
+
+        /// <summary>
+        /// Get appointmens in current week
+        /// </summary>
+        [HttpGet()]
+        public async Task<ActionResult<IEnumerable<SprievodkaDto>>> GetAllAppointments([FromQuery] SprievodkaParams sprievodkaParams)
+        {
+            var sprievodkyByWeek = await _sprievodkaRepository.GetSprievodkyByWeek(sprievodkaParams);
+
             return Ok(sprievodkyByWeek);
         }
 

@@ -35,7 +35,7 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<bool> EntityExists(decimal itemId)
         {
-            return false;
+            return await Task.FromResult(false);
         }
 
         public async Task<IEnumerable<PracovnaDobaDto>> GetItemsAsync()
@@ -69,7 +69,7 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<PracovnaDoba> GetOriginItemAsync(decimal userId)
         {
-            return null;
+            return await Task.FromResult<PracovnaDoba>(null);
         }
 
         public async Task<PracovnaDoba> GetPracovnaDobaToDateAsync(decimal idLekar, DayOfWeek den)

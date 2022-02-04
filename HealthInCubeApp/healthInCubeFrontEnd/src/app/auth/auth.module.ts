@@ -17,8 +17,7 @@ import { PractitionerInfoComponent } from './register/practitioner-info/practiti
         ReactiveFormsModule,
         SharedModule,
         AuthRoutingModule,
-        NgAnimatedBorderModule,
-        
+        NgAnimatedBorderModule
     ]
     
 })
