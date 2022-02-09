@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Castle.Core.Internal;
 using HealthInCube_BackEnd.DTOs;
+using HealthInCube_BackEnd.DTOs.Pacient.Activated;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -51,11 +52,18 @@ namespace HealthInCube_BackEnd.Controllers
         }
 
         [HttpGet("{userId}/activated")]
-        public async Task<ActionResult<bool>> ChecIfIsActivated(decimal userId)
+        public async Task<ActionResult<ActivatedPatientDto>> ChecIfIsActivated(decimal userId)
         {
             var isActivated = await _pacientRepository.IsActivated(userId);
+            if (isActivated == null)
+            {
+                return Ok(new ActivatedPatientDto
+                {
+                    IdPacient = -1,
+                    IsActivated = false
+                });
+            }
             return Ok(isActivated);
         }
-
     }
 }

@@ -1,9 +1,10 @@
+import { DefaultActivatedPatientModel } from "src/app/models/pacient/activatedPatient";
 import { PatientState } from "./modelStore/PatientState";
 import * as PatientActionsBundle from './patient.actions';
 
 // only state is a user 
 const initialState: PatientState = {
-    isActivated: false
+    activatedPatient: new DefaultActivatedPatientModel()
 };
 
 export function patientReducer(state: PatientState = initialState, action: PatientActionsBundle.PatientActions) {
@@ -11,12 +12,12 @@ export function patientReducer(state: PatientState = initialState, action: Patie
         case PatientActionsBundle.SET_IS_ACTIVATED:
             return {
                 ...state,
-                isActivated: action.payload
+                activatedPatient: action.payload
             }
         case PatientActionsBundle.RESET_PATIENT:
                 return {
                     ...state,
-                    isActivated: false
+                    activatedPatient: new DefaultActivatedPatientModel()
                   };
         default:
             return state;

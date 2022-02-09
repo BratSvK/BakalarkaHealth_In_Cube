@@ -67,7 +67,7 @@ export class PatientService {
 
   checkIsActiveted$() : Observable<boolean> {
     return this.store.select('patient').pipe(map(patientData => {
-      return patientData.isActivated
+      return patientData.activatedPatient.isActivated
     }));
   } 
   /*

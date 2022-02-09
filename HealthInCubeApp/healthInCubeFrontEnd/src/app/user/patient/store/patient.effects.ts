@@ -4,6 +4,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { ToastrService } from "ngx-toastr";
 import { of } from "rxjs";
 import { catchError, map, switchMap } from "rxjs/operators";
+import { ActivatedPatient } from "src/app/models/pacient/activatedPatient";
 import { environment } from "src/environments/environment";
 import * as PatientActionsBundle from './patient.actions';
 
@@ -17,7 +18,7 @@ export class PatientEffects {
     this.actions$.pipe(
         ofType(PatientActionsBundle.GET_IS_ACTIVATED),
         switchMap((userId: PatientActionsBundle.IsActivated) => {
-            return this.http.get<boolean>(fetchUrl + `pacient/${userId.payload}/activated`)
+            return this.http.get<ActivatedPatient>(fetchUrl + `pacient/${userId.payload}/activated`)
         }),
         map((isAcitvated) => {
             return new PatientActionsBundle.SetIstActivated(isAcitvated);

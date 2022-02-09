@@ -35,6 +35,13 @@ export function lekarReducer(state: LekarState = initialLekarState, action: Leka
                     return ziadanka.idUser !== action.payload.idUser;
                 })
             }
+
+        case LekarActionsBundle.RESET_PRACTITIONER:
+                return {
+                  ...state,
+                  practitioner: null,
+                  ziadanky: []
+                };
             
         default:
             return state;

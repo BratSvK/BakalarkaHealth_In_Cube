@@ -1,4 +1,5 @@
 import { Action } from "@ngrx/store";
+import { ActivatedPatient } from "src/app/models/pacient/activatedPatient";
 
 export const GET_IS_ACTIVATED = '[Patient] Is activated';
 export const SET_IS_ACTIVATED = '[Patient] set is activated';
@@ -19,7 +20,7 @@ export class IsActivated implements Action {
 export class SetIstActivated implements Action {
     readonly type = SET_IS_ACTIVATED
 
-    constructor(public payload: boolean) {}
+    constructor(public payload: ActivatedPatient) {}
 }
 
 export type PatientActions = IsActivated | SetIstActivated | ResetPatient;

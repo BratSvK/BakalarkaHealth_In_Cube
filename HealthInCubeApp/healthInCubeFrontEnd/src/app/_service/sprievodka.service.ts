@@ -26,20 +26,15 @@ export class SprievodkaService {
     let params = new HttpParams();
     params = params.append('idLekar', idLekar.toString());
     params = params.append('terminDatum', termin.toString());
-
     return this.http.get<boolean>(this.baseUrl + `${SPRIEVODKA_API}/availability`, {params: params});
   }
 
   getSprievodkyByParams(sprievodkaParams: SprievodkaParams): Observable<SprievodkaModel[]> {
-
     const keyFromParams = extractKeyFromParams(sprievodkaParams);
     var response = this.sprievodkaCache.get(keyFromParams);
-    console.log(response);
-
     if (response) {
       return of(response);
     }
-    
     let params = new HttpParams();
 
     if (sprievodkaParams.idLekar) {
@@ -50,7 +45,6 @@ export class SprievodkaService {
       params = params.append('idPacient', sprievodkaParams.idPacient.toString());
     }
     params = params.append('startWeekBy', sprievodkaParams.startWeekBy.toString());
-
     return this.http.get<SprievodkaModel[]>(this.baseUrl + `${SPRIEVODKA_API}/byWeek`, {params: params})
     .pipe(
       map(response => {

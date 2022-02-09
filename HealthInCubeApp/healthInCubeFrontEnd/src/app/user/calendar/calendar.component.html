@@ -1,15 +1,66 @@
-<div class="centerLayout">
-    
-    <ejs-schedule 
-        #scheduleObj
-        [eventSettings]="sprievodkyList$ | async"
-        (selectedDateChange)='showSprievodkyInSelectedWeek()'>
-        <e-views> 
-            <e-view 
-                option="Week" 
-                startHour="06:00" 
-                endHour="20:00">
-            </e-view>
-        </e-views>
-    </ejs-schedule>
+<ng-container *ngIf="(isActivated$ | async)">
+    <div class="centerLayout">
+        <div class="datepicker">
+            <mat-form-field 
+                class="myInput" 
+                appearance="none">
+              <mat-icon 
+                class="beforeArrow" 
+                matPrefix 
+                (click)="subtractWeek()">keyboard_arrow_left</mat-icon>
+              <input 
+                matInput 
+                class="myInput"
+                [bsConfig]="{containerClass: 'theme-blue', 
+                             isAnimated: true,
+                             dateInputFormat: 'DD-MM-YYYY',
+                             rangeInputFormat: 'DD-MM-YYYY' }"
+                bsDaterangepicker
+                #daterangepicker="bsDaterangepicker"
+                placement="bottom"  
+                [formControl]="date" 
+                (ngModelChange)="initSprievodky()">
+              <mat-icon 
+                class="afterArrow" 
+                matSuffix 
+                (click)="addWeek()">keyboard_arrow_right</mat-icon>
+            </mat-form-field>
+          </div>
+          <div style="overflow-x:auto;">
+          <table class="table table-bordered">
+            <tbody>
+                <tr *ngFor="let day of weekArray ; index as i" >
+                    <th 
+                     [ngStyle]="{'color':'black', 'padding-left': '5px', 'font-size': '18px'}"
+                      class="nameColumn" 
+                      scope="row">
+                      {{ day }}
+                    </th>
+
+                    <td *ngFor="let hour of hours ; index as h"  
+                        scope="col"
+                        class="sprievodkaInHour">
+
+                    <div class="example-box">
+                        {{getCurrentSprievodka(h,i)}}
+              </div>
+                    </td>
+                </tr>
+            </tbody>
+            <thead>
+                <tr>
+                  <th 
+                    scope="col" 
+                    class="nameColumnHead">
+                </th>
+                  <th *ngFor="let hour of hours ; index as h" 
+                      scope="col" 
+                      class="hoursHead">
+                      {{hour}}
+                    </th>
+                </tr>
+              </thead>
+          </table>
+    </div>
 </div>
+</ng-container>

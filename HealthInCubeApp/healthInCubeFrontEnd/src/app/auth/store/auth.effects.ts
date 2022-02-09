@@ -18,6 +18,7 @@ import { Photo } from "src/app/models/photo";
 import { handleError } from "src/app/shared/auth-common";
 import { LekarIdService } from "src/app/_service/lekar-id.service";
 import { PatientService } from "src/app/_service/patient.service";
+import * as LekarActionsBundle from '../../user/lekar/store/lekar.actions';
 
 const fetchUrl = environment.apiUrl; // ....../api/
 
@@ -79,10 +80,11 @@ export class AuthEffects {
           this.patientService.clearPatientCache();
           this.router.navigate(['/auth']);
         }),
-        map(() => {
-          return new UserDetailActions.ResetUserDetail();
-        })
-      ),
+        switchMap(res => [
+          new UserDetailActions.ResetUserDetail(),
+          new LekarActionsBundle.ResetPractitioner()
+        ])
+      )
   );
 
   autoLogin = createEffect(() =>

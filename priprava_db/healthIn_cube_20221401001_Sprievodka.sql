@@ -5,6 +5,9 @@ desc zdravotna_karta;
 desc "UserLogins";
 --- pridanie zoznam dni 
 select * from zoznam_den;
+commit;
+insert into "UserRoles" u
+values(7,2);
 
 insert into zoznam_den 
  values(0,'Nedela');
@@ -145,7 +148,8 @@ where b.id_bydliska = 28;
 commit;
  
 desc sprievodka;
- 
+desc zdrav_karta_povolenia;
+desc vystaveny_termin;
 -- ked sa vytvori sprievodka pridat do termin tabulky zaznam na cislenik 
 create or replace trigger trig_zapis_termin
 after insert on SPRIEVODKA
@@ -153,8 +157,13 @@ for each row
 begin
     insert into vystaveny_termin("IdPacient", "IdLekar", "DayOfYear")
      values(:new."IdPacient", :new."IdLekar", to_number(TO_CHAR(:new."TerminOd", 'DDD')));
+     
+     insert into zdrav_karta_povolenia(Id_Lekar, Id_Pacient,OD,DO)
+        values(:new."IdLekar", :new."IdPacient",:new."TerminOd", :new."TerminDo");
 end;
 /
+
+
 desc vystaveny_termin;
 
 SELECT to_number(TO_CHAR(SYSDATE, 'DD')) from DUAL;
@@ -176,6 +185,8 @@ delete from vystaveny_termin;
 
 delete from zdrav_karta_povolenia;
 commit;
+
+
 
 
 delete from sprievodka;
@@ -249,4 +260,9 @@ commit;
 
 
 select * from prac_doba;
+
+select * from zoznam_den;
+
+
+
  
