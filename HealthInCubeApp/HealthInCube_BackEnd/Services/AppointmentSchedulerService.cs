@@ -1,4 +1,4 @@
-﻿using HealthInCube_BackEnd.DTOs.Lekar.Sprievodka.Termin;
+﻿using HealthInCube_BackEnd.DTOs.Sprievodka.Termin;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Helpers;
 using HealthInCube_BackEnd.Interfaces;

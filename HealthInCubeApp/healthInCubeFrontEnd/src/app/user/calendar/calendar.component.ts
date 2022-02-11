@@ -1,12 +1,12 @@
 import { DatePipe } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { EventSettingsModel, ScheduleComponent } from '@syncfusion/ej2-angular-schedule';
 import * as _moment from 'moment';
 import { Observable } from 'rxjs';
-import { SprievodkaModel } from 'src/app/models/sprievodka/sprievodkaModel';
+import { map, switchMap } from 'rxjs/operators';
+import { SprievodkaLekarModel, SprievodkaModel, SprievodkaPacientModel } from 'src/app/models/sprievodka/sprievodkaModel';
 import { SprievodkaParams } from 'src/app/models/sprievodka/sprievodkaParams';
 import { LekarService } from 'src/app/_service/lekar.service';
 import { PatientService } from 'src/app/_service/patient.service';
@@ -23,15 +23,15 @@ const moment = _moment;
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit,OnDestroy {
-  @ViewChild("scheduleObj", { static: false }) scheduleObj: ScheduleComponent;
 
   selectedDayInWeek = new FormControl();
   sprievodkyList: SprievodkaModel[];
   currentView: any;
   weekArray: string[] = [];
   isActivated$: Observable<boolean>;
+  lekarId$: Observable<number>;
   hours: Array<number>;
-  public eventSettings: EventSettingsModel = {};
+  isPatient: boolean = false;
   currentDate = new Date(moment().isoWeekday(1).startOf('isoWeek').toDate());
 
   // Datepicker takes `Moment` objects instead of `Date` objects.
@@ -58,6 +58,7 @@ export class CalendarComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     if (this.router.url.split('/')[1] === 'patient')
     this.isActivated$ = this.patientService.checkIsActiveted$();
+    this.lekarId$ = this.lekarService.getLoginDoctorId$();
     this.getInitialInfo();
   }
 
@@ -92,38 +93,49 @@ export class CalendarComponent implements OnInit,OnDestroy {
     let urlSegments = this.router.url.split('/');
     let userId = +urlSegments[2];
     let sprievodkaParams = this.buildSprievodkaParams();
-    console.log(sprievodkaParams);
 
-    if (sprievodkaParams) {
-      // tu potrebujem dostat bud id lekar alebo id patient
-    // if (userId) {
-    //   if (urlSegments[1] === 'patient') {
-    //    this.sprievodkyList$ = this.store.select('patient')
-    //    .pipe(
-    //      map(patientData => {
-    //        return patientData.activatedPatient.idPacient
-    //      }),
-    //      switchMap(patientId => {
-    //        sprievodkaParams.idPacient = patientId;
-    //        return this.sprievodkyService.getSprievodkyByParams(sprievodkaParams);
-    //      })
-    //    );
-    //   } else {
-    //     this.sprievodkyList$ =  this.lekarService.getDoctorIdByUserId()
-    //     .pipe(
-    //       switchMap(doctorId => {
-    //         sprievodkaParams.idLekar = doctorId;
-    //         return this.sprievodkyService.getSprievodkyByParams(sprievodkaParams);
-    //       })
-    //     );
-    //   }
-    // }
+    if (userId && sprievodkaParams) {
+      if (urlSegments[1] === 'patient') {
+       this.subs.sink = this.store.select('patient')
+       .pipe(
+         map(patientData => {
+           return patientData.activatedPatient.idPacient
+         }),
+         switchMap(patientId => {
+           sprievodkaParams.idPacient = patientId;
+           this.isPatient = true;
+           return this.sprievodkyService.getSprievodkyByParams(sprievodkaParams);
+         })
+       ).subscribe(sprievodky => {
+         this.sprievodkyList = sprievodky;
+       });
+      } else {
+        this.subs.sink = this.lekarService.getDoctorIdByUserId()
+        .pipe(
+          switchMap(doctorId => {
+            sprievodkaParams.idLekar = doctorId;
+            this.isPatient = false;
+            return this.sprievodkyService.getSprievodkyByParams(sprievodkaParams);
+          })
+        ).subscribe(sprievodky => {
+          this.sprievodkyList = sprievodky;
+        });
+      }
   }
 }
 
-getCurrentSprievodka(day: number, hour: number) {
-  return "a";
-}
+  getCurrentSprievodka(day: number, hour: number): SprievodkaPacientModel | SprievodkaLekarModel {
+    let sprievodka = this.sprievodkyList?.filter(
+      s => moment(new Date(s.terminOd)).weekday() === day 
+        && moment(new Date(s.terminOd)).hour() === hour)[0];
+    return this.isPatient ? sprievodka as SprievodkaPacientModel : sprievodka as SprievodkaLekarModel;
+  }
+
+  onWheel(event: WheelEvent): void {
+    if (event.deltaY > 0) document.getElementById('table')!.scrollLeft += 55;
+    else document.getElementById('table')!.scrollLeft -= 55;
+    event.preventDefault();
+  }
 
   private createHoursTable(): void {
     this.hours = new Array();
@@ -136,9 +148,7 @@ getCurrentSprievodka(day: number, hour: number) {
     this.weekArray = moment.weekdays();
   }
 
-  
-
- private buildSprievodkaParams() : SprievodkaParams {
+  private buildSprievodkaParams() : SprievodkaParams {
     let sprievodka = new SprievodkaParams();
     const latestDate = this.datepipe.transform(this.date.value[0], 'yyyy-MM-dd');
     sprievodka.startWeekBy = latestDate;

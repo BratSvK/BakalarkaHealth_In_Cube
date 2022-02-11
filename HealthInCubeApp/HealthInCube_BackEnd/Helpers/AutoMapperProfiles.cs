@@ -3,7 +3,8 @@ using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Lekar;
 using HealthInCube_BackEnd.DTOs.Lekar.LekarTyp;
 using HealthInCube_BackEnd.DTOs.Lekar.PracovnaDoba;
-using HealthInCube_BackEnd.DTOs.Lekar.Sprievodka;
+using HealthInCube_BackEnd.DTOs.Pacient;
+using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.Entities;
 using System;
 
@@ -67,6 +68,9 @@ namespace HealthInCube_BackEnd.Helpers
             .ForMember(
                     dest => dest.Pracovisko,
                     opt => opt.MapFrom(src => src.IdOddelNavigation.IdNemNavigation.IdMestoNavigation.Nazov));
+
+            CreateMap<Sprievodka, SprievodkaPacientDto>();
+            CreateMap<Sprievodka, SprievodkaLekarDto>();
         }
     }
 }

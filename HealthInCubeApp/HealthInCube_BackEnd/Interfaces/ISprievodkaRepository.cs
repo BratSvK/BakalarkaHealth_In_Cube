@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using HealthInCube_BackEnd.DTOs.Lekar.Sprievodka;
+using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Helpers;
 

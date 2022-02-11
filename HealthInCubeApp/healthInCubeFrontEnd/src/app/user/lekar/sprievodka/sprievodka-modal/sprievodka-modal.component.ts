@@ -105,7 +105,6 @@ export class SprievodkaModalComponent implements OnInit, OnDestroy {
 
   private buildSprievodkaModalForm(): SprievodkaCreateModelApi {
     let fixedDated = this.fixDate(this.sprievodkaForm.controls.terminDatum.value);
-    console.log(fixedDated);
     this.sprievodkaForm.patchValue({terminDatum: fixedDated});
     return new SprievodkaCreateModelApi(this.sprievodkaForm.value);
   }

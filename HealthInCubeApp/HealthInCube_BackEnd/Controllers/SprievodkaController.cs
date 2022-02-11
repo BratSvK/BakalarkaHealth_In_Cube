@@ -1,5 +1,5 @@
-﻿using HealthInCube_BackEnd.DTOs.Lekar.Sprievodka;
-using HealthInCube_BackEnd.DTOs.Lekar.Sprievodka.Termin;
+﻿using HealthInCube_BackEnd.DTOs.Sprievodka;
+using HealthInCube_BackEnd.DTOs.Sprievodka.Termin;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Helpers;
 using HealthInCube_BackEnd.Interfaces;
@@ -104,7 +104,7 @@ namespace HealthInCube_BackEnd.Controllers
                 {
                     IdPacient = sprievodkaCreate.IdPacient,
                     IdLekar = sprievodkaCreate.IdLekar,
-                    IdTypVysetrenia = sprievodkaCreate.IdTypVysetrenia,
+                    IdTypVysetrenia = sprievodkaCreate.idTypVysetrenia,
                     TerminOd = sprievodkaCreate.TerminDatum.Add(vsetkyTerminyLekar[lastFreeAppointment].TerminOdInHour),
                     TerminDo = sprievodkaCreate.TerminDatum.Add(vsetkyTerminyLekar[lastFreeAppointment].TerminDoInHour)
                 };

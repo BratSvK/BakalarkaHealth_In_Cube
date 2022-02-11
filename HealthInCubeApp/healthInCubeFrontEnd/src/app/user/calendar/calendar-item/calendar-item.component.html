@@ -1,0 +1,15 @@
+<div 
+    class="sprievodkaItem" 
+    [ngStyle]="{'background-color': colorOfSprievodka}"
+    [tooltip]="scheduleTimeInfo"
+    (click)="openSprievodkaItemModal()">
+    <p class="titleOfSprievodka">
+        {{getPopisSprievodka()}}
+    </p>
+</div>
+
+<ng-template #scheduleTimeInfo>
+    Začiatok o: {{sprievodkaItem?.terminOd | date:'shortTime'}}
+    <br>
+    Trvanie: {{getDurationInMinutes()}} min.
+</ng-template>

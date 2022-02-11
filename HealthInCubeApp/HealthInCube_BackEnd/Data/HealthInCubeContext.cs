@@ -1215,6 +1215,11 @@ namespace HealthInCube_BackEnd.Data
                 entity.HasOne(s => s.IdPacientNavigation)
                     .WithMany(p => p.Sprievodkas)
                     .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(s => s.IdTypLekarNavigation)
+                    .WithMany(p => p.Sprievodkas)
+                    .HasForeignKey(s => s.IdTypVysetrenia)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<VystavenyTermin>()

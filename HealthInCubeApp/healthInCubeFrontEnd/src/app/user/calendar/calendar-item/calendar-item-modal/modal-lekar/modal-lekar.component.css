@@ -1,0 +1,39 @@
+.modal-title {
+    font-weight: bold;
+}
+
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-footer {
+    border-top: none;
+}
+
+.modal-body label {
+    color: #666;
+    line-height: 0.2;
+    font-size: 0.88rem;
+}
+.modal-body {
+    padding: 1rem 2rem;
+}
+
+.btn.info {
+    position: relative;
+    top: calc(50% - 10px);
+}
+.some-container .tooltip .tooltip-inner {
+    width: 7em;
+    white-space: normal;
+  }
+
+  input.ng-touched.ng-invalid {
+    border: 2px solid red;
+}
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

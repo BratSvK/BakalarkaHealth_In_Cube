@@ -1,0 +1,83 @@
+<ng-container *ngIf="sprievodka">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">
+        {{title}}
+      </h4>
+      <button type="button" 
+              class="btn-close close pull-right" 
+              aria-label="Close" 
+              (click)="bsModalRef.hide()">
+        <span aria-hidden="true" 
+              class="visually-hidden">&times;</span>
+      </button>
+    </div>
+     <div class="modal-body">
+      <form autocomplete="off" 
+            bg-light >
+  
+        <div class="form-row">
+          <div class="col-md mb-3">
+            <label for="patientName">
+              Pacient
+            </label>
+            <input type="text" 
+                  class="form-control" 
+                  id="patientName" 
+                  [ngModel]="sprievodka.idPacientNavigation?.idPouzivatelNavigation?.fullName"
+                  name="patientName"
+                  readonly>
+          </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md mb-3">
+              <label for="narodenieMesto">
+                Miesto narodenia
+              </label>
+              <input type="text" 
+                    class="form-control" 
+                    id="narodenieMesto" 
+                    [ngModel]=" sprievodka.idPacientNavigation?.zdravotnaKartum?.miestoNarodenia | uppercase"
+                    name="narodenieMesto"
+                    readonly>
+            </div>
+          </div>
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="terminOd">
+                Začiatok vyšetrenia
+              </label>
+              <input type="text" 
+                    class="form-control" 
+                    id="terminOd" 
+                    [ngModel]="sprievodka.terminOd | date:'dd.MM.YYYY HH:mm'"
+                    name="terminOd"
+                    readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="terminDo">
+                    Koniec vyšetrenia
+                  </label>
+                <input type="text" 
+                       class="form-control" 
+                       id="terminDo" 
+                       [ngModel]="sprievodka.terminDo | date:'dd.MM.YYYY HH:mm'"
+                       name="terminDo"
+                       readonly>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" 
+                class="btn btn-default" 
+                (click)="closeSprievodkaForm()">
+                Zavrieť
+        </button>
+        <!-- <button type="button" 
+                class="btn btn-primary" 
+                (click)="createSprievodka()"
+                [disabled]="sprievodkaForm.invalid">
+                Vytvoriť
+        </button> -->
+      </div>
+</ng-container>

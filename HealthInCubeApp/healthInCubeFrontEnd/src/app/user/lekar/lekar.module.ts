@@ -9,6 +9,7 @@ import { LekarComponent } from "./lekar.component";
 import { PacientCardComponent } from './pacienti-list/pacient-card/pacient-card.component';
 import { SprievodkaModalComponent } from './sprievodka/sprievodka-modal/sprievodka-modal.component';
 import { UserDetailModule } from "../user-detail/user-detail.module";
+import { GrantToGeneralPractitionerDirective } from "src/app/_directives/grant-to-general-practitioner.directive";
 
 @NgModule({
     declarations: [   
@@ -18,7 +19,8 @@ import { UserDetailModule } from "../user-detail/user-detail.module";
         PacientiListComponent, 
         VysetreniaComponent, 
         PacientCardComponent, 
-        SprievodkaModalComponent
+        SprievodkaModalComponent,
+        GrantToGeneralPractitionerDirective
     ],
     imports: [
         SharedModule, 

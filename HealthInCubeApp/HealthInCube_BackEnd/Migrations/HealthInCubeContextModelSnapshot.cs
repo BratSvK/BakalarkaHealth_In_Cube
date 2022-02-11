@@ -83,7 +83,7 @@ namespace HealthInCube_BackEnd.Migrations
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.Bydlisko", b =>
                 {
-                    b.Property<decimal>("IdBydliska")
+                    b.Property<decimal?>("IdBydliska")
                         .HasColumnType("NUMBER(38)")
                         .HasColumnName("ID_BYDLISKA");
 
@@ -794,23 +794,20 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Property<decimal>("IdPacient")
                         .HasColumnType("NUMBER(38)");
 
-                    b.Property<DateTimeOffset>("TerminOd")
-                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+                    b.Property<DateTime>("TerminOd")
+                        .HasColumnType("TIMESTAMP(7)");
 
-                    b.Property<decimal?>("IdTypLekarNavigationIdTyp")
+                    b.Property<decimal>("IdTypVysetrenia")
                         .HasColumnType("NUMBER(38)");
 
-                    b.Property<int>("IdTypVysetrenia")
-                        .HasColumnType("NUMBER(10)");
-
-                    b.Property<DateTimeOffset>("TerminDo")
-                        .HasColumnType("TIMESTAMP(7) WITH TIME ZONE");
+                    b.Property<DateTime>("TerminDo")
+                        .HasColumnType("TIMESTAMP(7)");
 
                     b.HasKey("IdLekar", "IdPacient", "TerminOd");
 
                     b.HasIndex("IdPacient");
 
-                    b.HasIndex("IdTypLekarNavigationIdTyp");
+                    b.HasIndex("IdTypVysetrenia");
 
                     b.ToTable("SPRIEVODKA");
                 });
@@ -1465,8 +1462,10 @@ namespace HealthInCube_BackEnd.Migrations
                         .IsRequired();
 
                     b.HasOne("HealthInCube_BackEnd.Entities.TypLekara", "IdTypLekarNavigation")
-                        .WithMany()
-                        .HasForeignKey("IdTypLekarNavigationIdTyp");
+                        .WithMany("Sprievodkas")
+                        .HasForeignKey("IdTypVysetrenia")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("IdLekarNavigation");
 
@@ -1699,6 +1698,8 @@ namespace HealthInCube_BackEnd.Migrations
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.TypLekara", b =>
                 {
                     b.Navigation("AtestacieLekars");
+
+                    b.Navigation("Sprievodkas");
                 });
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.TypSymptom", b =>

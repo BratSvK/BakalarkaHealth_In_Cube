@@ -3,7 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using HealthInCube_BackEnd.DTOs.Lekar.Sprievodka;
+using HealthInCube_BackEnd.DTOs.Lekar;
+using HealthInCube_BackEnd.DTOs.Pacient;
+using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Extensions;
 using HealthInCube_BackEnd.Helpers;
@@ -91,22 +93,33 @@ namespace HealthInCube_BackEnd.Data
         /// <returns></returns>
         public async Task<IEnumerable<SprievodkaDto>> GetSprievodkyByWeek(SprievodkaParams sprievodkaParams)
         {
-            var query = _context.Sprievodkas.AsQueryable();
+            var query = _context.Sprievodkas
+                .AsQueryable();
+
+            var selectedWeekNumber = sprievodkaParams.StartWeekBy.Date.GetWeekNumber();
+            query = query.Where(s => _context.GetWeekNumberFromDb(s.TerminOd) == selectedWeekNumber);
 
             if (sprievodkaParams.IdLekar > 0)
             {
-                query = query.Where(p => p.IdLekar == sprievodkaParams.IdLekar);
+                query = query
+                    .Include(s => s.IdPacientNavigation)
+                    .ThenInclude(p => p.IdPouzivatelNavigation)
+                    .Include(s => s.IdPacientNavigation.ZdravotnaKartum)
+                    .Where(p => p.IdLekar == sprievodkaParams.IdLekar);
+
+                return await query.ProjectTo<SprievodkaLekarDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
             }
             else
             {
-                query = query.Where(p => p.IdPacient == sprievodkaParams.IdPacient);
+                
+                query = query
+                    .Include(s => s.IdTypLekarNavigation)
+                    .Include(s => s.IdLekarNavigation)
+                    .ThenInclude(l => l.IdPouzivatelNavigation)
+                    .Where(p => p.IdPacient == sprievodkaParams.IdPacient);
+
+                return await query.ProjectTo<SprievodkaPacientDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
             }
-
-            var selectedWeekNumber = sprievodkaParams.StartWeekBy.Date.GetWeekNumber();
-
-            query = query.Where(s => _context.GetWeekNumberFromDb(s.TerminOd) == selectedWeekNumber);
-
-            return await query.ProjectTo<SprievodkaDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
         }
 
         /// <summary>

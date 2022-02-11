@@ -1,11 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { delay, filter, map, take, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { LekarSprievodka } from '../models/lekar/lekarSprievodka';
 import { LekarTyp } from '../models/lekar/typLekar';
+import { notNull, notUndefined } from '../shared/common';
+import { getPractitionerAtestationsId, getPractitionorIdState } from '../user/lekar/store/modelStore/LekarState';
 import { LEKAR_API } from '../_constants/endPointsApi';
+import { AppState } from '../_store/models/AppState';
+
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +19,10 @@ export class LekarService {
   baseUrl = environment.apiUrl;
   typeOfLekarCache = new Map();
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private store: Store<AppState>
+  ) { }
 
   getDoctorIdByUserId() {
     return this.http.get<number>(this.baseUrl + `${LEKAR_API}/id`);
@@ -31,6 +39,20 @@ export class LekarService {
         this.typeOfLekarCache.set('type', response);
         return response;
       })
+    );
+  }
+
+  getLoginDoctorAtestations$(): Observable<number[]> {
+    return this.store.select(getPractitionerAtestationsId).pipe(
+      filter(notUndefined),
+      take(1)
+    );;
+  }
+
+  getLoginDoctorId$(): Observable<number> {
+    return this.store.select(getPractitionorIdState).pipe(
+      filter(notUndefined),
+      take(1)
     );
   }
 
