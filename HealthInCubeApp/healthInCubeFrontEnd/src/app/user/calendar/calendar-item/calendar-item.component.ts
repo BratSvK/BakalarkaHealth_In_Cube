@@ -18,22 +18,16 @@ export class CalendarItemComponent implements OnInit {
   bsModalRef: BsModalRef;
   colorOfSprievodka: string;
 
-
-
   constructor(private modalService: BsModalService) { }
 
   ngOnInit(): void {
     this.initColorToSprievodka();
-    console.log(this.sprievodkaItem);
   }
-
 
   getDurationInMinutes(): number {
     var difference = Math.abs(new Date(this.sprievodkaItem?.terminOd).getTime() - new Date(this.sprievodkaItem?.terminDo).getTime());
     return Math.floor((difference/1000)/60);
   }
-
-  
 
   getPopisSprievodka() : string {
     return this.isPatient ? 

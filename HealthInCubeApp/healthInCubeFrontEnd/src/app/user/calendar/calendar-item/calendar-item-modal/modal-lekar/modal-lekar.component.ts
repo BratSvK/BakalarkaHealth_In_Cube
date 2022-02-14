@@ -15,5 +15,7 @@ export class ModalLekarComponent extends CalendarItemModalBaseComponent {
     super(bsModalRef);
    }
 
-
+   goToZdravotnaKartaPatient() {
+     console.log(this.sprievodka.idPacientNavigation?.zdravotnaKartum);
+   }
 }

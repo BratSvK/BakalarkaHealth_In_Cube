@@ -105,6 +105,7 @@ namespace HealthInCube_BackEnd.Data
                     .Include(s => s.IdPacientNavigation)
                     .ThenInclude(p => p.IdPouzivatelNavigation)
                     .Include(s => s.IdPacientNavigation.ZdravotnaKartum)
+                    .ThenInclude(z => z.IdMestoNarodeniaNavigation)
                     .Where(p => p.IdLekar == sprievodkaParams.IdLekar);
 
                 return await query.ProjectTo<SprievodkaLekarDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();

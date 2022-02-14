@@ -36,7 +36,7 @@
               <input type="text" 
                     class="form-control" 
                     id="narodenieMesto" 
-                    [ngModel]=" sprievodka.idPacientNavigation?.zdravotnaKartum?.miestoNarodenia | uppercase"
+                    [ngModel]=" sprievodka.idPacientNavigation?.zdravotnaKartum?.miestoNarodenia?.nazov | uppercase"
                     name="narodenieMesto"
                     readonly>
             </div>
@@ -69,15 +69,14 @@
       </div>
       <div class="modal-footer">
         <button type="button" 
+                class="btn btn-primary zdravotnaKarta" 
+                (click)="goToZdravotnaKartaPatient()">
+                Zdravotná karta
+        </button>
+        <button type="button" 
                 class="btn btn-default" 
                 (click)="closeSprievodkaForm()">
                 Zavrieť
         </button>
-        <!-- <button type="button" 
-                class="btn btn-primary" 
-                (click)="createSprievodka()"
-                [disabled]="sprievodkaForm.invalid">
-                Vytvoriť
-        </button> -->
       </div>
 </ng-container>

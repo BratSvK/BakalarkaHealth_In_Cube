@@ -43,17 +43,6 @@ namespace HealthInCube_BackEnd.Controllers
         }
 
         /// <summary>
-        /// Get appointmens in current week
-        /// </summary>
-        [HttpGet()]
-        public async Task<ActionResult<IEnumerable<SprievodkaDto>>> GetAllAppointments([FromQuery] SprievodkaParams sprievodkaParams)
-        {
-            var sprievodkyByWeek = await _sprievodkaRepository.GetSprievodkyByWeek(sprievodkaParams);
-
-            return Ok(sprievodkyByWeek);
-        }
-
-        /// <summary>
         /// Check availability in day.
         /// </summary>
         [HttpGet("availability")]
