@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Pacient;
+using HealthInCube_BackEnd.DTOs.Pacient.Activated;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -78,9 +79,17 @@ namespace HealthInCube_BackEnd.Data
 
         }
 
-        public async Task<bool> IsActivated(decimal userId)
+        public async Task<ActivatedPatientDto> IsActivated(decimal userId)
         {
-            return await _context.Pacient.AnyAsync(p => p.IdPouzivatel == userId);
+            return await _context.Pacient
+                .Include(p => p.IdPouzivatelNavigation)
+                .Where(p => p.IdPouzivatel == userId)
+                .Select(p => new ActivatedPatientDto
+                {
+                    IdPacient = p.IdPacient,
+                    IsActivated = true
+                })
+                .SingleOrDefaultAsync();
         }
 
         public async Task<Pacient> GetPacientById(decimal patientId)

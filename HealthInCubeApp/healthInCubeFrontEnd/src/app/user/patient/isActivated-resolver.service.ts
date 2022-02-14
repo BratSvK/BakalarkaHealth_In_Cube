@@ -22,7 +22,7 @@ export class IsActivatedResolver implements Resolve<boolean> {
       take(1),
       map(patientState => {
         // empty or fill array
-        return patientState.isActivated;               
+        return patientState.activatedPatient.isActivated;               
       }),
       switchMap(isActivated => {
         if (!isActivated) {

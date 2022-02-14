@@ -21,8 +21,9 @@ import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { ServerErrorComponent } from './errors/server-error/server-error.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { UserDetailEffects } from './user/user-detail/store/user-detail.effects';
-import { TimeagoModule } from 'ngx-timeago';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { CalendarModule } from './user/calendar/calendar.module';
+
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    CalendarModule,
     AppRoutingModule,
     HttpClientModule,
     NgxSpinnerModule,

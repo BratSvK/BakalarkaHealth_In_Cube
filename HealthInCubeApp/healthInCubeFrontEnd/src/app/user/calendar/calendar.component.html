@@ -1,0 +1,70 @@
+<ng-container *ngIf="(isActivated$ | async) || (lekarId$ | async)">
+    <div class="centerLayout">
+        <div class="datepicker">
+            <mat-form-field 
+                class="myInput" 
+                appearance="none">
+              <mat-icon 
+                class="beforeArrow" 
+                matPrefix 
+                (click)="subtractWeek()">keyboard_arrow_left</mat-icon>
+              <input 
+                matInput 
+                class="myInput"
+                [bsConfig]="{containerClass: 'theme-blue', 
+                             isAnimated: true,
+                             dateInputFormat: 'DD-MM-YYYY',
+                             rangeInputFormat: 'DD-MM-YYYY' }"
+                bsDaterangepicker
+                #daterangepicker="bsDaterangepicker"
+                placement="bottom"  
+                [formControl]="date" 
+                (ngModelChange)="initSprievodky()">
+              <mat-icon 
+                class="afterArrow" 
+                matSuffix 
+                (click)="addWeek()">keyboard_arrow_right</mat-icon>
+            </mat-form-field>
+          </div>
+          <div style="overflow-x:auto;">
+          <table class="table table-bordered" id="table" >
+            <tbody>
+                <tr *ngFor="let day of weekArray ; index as iDen" >
+                    <th 
+                     [ngStyle]="{'color':'black', 'padding-left': '5px', 'font-size': '18px'}"
+                      class="nameColumn" 
+                      scope="row">
+                      {{ day }}
+                    </th>
+
+                    <td *ngFor="let hour of hours ; index as h"  
+                        scope="col"
+                        class="sprievodkaInHour"
+                        (wheel)="onWheel($event)">
+
+                    <app-calendar-item 
+                                      *ngIf="getCurrentSprievodka(iDen, hour) as sprievodka"
+                                      class="example-box"
+                                      [sprievodkaItem]="sprievodka"
+                                      [isPatient]="isPatient">
+                    </app-calendar-item>
+                    </td>
+                </tr>
+            </tbody>
+            <thead>
+                <tr>
+                  <th 
+                    scope="col" 
+                    class="nameColumnHead">
+                </th>
+                  <th *ngFor="let hour of hours ; index as h" 
+                      scope="col" 
+                      class="hoursHead">
+                      {{hour}}:00
+                    </th>
+                </tr>
+              </thead>
+          </table>
+    </div>
+</div>
+</ng-container>

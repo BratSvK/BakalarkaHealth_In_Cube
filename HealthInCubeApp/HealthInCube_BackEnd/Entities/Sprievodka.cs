@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
 
 namespace HealthInCube_BackEnd.Entities
 {
@@ -22,7 +20,7 @@ namespace HealthInCube_BackEnd.Entities
         /// What type of revision.
         /// 44 => Oftamológ - očný lekár(info)
         /// </summary>
-        public TypyLekara IdTypVysetrenia { get; set; }
+        public decimal IdTypVysetrenia { get; set; }
 
         public DateTime TerminOd { get; set; }
 
@@ -32,6 +30,9 @@ namespace HealthInCube_BackEnd.Entities
         public DateTime TerminDo { get; set; }
 
         public virtual  Lekar IdLekarNavigation { get; set; }
+
+        public virtual TypLekara IdTypLekarNavigation { get; set; }
+
         public virtual Pacient IdPacientNavigation { get; set; }
     }
 }

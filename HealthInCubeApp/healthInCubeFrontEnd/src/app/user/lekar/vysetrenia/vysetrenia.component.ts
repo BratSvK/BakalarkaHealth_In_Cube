@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { LekarService } from 'src/app/_service/lekar.service';
 
 @Component({
   selector: 'app-vysetrenia',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vysetrenia.component.css']
 })
 export class VysetreniaComponent implements OnInit {
+  loginDoctorId$: Observable<number>;
 
-  constructor() { }
+  constructor(private lekarService: LekarService) { }
 
   ngOnInit(): void {
+    this.loginDoctorId$ = this.lekarService.getLoginDoctorId$();
   }
 
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HealthInCube_BackEnd.DTOs.Lekar.Sprievodka.Termin
+namespace HealthInCube_BackEnd.DTOs.Sprievodka.Termin
 {
     public class TerminSprievodkaDto
     {

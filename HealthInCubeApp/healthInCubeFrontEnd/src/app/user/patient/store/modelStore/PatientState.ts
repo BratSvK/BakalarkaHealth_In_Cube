@@ -1,3 +1,5 @@
+import { ActivatedPatient } from "src/app/models/pacient/activatedPatient";
+
 export interface PatientState {
-    isActivated: boolean;
+    activatedPatient: ActivatedPatient
 }

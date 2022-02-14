@@ -1,0 +1,214 @@
+<ng-container *ngIf="sprievodka">
+ <div *ngIf="isPatient; else lekarModal">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">
+        {{title}}
+      </h4>
+      <button type="button" 
+              class="btn-close close pull-right" 
+              aria-label="Close" 
+              (click)="bsModalRef.hide()">
+        <span aria-hidden="true" 
+              class="visually-hidden">&times;</span>
+      </button>
+    </div>
+     <div class="modal-body">
+      <form autocomplete="off" 
+            bg-light >
+  
+        <div class="form-row">
+          <div class="col-md mb-3">
+            <label for="lekarName">
+              Lekar
+            </label>
+            <input type="text" 
+                  class="form-control" 
+                  id="lekarName" 
+                  [ngModel]="sprievodkaPatient.idLekarNavigation?.fullName"
+                  name="lekarName"
+                  readonly>
+          </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md mb-3">
+              <label for="vykonMiesto">
+                Miesto vyšetrenia
+              </label>
+              <input type="text" 
+                    class="form-control" 
+                    id="vykonMiesto" 
+                    [ngModel]="sprievodkaPatient.idLekarNavigation?.pracovisko | uppercase"
+                    name="vykonMiesto"
+                    readonly>
+            </div>
+          </div>
+        <div class="form-row">
+          <div class="col-md-10 mb-3">
+            <label for="typVysetrenia">
+              Typ vyšetrenia
+            </label>
+            <input type="text" 
+                  class="form-control" 
+                  id="typVysetrenia" 
+                  [ngModel]="sprievodkaPatient.idTypLekarNavigation?.nazov"
+                  name="typVysetrenia"
+                  readonly>
+          </div>
+          <div class="col-md-2 mb-3">
+            <button type="button" 
+                    class="btn info" 
+                    [tooltip]="sprievodkaPatient.idTypLekarNavigation.popis" 
+                    placement="right">
+            <fa-icon class="ml-3" 
+                    [icon]="infoTooltip">
+            </fa-icon>
+            </button>
+          </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+              <label for="terminOd">
+                Začiatok vyšetrenia
+              </label>
+              <input type="text" 
+                    class="form-control" 
+                    id="terminOd" 
+                    [ngModel]="sprievodkaPatient.terminOd | date:'dd.MM.YYYY HH:mm'"
+                    name="terminOd"
+                    readonly>
+            </div>
+            <div class="col-md-6 mb-3">
+                <label for="terminDo">
+                    Koniec vyšetrenia
+                  </label>
+                <input type="text" 
+                       class="form-control" 
+                       id="terminDo" 
+                       [ngModel]="sprievodkaPatient.terminDo | date:'dd.MM.YYYY HH:mm'"
+                       name="terminDo"
+                       readonly>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" 
+                class="btn btn-default" 
+                (click)="closeSprievodkaForm()">
+                Zavrieť
+        </button>
+        <!-- <button type="button" 
+                class="btn btn-primary" 
+                (click)="createSprievodka()"
+                [disabled]="sprievodkaForm.invalid">
+                Vytvoriť
+        </button> -->
+      </div>
+    </div>
+      <ng-template #lekarModal>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">
+            {{title}}
+          </h4>
+          <button type="button" 
+                  class="btn-close close pull-right" 
+                  aria-label="Close" 
+                  (click)="bsModalRef.hide()">
+            <span aria-hidden="true" 
+                  class="visually-hidden">&times;</span>
+          </button>
+        </div>
+         <div class="modal-body">
+          <form autocomplete="off" 
+                bg-light >
+      
+            <div class="form-row">
+              <div class="col-md mb-3">
+                <label for="patientName">
+                  Pacient
+                </label>
+                <input type="text" 
+                      class="form-control" 
+                      id="patientName" 
+                      [ngModel]="sprievodkaLekar?.idPacientNavigation?.idPouzivatelNavigation?.fullName"
+                      name="patientName"
+                      readonly>
+              </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md mb-3">
+                  <label for="narodenieMesto">
+                    Miesto narodenia
+                  </label>
+                  <input type="text" 
+                        class="form-control" 
+                        id="narodenieMesto" 
+                        [ngModel]=" | uppercase"
+                        name="narodenieMesto"
+                        readonly>
+                </div>
+              </div>
+            <div class="form-row">
+              <div class="col-md-10 mb-3">
+                <label for="typVysetrenia">
+                  Typ vyšetrenia
+                </label>
+                <input type="text" 
+                      class="form-control" 
+                      id="typVysetrenia" 
+                      [ngModel]="sprievodkaPatient.idTypLekarNavigation?.nazov"
+                      name="typVysetrenia"
+                      readonly>
+              </div>
+              <div class="col-md-2 mb-3">
+                <button type="button" 
+                        class="btn info" 
+                        [tooltip]="sprievodkaPatient.idTypLekarNavigation.popis" 
+                        placement="right">
+                <fa-icon class="ml-3" 
+                        [icon]="infoTooltip">
+                </fa-icon>
+                </button>
+              </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                  <label for="terminOd">
+                    Začiatok vyšetrenia
+                  </label>
+                  <input type="text" 
+                        class="form-control" 
+                        id="terminOd" 
+                        [ngModel]="sprievodkaPatient.terminOd | date:'dd.MM.YYYY HH:mm'"
+                        name="terminOd"
+                        readonly>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="terminDo">
+                        Koniec vyšetrenia
+                      </label>
+                    <input type="text" 
+                           class="form-control" 
+                           id="terminDo" 
+                           [ngModel]="sprievodkaPatient.terminDo | date:'dd.MM.YYYY HH:mm'"
+                           name="terminDo"
+                           readonly>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" 
+                    class="btn btn-default" 
+                    (click)="closeSprievodkaForm()">
+                    Zavrieť
+            </button>
+            <!-- <button type="button" 
+                    class="btn btn-primary" 
+                    (click)="createSprievodka()"
+                    [disabled]="sprievodkaForm.invalid">
+                    Vytvoriť
+            </button> -->
+          </div>
+      </ng-template>
+    </ng-container>

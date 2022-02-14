@@ -9,8 +9,10 @@ export interface Lekar {
     nemocnica: string;
     oddelenieNazov: string;
     fotka: any;
-    // atestacie: AtestacieLekar[];
+    atestacieId: number[];
 }
+
+export const AtestacieVseobecnyIds  = [65, 66];
 
 export enum TypyLekara {
     Akupunkturista = 1,

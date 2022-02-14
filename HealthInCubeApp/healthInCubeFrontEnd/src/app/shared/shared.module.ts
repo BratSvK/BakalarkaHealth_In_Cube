@@ -9,28 +9,21 @@ import { InlineSVGModule } from 'ng-inline-svg';
 import { NavUserToolboxComponent } from '../nav/nav-user-toolbox/nav-user-toolbox.component';
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { RouterModule } from '@angular/router';
-import { UserDetailComponent } from '../user/user-detail/user-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PhotoEditorComponent } from '../user/user-detail/photo-editor/photo-editor.component';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { FileUploadModule } from 'ng2-file-upload';
 import { TimeagoModule } from 'ngx-timeago';
-import { UserBydliskoEditorComponent } from '../user/user-detail/user-bydlisko-editor/user-bydlisko-editor.component';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { HasFocusDirective } from '../_directives/has-focus.directive';
 
-
 @NgModule({
   declarations: [
     HasRoleDirective,
     HasFocusDirective,
     NavUserToolboxComponent,
-    UserDetailComponent,
-    PhotoEditorComponent,
-    UserBydliskoEditorComponent
   ],
   imports: [
     CommonModule,
@@ -48,14 +41,13 @@ import { HasFocusDirective } from '../_directives/has-focus.directive';
     FileUploadModule,
     PaginationModule.forRoot(),        // for any of angular boostrap components use forRoot 
     ModalModule.forRoot(),
-    TooltipModule.forRoot()
+    TooltipModule.forRoot(),
   ],
   exports: [
     CommonModule,
     FormsModule,
     TooltipModule,
     BsDatepickerModule,
-    PhotoEditorComponent,
     HasRoleDirective,
     HasFocusDirective,
     FontAwesomeModule,
@@ -64,14 +56,12 @@ import { HasFocusDirective } from '../_directives/has-focus.directive';
     InlineSVGModule,
     NavUserToolboxComponent,
     AlertModule,
-    UserDetailComponent,
     TabsModule,
     FileUploadModule,
     TimeagoModule,
-    UserBydliskoEditorComponent,
     PaginationModule,
     ModalModule,
     ReactiveFormsModule
-  ],
+  ]
 })
 export class SharedModule {}

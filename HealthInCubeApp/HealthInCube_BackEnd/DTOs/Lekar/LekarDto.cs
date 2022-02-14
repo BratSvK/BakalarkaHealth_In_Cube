@@ -21,7 +21,7 @@ namespace HealthInCube_BackEnd.DTOs
         {
             get
             {
-                return $"{Meno.Trim()} {Priezvisko}";
+                return $"{Meno?.Trim()} {Priezvisko}";
             }
 
         }

@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { Pouzivatel } from 'src/app/models/pouzivatel';
 import { AppState } from 'src/app/_store/models/AppState';
+import { faCalendarPlus } from '@fortawesome/free-solid-svg-icons';
+
 
 
 
@@ -13,6 +15,7 @@ import { AppState } from 'src/app/_store/models/AppState';
   styleUrls: ['./nav-patient.component.css']
 })
 export class NavPatientComponent implements OnInit {
+  calendar = faCalendarPlus;
 
   @Input() isActivatedPatientFlag$: Observable<boolean>;
   

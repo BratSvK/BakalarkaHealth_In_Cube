@@ -15,10 +15,18 @@ export const SET_PRACTITIONER = '[Lekar] Set practitioner';
 export const ACCEPT_REQUEST = '[Lekar] Accept request and create patient';
 export const DELETE_REQUEST = '[Lekar] Delete request of user to patient';
 
+export const RESET_PRACTITIONER = '[Lekar] Reset practitioner';
+
 export class DeleteRequest implements Action {
     readonly type = DELETE_REQUEST;
 
     constructor(public payload: Ziadanka) {}
+}
+
+export class ResetPractitioner implements Action {
+    readonly type = RESET_PRACTITIONER;
+
+    constructor() {}
 }
 
 export class AcceptRequest implements Action {
@@ -67,5 +75,6 @@ export type LekarActions =
     | FetchPractitioner
     | SetPractitioner
     | AcceptRequest
-    | DeleteRequest;
+    | DeleteRequest
+    | ResetPractitioner;
     

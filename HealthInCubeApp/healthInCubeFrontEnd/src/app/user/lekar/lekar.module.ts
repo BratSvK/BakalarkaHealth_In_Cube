@@ -8,6 +8,8 @@ import { NavLekarComponent } from "../../nav/nav-lekar/nav-lekar.component";
 import { LekarComponent } from "./lekar.component";
 import { PacientCardComponent } from './pacienti-list/pacient-card/pacient-card.component';
 import { SprievodkaModalComponent } from './sprievodka/sprievodka-modal/sprievodka-modal.component';
+import { UserDetailModule } from "../user-detail/user-detail.module";
+import { GrantToGeneralPractitionerDirective } from "src/app/_directives/grant-to-general-practitioner.directive";
 
 @NgModule({
     declarations: [   
@@ -17,11 +19,13 @@ import { SprievodkaModalComponent } from './sprievodka/sprievodka-modal/sprievod
         PacientiListComponent, 
         VysetreniaComponent, 
         PacientCardComponent, 
-        SprievodkaModalComponent
+        SprievodkaModalComponent,
+        GrantToGeneralPractitionerDirective
     ],
     imports: [
         SharedModule, 
-        LekarRoutingModule
+        LekarRoutingModule,
+        UserDetailModule
     ]
    })
   export class LekarModule {}

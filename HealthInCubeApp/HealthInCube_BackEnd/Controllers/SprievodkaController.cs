@@ -1,6 +1,5 @@
-﻿using AutoMapper;
-using HealthInCube_BackEnd.DTOs.Lekar.Sprievodka;
-using HealthInCube_BackEnd.DTOs.Lekar.Sprievodka.Termin;
+﻿using HealthInCube_BackEnd.DTOs.Sprievodka;
+using HealthInCube_BackEnd.DTOs.Sprievodka.Termin;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Helpers;
 using HealthInCube_BackEnd.Interfaces;
@@ -15,20 +14,17 @@ namespace HealthInCube_BackEnd.Controllers
     [Authorize(Roles = "Lekar,Pacient")]
     public class SprievodkaController : BaseApiController
     {
-        private readonly IMapper _mapper;
         private readonly ISprievodkaRepository _sprievodkaRepository;
         private readonly IPracovnaDobaRepository _pracovnaDobaRepository;
         private readonly ILekarRepository _lekarRepository;
         private readonly IAppointmentSchedulerService _appointmentSchedulerService;
 
         public SprievodkaController(
-            IMapper mapper, 
             ISprievodkaRepository sprievodkaRepository, 
             IPracovnaDobaRepository pracovnaDobaRepository,
             ILekarRepository lekarRepository,
             IAppointmentSchedulerService appointmentSchedulerService)
         {
-            _mapper = mapper;
             _sprievodkaRepository = sprievodkaRepository;
             _pracovnaDobaRepository = pracovnaDobaRepository;
             _lekarRepository = lekarRepository;
@@ -97,7 +93,7 @@ namespace HealthInCube_BackEnd.Controllers
                 {
                     IdPacient = sprievodkaCreate.IdPacient,
                     IdLekar = sprievodkaCreate.IdLekar,
-                    IdTypVysetrenia = sprievodkaCreate.IdTypVysetrenia,
+                    IdTypVysetrenia = sprievodkaCreate.idTypVysetrenia,
                     TerminOd = sprievodkaCreate.TerminDatum.Add(vsetkyTerminyLekar[lastFreeAppointment].TerminOdInHour),
                     TerminDo = sprievodkaCreate.TerminDatum.Add(vsetkyTerminyLekar[lastFreeAppointment].TerminDoInHour)
                 };
