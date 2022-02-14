@@ -1,0 +1,275 @@
+<div *ngIf="(typeOfDoctors$ | async) as doctorTypes" >
+<div class="container mt-5 registerWrapper text-left">
+    <div ngAnimatedBorderWrapper>
+        <span ngAnimatedBorder class="myCssAnimation" [abBorderWidth]="['4px']" [abBorderRadius]="['10px']"
+            [abBackgroundColor]="'#f5f5f5'">
+
+            <form [formGroup]="registerForm" autocomplete="off" bg-light (ngSubmit)="onSubmit()">
+
+                <div class="d-flex rightCorner justify-content-end">
+                    <button class="btn btn-warning" type="button" (click)="onReturn()">Return to login</button>
+                </div>
+
+                <h4 class="mb-3 text-uppercase"><i class="fa fa-user mr-2"></i>Užívateľské konto</h4>
+                <div formGroupName="userData">
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <label for="firstName">Meno*</label>
+                            <input type="text"   #autofocus class="form-control" id="firstName" formControlName="firstName">
+                            <!-- <div class="invalid-feedback">
+                            Valid first name is required.
+                        </div> -->
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="lastName">Priezvisko*</label>
+                            <input type="text" class="form-control" id="lastName" formControlName="lastName">
+                            <!-- <div class="invalid-feedback">
+                            Valid last name is required.
+                        </div> -->
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="familyName">Rodné prievzisko<span class="text-muted">(Voľitelné)</span></label>
+                            <input type="text" class="form-control" id="familyName" formControlName="familyName">
+                            <!-- <div class="invalid-feedback">
+                            Valid last name is required.
+                        </div> -->
+                        </div>
+                    </div>
+                    <div class="form-row" style="align-items: center;">
+                        <div class="col-md-4 mb-3">
+                            <label for="BID">Rodné číslo</label>
+                            <input type="text" class="form-control" id="BID" placeholder="etc. 981124/4168"
+                                formControlName="birthIDNumber">
+                            <div
+                                *ngIf="this.registerForm.get('userData.birthIDNumber')?.touched && this.registerForm.get('userData.birthIDNumber')?.value != null && this.registerForm.get('userData.birthIDNumber')?.value !== '' &&   !this.registerForm.get('userData.birthIDNumber')?.errors; then calculate">
+                            </div>
+                            <!-- <div class="invalid-feedback">
+                            Valid first name is required.
+                        </div> -->
+                            <ng-template #calculate>
+                                <div class="col-md mt-3">
+                                    <button class="btn btn-info" type="button" (click)="onCalculateFromBIDToBirthDate()">Dopočítaj</button>
+                                </div>
+                            </ng-template>
+
+                        </div>
+                        <div class="col-md-2 mt-4 pl-4" *ngFor="let gender of genders">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" class="form-check-input" formControlName="gender"
+                                        [value]="gender">{{ gender === 'M' ? 'Male' : 'Female' }}
+                                </label>
+
+                            </div>
+                            <!-- <div class="invalid-feedback">
+                            Valid first name is required.
+                        </div> -->
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="birthDate">Dátum narodenia*</label>
+                            <input type="date" class="form-control" id="birthDate" formControlName="birthDate">
+                            <!-- <div class="invalid-feedback">
+                            Valid last name is required.
+                        </div> -->
+
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email">Emailová adresa*</label>
+                        <input type="email" class="form-control" id="email" placeholder="you@example.com"
+                            formControlName="email">
+                        <!-- <div class="invalid-feedback">
+                        Please enter a valid email address.
+                    </div> -->
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone">Telefónne číslo<span class="text-muted">(Voľitelné)</span></label>
+                        <input type="text" class="form-control" id="phone" placeholder="421904362907"
+                            formControlName="phoneNumber">
+                        <div [ngStyle]="{'display': registerForm.get('userData.phoneNumber').invalid ? 'inherit' : 'none' }" class="invalid-feedback">
+                        Maximálne 12 znakov(bez +).
+                    </div>
+                    </div>
+
+                    <div class="form-row mb-3">
+                        <div class="col-md">
+                        <label for="password">Heslo*</label>
+                        <input type="text" class="form-control" id="password" placeholder="SilneHeslo1"
+                            formControlName="password">
+                        </div>
+                        <div class="col-md">
+                            <label for="confirmPassword">Zopakuj heslo*</label>
+                            <input type="text" class="form-control" id="confirmPassword" placeholder="SilneHeslo1"
+                                formControlName="confirmPassword">
+                            </div>
+                    </div>
+                </div>
+
+                <div formGroupName="userAddress">
+                    
+                    <h4 class="mb-3 text-uppercase"><i class="fa fa-address-book mr-2"></i>ADRESA BYDLISKA</h4>
+
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <label for="country">Štát*</label>
+                            <select class="custom-select d-block w-100" id="country" formControlName="country" (ngModelChange)="onCountryChange()">
+                                <option [selected]="true" [ngValue]="">Choose...</option>
+                                <option >Slovensko</option>
+                            </select>
+                            <!-- <div class="invalid-feedback">
+                            Please select a valid country.
+                        </div> -->
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="district">Okres*</label>
+                            <select class="custom-select d-block w-100" id="district" formControlName="district"
+                                (ngModelChange)="onChangeOkres()">
+                                <option [disabled]="true" [selected]="true" value="">Choose...</option>
+                                <option [ngValue]="district.idOkres" *ngFor="let district of okresy">{{district.nazov}}
+                                </option>
+                            </select>
+                            <!-- <div class="invalid-feedback">
+                            Please provide a valid state.
+                        </div> -->
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="city">Mesto*</label>
+                            <select class="custom-select d-block w-100" id="city" formControlName="city" (ngModelChange)="onChangeCity()">
+                                <option [disabled]="true" [selected]="true" value="">Choose...</option>
+                                <option [ngValue]="mesto.idMesto" *ngFor="let mesto of mesta">{{mesto.nazov}}</option>
+                            </select>
+                            <!-- <div class="invalid-feedback">
+                            Please provide a valid state.
+                        </div> -->
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="street">Ulica*</label>
+                        <input type="text" class="form-control" id="street" placeholder="1234 Main St"
+                            formControlName="street">
+                        <!-- <div class="invalid-feedback">
+                        Please enter your street address.
+                    </div> -->
+                    </div>
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" id="same-address"
+                            formControlName="isPernamentAddress">
+                        <label class="custom-control-label" for="same-address">Trvalé bydlisko</label>
+                    </div>
+                </div>
+
+                <hr class="mb-4">
+
+                <div formGroupName="birthPlace">
+
+                    <hr class="mb-4">
+
+                    <h4 class="mb-3 text-uppercase"><fa-icon class="mr-2"  [icon]="babyIcon"></fa-icon>Miesto narodenia</h4>
+
+                    <div class="form-row">
+                        <div class="col-md-4 mb-3">
+                            <label for="countryBirth">Štát*</label>
+                            <select class="custom-select d-block w-100" id="countryBirth" formControlName="countryBirth" (ngModelChange)="onCountryBirthChange()">
+                                <option [selected]="true" [ngValue]="">Choose...</option>
+                                <option >Slovensko</option>
+                            </select>
+                            <!-- <div class="invalid-feedback">
+                            Please select a valid country.
+                        </div> -->
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="districtBirth">Okres*</label>
+                            <select class="custom-select d-block w-100" id="districtBirth" formControlName="districtBirth"
+                                (ngModelChange)="onChangeBirthOkres()">
+                                <option [disabled]="true" [selected]="true" value="">Choose...</option>
+                                <option [ngValue]="district.idOkres" *ngFor="let district of okresyBirth">{{district.nazov}}
+                                </option>
+                            </select>
+                            <!-- <div class="invalid-feedback">
+                            Please provide a valid state.
+                        </div> -->
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="cityBirth">Mesto*</label>
+                            <select class="custom-select d-block w-100" id="cityBirth" formControlName="cityBirth">
+                                <option [disabled]="true" [selected]="true" value="">Choose...</option>
+                                <option [ngValue]="mesto.idMesto" *ngFor="let mesto of mestaBirth">{{mesto.nazov}}</option>
+                            </select>
+                            <!-- <div class="invalid-feedback">
+                            Please provide a valid state.
+                        </div> -->
+                        </div>
+                    </div>
+                </div>
+                
+                <hr class="mb-4">
+                <h4 class="mb-3 text-uppercase"><i class="fa fa-user mr-2"></i>Lekárske data</h4>
+                <div formGroupName="lekarData">
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="nemocnica">Nemocnica</label>
+                            <select class="custom-select d-block w-100" id="nemocnica" formControlName="idNemocnica"
+                                (ngModelChange)="onChangeBirthOkres()">
+                                <option [disabled]="true" [selected]="true" value="">Choose...</option>
+                                <option [ngValue]="nemocnica.id_nem" *ngFor="let nemocnica of nemocnice">{{nemocnica.nazov}}
+                                </option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="nemocnica">Oddelenie</label>
+                            <select class="custom-select d-block w-100" id="oddelenie" formControlName="idOddelenie"
+                                (ngModelChange)="onChangeBirthOkres()">
+                                <option [disabled]="true" [selected]="true" value="">Choose...</option>
+                                <option [ngValue]="oddelenie.idOddel" *ngFor="let oddelenie of oddelenia">{{oddelenie.nazovOdd}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+                        <div class="form-row">
+                            <div class="col-md-6 mb-3">
+                                <label for="idTypVysetrenia">
+                                    Typ lekára
+                                  </label>
+                                  <select class="custom-select d-block w-100" 
+                                          id="idTypDoctor" 
+                                          formControlName="idTypDoctor">
+                                    <option [disabled]="true" 
+                                            [selected]="true" 
+                                            value="">Vyber...
+                                    </option>
+                                    <option [ngValue]="typeDoc.idTyp" 
+                                            *ngFor="let typeDoc of doctorTypes">
+                                            {{typeDoc.nazov}}
+                                    </option>
+                                  </select>
+                            </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="dlzkaVysetrenia">Dĺžka vyšetrenia (minúty-odhad)</label>
+                            <input 
+                                    type="number" 
+                                    #autofocus 
+                                    class="form-control" 
+                                    id="dlzkaVysetrenia" 
+                                    formControlName="dlzkaVysetrenia"
+                                    step="15"
+                                    min="0"
+                                    max="120">
+                        </div>
+                    </div>
+                </div>
+                <hr class="mt-4">
+                <p class="text-muted">*(Povinné)</p>
+                <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="registerForm.invalid">Vytvor</button>
+                <div class="invalid-feedback" [ngStyle]="{'display': registerForm.invalid ? 'inherit' : 'none' }">
+                    <span class="errorHlaska">Prosím zadaj správne dáta</span>
+                </div>
+            </form>
+        </span>
+    </div>
+</div>
+</div>

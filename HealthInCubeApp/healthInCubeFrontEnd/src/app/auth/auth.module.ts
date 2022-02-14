@@ -6,12 +6,16 @@ import { AuthComponent } from "./auth.component";
 import { RegisterComponent } from './register/register.component';
 import { NgAnimatedBorderModule } from 'ng-animated-border';
 import { PractitionerInfoComponent } from './register/practitioner-info/practitioner-info.component';
+import { ModalRegisterComponent } from './modal-register/modal-register.component';
+import { RegisterLekarComponent } from './register-lekar/register-lekar.component';
 
 @NgModule({
     declarations: [
         AuthComponent,
         RegisterComponent,
-        PractitionerInfoComponent
+        PractitionerInfoComponent,
+        ModalRegisterComponent,
+        RegisterLekarComponent
     ],
     imports: [
         ReactiveFormsModule,

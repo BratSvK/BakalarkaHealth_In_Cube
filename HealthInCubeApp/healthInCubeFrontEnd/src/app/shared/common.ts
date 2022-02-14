@@ -6,4 +6,3 @@ export const notNull = (data) => data !== null;
 
 export const notUndefined = (data) => data !== undefined;
 
-

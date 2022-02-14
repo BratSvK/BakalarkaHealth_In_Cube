@@ -26,6 +26,7 @@ import { RegisterPouzivatel } from 'src/app/models/pouzivatelRegistracia';
 import { Adresa } from 'src/app/models/adresa';
 
 import { faBaby } from '@fortawesome/free-solid-svg-icons';
+import { matchValues } from 'src/app/shared/auth-common';
 
 @Component({
   selector: 'app-register',
@@ -218,7 +219,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         ]),
         confirmPassword: new FormControl('', [
           Validators.required,
-          this.matchValues('password'),
+          matchValues('password'),
         ]),
       }),
       userAddress: new FormGroup({
@@ -254,13 +255,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     window.scrollTo(0, 0);
   }
 
-  private matchValues(matchTo: string): ValidatorFn {
-    return (control: AbstractControl) => {
-      return control?.value === control?.parent?.controls[matchTo].value
-        ? null
-        : { isMatching: true }; // return null ak prejde validacia
-    };
-  }
+  
 
   private createModelToSingUp(): RegisterPouzivatel {
    

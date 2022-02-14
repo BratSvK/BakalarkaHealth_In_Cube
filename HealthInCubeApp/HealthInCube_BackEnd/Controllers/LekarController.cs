@@ -199,6 +199,7 @@ namespace HealthInCube_BackEnd.Controllers
         /// </summary>
         /// <param name="bid">BID in user table(unique id)</param>
         /// <returns></returns>
+        [AllowAnonymous()]
         [HttpGet("types")]
         public async Task<ActionResult<IEnumerable<LekarTypeDto>>> GetTypesOfDoctors()
         {
