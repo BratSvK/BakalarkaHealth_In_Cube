@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthInCube_BackEnd.DTOs;
+using HealthInCube_BackEnd.DTOs.Nemocnica;
 using HealthInCube_BackEnd.Entities;
+using HealthInCube_BackEnd.Helpers.Params;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,9 +16,11 @@ namespace HealthInCube_BackEnd.Controllers
     /// <summary>
     /// Admin controller.
     /// </summary>
+    [Authorize(Roles = "Spravca")]
     public class SpravcaController : BaseApiController
     {
         private readonly INemocnicaRepistory _nemocnicaRepository;
+        private readonly IZiadankaRepository _ziadankaRepository;
         private readonly UserManager<Pouzivatel> _userManager;
 
         /// <summary>
@@ -24,15 +28,18 @@ namespace HealthInCube_BackEnd.Controllers
         /// </summary>
         /// <param name="nemocnicaRepository"></param>
         /// <param name="userManager"></param>
-        public SpravcaController(INemocnicaRepistory nemocnicaRepository, UserManager<Pouzivatel> userManager)
+        public SpravcaController(
+            INemocnicaRepistory nemocnicaRepository,
+            IZiadankaRepository ziadankaRepository,
+            UserManager<Pouzivatel> userManager)
         {
             _userManager = userManager;
             _nemocnicaRepository = nemocnicaRepository;
+            _ziadankaRepository = ziadankaRepository;
         }
 
         #region User-Roles
       
-        [Authorize(Roles = "Spravca")]
         [HttpGet("users-with-roles")]
         public async Task<ActionResult> GetUsersWithRoles()
         {
@@ -51,8 +58,6 @@ namespace HealthInCube_BackEnd.Controllers
             return Ok(users);
         }
 
-
-        [Authorize(Roles = "Spravca")]
         [HttpPost("edit-roles/{username}")]
         public async Task<ActionResult> EditRoles(string username, [FromQuery] string roles)
         {   
@@ -78,8 +83,6 @@ namespace HealthInCube_BackEnd.Controllers
 
         #endregion
 
-
-
         [HttpGet("nemocnice")]
         public async Task<ActionResult<IEnumerable<NemocnicaDto>>> GetNemocnice()
         {
@@ -88,14 +91,18 @@ namespace HealthInCube_BackEnd.Controllers
             if (nemocnice == null) return NotFound("Nothing found");
 
             return Ok(nemocnice);
-
         }
 
-
-        
-
-
-
-
+        /// <summary>
+        /// Get the list of requests by hospital.
+        /// </summary>
+        /// <param name="idNemocnica">Id of the hospital.</param>
+        /// <returns></returns>
+        [HttpGet("{idNemocnica}/request/list")]
+        public async Task<ActionResult<ZiadankaLekar>> GetAllRequestByDoctor(decimal idNemocnica, [FromQuery] SpravcaParams spravcaParams)
+        {
+            var requests = await _ziadankaRepository.GetZiadankyByHospitalId(idNemocnica, spravcaParams);
+            return Ok(requests);
+        }
     }
 }

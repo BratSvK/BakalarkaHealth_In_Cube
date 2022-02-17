@@ -11,7 +11,11 @@ const appRoutes: Routes = [
     {
         path: 'auth',
         loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule)                      
-    }, 
+    },
+    {
+        path: 'admin/:id',
+        loadChildren: () => import('./user/admin/admin.module').then((m) => m.AdminModule)                      
+    },  
     {   
         path:'practitioner/:id',
         canActivate: [AuthGuard],

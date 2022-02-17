@@ -1,8 +1,8 @@
 export interface Nemocnica {
-    id_nem: number;
+    idNem: number;
     nazov: string;
     mobil: string;
     ulica: string;
-    url_Stranka: string;
-    id_mesto: number;
+    urlStranka: string;
+    idMesto: number;
 }

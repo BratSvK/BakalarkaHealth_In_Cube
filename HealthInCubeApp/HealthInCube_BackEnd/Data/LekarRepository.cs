@@ -7,8 +7,10 @@ using AutoMapper.QueryableExtensions;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Lekar;
 using HealthInCube_BackEnd.DTOs.Lekar.LekarTyp;
+using HealthInCube_BackEnd.DTOs.Ziadanka;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Helpers;
+using HealthInCube_BackEnd.Helpers.Params;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -108,15 +110,14 @@ namespace HealthInCube_BackEnd.Data
 
         }
 
-        public async Task<IEnumerable<ZiadankaDto>> GetAllRequetsByDoctorIdAsync(decimal lekarId)
+        public async Task<IEnumerable<ZiadankaPacientDto>> GetAllRequetsByDoctorIdAsync(decimal lekarId)
         {
-            var requests =  await _context.Ziadanka
+            return await _context.Ziadanka
                 .Include(z => z.IdPouzivatelNavigation)
                 .Where(z => z.IdLekar == lekarId && z.AcceptedAt == null)
+                .ProjectTo<ZiadankaPacientDto>(_mapper.ConfigurationProvider)
                 .OrderBy(z => z.CreatedAt)
                 .ToListAsync();
-
-            return _mapper.Map<List<Ziadanka>, IEnumerable<ZiadankaDto>>(requests);
         }
 
         public void InsertItem(Lekar item)

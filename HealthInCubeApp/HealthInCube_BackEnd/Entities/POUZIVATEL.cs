@@ -16,10 +16,9 @@ namespace HealthInCube_BackEnd.Entities
             Lekars = new HashSet<Lekar>();
             Pacients = new HashSet<Pacient>();
             Ziadanky = new HashSet<Ziadanka>();
-
+            ZiadankaLekars = new HashSet<ZiadankaLekar>();
         }
 
-       
         public DateTime Registrovany { get; set; } = DateTime.Now;
         public string Meno { get; set; }
         public string Priezvisko { get; set; }
@@ -30,21 +29,14 @@ namespace HealthInCube_BackEnd.Entities
         public string Mobil { get; set; }
         public DateTime? PoslednePrihlasenie { get; set; }  = DateTime.Now;
         public string Pohlavie { get; set; }
-
-
         public decimal IdMestoNarodenia { get; set; }
-
         public virtual Mesto IdMestoNarodeniaNavigation { get; set;}
-
         public virtual FotkaPouzivatel FotkaPouzivatel { get; set; }
         public virtual ICollection<Bydlisko> Bydliskos { get; set; }
         public virtual ICollection<Lekar> Lekars { get; set; }
         public virtual ICollection<Pacient> Pacients { get; set; }
-
         public virtual ICollection<AppPouzivatelRola> PouzivatelRole { get; set; }
-
         public virtual ICollection<Ziadanka> Ziadanky { get; set; }
-
-
+        public virtual ICollection<ZiadankaLekar> ZiadankaLekars { get; set; }
     }
 }

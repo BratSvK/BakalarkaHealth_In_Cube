@@ -5,17 +5,23 @@ using System.Net.Mail;
 using System.Net.Mime;
 using System.Threading.Tasks;
 using AutoMapper;
+using EmailService.Models;
+using EmailService.Services;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Lekar;
 using HealthInCube_BackEnd.DTOs.Lekar.LekarTyp;
 using HealthInCube_BackEnd.DTOs.Pacient;
+using HealthInCube_BackEnd.DTOs.Ziadanka;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Extensions;
-using HealthInCube_BackEnd.Helpers;
+using HealthInCube_BackEnd.Helpers.Params;
 using HealthInCube_BackEnd.Interfaces;
+using HealthInCube_BackEnd.Properties;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using MimeKit;
+using MimeKit.Utils;
 
 namespace HealthInCube_BackEnd.Controllers
 {
@@ -31,6 +37,7 @@ namespace HealthInCube_BackEnd.Controllers
         private readonly IConfiguration _config;
         private readonly IPouzivatelRepository _pouzivatelRepository;
         private readonly IZiadankaRepository _ziadankaRepository;
+        private readonly IEmailSender _emailSenderService;
 
         /// <summary>
         /// Ctor.
@@ -40,7 +47,16 @@ namespace HealthInCube_BackEnd.Controllers
         /// <param name="mapper">Mapper</param>
         /// <param name="config">Data from config file app config.</param>
         /// <param name="pouzivatelRepository">User repository.</param>
-        public LekarController(ILekarRepository lekarRepo, IPacientRepository pacientRepository, IMapper mapper, IConfiguration config, IPouzivatelRepository pouzivatelRepository, IZiadankaRepository ziadankaRepository)
+        /// <param name="ziadankaRepository">Requuests repository.</param>
+        /// <param name="emailSenderService">Service for sending emails.</param>
+        public LekarController(
+            ILekarRepository lekarRepo,
+            IPacientRepository pacientRepository,
+            IMapper mapper,
+            IConfiguration config,
+            IPouzivatelRepository pouzivatelRepository,
+            IZiadankaRepository ziadankaRepository,
+            IEmailSender emailSenderService)
         {
             _lekarRepo = lekarRepo;
             _pacientRepository = pacientRepository;
@@ -48,6 +64,7 @@ namespace HealthInCube_BackEnd.Controllers
             _config = config;
             _pouzivatelRepository = pouzivatelRepository;
             _ziadankaRepository = ziadankaRepository;
+            _emailSenderService = emailSenderService;
         }
 
         /// <summary>
@@ -70,7 +87,7 @@ namespace HealthInCube_BackEnd.Controllers
         /// <param name="idLekar"></param>
         /// <returns></returns>
         [HttpGet("{idLekar}/request/all")]
-        public async Task<ActionResult<ZiadankaDto>> GetAllRequestByDoctor(decimal idLekar)
+        public async Task<ActionResult<ZiadankaPacientDto>> GetAllRequestByDoctor(decimal idLekar)
         {
             if (_lekarRepo.GetLekarEntity(idLekar).Result == null) return NotFound("Lekar neexistuje!");
             var requests = await _lekarRepo.GetAllRequetsByDoctorIdAsync(idLekar);
@@ -129,7 +146,7 @@ namespace HealthInCube_BackEnd.Controllers
         ///  Create an patient account.
         /// </summary>
         [HttpPost("createPatientAccount")]
-        public async Task<ActionResult<ZiadankaDto>> CreatePatientAccount([FromBody] CreatePatientAccountDto createPatientAccount)
+        public async Task<ActionResult<ZiadankaPacientDto>> CreatePatientAccount([FromBody] CreatePatientAccountDto createPatientAccount)
         {
             var patientId = _pacientRepository.GetItemsAsync().GetAwaiter().GetResult().Count();
 
@@ -153,7 +170,7 @@ namespace HealthInCube_BackEnd.Controllers
 
             if (await _pacientRepository.SaveAllAsync())
             {
-                SendConfirmationCreationEmailToPatient(userToPatient);
+                await SendConfirmationCreationEmailToPatient(userToPatient);
                 // may have more request to more doctors 
                 var requestToDelete = await RemoveFromRequest(userToPatient.Ziadanky, createPatientAccount.IdLekar);
 
@@ -219,7 +236,7 @@ namespace HealthInCube_BackEnd.Controllers
             return Ok(doctors);
         }
 
-        private async Task<ZiadankaDto> RemoveFromRequest(ICollection<Ziadanka> ziadanky, decimal idLekar)
+        private async Task<ZiadankaPacientDto> RemoveFromRequest(ICollection<Ziadanka> ziadanky, decimal idLekar)
         {
             var requestToDelete = ziadanky.SingleOrDefault(z => z.IdLekar == idLekar);
             if (requestToDelete == null) return null;
@@ -227,62 +244,39 @@ namespace HealthInCube_BackEnd.Controllers
             requestToDelete.AcceptedAt = DateTime.Now;
             _ziadankaRepository.UpdateItem(requestToDelete);
 
-            if (await _ziadankaRepository.SaveAllAsync()) return _mapper.Map<ZiadankaDto>(requestToDelete);
+            if (await _ziadankaRepository.SaveAllAsync()) return _mapper.Map<ZiadankaPacientDto>(requestToDelete);
 
             return null;
         }
 
-        private void SendConfirmationCreationEmailToPatient(Pouzivatel userToPatient)
+        private async Task SendConfirmationCreationEmailToPatient(Pouzivatel userToPatient)
         {
-
             if (userToPatient == null)
             {
                 return;
             }
-            var smtpAddress = _config["Smtp:Host"];
-            var portNumber = int.Parse(_config["Smtp:Port"]);
-            var enableSSL = true;
-            var emailFromAddress = _config["Smtp:Username"]; //Sender Email Address  
-            var password = _config["Smtp:Password"]; //Sender Password  
-            var emailToAddress = userToPatient.Email;
-
+            var builder = new BodyBuilder();
             string filePath = $"{System.IO.Directory.GetCurrentDirectory()}\\Assets\\logo.jpg";
-
-            var linkedResource = new LinkedResource(filePath, MediaTypeNames.Image.Jpeg);
-
-            var subject = "Your patient account has been created";
-            var body = "<div style='text-align: center; background-color:  rgba(255, 230, 208, 0.363); width: 50%; position: absolute; margin-left: 25%; border-style: solid; border-width: 1px;border-color: rgba(255, 68, 0, 0.37);" +
-             "border-radius:3px; padding: 10px;'>" + $"<div><img style='background: #ffe6d0; width: 100px; height: 100px;'" +
-             $"src=\"cid:{linkedResource.ContentId}\"></img></div>" +
+            var image = builder.LinkedResources.Add(filePath);
+            image.ContentId = MimeUtils.GenerateMessageId();
+            var subject = Resource.SubjectPatientAccountCreated;
+            builder.HtmlBody = "<div style='text-align: center; background-color:  rgba(255, 230, 208, 0.363); width: 50%; position: absolute; margin-left: 25%; border-style: solid; border-width: 1px;border-color: rgba(255, 68, 0, 0.37);" +
+             "border-radius:3px; padding: 10px;'>" +
+             $"<div><img style='background: #ffe6d0; width: 100px; height: 100px;'" +
+             $"src=\"cid:{image.ContentId}\"></img></div>" +
              "<br>" +
-             "<div style ='font-size: large; color: dimgray;'>Dear " + userToPatient.GetFullName() + ",</div>" +
+             "<div style ='font-size: large; color: dimgray;'>" + userToPatient.GetFullName() + ",</div>" +
              "<br>" +
-             "<div style ='font-size: meddium; color: dimgray;'> Your patient account has been created successfully! </div> " +
+             "<div style ='font-size: meddium; color: dimgray;'> Váš účet pacienta bol úspešne vytvorený! </div> " +
              "<br>" +
-            "<div style ='font-size: meddium; color: dimgray;'> Please update your profile and set your health insurance company</div> " +
+            "<div style ='font-size: meddium; color: dimgray;'> Aktualizujte si profil a nastavte si zdravotnú poisťovňu</div> " +
              "<br>" +
-             "<div style ='font-size: meddium; color: dimgray;'> Have a nice day!  </div> " +
+             "<div style ='font-size: meddium; color: dimgray;'> Pekný deň a chráňte si zdravie! </div> " +
              "<div style ='font-size: meddium; color: dimgray;'> The HealthInCube Team </div> "
             + "</div>";
 
-            var alternativeView = AlternateView.CreateAlternateViewFromString(body, null, MediaTypeNames.Text.Html);
-            alternativeView.LinkedResources.Add(linkedResource);
-
-            using (MailMessage mail = new MailMessage())
-            {
-                mail.From = new MailAddress(emailFromAddress);
-                mail.To.Add(emailToAddress);
-                mail.Subject = subject;
-                mail.AlternateViews.Add(alternativeView);
-                mail.IsBodyHtml = true;
-                //mail.Attachments.Add(new Attachment("D:\\TestFile.txt"));//--Uncomment this to send any attachment  
-                using (SmtpClient smtp = new SmtpClient(smtpAddress, portNumber))
-                {
-                    smtp.Credentials = new System.Net.NetworkCredential(emailFromAddress, password);
-                    smtp.EnableSsl = enableSSL;
-                    smtp.Send(mail);
-                }
-            }
+            var message = new Message(new string[] { userToPatient.Email }, subject, builder.ToMessageBody());
+            await _emailSenderService.SendEmailAsync(message);
         }
     }
 }

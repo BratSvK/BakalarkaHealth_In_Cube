@@ -1,10 +1,10 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { Lekar } from "src/app/models/lekar/lekar";
-import { Ziadanka } from "src/app/models/ziadanka";
+import { ZiadankaPacient } from "src/app/models/ziadanka/ziadankaPacient";
 
 export interface LekarState {
     practitioner: Lekar, 
-    ziadanky: Ziadanka[]
+    ziadanky: ZiadankaPacient[]
 }
 
 export const getPractitionerState = createFeatureSelector('lekar');

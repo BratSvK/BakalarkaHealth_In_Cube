@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
 namespace HealthInCube_BackEnd
@@ -28,7 +27,6 @@ namespace HealthInCube_BackEnd
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplicationServices(_configuration);
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

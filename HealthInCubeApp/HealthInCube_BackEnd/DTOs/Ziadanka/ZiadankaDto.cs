@@ -1,15 +1,13 @@
 using System;
 
-namespace HealthInCube_BackEnd.DTOs
+namespace HealthInCube_BackEnd.DTOs.Ziadanka
 {
     /// <summary>
-    /// Domain model from db.
+    /// Domain base model of requests from db.
     /// </summary>
-    public class ZiadankaDto
+    public abstract class ZiadankaBaseDto
     {
         public decimal IdUser { get; set; }
-
-        public decimal IdLekar { get; set; }
 
         public DateTime? AcceptedAt { get; set; }
 

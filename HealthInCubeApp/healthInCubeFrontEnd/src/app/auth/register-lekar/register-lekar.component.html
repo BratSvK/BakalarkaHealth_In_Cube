@@ -215,7 +215,7 @@
                             <select class="custom-select d-block w-100" id="nemocnica" formControlName="idNemocnica"
                                 (ngModelChange)="onChangeBirthOkres()">
                                 <option [disabled]="true" [selected]="true" value="">Choose...</option>
-                                <option [ngValue]="nemocnica.id_nem" *ngFor="let nemocnica of nemocnice">{{nemocnica.nazov}}
+                                <option [ngValue]="nemocnica.idNem" *ngFor="let nemocnica of nemocnice">{{nemocnica.nazov}}
                                 </option>
                             </select>
                         </div>

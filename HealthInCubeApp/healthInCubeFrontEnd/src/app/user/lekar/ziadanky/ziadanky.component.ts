@@ -2,12 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { Ziadanka } from 'src/app/models/ziadanka';
 import { AppState } from 'src/app/_store/models/AppState';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 import * as LekarActionsBundle from '../store/lekar.actions';
 import { CreatePatient } from 'src/app/models/createPatient';
+import { ZiadankaPacient } from 'src/app/models/ziadanka/ziadankaPacient';
 
 @Component({
   selector: 'app-ziadanky',
@@ -18,7 +18,7 @@ export class ZiadankyComponent implements OnInit, OnDestroy {
 
   checkIcon = faCheck;
 
-  requests: Ziadanka[] = [];
+  requests: ZiadankaPacient[] = [];
   ziadankaSub: Subscription;
 
   constructor(private store: Store<AppState>) {}

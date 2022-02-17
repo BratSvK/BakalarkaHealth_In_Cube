@@ -8,6 +8,7 @@ using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.Entities;
+using HealthInCube_BackEnd.DTOs.Nemocnica;
 
 namespace HealthInCube_BackEnd.Data
 {
@@ -57,7 +58,7 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<NemocnicaDto> GetItemAsync(decimal itemId)
         {
-            var nemocnica = await _context.Nemocnica.ProjectTo<NemocnicaDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(n => n.Id_nem == itemId);
+            var nemocnica = await _context.Nemocnica.ProjectTo<NemocnicaDto>(_mapper.ConfigurationProvider).FirstOrDefaultAsync(n => n.IdNem == itemId);
             return nemocnica;
         }
 

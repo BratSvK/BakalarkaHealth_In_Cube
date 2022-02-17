@@ -1,22 +1,19 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Router } from "@angular/router";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { ToastrService } from "ngx-toastr";
 import { of } from "rxjs";
 import { catchError, map, switchMap, withLatestFrom } from "rxjs/operators";
 import { Lekar } from "src/app/models/lekar/lekar";
-import { Ziadanka } from "src/app/models/ziadanka";
+import { ZiadankaPacient } from "src/app/models/ziadanka/ziadankaPacient";
 import { LekarIdService } from "src/app/_service/lekar-id.service";
 import { AppState } from "src/app/_store/models/AppState";
 import { environment } from "src/environments/environment";
 
 import * as LekarActionsBundle from './lekar.actions';
 
-
 const fetchUrl = environment.apiUrl; // ....../api/
-
 
 @Injectable()
 export class LekarEffects {
@@ -29,7 +26,7 @@ export class LekarEffects {
             return +lekarData[1].practitioner.idLekar;
         }),
         switchMap(id => {
-            return this.http.get<Ziadanka[]>(fetchUrl + `lekar/${id}/request/all`);
+            return this.http.get<ZiadankaPacient[]>(fetchUrl + `lekar/${id}/request/all`);
         }),
         map((ziadanky) => {
             return new LekarActionsBundle.SetRequests(ziadanky);
@@ -63,7 +60,7 @@ export class LekarEffects {
         this.actions$.pipe(
             ofType(LekarActionsBundle.ACCEPT_REQUEST),
             switchMap((action: LekarActionsBundle.AcceptRequest) => {
-                return this.http.post<Ziadanka>(fetchUrl + `lekar/createPatientAccount`, action.payload).pipe(
+                return this.http.post<ZiadankaPacient>(fetchUrl + `lekar/createPatientAccount`, action.payload).pipe(
                     map((ziadanka) => {
                         this.toastr.success("Pacient vytvorený");
                         return new LekarActionsBundle.DeleteRequest(ziadanka);
@@ -81,7 +78,6 @@ export class LekarEffects {
         private actions$: Actions,
         private http: HttpClient,
         private store$: Store<AppState>,
-        private router: Router,
         private toastr: ToastrService,
         private lekarIdService: LekarIdService
       ) {}

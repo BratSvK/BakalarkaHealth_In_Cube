@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using HealthInCube_BackEnd.Data;
 using HealthInCube_BackEnd.Entities;
@@ -13,20 +14,22 @@ namespace HealthInCube_BackEnd.Extensions
     {
         public static IServiceCollection AddIdentityService(this IServiceCollection services, IConfiguration config)
         {
-
-             
             // this is signle page application not MVC 
-            services.AddIdentityCore<Pouzivatel>(opt =>{
+            services.AddIdentityCore<Pouzivatel>(opt =>
+            {
                 opt.Password.RequireNonAlphanumeric = false;
             })
                 .AddRoles<AppRola>()
                 .AddRoleManager<RoleManager<AppRola>>()
                 .AddSignInManager<SignInManager<Pouzivatel>>()
                 .AddRoleValidator<RoleValidator<AppRola>>()
-                .AddEntityFrameworkStores<HealthInCubeContext>();           // set up our database with .net indetity tables 
+                .AddEntityFrameworkStores<HealthInCubeContext>()          // set up our database with .net indetity tables
+                .AddDefaultTokenProviders();
 
+            // set life time four our token
 
-
+            services.Configure<DataProtectionTokenProviderOptions>(
+                opt => opt.TokenLifespan = TimeSpan.FromHours(2));
 
              // service for authentification
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -39,8 +42,6 @@ namespace HealthInCube_BackEnd.Extensions
                         ValidateAudience = false            // angular app 
                     };
                 });
-
-
                 return services;
         }
     }
