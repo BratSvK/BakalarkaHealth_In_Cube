@@ -80,9 +80,11 @@ namespace HealthInCube_BackEnd.Helpers
             CreateMap<Sprievodka, SprievodkaLekarDto>();
 
             CreateMap<ZiadankaLekar, ZiadankaLekarDto>()
-                .ForMember(dest => dest.Pouzivatel, conf => conf.MapFrom(z => z.PouzivatelNavigation)); ;
+                .ForMember(dest => dest.Pouzivatel, conf => conf.MapFrom(z => z.PouzivatelNavigation));
             CreateMap<Ziadanka, ZiadankaPacientDto>()
-                .ForMember(dest => dest.Pouzivatel, conf => conf.MapFrom(z => z.IdPouzivatelNavigation)); ;
+                .ForMember(dest => dest.Pouzivatel, conf => conf.MapFrom(z => z.IdPouzivatelNavigation));
+
+            CreateMap<AtestaciaLekarDto, AtestacieLekar>();
         }
     }
 }

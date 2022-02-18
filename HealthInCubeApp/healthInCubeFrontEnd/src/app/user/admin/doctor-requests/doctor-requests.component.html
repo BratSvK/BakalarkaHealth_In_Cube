@@ -1,0 +1,15 @@
+<table class="table table-striped">
+    <thead class="thead-dark">
+      <th >Pacient</th>
+      <th style="text-align: center;">Vytvorenie</th>
+      <th style="text-align: center;">Schválenie</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let req of requests">
+        <td>{{req.pouzivatel.fullName}}</td>
+        <td style="text-align: center;">{{req.createdAt | date: 'medium'}}</td>
+        <td style="text-align: center;" ><button class="btn btn-success" (click)="onApproveDoctor(req.idUser)"><fa-icon  [icon]="checkIcon"></fa-icon></button></td>
+      </tr>
+    </tbody>
+  </table>
+

@@ -96,12 +96,11 @@ namespace HealthInCube_BackEnd.Controllers
         /// <summary>
         /// Get the list of requests by hospital.
         /// </summary>
-        /// <param name="idNemocnica">Id of the hospital.</param>
         /// <returns></returns>
-        [HttpGet("{idNemocnica}/request/list")]
-        public async Task<ActionResult<ZiadankaLekar>> GetAllRequestByDoctor(decimal idNemocnica, [FromQuery] SpravcaParams spravcaParams)
+        [HttpGet("request/list")]
+        public async Task<ActionResult<ZiadankaLekar>> GetAllRequestByDoctor([FromQuery] SpravcaParams spravcaParams)
         {
-            var requests = await _ziadankaRepository.GetZiadankyByHospitalId(idNemocnica, spravcaParams);
+            var requests = await _ziadankaRepository.GetZiadankyByHospitalId(spravcaParams);
             return Ok(requests);
         }
     }

@@ -10,6 +10,7 @@ export interface Lekar {
     oddelenieNazov: string;
     fotka: any;
     atestacieId: number[];
+    isActivated: boolean;
 }
 
 export const AtestacieVseobecnyIds  = [65, 66];

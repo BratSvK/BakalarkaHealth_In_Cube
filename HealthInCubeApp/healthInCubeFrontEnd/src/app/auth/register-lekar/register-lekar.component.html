@@ -207,15 +207,29 @@
                 </div>
                 
                 <hr class="mb-4">
-                <h4 class="mb-3 text-uppercase"><i class="fa fa-user mr-2"></i>Lekárske data</h4>
+                <h4 class="mb-3 text-uppercase">
+                    <i class="fa fa-user mr-2"></i>
+                    Lekárske data
+                </h4>
                 <div formGroupName="lekarData">
                     <div class="form-row">
                         <div class="col-md-6 mb-3">
                             <label for="nemocnica">Nemocnica</label>
-                            <select class="custom-select d-block w-100" id="nemocnica" formControlName="idNemocnica"
-                                (ngModelChange)="onChangeBirthOkres()">
-                                <option [disabled]="true" [selected]="true" value="">Choose...</option>
-                                <option [ngValue]="nemocnica.idNem" *ngFor="let nemocnica of nemocnice">{{nemocnica.nazov}}
+                            <select 
+                                    class="custom-select d-block w-100" 
+                                    id="nemocnica" 
+                                    formControlName="idNemocnica"
+                                    (ngModelChange)="onChangeBirthOkres()">
+                                <option 
+                                        [disabled]="true" 
+                                        [selected]="true" 
+                                        value="">
+                                        Choose...
+                                </option>
+                                <option 
+                                       [ngValue]="nemocnica.idNem" 
+                                       *ngFor="let nemocnica of nemocnice">
+                                       {{nemocnica.nazov}}
                                 </option>
                             </select>
                         </div>
@@ -230,25 +244,9 @@
                             </select>
                         </div>
                     </div>
+                   
                         <div class="form-row">
-                            <div class="col-md-6 mb-3">
-                                <label for="idTypVysetrenia">
-                                    Typ lekára
-                                  </label>
-                                  <select class="custom-select d-block w-100" 
-                                          id="idTypDoctor" 
-                                          formControlName="idTypDoctor">
-                                    <option [disabled]="true" 
-                                            [selected]="true" 
-                                            value="">Vyber...
-                                    </option>
-                                    <option [ngValue]="typeDoc.idTyp" 
-                                            *ngFor="let typeDoc of doctorTypes">
-                                            {{typeDoc.nazov}}
-                                    </option>
-                                  </select>
-                            </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md mb-3">
                             <label for="dlzkaVysetrenia">Dĺžka vyšetrenia (minúty-odhad)</label>
                             <input 
                                     type="number" 
@@ -261,7 +259,101 @@
                                     max="120">
                         </div>
                     </div>
-                </div>
+                    <h4>Atestacie</h4>
+                    <div class="form-row ">
+                        <div class="col-md-12"
+                            formArrayName="atestacieLekar">
+                            <div 
+                                class="form-row mr-2 mt-2"
+                                *ngFor="let atestaciaDoctor of atestacieLekar; let i = index"
+                                [formGroupName]="i"
+                                >
+                                <div class="col-md-8">
+                                    <select class="custom-select d-block w-100" 
+                                          id="idTypDoctor" 
+                                          formControlName="idTypSelected"
+                                          (ngModelChange)="onSelectAtestaciaType(i)">
+                                    <option [disabled]="true" 
+                                            [selected]="true" 
+                                            value="">Vyber...
+                                    </option>
+                                    <option [ngValue]="typeDoc.idTyp" 
+                                            *ngFor="let typeDoc of doctorTypes">
+                                            {{typeDoc.nazov}}
+                                    </option>
+                                  </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <input 
+                                        type="number" 
+                                        class="form-control"
+                                        formControlName="idTyp"
+                                        min="0">
+                                </div>
+                                <div class="col-md-2">
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-danger float-right"
+                                        (click)="onDeleteAtestacia(i)">
+                                        X
+                                </button>
+                                </div>
+                            </div>
+                         </div>
+                    </div>
+                <hr>
+                <h4>Pracovná doba</h4>
+                    <div class="form-row ">
+                        <div class="col-md-12"
+                            formArrayName="atestacieLekar">
+                            <div 
+                                class="form-row mr-2 mt-2"
+                                *ngFor="let atestaciaDoctor of atestacieLekar; let i = index"
+                                [formGroupName]="i"
+                                >
+                                <div class="col-md-8">
+                                    <select class="custom-select d-block w-100" 
+                                          id="idTypDoctor" 
+                                          formControlName="idTypSelected"
+                                          (ngModelChange)="onSelectAtestaciaType(i)">
+                                    <option [disabled]="true" 
+                                            [selected]="true" 
+                                            value="">Vyber...
+                                    </option>
+                                    <option [ngValue]="typeDoc.idTyp" 
+                                            *ngFor="let typeDoc of doctorTypes">
+                                            {{typeDoc.nazov}}
+                                    </option>
+                                  </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <input 
+                                        type="number" 
+                                        class="form-control"
+                                        formControlName="idTyp"
+                                        min="0">
+                                </div>
+                                <div class="col-md-2">
+                                    <button 
+                                        type="button" 
+                                        class="btn btn-danger float-right"
+                                        (click)="onDeleteAtestacia(i)">
+                                        X
+                                </button>
+                                </div>
+                            </div>
+                         </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <button
+                                type="button"
+                                class="btn btn-success"
+                                (click)="onAddAtestacia()">Pridaj atestáciu</button>
+                        </div>
+                    </div>
                 <hr class="mt-4">
                 <p class="text-muted">*(Povinné)</p>
                 <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="registerForm.invalid">Vytvor</button>

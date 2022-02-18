@@ -7,7 +7,7 @@ import { environment } from 'src/environments/environment';
 import { LekarSprievodka } from '../models/lekar/lekarSprievodka';
 import { LekarTyp } from '../models/lekar/typLekar';
 import { notNull, notUndefined } from '../shared/common';
-import { getPractitionerAtestationsId, getPractitionorIdState } from '../user/lekar/store/modelStore/LekarState';
+import { getPractitionerAtestationsId, getPractitionerIsActivatedAccount, getPractitionorIdState } from '../user/lekar/store/modelStore/LekarState';
 import { LEKAR_API } from '../_constants/endPointsApi';
 import { AppState } from '../_store/models/AppState';
 
@@ -51,6 +51,17 @@ export class LekarService {
 
   getLoginDoctorId$(): Observable<number> {
     return this.store.select(getPractitionorIdState).pipe(
+      filter(notUndefined),
+      take(1)
+    );
+  }
+
+  checkIsActivetedDoctorAccountApi$(): Observable<boolean> {
+    return this.http.get<boolean>(this.baseUrl + `${LEKAR_API}/activated`);
+  }
+
+  checkIsActivetedDoctorAccount$() : Observable<boolean> {
+    return this.store.select(getPractitionerIsActivatedAccount).pipe(
       filter(notUndefined),
       take(1)
     );

@@ -146,7 +146,7 @@ namespace HealthInCube_BackEnd.Controllers
         /// <param name="registeredUser">register object to work with</param>
         /// <returns></returns>
         [HttpPost("register/lekar")]
-        public async Task<ActionResult<PouzivatelDto>> RegisterDoctor(LekarRegisterDto lekarRegister)
+        public async Task<IActionResult> RegisterDoctor(LekarRegisterDto lekarRegister)
         {
             // check if we have a username in db
             if (await UserExists(lekarRegister.Email))
@@ -163,9 +163,9 @@ namespace HealthInCube_BackEnd.Controllers
             var bydliskoToUser = _mapper.Map<Bydlisko>(adresaRegister);
             user.Bydliskos.Add(bydliskoToUser);
 
-            // EF uses 
-            var result = await _userManager.CreateAsync(user, lekarRegister.Password);     // create user and save changes to DB 
-
+            // EF uses
+            // create user and save changes to DB 
+            var result = await _userManager.CreateAsync(user, lekarRegister.Password);     
             if (!result.Succeeded) return BadRequest(result.Errors);
 
             // adding a member role to  new user -> registration is only for pacient
@@ -178,22 +178,23 @@ namespace HealthInCube_BackEnd.Controllers
                 IdLekar = _lekarRepository.GetCountAsync().Result + 1,
                 IdPouzivatel = user.Id,
                 PracovnaDobas = _mapper.Map<ICollection<PracovnaDoba>>(lekarRegister.PracovnaDobas),
-                IdOddel = lekarRegister.IdOddel,
+                IdOddel = lekarRegister.IdOddelenie,
                 DlzkaVysetrenia = lekarRegister.DlzkaVysetrenia
             };
 
             _lekarRepository.InsertItem(lekar);
 
-            if (await _lekarRepository.SaveAllAsync())
+            // here we need to send ziadanka  to Admin 
+            var ziadanka = new ZiadankaLekar
             {
-                return Ok(new PouzivatelDto
-                {
-                    Email = user.Email,
-                    Token = _tokenService.CreateToken(user).Result,
-                    FullName = user.GetFullName(),
-                    Fotka = _fotoRepository.GetItemAsync(user.Id).Result?.Fotka,
-                    Id = user.Id
-                });
+                IdUser = user.Id,
+                IdNemocnica = lekarRegister.IdNemocnica
+            };
+            _ziadankaRepository.InsertDoctorRequests(ziadanka);
+
+            if (await _ziadankaRepository.SaveAllAsync())
+            {
+                return Ok();
             }
 
             return BadRequest("Failed to register lekar!!");
@@ -285,10 +286,6 @@ namespace HealthInCube_BackEnd.Controllers
 
             return Ok();
         }
-
-
-
-
         private async Task<bool> UserExists(string email)  => await _userManager.Users.AnyAsync(x => x.Email == email.ToLower());
     }
 }

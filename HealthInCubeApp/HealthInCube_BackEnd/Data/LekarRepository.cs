@@ -101,13 +101,12 @@ namespace HealthInCube_BackEnd.Data
                     Nemocnica = l.IdOddelNavigation.IdNemNavigation.Nazov,
                     OddelenieNazov = l.IdOddelNavigation.NazovOdd,
                     AtestacieId = l.AtestacieLekars.Select(a => a.IdTyp).ToList(),
-                    Fotka = l.IdPouzivatelNavigation.FotkaPouzivatel.Fotka
+                    Fotka = l.IdPouzivatelNavigation.FotkaPouzivatel.Fotka,
+                    IsActivated = l.IsActivated
                 })
                 .AsNoTracking().AsQueryable();
 
-
             return await lekar.SingleOrDefaultAsync();
-
         }
 
         public async Task<IEnumerable<ZiadankaPacientDto>> GetAllRequetsByDoctorIdAsync(decimal lekarId)
@@ -224,5 +223,11 @@ namespace HealthInCube_BackEnd.Data
                 .Select(l => l.DlzkaVysetrenia)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<bool> GetIsActivatedAccountAsync(decimal idPouzivatel)
+         => await _context.Lekar
+                    .Where(l => l.IdPouzivatel == idPouzivatel)
+                    .Select(l => l.IsActivated)
+                    .FirstOrDefaultAsync();
     }
 }

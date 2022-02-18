@@ -27,5 +27,7 @@ namespace HealthInCube_BackEnd.Interfaces
         Task<IEnumerable<LekarSprievodkaDto>> GetLekarsByType(decimal idTyp);
 
         Task<int> GetAverageTimePerPatientAsync(decimal lekarId);
+
+        Task<bool> GetIsActivatedAccountAsync(decimal pouzivatelId);
     }
 }

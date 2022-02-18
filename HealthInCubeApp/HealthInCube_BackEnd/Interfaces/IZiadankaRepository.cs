@@ -10,6 +10,8 @@ namespace HealthInCube_BackEnd.Interfaces
     {
         Task<Ziadanka> GetZiadankaByPatientId(int id);
         Task<Ziadanka> GetZiadankaByDoctorId(int id);
-        Task<PagedList<ZiadankaLekarDto>> GetZiadankyByHospitalId(decimal hospitalId, SpravcaParams spravcaParams);
+        Task<PagedList<ZiadankaLekarDto>> GetZiadankyByHospitalId(SpravcaParams spravcaParams);
+
+        void InsertDoctorRequests(ZiadankaLekar ziadankaLekar);
     }
 }

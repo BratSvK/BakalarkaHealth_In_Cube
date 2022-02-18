@@ -18,3 +18,8 @@ export const getPractitionorIdState = createSelector(
     getPractitionerState,
     (state: LekarState) => state.practitioner.atestacieId
   );
+
+  export const getPractitionerIsActivatedAccount= createSelector(
+    getPractitionerState,
+    (state: LekarState) => state.practitioner.isActivated
+  );

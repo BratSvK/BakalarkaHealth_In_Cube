@@ -143,6 +143,18 @@ namespace HealthInCube_BackEnd.Controllers
         }
 
         /// <summary>
+        /// Check if doctor account is activated.
+        /// </summary>
+        /// <param name="idLekar"></param>
+        /// <returns></returns>
+        [HttpGet("activated")]
+        public async Task<ActionResult<bool>> GetIsActivatedAccount()
+        {
+            var isActivated = await _lekarRepo.GetIsActivatedAccountAsync(User.GetUserId());
+            return Ok(isActivated);
+        }
+
+        /// <summary>
         ///  Create an patient account.
         /// </summary>
         [HttpPost("createPatientAccount")]

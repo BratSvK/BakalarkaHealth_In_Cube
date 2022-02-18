@@ -1,6 +1,6 @@
 
 export enum Role {
-    Admin = 'Admin',
+    Admin = 'Spravca',
     Patient = 'Pacient',
     Practitioner = 'Lekar'
 };

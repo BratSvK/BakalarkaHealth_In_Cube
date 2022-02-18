@@ -2,5 +2,6 @@
 {
     public class SpravcaParams : ParamsBase 
     {
+        public decimal IdNemocnica { get; set; }
     }
 }

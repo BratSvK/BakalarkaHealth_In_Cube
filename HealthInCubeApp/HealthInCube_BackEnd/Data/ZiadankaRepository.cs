@@ -61,6 +61,10 @@ namespace HealthInCube_BackEnd.Data
 
         }
 
+        /// <summary>
+        /// Insert request from user to patient.
+        /// </summary>
+        /// <param name="item">Patient request.</param>
         public void InsertItem(Ziadanka item)
         {
             _context.Ziadanka.Add(item);
@@ -87,19 +91,28 @@ namespace HealthInCube_BackEnd.Data
             return await _context.Ziadanka.FindAsync(userId);
         }
 
-        public async Task<PagedList<ZiadankaLekarDto>> GetZiadankyByHospitalId(decimal hospitalId, SpravcaParams spravcaParams)
+        public async Task<PagedList<ZiadankaLekarDto>> GetZiadankyByHospitalId(SpravcaParams spravcaParams)
         {
             var query = _context.ZiadankaLekars
                 .Include(z => z.PouzivatelNavigation)
                 .AsQueryable();
 
-            query = query.Where(z => z.IdNemocnica == hospitalId && z.AcceptedAt != null);
+            query = query.Where(z => z.IdNemocnica == spravcaParams.IdNemocnica && z.AcceptedAt != null);
 
             // pasing queriy to pageList class.
             return await PagedList<ZiadankaLekarDto>.CreateAsync(
                 query.ProjectTo<ZiadankaLekarDto>(_mapper.ConfigurationProvider).AsNoTracking(),
                 spravcaParams.PageNumber,
                 spravcaParams.PageSize);
+        }
+
+        /// <summary>
+        /// Insert request for user to doctor.
+        /// </summary>
+        /// <param name="ziadankaLekar">Doctor request.</param>
+        public void InsertDoctorRequests(ZiadankaLekar ziadankaLekar)
+        {
+            _context.ZiadankaLekars.Add(ziadankaLekar);
         }
     }
 }

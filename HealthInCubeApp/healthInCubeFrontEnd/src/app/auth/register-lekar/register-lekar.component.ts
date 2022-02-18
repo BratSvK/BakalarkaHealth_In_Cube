@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faBaby } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
 import * as moment from 'moment';
 import { Observable } from 'rxjs';
 import { Adresa } from 'src/app/models/adresa';
+import { AtestaciaLekar } from 'src/app/models/lekar/atestacia/atestaciaLekar';
 import { LekarRegister } from 'src/app/models/lekar/lekarRegister';
 import { LekarTyp } from 'src/app/models/lekar/typLekar';
 import { Mesto } from 'src/app/models/mesto';
@@ -44,7 +45,9 @@ export class RegisterLekarComponent implements OnInit {
 
   typeOfDoctors$: Observable<LekarTyp[]>;
 
-
+  get atestacieLekar() {
+    return (<FormArray>this.registerForm.get('lekarData.atestacieLekar')).controls;
+  }
 
   constructor(
     private store: Store<AppState>,
@@ -164,11 +167,12 @@ export class RegisterLekarComponent implements OnInit {
   }
 
   onSubmit() {
-    var registerPouzivatel = this.createModelToSingUp();
-    this.isSubmitted = true;
-    this.store.dispatch(
-      new RegisterBundleActions.RegisterUserStart(registerPouzivatel)
-    );
+    var registerPouzivatelToDoctor = this.createModelToSingUp();
+    console.log(registerPouzivatelToDoctor);
+    // this.isSubmitted = true;
+    // this.store.dispatch(
+    //   new RegisterBundleActions.RegisterUserStart(registerPouzivatel)
+    // );
   }
 
 
@@ -213,10 +217,33 @@ export class RegisterLekarComponent implements OnInit {
         idNemocnica: new FormControl(null, [Validators.required]),
         idOddelenie: new FormControl(null, [Validators.required]),
         dlzkaVysetrenia: new FormControl(30, [Validators.required, Validators.min(1), Validators.max(120)]),
-        idTypDoctor: new FormControl(null, [Validators.required]) 
+        atestacieLekar: new FormArray([
+           new FormGroup({
+            idTypSelected: new FormControl('', [Validators.required]),
+            idTyp: new FormControl({value: '', disabled: true}, [Validators.required]),
+          })
+        ]) 
       }
       )
     });
+  }
+
+  onSelectAtestaciaType(index: number) {
+      const idTypSelected = (this.atestacieLekar[index].value as AtestaciaLekar).idTypSelected;
+      this.atestacieLekar[index].get('idTyp').setValue(idTypSelected);
+  }
+
+  onAddAtestacia() {
+    (<FormArray>this.registerForm.get('lekarData.atestacieLekar')).push(
+      new FormGroup({
+        idTypSelected: new FormControl('', [Validators.required]),
+        idTyp:  new FormControl({value: '', disabled: true}, [Validators.required]),
+      })
+    )
+  }
+
+  onDeleteAtestacia(index: number) {
+    (<FormArray>this.registerForm.get('lekarData.atestacieLekar')).removeAt(index);
   }
 
   private createModelToSingUp(): LekarRegister {
@@ -241,7 +268,8 @@ export class RegisterLekarComponent implements OnInit {
       idMestoNarodenia: +this.registerForm.get('birthPlace.cityBirth').value,
       idOddel: 1,
       dlzkaVysetrenia: this.registerForm.get('lekarData').value.dlzkaVysetrenia,
-      pracovnaDobas: []
+      pracovnaDobas: [],
+      atestacieLekars: []
     };
   }
 }

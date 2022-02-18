@@ -29,6 +29,7 @@ namespace HealthInCube_BackEnd.DTOs
         public byte[] Fotka { get; set; }
         public string Nemocnica { get; set; }
         public string OddelenieNazov { get; set; }
+        public bool IsActivated { get; set; } = false;
         public ICollection<decimal> AtestacieId { get; set; }   
     }
 }

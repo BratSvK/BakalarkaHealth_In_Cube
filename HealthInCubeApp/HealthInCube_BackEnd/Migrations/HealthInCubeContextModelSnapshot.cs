@@ -287,6 +287,9 @@ namespace HealthInCube_BackEnd.Migrations
                         .HasColumnType("NUMBER(38)")
                         .HasColumnName("ID_POUZIVATEL");
 
+                    b.Property<bool>("IsActivated")
+                        .HasColumnType("NUMBER(1)");
+
                     b.HasKey("IdLekar");
 
                     b.HasIndex(new[] { "IdPouzivatel" }, "IX_RELATIONSHIP16");
