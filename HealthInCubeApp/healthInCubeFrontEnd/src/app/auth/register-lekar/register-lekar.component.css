@@ -29,14 +29,14 @@
     font-weight: bold;
 }
 
-  
-
-
 
 h4 {
     text-decoration: underline;
 }
 
+.workingday {
+    align-items: center;
+}
 
 
 
@@ -79,4 +79,28 @@ input.ng-touched.ng-invalid {
   0% { background-position: 0 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0 50%; }
+}
+
+.od {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.do {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.obed {
+    color: #212529;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }

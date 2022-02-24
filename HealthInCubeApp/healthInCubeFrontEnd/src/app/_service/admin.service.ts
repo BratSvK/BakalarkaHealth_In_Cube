@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { CreatePatient } from '../models/createPatient';
 import { ZiadankaLekar } from '../models/ziadanka/ziadankaLekar';
 import { ZiadankaParams } from '../models/ziadanka/ziadankaParams';
 import { extractKeyFromParams } from '../shared/common';
@@ -38,6 +38,14 @@ export class AdminService {
       }));
     }
 
+    activateDoctorAccount(createPatient: CreatePatient) {
+      return this.http.post(this.baseUrl + `${SPRAVCA_API}/activateDoctorAccount` , createPatient);
+    }
+
+    removeFromCache(idNemocnica: number) {
+      const keyFromParams = extractKeyFromParams(new ZiadankaParams(idNemocnica));
+      this.sprievodkaCache.delete(keyFromParams);
+    }
 
     clearCacheOfRequests() {
       this.sprievodkaCache.clear();

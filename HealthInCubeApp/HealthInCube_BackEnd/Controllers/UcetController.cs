@@ -20,6 +20,8 @@ using MimeKit;
 using HealthInCube_BackEnd.DTOs.ResetPassword;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Linq;
+using AutoMapper.QueryableExtensions;
+using HealthInCube_BackEnd.DTOs.Lekar.PracovnaDoba;
 
 namespace HealthInCube_BackEnd.Controllers
 {
@@ -172,15 +174,25 @@ namespace HealthInCube_BackEnd.Controllers
             var roleResult = await _userManager.AddToRoleAsync(user, "Lekar");
 
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
+            var pracovnaDoba = lekarRegister.PracovnaDobas.Select(x => _mapper.Map<PracovnaDoba>(x)).ToList();
 
             var lekar = new Lekar
             {
                 IdLekar = _lekarRepository.GetCountAsync().Result + 1,
                 IdPouzivatel = user.Id,
-                PracovnaDobas = _mapper.Map<ICollection<PracovnaDoba>>(lekarRegister.PracovnaDobas),
+                PracovnaDobas = pracovnaDoba,
                 IdOddel = lekarRegister.IdOddelenie,
                 DlzkaVysetrenia = lekarRegister.DlzkaVysetrenia
             };
+
+            //pridanie id lekara ku atestaciam
+            foreach (AtestaciaLekarDto atestacia in lekarRegister.AtestacieLekars)
+            {
+                atestacia.IdLekar = lekar.IdLekar;
+            }
+
+            var atestacie = lekarRegister.AtestacieLekars.Select(x => _mapper.Map<AtestacieLekar>(x)).ToList();
+            lekar.AtestacieLekars = atestacie;
 
             _lekarRepository.InsertItem(lekar);
 

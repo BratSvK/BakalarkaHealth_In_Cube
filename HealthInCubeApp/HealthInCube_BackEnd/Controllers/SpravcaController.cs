@@ -1,8 +1,11 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Nemocnica;
+using HealthInCube_BackEnd.DTOs.Ziadanka;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Helpers.Params;
 using HealthInCube_BackEnd.Interfaces;
@@ -21,6 +24,9 @@ namespace HealthInCube_BackEnd.Controllers
     {
         private readonly INemocnicaRepistory _nemocnicaRepository;
         private readonly IZiadankaRepository _ziadankaRepository;
+        private readonly ILekarRepository _lekarRepository;
+        private readonly IEmailGeneratorService _emailGeneratorService;
+        private readonly IMapper _mapper;
         private readonly UserManager<Pouzivatel> _userManager;
 
         /// <summary>
@@ -31,11 +37,17 @@ namespace HealthInCube_BackEnd.Controllers
         public SpravcaController(
             INemocnicaRepistory nemocnicaRepository,
             IZiadankaRepository ziadankaRepository,
+            ILekarRepository lekarRepository,
+            IEmailGeneratorService emailGeneratorService,
+            IMapper mapper,
             UserManager<Pouzivatel> userManager)
         {
             _userManager = userManager;
             _nemocnicaRepository = nemocnicaRepository;
             _ziadankaRepository = ziadankaRepository;
+            _lekarRepository = lekarRepository;
+            _emailGeneratorService = emailGeneratorService;
+            _mapper = mapper;
         }
 
         #region User-Roles
@@ -102,6 +114,49 @@ namespace HealthInCube_BackEnd.Controllers
         {
             var requests = await _ziadankaRepository.GetZiadankyByHospitalId(spravcaParams);
             return Ok(requests);
+        }
+
+        /// <summary>
+        ///  Activate an doctor acount.
+        /// </summary>
+        [HttpPost("activateDoctorAccount")]
+        public async Task<ActionResult> CreatePatientAccount([FromBody] CreatePatientAccountDto createPatientAccount)
+        {
+            var lekarId = await _lekarRepository.GetLekarIdByUser(createPatientAccount.IdUser);
+            if (!lekarId.HasValue)
+            {
+                return NotFound();
+            }
+
+            var lekar = await _lekarRepository.GetLekarEntity(lekarId.Value);
+
+            lekar.IsActivated = true;
+            _lekarRepository.UpdateItem(lekar);
+
+            if (await _lekarRepository.SaveAllAsync())
+            {
+                await _emailGeneratorService.GenerateEmailForDoctorCreation(lekar.IdPouzivatelNavigation); 
+                var requestToDelete = await RemoveFromRequest(createPatientAccount.IdUser);
+
+                if (requestToDelete == null) return BadRequest();
+
+                return Ok();
+            }
+
+            return BadRequest("Failed to create and account for patient");
+        }
+
+        private async Task<ZiadankaLekarDto> RemoveFromRequest(decimal idUser)
+        {
+            var requestToDelete = await _ziadankaRepository.GetZiadankaByDoctorIdAsync(idUser);
+            if (requestToDelete == null) return null;
+
+            requestToDelete.AcceptedAt = DateTime.Now;
+            _ziadankaRepository.UpdateDoctorRequest(requestToDelete);
+
+            if (await _ziadankaRepository.SaveAllAsync()) return _mapper.Map<ZiadankaLekarDto>(requestToDelete);
+
+            return null;
         }
     }
 }

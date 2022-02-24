@@ -1,66 +1,98 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { faBaby } from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
-import * as moment from 'moment';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Adresa } from 'src/app/models/adresa';
 import { AtestaciaLekar } from 'src/app/models/lekar/atestacia/atestaciaLekar';
 import { LekarRegister } from 'src/app/models/lekar/lekarRegister';
+import { ZoznamDenModel } from 'src/app/models/lekar/pracovnaDoba/pracDoba-zoznamDen';
 import { LekarTyp } from 'src/app/models/lekar/typLekar';
 import { Mesto } from 'src/app/models/mesto';
 import { Nemocnica } from 'src/app/models/nemocnica/nemocnica';
 import { Oddelenie } from 'src/app/models/nemocnica/oddelenie/oddelenie';
 import { Okres } from 'src/app/models/okres';
-import { RegisterPouzivatel } from 'src/app/models/pouzivatelRegistracia';
 import { matchValues } from 'src/app/shared/auth-common';
 import { LekarService } from 'src/app/_service/lekar.service';
 import { AppState } from 'src/app/_store/models/AppState';
-import * as RegisterBundleActions from './../register/store/register.actions';
+import { PracovnaDobaService } from 'src/app/_service/pracovnaDoba.service';
+import { TimepickerComponent, TimepickerConfig } from 'ngx-bootstrap/timepicker';
+import { DEFAULT_TIME_END_WORK, DEFAULT_TIME_PER_PATIENT, DEFAULT_TIME_START_LUNCH, DEFAULT_TIME_START_WORK } from 'src/app/shared/defaults';
+import { SubSink } from 'subsink';
+import { NemocnicaService } from 'src/app/_service/nemocnica.service';
+import { distinctUntilChanged, filter } from 'rxjs/operators';
+import { getTimepickerConfig } from 'src/app/shared/common';
 
+
+import * as RegisterBundleActions from './../register/store/register.actions';
+import * as moment from 'moment';
+import { PracovnaDoba } from 'src/app/models/pracovnaDoba/pracovnaDoba';
 
 @Component({
   selector: 'app-register-lekar',
   templateUrl: './register-lekar.component.html',
-  styleUrls: ['./register-lekar.component.css']
+  styleUrls: ['./register-lekar.component.css'],
+  providers: [{ provide: TimepickerConfig, useFactory: getTimepickerConfig }]
 })
-export class RegisterLekarComponent implements OnInit {
+export class RegisterLekarComponent implements OnInit, OnDestroy {
+
+  @ViewChildren('timepicker') timepickerList: QueryList<TimepickerComponent>;
 
   registerForm: FormGroup;
   babyIcon = faBaby;
   isSubmitted = false;
-
-
   genders: string[] = ['M', 'F'];
   okresy: Okres[] = [];
   mesta: Mesto[] = [];
-
   okresyBirth: Okres[] = [];
   mestaBirth: Mesto[] = [];
-
-
+  registerSub: Subscription;
   nemocnice: Nemocnica[] = [];
   oddelenia: Oddelenie[] = [];
-
   typeOfDoctors$: Observable<LekarTyp[]>;
+  pracovnaDobaZoznamDni$: Observable<ZoznamDenModel[]>;
+
+  private subs = new SubSink();
+
 
   get atestacieLekar() {
     return (<FormArray>this.registerForm.get('lekarData.atestacieLekar')).controls;
+  }
+
+  get pracovnaDoba() {
+    return (<FormArray>this.registerForm.get('lekarData.pracovnaDobaZoznam')).controls;
+  }
+
+  get rodneCislo() {
+    return (<FormControl>this.registerForm.get('userData.birthIDNumber'));
+  }
+
+  get pracovnaDobaValues(): PracovnaDoba[] {
+    return (<FormControl>this.registerForm.get('lekarData.pracovnaDobaZoznam')).value;
+  }
+
+   get atestacieLekarValues(): AtestaciaLekar[] {
+    return (<FormControl>this.registerForm.get('lekarData.atestacieLekar')).value;
   }
 
   constructor(
     private store: Store<AppState>,
     private router: Router,
     private route: ActivatedRoute,
-    private lekarService: LekarService
+    private lekarService: LekarService,
+    private pracovnaDobaService: PracovnaDobaService,
+    private nemocnicaService: NemocnicaService
   ) {}
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.initForm();
-    this.listenToDoctorTypes();
   }
-
+  
   onReturn() {
     this.router.navigate(['../'], { relativeTo: this.route });
   }
@@ -75,19 +107,6 @@ export class RegisterLekarComponent implements OnInit {
   onChangeOkres() {
     var idOkres: number = this.registerForm.get('userAddress.district').value;
     this.store.dispatch(new RegisterBundleActions.FetchMesta(idOkres));
-  }
-
-  onChangeCity() {
-    var idCity = this.registerForm.get('userAddress.city').value as number;
-    var vekPacienta = this.getAgeByDateBirth();
-
-    if (vekPacienta !== -1)
-      this.store.dispatch(
-        new RegisterBundleActions.FetchPractitioners({
-          idMesto: idCity,
-          vek: vekPacienta,
-        })
-      );
   }
 
   onCountryBirthChange() {
@@ -130,6 +149,66 @@ export class RegisterLekarComponent implements OnInit {
     }
   }
 
+  onChangeNemocnica() {
+    this.oddelenia = this.nemocnice[this.registerForm.get('lekarData.idNemocnica').value - 1].oddelenies;
+  }
+
+  onChangeBirthOkres() {
+    var idOkres: number = this.registerForm.get(
+      'birthPlace.districtBirth'
+    ).value;
+    this.store.dispatch(new RegisterBundleActions.FetchMestaBirth(idOkres));
+  }
+
+  onSubmit() {
+    var registerPouzivatelToDoctor = this.createModelToSingUp();
+    this.isSubmitted = true;
+    this.store.dispatch(
+      new RegisterBundleActions.RegisterStartLekar(registerPouzivatelToDoctor)
+    );
+  }
+
+  onSelectAtestaciaType(index: number) {
+    const idTyp = (this.atestacieLekar[index].value as AtestaciaLekar).idTyp;
+    this.atestacieLekar[index].get('idTypSelected').setValue(idTyp);
+}
+
+onAddAtestacia() {
+  (<FormArray>this.registerForm.get('lekarData.atestacieLekar')).push(
+    new FormGroup({
+      idTyp: new FormControl('', [Validators.required]),
+      idTypSelected:  new FormControl({value: '', disabled: true}, [Validators.required]),
+    })
+  )
+}
+
+onDeleteAtestacia(index: number) {
+  (<FormArray>this.registerForm.get('lekarData.atestacieLekar')).removeAt(index);
+}
+
+onDeletePracovnaDoba(index: number) {
+  (<FormArray>this.registerForm.get('lekarData.pracovnaDobaZoznam')).removeAt(index);
+}
+
+
+onAddPracovnaDoba() {
+  (<FormArray>this.registerForm.get('lekarData.pracovnaDobaZoznam')).push(
+    new FormGroup({
+      idDen: new FormControl('', [Validators.required]),
+      pracDobaOd: new FormControl(DEFAULT_TIME_START_WORK, [Validators.required]),
+      pracDobaDo: new FormControl(DEFAULT_TIME_END_WORK, [Validators.required]),
+      obedOd: new FormControl(DEFAULT_TIME_START_LUNCH, [Validators.required])
+    })
+  )
+}
+
+private listenToChangeDurationOfPatient() {
+  this.subs.sink = this.registerForm.get('lekarData.dlzkaVysetrenia').valueChanges
+  .subscribe(duration => this.timepickerList.forEach((item) => {
+    item.minuteStep = duration;
+  }));
+}
+
   private getDateByBID(dateString: string): string {
     let dateToSet = moment(dateString, 'YYYY-MM-DD').toDate();
     let dateTest = new Date(
@@ -141,40 +220,27 @@ export class RegisterLekarComponent implements OnInit {
   }
 
   private chceckPohlavie(mesiac: string): boolean {
-    return mesiac === '1' || mesiac === '2';
+    return mesiac === '0' || mesiac === '1';
   }
 
-  onChangeBirthOkres() {
-    var idOkres: number = this.registerForm.get(
-      'birthPlace.districtBirth'
-    ).value;
-    this.store.dispatch(new RegisterBundleActions.FetchMestaBirth(idOkres));
-  }
-
-  private getAgeByDateBirth(): number {
-    var birthDate = this.registerForm.get('userData.birthDate').value;
-    let dateToSet = moment(birthDate, 'YYYY-MM-DD').toDate();
-
-    if (birthDate === null) return -1;
-
-    let timeDiff = Math.abs(Date.now() - dateToSet.getTime());
-    let age = Math.floor(timeDiff / (1000 * 3600 * 24) / 365.25);
-    return age;
+  private listenToChangesPlace() {
+    this.registerSub = this.store
+      .select('register')
+      .subscribe((registerFormData) => {
+        this.okresy = registerFormData.okresy;
+        this.mesta = registerFormData.mesta;
+        this.okresyBirth = registerFormData.okresyBirth;
+        this.mestaBirth = registerFormData.mestaBirth;
+      });
   }
 
   private listenToDoctorTypes() {
     this.typeOfDoctors$ = this.lekarService.getLekarTypes();
   }
 
-  onSubmit() {
-    var registerPouzivatelToDoctor = this.createModelToSingUp();
-    console.log(registerPouzivatelToDoctor);
-    // this.isSubmitted = true;
-    // this.store.dispatch(
-    //   new RegisterBundleActions.RegisterUserStart(registerPouzivatel)
-    // );
+  private listenToZoznamDen() {
+    this.pracovnaDobaZoznamDni$ = this.pracovnaDobaService.getPracovnaDobaDniZoznam$();
   }
-
 
   private initForm() {
     this.registerForm = new FormGroup({
@@ -182,10 +248,10 @@ export class RegisterLekarComponent implements OnInit {
         firstName: new FormControl('', Validators.required),
         lastName: new FormControl('', Validators.required),
         familyName: new FormControl(''),
-        birthIDNumber: new FormControl(null, [
-          Validators.pattern('^[0-9]+[/]*[0-9]*$'),
+        birthIDNumber: new FormControl('', [
+          Validators.pattern('^[0-9]+[/]+[0-9]*$'),
           Validators.minLength(11),
-          Validators.maxLength(11),
+          Validators.maxLength(11)
         ]),
         birthDate: new FormControl(null, [Validators.required]),
         email: new FormControl('', [Validators.required, Validators.email]),
@@ -216,34 +282,49 @@ export class RegisterLekarComponent implements OnInit {
       lekarData: new FormGroup({
         idNemocnica: new FormControl(null, [Validators.required]),
         idOddelenie: new FormControl(null, [Validators.required]),
-        dlzkaVysetrenia: new FormControl(30, [Validators.required, Validators.min(1), Validators.max(120)]),
+        dlzkaVysetrenia: new FormControl(DEFAULT_TIME_PER_PATIENT, [Validators.required, Validators.min(1), Validators.max(120)]),
         atestacieLekar: new FormArray([
            new FormGroup({
-            idTypSelected: new FormControl('', [Validators.required]),
-            idTyp: new FormControl({value: '', disabled: true}, [Validators.required]),
+            idTyp: new FormControl('', [Validators.required]),
+            idTypSelected: new FormControl({value: '', disabled: true}, [Validators.required]),
           })
-        ]) 
+        ]),
+        pracovnaDobaZoznam: new FormArray([
+          new FormGroup({
+           idDen: new FormControl('', [Validators.required]),
+           pracDobaOd: new FormControl(DEFAULT_TIME_START_WORK, [Validators.required]),
+           pracDobaDo: new FormControl(DEFAULT_TIME_END_WORK, [Validators.required]),
+           obedOd: new FormControl(DEFAULT_TIME_START_LUNCH, [Validators.required])
+         })
+       ])  
       }
       )
     });
+
+    this.listenToChangesPlace();
+    this.listenToDoctorTypes();
+    this.listenToZoznamDen();
+    this.listenToChangeDurationOfPatient();
+    this.loadNemocnice();
+    this.listenToBirthDNumberChange();
+    }
+  
+
+  
+
+  private listenToBirthDNumberChange() {
+    this.subs.sink = this.registerForm.get('userData.birthIDNumber').valueChanges.pipe(
+      filter((item: string) => this.rodneCislo.valid && item.length > 0),
+      distinctUntilChanged()
+    ).subscribe(() => {
+      this.onCalculateFromBIDToBirthDate();
+    });
   }
 
-  onSelectAtestaciaType(index: number) {
-      const idTypSelected = (this.atestacieLekar[index].value as AtestaciaLekar).idTypSelected;
-      this.atestacieLekar[index].get('idTyp').setValue(idTypSelected);
-  }
-
-  onAddAtestacia() {
-    (<FormArray>this.registerForm.get('lekarData.atestacieLekar')).push(
-      new FormGroup({
-        idTypSelected: new FormControl('', [Validators.required]),
-        idTyp:  new FormControl({value: '', disabled: true}, [Validators.required]),
-      })
-    )
-  }
-
-  onDeleteAtestacia(index: number) {
-    (<FormArray>this.registerForm.get('lekarData.atestacieLekar')).removeAt(index);
+  private loadNemocnice() {
+    this.subs.sink = this.nemocnicaService.getNemocnice$().subscribe(nemocniceZoznam => {
+      this.nemocnice = nemocniceZoznam;
+    });
   }
 
   private createModelToSingUp(): LekarRegister {
@@ -263,13 +344,14 @@ export class RegisterLekarComponent implements OnInit {
       mobil: this.registerForm.get('userData.phoneNumber').value,
       pohlavie: this.registerForm.get('userData.gender').value,
       password: this.registerForm.get('userData.password').value,
-      idDoctor: this.registerForm.get('practitioner').value.idLekar,
+      idDoctor: -1,
       adresa: adresa,
       idMestoNarodenia: +this.registerForm.get('birthPlace.cityBirth').value,
-      idOddel: 1,
-      dlzkaVysetrenia: this.registerForm.get('lekarData').value.dlzkaVysetrenia,
-      pracovnaDobas: [],
-      atestacieLekars: []
+      idNemocnica: this.registerForm.get('lekarData.idNemocnica').value,
+      idOddelenie: this.registerForm.get('lekarData.idOddelenie').value,
+      dlzkaVysetrenia: this.registerForm.get('lekarData.dlzkaVysetrenia').value,
+      pracovnaDobas: this.pracovnaDobaValues,
+      atestacieLekars: this.atestacieLekarValues
     };
   }
 }

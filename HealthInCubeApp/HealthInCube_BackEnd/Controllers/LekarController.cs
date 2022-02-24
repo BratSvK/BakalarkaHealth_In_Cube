@@ -37,7 +37,7 @@ namespace HealthInCube_BackEnd.Controllers
         private readonly IConfiguration _config;
         private readonly IPouzivatelRepository _pouzivatelRepository;
         private readonly IZiadankaRepository _ziadankaRepository;
-        private readonly IEmailSender _emailSenderService;
+        private readonly IEmailGeneratorService _emailGeneratorService;
 
         /// <summary>
         /// Ctor.
@@ -48,7 +48,7 @@ namespace HealthInCube_BackEnd.Controllers
         /// <param name="config">Data from config file app config.</param>
         /// <param name="pouzivatelRepository">User repository.</param>
         /// <param name="ziadankaRepository">Requuests repository.</param>
-        /// <param name="emailSenderService">Service for sending emails.</param>
+        /// <param name="emailGeneratorService">Generator for emails.</param>
         public LekarController(
             ILekarRepository lekarRepo,
             IPacientRepository pacientRepository,
@@ -56,7 +56,7 @@ namespace HealthInCube_BackEnd.Controllers
             IConfiguration config,
             IPouzivatelRepository pouzivatelRepository,
             IZiadankaRepository ziadankaRepository,
-            IEmailSender emailSenderService)
+            IEmailGeneratorService emailGeneratorService)
         {
             _lekarRepo = lekarRepo;
             _pacientRepository = pacientRepository;
@@ -64,7 +64,7 @@ namespace HealthInCube_BackEnd.Controllers
             _config = config;
             _pouzivatelRepository = pouzivatelRepository;
             _ziadankaRepository = ziadankaRepository;
-            _emailSenderService = emailSenderService;
+            _emailGeneratorService = emailGeneratorService;
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace HealthInCube_BackEnd.Controllers
 
             if (await _pacientRepository.SaveAllAsync())
             {
-                await SendConfirmationCreationEmailToPatient(userToPatient);
+                await _emailGeneratorService.GenerateEmailForPatientCreation(userToPatient);
                 // may have more request to more doctors 
                 var requestToDelete = await RemoveFromRequest(userToPatient.Ziadanky, createPatientAccount.IdLekar);
 
@@ -259,36 +259,6 @@ namespace HealthInCube_BackEnd.Controllers
             if (await _ziadankaRepository.SaveAllAsync()) return _mapper.Map<ZiadankaPacientDto>(requestToDelete);
 
             return null;
-        }
-
-        private async Task SendConfirmationCreationEmailToPatient(Pouzivatel userToPatient)
-        {
-            if (userToPatient == null)
-            {
-                return;
-            }
-            var builder = new BodyBuilder();
-            string filePath = $"{System.IO.Directory.GetCurrentDirectory()}\\Assets\\logo.jpg";
-            var image = builder.LinkedResources.Add(filePath);
-            image.ContentId = MimeUtils.GenerateMessageId();
-            var subject = Resource.SubjectPatientAccountCreated;
-            builder.HtmlBody = "<div style='text-align: center; background-color:  rgba(255, 230, 208, 0.363); width: 50%; position: absolute; margin-left: 25%; border-style: solid; border-width: 1px;border-color: rgba(255, 68, 0, 0.37);" +
-             "border-radius:3px; padding: 10px;'>" +
-             $"<div><img style='background: #ffe6d0; width: 100px; height: 100px;'" +
-             $"src=\"cid:{image.ContentId}\"></img></div>" +
-             "<br>" +
-             "<div style ='font-size: large; color: dimgray;'>" + userToPatient.GetFullName() + ",</div>" +
-             "<br>" +
-             "<div style ='font-size: meddium; color: dimgray;'> Váš účet pacienta bol úspešne vytvorený! </div> " +
-             "<br>" +
-            "<div style ='font-size: meddium; color: dimgray;'> Aktualizujte si profil a nastavte si zdravotnú poisťovňu</div> " +
-             "<br>" +
-             "<div style ='font-size: meddium; color: dimgray;'> Pekný deň a chráňte si zdravie! </div> " +
-             "<div style ='font-size: meddium; color: dimgray;'> The HealthInCube Team </div> "
-            + "</div>";
-
-            var message = new Message(new string[] { userToPatient.Email }, subject, builder.ToMessageBody());
-            await _emailSenderService.SendEmailAsync(message);
         }
     }
 }

@@ -79,7 +79,9 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<Lekar> GetLekarEntity(decimal lekarId)
         {
-            return await _context.Lekar.FindAsync(lekarId);
+            return await _context.Lekar
+                    .Include(l => l.IdPouzivatelNavigation)
+                    .SingleOrDefaultAsync(l => l.IdLekar == lekarId);
         }
 
         public async Task<LekarDto> GetLekarEntityByUserId(decimal userId)
@@ -131,7 +133,7 @@ namespace HealthInCube_BackEnd.Data
 
         public void UpdateItem(Lekar item)
         {
-            throw new System.NotImplementedException();
+            _context.Entry(item).State = EntityState.Modified;
         }
 
         public async Task<int> GetCountAsync()

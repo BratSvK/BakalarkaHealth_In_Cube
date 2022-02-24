@@ -1,0 +1,62 @@
+.dropdown-toggle, .dropdown-item{
+    cursor: pointer;
+}
+
+.nav-link {
+    cursor: pointer;
+}
+
+.dropdown img {
+    max-height: 50px;
+    border: 2px solid black;
+    display: inline;
+}
+
+.space {
+    width: 10%;
+}
+
+.navbar {
+    height: 70px;
+}
+
+.navbar-brand {
+    cursor: default;
+    width: 29.9rem;
+}
+
+.brand-zone-text {
+    line-height: 5.8rem;
+}
+
+.navbar-brand img {
+    width: 10rem;
+    background-color: #007bff;
+}
+
+fa-icon {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+}
+
+a {
+    color: black;
+}
+
+a:hover:not(.dropdown-item) {
+    color:white; 
+}
+
+.dropdown-menu {
+    background-color: white;
+    transform: translate(40%,-20%) !important;
+}
+
+fa-icon.arrow {
+    font-size: 0.7rem;
+}
+
+
+.nav-link.arrow {
+    padding-right: 0%;
+}

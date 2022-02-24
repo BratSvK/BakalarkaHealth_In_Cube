@@ -1,3 +1,5 @@
+import { Oddelenie } from "./oddelenie/oddelenie";
+
 export interface Nemocnica {
     idNem: number;
     nazov: string;
@@ -5,4 +7,5 @@ export interface Nemocnica {
     ulica: string;
     urlStranka: string;
     idMesto: number;
+    oddelenies: Oddelenie[];
 }

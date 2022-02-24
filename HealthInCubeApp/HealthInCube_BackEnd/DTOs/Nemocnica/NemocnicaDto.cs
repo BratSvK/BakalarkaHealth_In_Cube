@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace HealthInCube_BackEnd.DTOs.Nemocnica
 {
     public class NemocnicaDto
@@ -8,6 +10,6 @@ namespace HealthInCube_BackEnd.DTOs.Nemocnica
         public string Ulica { get; set; }
         public string UrlStranka { get; set; }
         public decimal IdMesto { get; set; }
-        //ICollection<OddelenieDto> Oddelenies { get; set; }
+        public ICollection<OddelenieDto> Oddelenies { get; set; }
     }
 }

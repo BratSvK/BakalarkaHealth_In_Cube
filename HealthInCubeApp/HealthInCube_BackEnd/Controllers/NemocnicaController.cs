@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using HealthInCube_BackEnd.DTOs;
+using HealthInCube_BackEnd.DTOs.Nemocnica;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ namespace HealthInCube_BackEnd.Controllers
 {
    
     [Authorize]
+    [AllowAnonymous]
     public class NemocnicaController : BaseApiController
     {
         private readonly INemocnicaRepistory _nemocnicaRepository;
@@ -26,7 +28,6 @@ namespace HealthInCube_BackEnd.Controllers
 
         // from query params -> throught client 
         // postman -> from body 
-        [AllowAnonymous]
         [HttpGet("vseobecnyLekary")]
         public async Task<ActionResult<IEnumerable<LekarDto>>> GetAllGeneralPractitionersAsync([FromQuery] RegisterPacientAgeAndCityDto registerPacientAgeAndCity)
         {   
@@ -55,29 +56,17 @@ namespace HealthInCube_BackEnd.Controllers
             return Ok(lekariByPacientAge);
         }
 
+        /// <summary>
+        /// Get hospitals.
+        /// </summary>
+        [HttpGet("all")]
+        public async Task<ActionResult<IEnumerable<NemocnicaDto>>> GetAllAppointmentsByWeek()
+        {
+            var nemonice = await _nemocnicaRepository.GetItemsAsync();
 
-        //  [AllowAnonymous]
-        // [HttpGet("oddelenia")]
-        // public async Task<ActionResult<IEnumerable<LekarDto>>> GetAllGeneralPractitionersAsync([FromQuery] RegisterPacientAgeAndCityDto registerPacientAgeAndCity)
-        // {   
+            return Ok(nemonice);
+        }
 
-        //     var lekari = await _nemocnicaRepository.GetAllPractitionersByCityAsync(registerPacientAgeAndCity.IdCity);
-        //     var lekariByPacientAge = new List<LekarDto>();
-
-        //     if (lekari.Count() == 0) return NotFound("Nothing found");
-
-        //     if(registerPacientAgeAndCity.Age > 0 && registerPacientAgeAndCity.Age <= 25)
-        //     {
-        //         lekariByPacientAge = GetLekariByAge(lekari, (int)TypVseobecnyLekar.Detsky);
-                
-        //     }
-        //     else 
-        //     {
-        //         lekariByPacientAge = GetLekariByAge(lekari, (int)TypVseobecnyLekar.Dospely);
-        //     }
-
-        //     return Ok(lekariByPacientAge);
-        // }
 
         private List<LekarDto> GetLekariByAge(IEnumerable<LekarDto> lekary , int typVseobecny)
         {

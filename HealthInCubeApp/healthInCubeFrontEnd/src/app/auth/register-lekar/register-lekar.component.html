@@ -1,4 +1,5 @@
 <div *ngIf="(typeOfDoctors$ | async) as doctorTypes" >
+    <div *ngIf="(pracovnaDobaZoznamDni$ | async) as zoznamDni" >
 <div class="container mt-5 registerWrapper text-left">
     <div ngAnimatedBorderWrapper>
         <span ngAnimatedBorder class="myCssAnimation" [abBorderWidth]="['4px']" [abBorderRadius]="['10px']"
@@ -38,26 +39,18 @@
                     <div class="form-row" style="align-items: center;">
                         <div class="col-md-4 mb-3">
                             <label for="BID">Rodné číslo</label>
-                            <input type="text" class="form-control" id="BID" placeholder="etc. 981124/4168"
+                            <input 
+                                type="text" 
+                                class="form-control" 
+                                id="BID" 
+                                placeholder="etc. 981124/4168"
                                 formControlName="birthIDNumber">
-                            <div
-                                *ngIf="this.registerForm.get('userData.birthIDNumber')?.touched && this.registerForm.get('userData.birthIDNumber')?.value != null && this.registerForm.get('userData.birthIDNumber')?.value !== '' &&   !this.registerForm.get('userData.birthIDNumber')?.errors; then calculate">
-                            </div>
-                            <!-- <div class="invalid-feedback">
-                            Valid first name is required.
-                        </div> -->
-                            <ng-template #calculate>
-                                <div class="col-md mt-3">
-                                    <button class="btn btn-info" type="button" (click)="onCalculateFromBIDToBirthDate()">Dopočítaj</button>
-                                </div>
-                            </ng-template>
-
                         </div>
                         <div class="col-md-2 mt-4 pl-4" *ngFor="let gender of genders">
                             <div class="radio">
                                 <label>
                                     <input type="radio" class="form-check-input" formControlName="gender"
-                                        [value]="gender">{{ gender === 'M' ? 'Male' : 'Female' }}
+                                        [value]="gender">{{ gender === 'M' ? 'Muž' : 'Žena' }}
                                 </label>
 
                             </div>
@@ -77,7 +70,7 @@
 
                     <div class="mb-3">
                         <label for="email">Emailová adresa*</label>
-                        <input type="email" class="form-control" id="email" placeholder="you@example.com"
+                        <input type="email" class="form-control" id="email" placeholder="martin@gmail.com"
                             formControlName="email">
                         <!-- <div class="invalid-feedback">
                         Please enter a valid email address.
@@ -136,7 +129,7 @@
 
                         <div class="col-md-4 mb-3">
                             <label for="city">Mesto*</label>
-                            <select class="custom-select d-block w-100" id="city" formControlName="city" (ngModelChange)="onChangeCity()">
+                            <select class="custom-select d-block w-100" id="city" formControlName="city">
                                 <option [disabled]="true" [selected]="true" value="">Choose...</option>
                                 <option [ngValue]="mesto.idMesto" *ngFor="let mesto of mesta">{{mesto.nazov}}</option>
                             </select>
@@ -148,7 +141,7 @@
 
                     <div class="mb-3">
                         <label for="street">Ulica*</label>
-                        <input type="text" class="form-control" id="street" placeholder="1234 Main St"
+                        <input type="text" class="form-control" id="street" placeholder="1234 Hlavná Ulica"
                             formControlName="street">
                         <!-- <div class="invalid-feedback">
                         Please enter your street address.
@@ -216,10 +209,10 @@
                         <div class="col-md-6 mb-3">
                             <label for="nemocnica">Nemocnica</label>
                             <select 
-                                    class="custom-select d-block w-100" 
+                                    class="custom-select d-block w-100 ellipsis" 
                                     id="nemocnica" 
                                     formControlName="idNemocnica"
-                                    (ngModelChange)="onChangeBirthOkres()">
+                                    (ngModelChange)="onChangeNemocnica()">
                                 <option 
                                         [disabled]="true" 
                                         [selected]="true" 
@@ -236,10 +229,20 @@
 
                         <div class="col-md-6 mb-3">
                             <label for="nemocnica">Oddelenie</label>
-                            <select class="custom-select d-block w-100" id="oddelenie" formControlName="idOddelenie"
-                                (ngModelChange)="onChangeBirthOkres()">
-                                <option [disabled]="true" [selected]="true" value="">Choose...</option>
-                                <option [ngValue]="oddelenie.idOddel" *ngFor="let oddelenie of oddelenia">{{oddelenie.nazovOdd}}
+                            <select 
+                                class="custom-select d-block w-100 ellipsis" 
+                                id="oddelenie" 
+                                formControlName="idOddelenie">
+                                <option 
+                                    [disabled]="true" 
+                                    [selected]="true" 
+                                    value="">
+                                    Choose...
+                                </option>
+                                <option 
+                                    [ngValue]="oddelenie.idOddel" 
+                                    *ngFor="let oddelenie of oddelenia">
+                                    {{oddelenie.nazovOdd}}
                                 </option>
                             </select>
                         </div>
@@ -260,7 +263,7 @@
                         </div>
                     </div>
                     <h4>Atestacie</h4>
-                    <div class="form-row ">
+                    <div class="form-row mb-4">
                         <div class="col-md-12"
                             formArrayName="atestacieLekar">
                             <div 
@@ -271,11 +274,11 @@
                                 <div class="col-md-8">
                                     <select class="custom-select d-block w-100" 
                                           id="idTypDoctor" 
-                                          formControlName="idTypSelected"
+                                          formControlName="idTyp"
                                           (ngModelChange)="onSelectAtestaciaType(i)">
                                     <option [disabled]="true" 
                                             [selected]="true" 
-                                            value="">Vyber...
+                                            value="">Vyber atestáciu...
                                     </option>
                                     <option [ngValue]="typeDoc.idTyp" 
                                             *ngFor="let typeDoc of doctorTypes">
@@ -287,7 +290,7 @@
                                     <input 
                                         type="number" 
                                         class="form-control"
-                                        formControlName="idTyp"
+                                        formControlName="idTypSelected"
                                         min="0">
                                 </div>
                                 <div class="col-md-2">
@@ -301,59 +304,88 @@
                             </div>
                          </div>
                     </div>
-                <hr>
+                <div class="form-row mb-4">
+                    <div class="col-md-12">
+                        <button
+                            type="button"
+                            class="btn btn-success"
+                            (click)="onAddAtestacia()">Pridaj atestáciu</button>
+                    </div>
+                </div>
                 <h4>Pracovná doba</h4>
+                <div class="form-row mt-4">
+                    <div class="col-md-12">
+                        <div class="form-row mr-2">
+                            <div class="col-md-3">
+                                <label for="idDenPracDobaDen">Pracovný deň</label>
+                            </div>
+                            <div class="col-md-3 time">
+                                <label for="idDenPracDobaOd">Začiatok</label>
+                            </div>
+                            <div class="col-md-3 time">
+                                <label for="idDenPracDobaDo">Koniec</label>
+                            </div>
+                            <div class="col-md-3 time">
+                                <label for="idDenPracDobaObed">Obed začiatok</label>
+                            </div>
+                        </div>
+                     </div>
+                    </div>
                     <div class="form-row ">
                         <div class="col-md-12"
-                            formArrayName="atestacieLekar">
+                             formArrayName="pracovnaDobaZoznam">
                             <div 
-                                class="form-row mr-2 mt-2"
-                                *ngFor="let atestaciaDoctor of atestacieLekar; let i = index"
+                                class="form-row workingday mr-2 mt-2"
+                                *ngFor="let pracDoba of pracovnaDoba; let i = index"
                                 [formGroupName]="i"
                                 >
-                                <div class="col-md-8">
+                                <div class="col-md-3">
                                     <select class="custom-select d-block w-100" 
-                                          id="idTypDoctor" 
-                                          formControlName="idTypSelected"
-                                          (ngModelChange)="onSelectAtestaciaType(i)">
+                                          id="idDenPracDobaDen" 
+                                          formControlName="idDen"
+                                          (ngModelChange)="onAddPracovnaDoba()">
                                     <option [disabled]="true" 
                                             [selected]="true" 
-                                            value="">Vyber...
+                                            value="">Vyber den...
                                     </option>
-                                    <option [ngValue]="typeDoc.idTyp" 
-                                            *ngFor="let typeDoc of doctorTypes">
-                                            {{typeDoc.nazov}}
+                                    <option [ngValue]="den.idDen" 
+                                            *ngFor="let den of zoznamDni">
+                                            {{den.nazov}}
                                     </option>
                                   </select>
                                 </div>
-                                <div class="col-md-2">
-                                    <input 
-                                        type="number" 
-                                        class="form-control"
-                                        formControlName="idTyp"
-                                        min="0">
+                                <div class="col-md od">
+                                    <timepicker
+                                        #timepicker
+                                        id="idDenPracDobaOd"  
+                                        formControlName="pracDobaOd">
+                                    </timepicker>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md do">
+                                    <timepicker 
+                                        #timepicker
+                                        id="idDenPracDobaDo"  
+                                        formControlName="pracDobaDo">
+                                    </timepicker>
+                                </div>
+                                <div class="col-md obed">
+                                    <timepicker
+                                        id="idDenPracDobaObed" 
+                                        formControlName="obedOd">
+                                    </timepicker>
+                                </div>
+                                <div class="col-md">
                                     <button 
                                         type="button" 
                                         class="btn btn-danger float-right"
-                                        (click)="onDeleteAtestacia(i)">
+                                        (click)="onDeletePracovnaDoba(i)">
                                         X
                                 </button>
                                 </div>
                             </div>
                          </div>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="form-row">
-                        <div class="col-md-12">
-                            <button
-                                type="button"
-                                class="btn btn-success"
-                                (click)="onAddAtestacia()">Pridaj atestáciu</button>
-                        </div>
-                    </div>
+                </div>
                 <hr class="mt-4">
                 <p class="text-muted">*(Povinné)</p>
                 <button class="btn btn-primary btn-lg btn-block" type="submit" [disabled]="registerForm.invalid">Vytvor</button>
@@ -363,5 +395,6 @@
             </form>
         </span>
     </div>
+</div>
 </div>
 </div>

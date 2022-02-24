@@ -43,12 +43,10 @@ namespace HealthInCube_BackEnd.Helpers
                 .ForMember(dest => dest.DatNarodenia, opt => opt.MapFrom(src => src.IdPouzivatelNavigation.DatNarodenia.Value.Date))
                 .ForMember(dest => dest.MestoNarodenia, opt => opt.MapFrom(src => src.ZdravotnaKartum.IdMestoNarodeniaNavigation.Nazov))
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(p => $"{p.IdPouzivatelNavigation.Meno} {p.IdPouzivatelNavigation.Priezvisko}"));
-
             CreateMap<ZdravotnaKartum, ZdratovnaKartaDto>()
                 .ForMember(
                     dest => dest.MiestoNarodenia,
                     opt => opt.MapFrom(src => src.IdMestoNarodeniaNavigation));
-
             CreateMap<ZdravPoistenie, ZdravotnePoistenieDto>();
             CreateMap<Pouzivatel, PouzivatelDto>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(p => $"{p.Meno} {p.Priezvisko}"));
@@ -57,17 +55,14 @@ namespace HealthInCube_BackEnd.Helpers
             CreateMap<Pouzivatel, PouzivatelDetailDto>();
             CreateMap<Sprievodka, SprievodkaDto>();
             CreateMap<SprievodkaDto, Sprievodka>();
-
             CreateMap<PracovnaDobaDto, PracovnaDoba>()
-                .ForMember(dest => dest.PracDobaOd, opt => opt.MapFrom(src => TimeSpan.Parse(src.PracDobaOd)))
-                .ForMember(dest => dest.PracDobaDo, opt => opt.MapFrom(src => TimeSpan.Parse(src.PracDobaDo)))
-                .ForMember(dest => dest.ObedOd, opt => opt.MapFrom(src => TimeSpan.Parse(src.ObedOd)))
-                .ForMember(dest => dest.ObedDo, opt => opt.MapFrom(src => TimeSpan.Parse(src.ObedDo)));
+                .ForMember(dest => dest.PracDobaOd, opt => opt.MapFrom(src => src.PracDobaOd.ToLocalTime().TimeOfDay))
+                .ForMember(dest => dest.PracDobaDo, opt => opt.MapFrom(src => src.PracDobaDo.ToLocalTime().TimeOfDay))
+                .ForMember(dest => dest.ObedOd, opt => opt.MapFrom(src => src.ObedOd.ToLocalTime().TimeOfDay))
+                .ForMember(dest => dest.ObedDo, opt => opt.MapFrom(src => src.ObedDo.ToLocalTime().TimeOfDay));
             CreateMap<PracovnaDoba, PracovnaDobaDto>();
-
             CreateMap<TypLekara, LekarTypeDto>()
                 .ForMember(dest => dest.IdTyp, opt => opt.MapFrom(src => (int)src.IdTyp));
-
             CreateMap<Lekar, LekarSprievodkaDto>()
                 .ForMember(
                     dest => dest.FullName, 
@@ -75,16 +70,14 @@ namespace HealthInCube_BackEnd.Helpers
             .ForMember(
                     dest => dest.Pracovisko,
                     opt => opt.MapFrom(src => src.IdOddelNavigation.IdNemNavigation.IdMestoNavigation.Nazov));
-
             CreateMap<Sprievodka, SprievodkaPacientDto>();
             CreateMap<Sprievodka, SprievodkaLekarDto>();
-
             CreateMap<ZiadankaLekar, ZiadankaLekarDto>()
                 .ForMember(dest => dest.Pouzivatel, conf => conf.MapFrom(z => z.PouzivatelNavigation));
             CreateMap<Ziadanka, ZiadankaPacientDto>()
                 .ForMember(dest => dest.Pouzivatel, conf => conf.MapFrom(z => z.IdPouzivatelNavigation));
-
             CreateMap<AtestaciaLekarDto, AtestacieLekar>();
+            CreateMap<ZoznamDen, ZoznamDenDto>();
         }
     }
 }

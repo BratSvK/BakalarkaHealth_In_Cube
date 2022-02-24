@@ -40,24 +40,12 @@
                             <label for="BID">Rodné číslo</label>
                             <input type="text" class="form-control" id="BID" placeholder="etc. 981124/4168"
                                 formControlName="birthIDNumber">
-                            <div
-                                *ngIf="this.registerForm.get('userData.birthIDNumber')?.touched && this.registerForm.get('userData.birthIDNumber')?.value != null && this.registerForm.get('userData.birthIDNumber')?.value !== '' &&   !this.registerForm.get('userData.birthIDNumber')?.errors; then calculate">
-                            </div>
-                            <!-- <div class="invalid-feedback">
-                            Valid first name is required.
-                        </div> -->
-                            <ng-template #calculate>
-                                <div class="col-md mt-3">
-                                    <button class="btn btn-info" type="button" (click)="onCalculateFromBIDToBirthDate()">Dopočítaj</button>
-                                </div>
-                            </ng-template>
-
                         </div>
                         <div class="col-md-2 mt-4 pl-4" *ngFor="let gender of genders">
                             <div class="radio">
                                 <label>
                                     <input type="radio" class="form-check-input" formControlName="gender"
-                                        [value]="gender">{{ gender === 'M' ? 'Male' : 'Female' }}
+                                        [value]="gender">{{ gender === 'M' ? 'Muž' : 'Žena' }}
                                 </label>
 
                             </div>
@@ -77,7 +65,7 @@
 
                     <div class="mb-3">
                         <label for="email">Emailová adresa*</label>
-                        <input type="email" class="form-control" id="email" placeholder="you@example.com"
+                        <input type="email" class="form-control" id="email" placeholder="martin@gmail.com"
                             formControlName="email">
                         <!-- <div class="invalid-feedback">
                         Please enter a valid email address.
@@ -148,7 +136,7 @@
 
                     <div class="mb-3">
                         <label for="street">Ulica*</label>
-                        <input type="text" class="form-control" id="street" placeholder="1234 Main St"
+                        <input type="text" class="form-control" id="street" placeholder="1234 Hlavna ulica"
                             formControlName="street">
                         <!-- <div class="invalid-feedback">
                         Please enter your street address.

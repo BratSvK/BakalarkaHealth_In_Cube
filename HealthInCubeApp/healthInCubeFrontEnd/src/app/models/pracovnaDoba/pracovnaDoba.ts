@@ -1,7 +1,7 @@
 export interface PracovnaDoba {
     idDen: number;
-    pracDobaOd: string;
-    pracDobaDo: string;
-    obedOd: string;
-    obedDo: string;
+    pracDobaOd: Date;
+    pracDobaDo: Date;
+    obedOd: Date;
+    obedDo: Date;
 }

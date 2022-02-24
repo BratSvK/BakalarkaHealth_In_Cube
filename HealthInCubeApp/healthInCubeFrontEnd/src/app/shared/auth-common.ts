@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 export function handleError(errorRes: HttpErrorResponse) {
-  let errorMessage = 'An uknown error occured!';
+  let errorMessage = 'Nastala neočakávaná chyba!';
   if (!errorRes.error) {
     return errorMessage;
   }

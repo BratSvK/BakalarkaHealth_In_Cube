@@ -68,12 +68,11 @@ namespace HealthInCube_BackEnd.Data
         }
 
         public async Task<IEnumerable<NemocnicaDto>> GetItemsAsync()
-        {
-            var query = _context.Nemocnica.Include(x => x.Oddelenies).AsQueryable();
-
-            return await query.ProjectTo<NemocnicaDto>(_mapper.ConfigurationProvider).AsNoTracking().ToListAsync();
-        }
-
+            => await _context.Nemocnica
+                    .Include(x => x.Oddelenies)
+                    .ProjectTo<NemocnicaDto>(_mapper.ConfigurationProvider)
+                    .AsNoTracking()
+                    .ToListAsync();
         public void InsertItem(Nemocnica item)
         {
              _context.Nemocnica.Add(item);

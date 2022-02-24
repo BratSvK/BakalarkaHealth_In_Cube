@@ -50,9 +50,9 @@ namespace HealthInCube_BackEnd.Data
                                 .ToListAsync();
         }
 
-        public async Task<Ziadanka> GetZiadankaByDoctorId(int id)
+        public async Task<ZiadankaLekar> GetZiadankaByDoctorIdAsync(decimal idUser)
         {
-            return await _context.Ziadanka.Include(z => z.IdLekarNavigation).SingleOrDefaultAsync(z => z.IdLekar == id);
+            return await _context.ZiadankaLekars.SingleOrDefaultAsync(z => z.IdUser == idUser);
         }
 
         public async Task<Ziadanka> GetZiadankaByPatientId(int id)
@@ -93,11 +93,11 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<PagedList<ZiadankaLekarDto>> GetZiadankyByHospitalId(SpravcaParams spravcaParams)
         {
-            var query = _context.ZiadankaLekars
+           var query = _context.ZiadankaLekars
                 .Include(z => z.PouzivatelNavigation)
                 .AsQueryable();
 
-            query = query.Where(z => z.IdNemocnica == spravcaParams.IdNemocnica && z.AcceptedAt != null);
+            query = query.Where(z => z.IdNemocnica == spravcaParams.IdNemocnica && z.AcceptedAt == null);
 
             // pasing queriy to pageList class.
             return await PagedList<ZiadankaLekarDto>.CreateAsync(
@@ -113,6 +113,12 @@ namespace HealthInCube_BackEnd.Data
         public void InsertDoctorRequests(ZiadankaLekar ziadankaLekar)
         {
             _context.ZiadankaLekars.Add(ziadankaLekar);
+        }
+
+        public void UpdateDoctorRequest(ZiadankaLekar ziadankaLekar)
+        {
+            // nothing to change only mark entity that has been modifity 
+            _context.Entry(ziadankaLekar).State = EntityState.Modified;
         }
     }
 }

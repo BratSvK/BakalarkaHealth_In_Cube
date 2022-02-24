@@ -23,6 +23,7 @@ import { AlertModule } from 'ngx-bootstrap/alert';
 import { UserDetailEffects } from './user/user-detail/store/user-detail.effects';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { CalendarModule } from './user/calendar/calendar.module';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 
 @NgModule({
@@ -47,6 +48,7 @@ import { CalendarModule } from './user/calendar/calendar.module';
     StoreDevtoolsModule.instrument({logOnly: environment.production}),
     AlertModule.forRoot(),
     PaginationModule.forRoot(),
+    TimepickerModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]

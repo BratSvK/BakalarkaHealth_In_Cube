@@ -9,9 +9,10 @@ namespace HealthInCube_BackEnd.Interfaces
     public interface IZiadankaRepository : IRepository<Ziadanka, ZiadankaBaseDto>
     {
         Task<Ziadanka> GetZiadankaByPatientId(int id);
-        Task<Ziadanka> GetZiadankaByDoctorId(int id);
+        Task<ZiadankaLekar> GetZiadankaByDoctorIdAsync(decimal idUser);
         Task<PagedList<ZiadankaLekarDto>> GetZiadankyByHospitalId(SpravcaParams spravcaParams);
 
         void InsertDoctorRequests(ZiadankaLekar ziadankaLekar);
+        void UpdateDoctorRequest(ZiadankaLekar ziadankaLekar);
     }
 }

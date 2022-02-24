@@ -1,4 +1,4 @@
 export interface CreatePatient {
-    idLekar: number;
+    idLekar?: number;
     idUser: number;
 }
