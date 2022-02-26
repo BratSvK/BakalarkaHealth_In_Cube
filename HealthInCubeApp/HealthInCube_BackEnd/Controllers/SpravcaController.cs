@@ -117,7 +117,7 @@ namespace HealthInCube_BackEnd.Controllers
         }
 
         /// <summary>
-        ///  Activate an doctor acount.
+        ///  Activate an doctor account.
         /// </summary>
         [HttpPost("activateDoctorAccount")]
         public async Task<ActionResult> CreatePatientAccount([FromBody] CreatePatientAccountDto createPatientAccount)
@@ -143,7 +143,7 @@ namespace HealthInCube_BackEnd.Controllers
                 return Ok();
             }
 
-            return BadRequest("Failed to create and account for patient");
+            return BadRequest("Failed to activate doctor account.");
         }
 
         private async Task<ZiadankaLekarDto> RemoveFromRequest(decimal idUser)
