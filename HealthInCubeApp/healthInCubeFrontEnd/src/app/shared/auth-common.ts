@@ -1,7 +1,8 @@
 import { HttpErrorResponse } from '@angular/common/http';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 export function handleError(errorRes: HttpErrorResponse) {
-  let errorMessage = 'An uknown error occured!';
+  let errorMessage = 'Nastala neočakávaná chyba!';
   if (!errorRes.error) {
     return errorMessage;
   }
@@ -19,4 +20,13 @@ export function handleError(errorRes: HttpErrorResponse) {
       break;
   }
   return errorMessage;
+}
+
+
+export function matchValues(matchTo: string): ValidatorFn {
+  return (control: AbstractControl) => {
+    return control?.value === control?.parent?.controls[matchTo].value
+      ? null
+      : { isMatching: true }; // return null ak prejde validacia
+  };
 }

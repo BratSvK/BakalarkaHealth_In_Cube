@@ -30,6 +30,12 @@ namespace HealthInCube_BackEnd.Entities
         /// </summary>
         public byte DlzkaVysetrenia { get; set; }
 
+        /// <summary>
+        /// Check if the doctor account is activated by admin.
+        /// By default is false.
+        /// </summary>
+        public bool IsActivated { get; set; } = false;
+
         public virtual Oddelenie IdOddelNavigation { get; set; }
         public virtual Pouzivatel IdPouzivatelNavigation { get; set; }
         public virtual ICollection<Ziadanka> Ziadanky { get; set; }

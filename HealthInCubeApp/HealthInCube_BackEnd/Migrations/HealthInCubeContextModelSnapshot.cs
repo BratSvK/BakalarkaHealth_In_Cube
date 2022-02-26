@@ -287,6 +287,9 @@ namespace HealthInCube_BackEnd.Migrations
                         .HasColumnType("NUMBER(38)")
                         .HasColumnName("ID_POUZIVATEL");
 
+                    b.Property<bool>("IsActivated")
+                        .HasColumnType("NUMBER(1)");
+
                     b.HasKey("IdLekar");
 
                     b.HasIndex(new[] { "IdPouzivatel" }, "IX_RELATIONSHIP16");
@@ -1075,6 +1078,29 @@ namespace HealthInCube_BackEnd.Migrations
                     b.ToTable("ZIADANKA");
                 });
 
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.ZiadankaLekar", b =>
+                {
+                    b.Property<decimal>("IdUser")
+                        .HasColumnType("NUMBER(38)")
+                        .HasColumnName("ID_USER");
+
+                    b.Property<decimal>("IdNemocnica")
+                        .HasColumnType("NUMBER(38)")
+                        .HasColumnName("ID_NEMOCNICA");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("DATE")
+                        .HasColumnName("VYTVORENA");
+
+                    b.Property<DateTime?>("AcceptedAt")
+                        .HasColumnType("DATE")
+                        .HasColumnName("AKCEPTOVANA");
+
+                    b.HasKey("IdUser", "IdNemocnica", "CreatedAt");
+
+                    b.ToTable("ZIADANKA_LEKAR");
+                });
+
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.ZoznamDen", b =>
                 {
                     b.Property<int>("IdDen")
@@ -1595,6 +1621,17 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Navigation("IdPouzivatelNavigation");
                 });
 
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.ZiadankaLekar", b =>
+                {
+                    b.HasOne("HealthInCube_BackEnd.Entities.Pouzivatel", "PouzivatelNavigation")
+                        .WithMany("ZiadankaLekars")
+                        .HasForeignKey("IdUser")
+                        .HasConstraintName("RELATIONSHIP_ZIADANKA_LEKAR_FK")
+                        .IsRequired();
+
+                    b.Navigation("PouzivatelNavigation");
+                });
+
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.AppRola", b =>
                 {
                     b.Navigation("PouzivatelRole");
@@ -1691,6 +1728,8 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Navigation("Pacients");
 
                     b.Navigation("PouzivatelRole");
+
+                    b.Navigation("ZiadankaLekars");
 
                     b.Navigation("Ziadanky");
                 });

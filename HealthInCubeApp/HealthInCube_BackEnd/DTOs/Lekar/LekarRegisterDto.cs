@@ -5,8 +5,10 @@ namespace HealthInCube_BackEnd.DTOs.Lekar
 {
     public class LekarRegisterDto : RegisterPouzivatelDto
     {
-        public decimal IdOddel { get; set; }
+        public decimal IdNemocnica { get; set; }
+        public decimal IdOddelenie { get; set; }
         public byte DlzkaVysetrenia { get; set; }
         public ICollection<PracovnaDobaDto> PracovnaDobas { get; set; }
+        public ICollection<AtestaciaLekarDto> AtestacieLekars { get; set; }
     }
 }

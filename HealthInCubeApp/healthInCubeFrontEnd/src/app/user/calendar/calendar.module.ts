@@ -14,7 +14,8 @@ import { ModalPacientComponent } from './calendar-item/calendar-item-modal/modal
     declarations: [
       CalendarComponent, 
       CalendarItemComponent, 
-      ModalLekarComponent, ModalPacientComponent 
+      ModalLekarComponent,
+      ModalPacientComponent 
     ],
     imports: [
       SharedModule,

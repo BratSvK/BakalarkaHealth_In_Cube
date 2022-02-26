@@ -1,0 +1,46 @@
+    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+      <div class="container-fluid">
+        <div>
+          <i class="brand-zone-text" 
+             [inlineSVG]="'assets/brand.svg'">
+          </i>
+        </div>
+        <button class="navbar-toggler" 
+                type="button" 
+                data-bs-toggle="collapse" 
+                (click)="isCollapsed = !isCollapsed"
+                [attr.aria-expanded]="!isCollapsed" 
+                aria-controls="collapseBasic" 
+                aria-controls="collapseBasic"
+                aria-expanded="false" 
+                aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon">
+          </span>
+        </button>
+        <span class="space"></span>
+        <div class="collapse navbar-collapse" 
+             id="collapseBasic" 
+             [collapse]="isCollapsed">
+          <ul class="nav nav-pills me-auto mb-2 mb-md-0">
+            <ng-container>
+              <li class="nav-item mr-2">
+                <a class="nav-link" 
+                   [routerLink]="['ziadanky-lekar']" 
+                   routerLinkActive='active'>
+                  <fa-icon [icon]="userCheck">
+                  </fa-icon>
+                  Žiadanky
+                </a>
+              </li>
+            </ng-container>
+          </ul>
+          <ul class="navbar-nav flex-row flex-wrap ms-md-auto" 
+              style="margin-left: auto!important">
+            <app-nav-user-toolbox 
+                                    (clearAdminCache)="clearCacheOfAdmin()" 
+                                    [user]="user">
+            </app-nav-user-toolbox>
+          </ul>
+        </div>
+      </div>
+    </nav>

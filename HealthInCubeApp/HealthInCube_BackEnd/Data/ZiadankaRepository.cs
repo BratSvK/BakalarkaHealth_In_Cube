@@ -1,9 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using HealthInCube_BackEnd.DTOs;
+using HealthInCube_BackEnd.DTOs.Ziadanka;
 using HealthInCube_BackEnd.Entities;
+using HealthInCube_BackEnd.Helpers;
+using HealthInCube_BackEnd.Helpers.Params;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,10 +30,10 @@ namespace HealthInCube_BackEnd.Data
             _context.Ziadanka.Remove(ziadanka);
         }
 
-        public Task<ZiadankaDto> GetItemAsync(decimal itemId)
+        public Task<ZiadankaBaseDto> GetItemAsync(decimal itemId)
         {
             throw new System.NotImplementedException();
-           
+
         }
 
         public async Task<bool> EntityExists(decimal itemId)
@@ -38,18 +41,18 @@ namespace HealthInCube_BackEnd.Data
             return await _context.Ziadanka.AnyAsync(l => l.IdUser == itemId);
         }
 
-        public async Task<IEnumerable<ZiadankaDto>> GetItemsAsync()
+        public async Task<IEnumerable<ZiadankaBaseDto>> GetItemsAsync()
         {
             return await _context.Ziadanka
                                 .Include(z => z.IdPouzivatelNavigation)
                                 .Include(z => z.IdLekarNavigation)
-                                .ProjectTo<ZiadankaDto>(_mapper.ConfigurationProvider)
+                                .ProjectTo<ZiadankaBaseDto>(_mapper.ConfigurationProvider)
                                 .ToListAsync();
         }
 
-        public async Task<Ziadanka> GetZiadankaByDoctorId(int id)
+        public async Task<ZiadankaLekar> GetZiadankaByDoctorIdAsync(decimal idUser)
         {
-            return await _context.Ziadanka.Include(z => z.IdLekarNavigation).SingleOrDefaultAsync(z =>z.IdLekar == id);
+            return await _context.ZiadankaLekars.SingleOrDefaultAsync(z => z.IdUser == idUser);
         }
 
         public async Task<Ziadanka> GetZiadankaByPatientId(int id)
@@ -58,6 +61,10 @@ namespace HealthInCube_BackEnd.Data
 
         }
 
+        /// <summary>
+        /// Insert request from user to patient.
+        /// </summary>
+        /// <param name="item">Patient request.</param>
         public void InsertItem(Ziadanka item)
         {
             _context.Ziadanka.Add(item);
@@ -70,7 +77,7 @@ namespace HealthInCube_BackEnd.Data
 
         public void UpdateItem(Ziadanka item)
         {
-           // nothing to change only mark entity that has been modifity 
+            // nothing to change only mark entity that has been modifity 
             _context.Entry(item).State = EntityState.Modified;
         }
 
@@ -82,6 +89,36 @@ namespace HealthInCube_BackEnd.Data
         public async Task<Ziadanka> GetOriginItemAsync(decimal userId)
         {
             return await _context.Ziadanka.FindAsync(userId);
+        }
+
+        public async Task<PagedList<ZiadankaLekarDto>> GetZiadankyByHospitalId(SpravcaParams spravcaParams)
+        {
+           var query = _context.ZiadankaLekars
+                .Include(z => z.PouzivatelNavigation)
+                .AsQueryable();
+
+            query = query.Where(z => z.IdNemocnica == spravcaParams.IdNemocnica && z.AcceptedAt == null);
+
+            // pasing queriy to pageList class.
+            return await PagedList<ZiadankaLekarDto>.CreateAsync(
+                query.ProjectTo<ZiadankaLekarDto>(_mapper.ConfigurationProvider).AsNoTracking(),
+                spravcaParams.PageNumber,
+                spravcaParams.PageSize);
+        }
+
+        /// <summary>
+        /// Insert request for user to doctor.
+        /// </summary>
+        /// <param name="ziadankaLekar">Doctor request.</param>
+        public void InsertDoctorRequests(ZiadankaLekar ziadankaLekar)
+        {
+            _context.ZiadankaLekars.Add(ziadankaLekar);
+        }
+
+        public void UpdateDoctorRequest(ZiadankaLekar ziadankaLekar)
+        {
+            // nothing to change only mark entity that has been modifity 
+            _context.Entry(ziadankaLekar).State = EntityState.Modified;
         }
     }
 }

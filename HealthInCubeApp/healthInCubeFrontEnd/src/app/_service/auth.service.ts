@@ -1,7 +1,15 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 import * as AuthActionBundle from '../auth/store/auth.actions';
+import { Pouzivatel } from '../models/pouzivatel';
+import { Role } from '../models/user';
+import { ForgotPassword } from '../models/zabudnuteHeslo/forgotPassword';
+import { ResetPassword } from '../models/zabudnuteHeslo/resetPassword';
+import { CLIENT_URI_RESET_PASSWORD, UCET_API } from '../_constants/endPointsApi';
 import { AppState } from '../_store/models/AppState';
 
 
@@ -17,10 +25,13 @@ export class AuthService {
   // new type of subject -> behaviourSubject(store a value inside) -> call/sub -> difference is -> get acces to the latest user without subscribe in the time 
   // user = new BehaviorSubject<User>(null);
   
-
+  baseUrl = environment.apiUrl;
   private tokenExpirationTimer: any;
 
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store<AppState>,
+    private http: HttpClient
+  ) {}
 
   // autologin after expires one hour 
   setLogoutTimer(expirationDuration: number) {
@@ -37,6 +48,20 @@ export class AuthService {
     }
   }
 
+   forgotPasswordUser(forgotUserData: ForgotPassword): Observable<any> {
+    const url = `${this.baseUrl}${UCET_API}/forgotPassword`;
+    forgotUserData.clientURI = `${CLIENT_URI_RESET_PASSWORD}`;
+    return this.http.post(url, forgotUserData);
+  }
+
+  resetPasswordUser(resetUserData: ResetPassword): Observable<any> {
+    const url = `${this.baseUrl}${UCET_API}/resetPassword`;
+    return this.http.post(url, resetUserData);
+  }
+
+  chechIfUserIsAdmin(user: Pouzivatel): boolean {
+    return user.roleStoreBase.some(r => r === Role.Admin)
+  }
 
   // OLD WAY WITHOUT REDUX PATTERN
   // signup(signUpForm: SignUp) {

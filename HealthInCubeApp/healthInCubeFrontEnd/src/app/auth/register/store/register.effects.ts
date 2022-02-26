@@ -121,12 +121,36 @@ fetchMestaBirth = createEffect(() =>
           .pipe(
             // return a observable automaticly
            
-            map((resData) => {
-              const emailData: Mail = {
-                receiverEmail: resData.email,
-                receiverFullName: resData.fullName
-              };
-              return new RegisterAcitonsBundle.RegisterUserSuccess(emailData);
+            map(() => {
+              return new RegisterAcitonsBundle.RegisterUserSuccess();
+            }),
+            catchError((error) => {
+              // returning non error observable
+              const errorToSend = handleError(error);
+              this.toastr.error(errorToSend);
+              return of(new RegisterAcitonsBundle.RegisterUserFailed());
+            })
+          );
+      })
+    )
+  );
+
+  authSignupLekar = createEffect(() =>
+    this.actions$.pipe(
+      ofType(RegisterAcitonsBundle.REGISTER_LEKAR_START),
+      
+      switchMap((authSignData: RegisterAcitonsBundle.RegisterStartLekar) => {
+        // const signInObject = this.createModelToSend(authSignData.payload);
+
+        return this.http
+          .post(fetchUrl + 'ucet/register/lekar',
+            authSignData.payload
+          )
+          .pipe(
+            // return a observable automaticly
+           
+            map(() => {
+              return new RegisterAcitonsBundle.RegisterUserSuccess();
             }),
             catchError((error) => {
               // returning non error observable
@@ -144,11 +168,8 @@ fetchMestaBirth = createEffect(() =>
     () =>
       this.actions$.pipe(
         ofType(RegisterAcitonsBundle.REGISTER_SUCCESS),
-        switchMap((registerData: RegisterAcitonsBundle.RegisterUserSuccess) => {
-          return this.http.post<Mail>(`${fetchUrl}ucet/mail`, registerData.payload)
-        }),
         tap(() => {
-            this.toastr.success("Account created");
+            this.toastr.success("Účet vytvorený, počkajte na prijatie príšlušným vyšším orgánom.");
             this.router.navigate(['/auth']);
         })
       ),
@@ -158,7 +179,6 @@ fetchMestaBirth = createEffect(() =>
   constructor(
     private actions$: Actions,
     private http: HttpClient,
-    private store: Store<AppState>,
     private router: Router,
     private toastr: ToastrService
   ) {}

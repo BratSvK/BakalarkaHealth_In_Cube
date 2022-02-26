@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace HealthInCube_BackEnd.DTOs
+﻿namespace HealthInCube_BackEnd.DTOs
 {
     /// <summary>
     /// Create patient account data transfer object.
+    /// The same as doctor create model.
     /// </summary>
     public class CreatePatientAccountDto
     {

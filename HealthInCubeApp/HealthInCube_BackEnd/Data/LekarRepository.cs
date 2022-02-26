@@ -7,8 +7,10 @@ using AutoMapper.QueryableExtensions;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Lekar;
 using HealthInCube_BackEnd.DTOs.Lekar.LekarTyp;
+using HealthInCube_BackEnd.DTOs.Ziadanka;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Helpers;
+using HealthInCube_BackEnd.Helpers.Params;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -77,7 +79,9 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<Lekar> GetLekarEntity(decimal lekarId)
         {
-            return await _context.Lekar.FindAsync(lekarId);
+            return await _context.Lekar
+                    .Include(l => l.IdPouzivatelNavigation)
+                    .SingleOrDefaultAsync(l => l.IdLekar == lekarId);
         }
 
         public async Task<LekarDto> GetLekarEntityByUserId(decimal userId)
@@ -99,24 +103,22 @@ namespace HealthInCube_BackEnd.Data
                     Nemocnica = l.IdOddelNavigation.IdNemNavigation.Nazov,
                     OddelenieNazov = l.IdOddelNavigation.NazovOdd,
                     AtestacieId = l.AtestacieLekars.Select(a => a.IdTyp).ToList(),
-                    Fotka = l.IdPouzivatelNavigation.FotkaPouzivatel.Fotka
+                    Fotka = l.IdPouzivatelNavigation.FotkaPouzivatel.Fotka,
+                    IsActivated = l.IsActivated
                 })
                 .AsNoTracking().AsQueryable();
 
-
             return await lekar.SingleOrDefaultAsync();
-
         }
 
-        public async Task<IEnumerable<ZiadankaDto>> GetAllRequetsByDoctorIdAsync(decimal lekarId)
+        public async Task<IEnumerable<ZiadankaPacientDto>> GetAllRequetsByDoctorIdAsync(decimal lekarId)
         {
-            var requests =  await _context.Ziadanka
+            return await _context.Ziadanka
                 .Include(z => z.IdPouzivatelNavigation)
                 .Where(z => z.IdLekar == lekarId && z.AcceptedAt == null)
+                .ProjectTo<ZiadankaPacientDto>(_mapper.ConfigurationProvider)
                 .OrderBy(z => z.CreatedAt)
                 .ToListAsync();
-
-            return _mapper.Map<List<Ziadanka>, IEnumerable<ZiadankaDto>>(requests);
         }
 
         public void InsertItem(Lekar item)
@@ -131,7 +133,7 @@ namespace HealthInCube_BackEnd.Data
 
         public void UpdateItem(Lekar item)
         {
-            throw new System.NotImplementedException();
+            _context.Entry(item).State = EntityState.Modified;
         }
 
         public async Task<int> GetCountAsync()
@@ -223,5 +225,11 @@ namespace HealthInCube_BackEnd.Data
                 .Select(l => l.DlzkaVysetrenia)
                 .FirstOrDefaultAsync();
         }
+
+        public async Task<bool> GetIsActivatedAccountAsync(decimal idPouzivatel)
+         => await _context.Lekar
+                    .Where(l => l.IdPouzivatel == idPouzivatel)
+                    .Select(l => l.IsActivated)
+                    .FirstOrDefaultAsync();
     }
 }

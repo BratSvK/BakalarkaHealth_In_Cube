@@ -18,6 +18,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { HasFocusDirective } from '../_directives/has-focus.directive';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { HasFocusDirective } from '../_directives/has-focus.directive';
     PaginationModule.forRoot(),        // for any of angular boostrap components use forRoot 
     ModalModule.forRoot(),
     TooltipModule.forRoot(),
+    TimepickerModule.forRoot()
   ],
   exports: [
     CommonModule,
@@ -61,7 +63,8 @@ import { HasFocusDirective } from '../_directives/has-focus.directive';
     TimeagoModule,
     PaginationModule,
     ModalModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TimepickerModule
   ]
 })
 export class SharedModule {}

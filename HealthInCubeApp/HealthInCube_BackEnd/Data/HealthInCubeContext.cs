@@ -51,8 +51,7 @@ namespace HealthInCube_BackEnd.Data
         public virtual DbSet<VystavenyTermin> VystavenyTermins { get; set; }
         public virtual DbSet<Sprievodka> Sprievodkas { get; set; }
         public virtual DbSet<PracovnaDoba> PracovnaDobas { get; set; }
-
-
+        public virtual DbSet<ZiadankaLekar> ZiadankaLekars { get; set; }
         #endregion
 
 
@@ -126,9 +125,6 @@ namespace HealthInCube_BackEnd.Data
                        .HasForeignKey(d => d.IdUser)
                        .OnDelete(DeleteBehavior.ClientSetNull)
                        .HasConstraintName("RELATIONSHIP201");
-
-
-
             });
 
             modelBuilder.Entity<AtestacieLekar>(entity =>
@@ -214,7 +210,6 @@ namespace HealthInCube_BackEnd.Data
                     .HasForeignKey(d => d.IdMesto)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("RELATIONSHIP103");
-
                 entity.HasOne(d => d.IdPouzivatelNavigation)
                     .WithMany(p => p.Bydliskos)
                     .HasForeignKey(d => d.IdPouzivatel)
@@ -1224,6 +1219,36 @@ namespace HealthInCube_BackEnd.Data
 
             modelBuilder.Entity<VystavenyTermin>()
                    .ToTable("VYSTAVENY_TERMIN");
+
+            modelBuilder.Entity<ZiadankaLekar>(entity =>
+            {
+                entity.HasKey(z => new { z.IdUser, z.IdNemocnica, z.CreatedAt });
+                entity.ToTable("ZIADANKA_LEKAR");
+
+                entity.Property(e => e.IdUser)
+                   .HasColumnType("NUMBER(38)")
+                   .HasColumnName("ID_USER");
+
+                entity.Property(e => e.IdNemocnica)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("ID_NEMOCNICA");
+
+                entity.Property(e => e.CreatedAt)
+                    .HasColumnType("DATE")
+                    .HasColumnName("VYTVORENA");
+
+                entity.Property(e => e.AcceptedAt)
+                    .HasColumnType("DATE")
+                    .HasColumnName("AKCEPTOVANA");
+
+                entity.HasOne(d => d.PouzivatelNavigation)
+                       .WithMany(p => p.ZiadankaLekars)
+                       .HasForeignKey(d => d.IdUser)
+                       .OnDelete(DeleteBehavior.ClientSetNull)
+                       .HasConstraintName("RELATIONSHIP_ZIADANKA_LEKAR_FK");
+            });
+
+
             #endregion
 
             OnModelCreatingPartial(modelBuilder);

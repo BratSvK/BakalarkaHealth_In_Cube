@@ -1,0 +1,14 @@
+.thead-dark th {
+    background-color: black!important;   
+}
+
+td {
+    vertical-align: middle;
+}
+tbody {
+    background-color: whitesmoke;
+}
+
+fa-icon {
+    font-size: 1.2rem;
+}

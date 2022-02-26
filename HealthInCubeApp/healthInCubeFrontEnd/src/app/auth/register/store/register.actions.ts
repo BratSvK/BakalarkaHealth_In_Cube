@@ -8,6 +8,7 @@ import { Pouzivatel } from "src/app/models/pouzivatel";
 import { RegisterPouzivatel } from "src/app/models/pouzivatelRegistracia";
 import { Actions } from "@ngrx/effects";
 import { Mail } from "src/app/models/mail";
+import { LekarRegister } from "src/app/models/lekar/lekarRegister";
 
 
 
@@ -40,11 +41,10 @@ export const SET_PRACTITIONERS = '[Register] Set practitioners';
 
 
 export const REGISTER_START = '[Register] Register Start User';
-
 export const REGISTER_SUCCESS = '[Register] Register Success User';
-
 export const REGISTER_FAILED = '[Register] Register Failed User';
 
+export const REGISTER_LEKAR_START = '[Register] Register Start Lekar';
 
 export const REGISTER_SEND_EMAIL_CONFIRM = '[Register] Sending a confirm email';
 
@@ -56,8 +56,12 @@ export const RESET_FORM = '[Register] Reset form';
 
 export class SendingEmailToUser implements Action {
     readonly type = REGISTER_SEND_EMAIL_CONFIRM;
+}
 
-   
+export class RegisterStartLekar implements Action {
+    readonly type = REGISTER_LEKAR_START;
+
+    constructor(public payload: LekarRegister) {}
 }
 
 export class ResetForm implements Action {
@@ -81,8 +85,6 @@ export class RegisterUserStart implements Action {
 
 export class RegisterUserSuccess implements Action {
     readonly type =  REGISTER_SUCCESS;
-
-     constructor(public payload: Mail) {}
 }
 
 export class RegisterUserFailed implements Action {
@@ -178,7 +180,8 @@ export type RegisterActions =
   | FetchOkresyBirth
   | SetOkresyBBirth
   | FetchMestaBirth
-  | SetMestaBirth;
+  | SetMestaBirth
+  | RegisterStartLekar;
  
 
 

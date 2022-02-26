@@ -1,14 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Ziadanka } from 'src/app/models/ziadanka';
 import { AppState } from 'src/app/_store/models/AppState';
 import { Actions, ofType} from '@ngrx/effects';
-
-import * as UserDetailActions from './store/user-detail.actions';
 import { map, switchMap, take } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { PouzivatelDetail } from 'src/app/models/pouzivatel-detail';
+
+import * as UserDetailActions from './store/user-detail.actions';
 
 @Injectable({
   providedIn: 'root'

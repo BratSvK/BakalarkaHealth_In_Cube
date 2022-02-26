@@ -79,5 +79,10 @@ namespace HealthInCube_BackEnd.Data
                 .AsNoTracking()
                 .SingleOrDefaultAsync();
         }
+
+        public async Task<IEnumerable<ZoznamDenDto>> GetAllDaysListAsync()
+         => await _context.ZoznamDen
+            .ProjectTo<ZoznamDenDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
     }
 }

@@ -26,6 +26,9 @@ import { RegisterPouzivatel } from 'src/app/models/pouzivatelRegistracia';
 import { Adresa } from 'src/app/models/adresa';
 
 import { faBaby } from '@fortawesome/free-solid-svg-icons';
+import { matchValues } from 'src/app/shared/auth-common';
+import { SubSink } from 'subsink';
+import { distinctUntilChanged, filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -52,6 +55,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
 
   isSubmitted = false;
+
+  private subs = new SubSink();
+
+
+  get rodneCislo() {
+    return (<FormControl>this.registerForm.get('userData.birthIDNumber'));
+  }
 
   constructor(
     private store: Store<AppState>,
@@ -193,7 +203,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   private chceckPohlavie(mesiac: string): boolean {
-    return mesiac === '1' || mesiac === '2';
+    return mesiac === '0' || mesiac === '1';
   }
 
   private initForm() {
@@ -203,7 +213,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         lastName: new FormControl('', Validators.required),
         familyName: new FormControl(''),
         birthIDNumber: new FormControl(null, [
-          Validators.pattern('^[0-9]+[/]*[0-9]*$'),
+          Validators.pattern('^[0-9]+[/]+[0-9]*$'),
           Validators.minLength(11),
           Validators.maxLength(11),
         ]),
@@ -218,7 +228,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         ]),
         confirmPassword: new FormControl('', [
           Validators.required,
-          this.matchValues('password'),
+          matchValues('password'),
         ]),
       }),
       userAddress: new FormGroup({
@@ -246,6 +256,13 @@ export class RegisterComponent implements OnInit, OnDestroy {
         .updateValueAndValidity();
     });
 
+    this.subs.sink = this.registerForm.get('userData.birthIDNumber').valueChanges.pipe(
+      filter((item: string) => this.rodneCislo.valid && item.length > 0),
+      distinctUntilChanged()
+     ).subscribe(() => {
+       this.onCalculateFromBIDToBirthDate();
+     })
+
     this.focusNameInput();
   }
 
@@ -254,13 +271,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     window.scrollTo(0, 0);
   }
 
-  private matchValues(matchTo: string): ValidatorFn {
-    return (control: AbstractControl) => {
-      return control?.value === control?.parent?.controls[matchTo].value
-        ? null
-        : { isMatching: true }; // return null ak prejde validacia
-    };
-  }
+  
 
   private createModelToSingUp(): RegisterPouzivatel {
    

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HealthInCube_BackEnd.Helpers
+namespace HealthInCube_BackEnd.Helpers.Params
 {
     /// <summary>
     /// Params from lekar.

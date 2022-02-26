@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Ziadanka } from 'src/app/models/ziadanka';
 import { AppState } from 'src/app/_store/models/AppState';
 import { Actions, ofType} from '@ngrx/effects';
 
 import * as LekarActionsBundle from '../store/lekar.actions';
 import { map, switchMap, take } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { ZiadankaPacient } from 'src/app/models/ziadanka/ziadankaPacient';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ZiadankyResolverService implements Resolve<Ziadanka[]> {
+export class ZiadankyResolverService implements Resolve<ZiadankaPacient[]> {
 
   constructor(private store: Store<AppState>, private actions$: Actions) { }
 

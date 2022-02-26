@@ -1,0 +1,106 @@
+
+/* .container {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 40px;
+    
+  } */
+
+  .bgImageWrapper {
+    /* The image used */
+    background-image: url('../../../assets/pozadie.jpg');
+   
+    height: 100%;
+  
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  
+  
+  }
+
+.rightCorner {
+    transform: translate(30px, -30px);
+}
+
+.errorHlaska {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+
+h4 {
+    text-decoration: underline;
+}
+
+.workingday {
+    align-items: center;
+}
+
+
+
+input.ng-touched.ng-invalid {
+    border: 2px solid red;
+}
+
+@media (min-width: 768px){
+    .registerWrapper {
+        width: 50%;
+        
+    }
+
+      
+}
+
+@media (max-width: 576px){
+    .container {
+        border: none
+    }
+
+    .rightCorner {
+        transform: translate(-60%, -30px);
+    }
+}
+
+
+.myCssAnimation {
+
+    padding: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+    position: absolute !important;
+    background: linear-gradient(270deg, #e922e9, #f75d21, #5543f7, #00dbff, #92db32);
+    background-size: 600% 600%;
+    animation: borderAnimation 4s ease infinite;
+}
+ 
+@keyframes borderAnimation {
+  0% { background-position: 0 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0 50%; }
+}
+
+.od {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.do {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.obed {
+    color: #212529;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+}
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

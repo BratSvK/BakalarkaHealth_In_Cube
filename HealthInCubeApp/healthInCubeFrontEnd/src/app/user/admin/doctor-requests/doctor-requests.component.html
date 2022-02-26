@@ -1,0 +1,39 @@
+<div *ngIf="(nemocnice$ | async) as nemocnice">
+  <div 
+    [formGroup]="nemocnicaForm" 
+    class="row">
+
+    <label for="nemocnica"><b>Nemocnica</b></label>
+    <select 
+      class="custom-select d-block ellipsis" 
+      id="nemocnica" 
+      formControlName="idNemocnica">
+      <option [disabled]="true" [selected]="true" value="">
+        Choose...
+      </option>
+      <option [ngValue]="nemocnica.idNem" *ngFor="let nemocnica of nemocnice">
+        {{nemocnica.nazov}}
+      </option>
+    </select>
+  </div>
+  <hr>
+  <br>
+
+  <table class="table table-striped">
+    <thead class="thead-dark">
+      <th>Lekár</th>
+      <th style="text-align: center;">Vytvorenie</th>
+      <th style="text-align: center;">Schválenie</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let req of (requests$ | async)">
+        <td>{{req.pouzivatel.fullName}}</td>
+        <td style="text-align: center;">{{req.createdAt | date: 'medium'}}</td>
+        <td style="text-align: center;"><button class="btn btn-success" (click)="onApproveDoctor(req.idUser)">
+            <fa-icon [icon]="checkIcon"></fa-icon>
+          </button></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

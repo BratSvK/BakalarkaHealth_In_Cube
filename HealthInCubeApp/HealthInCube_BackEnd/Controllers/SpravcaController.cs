@@ -1,8 +1,13 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using HealthInCube_BackEnd.DTOs;
+using HealthInCube_BackEnd.DTOs.Nemocnica;
+using HealthInCube_BackEnd.DTOs.Ziadanka;
 using HealthInCube_BackEnd.Entities;
+using HealthInCube_BackEnd.Helpers.Params;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,9 +19,14 @@ namespace HealthInCube_BackEnd.Controllers
     /// <summary>
     /// Admin controller.
     /// </summary>
+    [Authorize(Roles = "Spravca")]
     public class SpravcaController : BaseApiController
     {
         private readonly INemocnicaRepistory _nemocnicaRepository;
+        private readonly IZiadankaRepository _ziadankaRepository;
+        private readonly ILekarRepository _lekarRepository;
+        private readonly IEmailGeneratorService _emailGeneratorService;
+        private readonly IMapper _mapper;
         private readonly UserManager<Pouzivatel> _userManager;
 
         /// <summary>
@@ -24,15 +34,24 @@ namespace HealthInCube_BackEnd.Controllers
         /// </summary>
         /// <param name="nemocnicaRepository"></param>
         /// <param name="userManager"></param>
-        public SpravcaController(INemocnicaRepistory nemocnicaRepository, UserManager<Pouzivatel> userManager)
+        public SpravcaController(
+            INemocnicaRepistory nemocnicaRepository,
+            IZiadankaRepository ziadankaRepository,
+            ILekarRepository lekarRepository,
+            IEmailGeneratorService emailGeneratorService,
+            IMapper mapper,
+            UserManager<Pouzivatel> userManager)
         {
             _userManager = userManager;
             _nemocnicaRepository = nemocnicaRepository;
+            _ziadankaRepository = ziadankaRepository;
+            _lekarRepository = lekarRepository;
+            _emailGeneratorService = emailGeneratorService;
+            _mapper = mapper;
         }
 
         #region User-Roles
       
-        [Authorize(Roles = "Spravca")]
         [HttpGet("users-with-roles")]
         public async Task<ActionResult> GetUsersWithRoles()
         {
@@ -51,8 +70,6 @@ namespace HealthInCube_BackEnd.Controllers
             return Ok(users);
         }
 
-
-        [Authorize(Roles = "Spravca")]
         [HttpPost("edit-roles/{username}")]
         public async Task<ActionResult> EditRoles(string username, [FromQuery] string roles)
         {   
@@ -78,8 +95,6 @@ namespace HealthInCube_BackEnd.Controllers
 
         #endregion
 
-
-
         [HttpGet("nemocnice")]
         public async Task<ActionResult<IEnumerable<NemocnicaDto>>> GetNemocnice()
         {
@@ -88,14 +103,60 @@ namespace HealthInCube_BackEnd.Controllers
             if (nemocnice == null) return NotFound("Nothing found");
 
             return Ok(nemocnice);
-
         }
 
+        /// <summary>
+        /// Get the list of requests by hospital.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("request/list")]
+        public async Task<ActionResult<ZiadankaLekar>> GetAllRequestByDoctor([FromQuery] SpravcaParams spravcaParams)
+        {
+            var requests = await _ziadankaRepository.GetZiadankyByHospitalId(spravcaParams);
+            return Ok(requests);
+        }
 
-        
+        /// <summary>
+        ///  Activate an doctor account.
+        /// </summary>
+        [HttpPost("activateDoctorAccount")]
+        public async Task<ActionResult> CreatePatientAccount([FromBody] CreatePatientAccountDto createPatientAccount)
+        {
+            var lekarId = await _lekarRepository.GetLekarIdByUser(createPatientAccount.IdUser);
+            if (!lekarId.HasValue)
+            {
+                return NotFound();
+            }
 
+            var lekar = await _lekarRepository.GetLekarEntity(lekarId.Value);
 
+            lekar.IsActivated = true;
+            _lekarRepository.UpdateItem(lekar);
 
+            if (await _lekarRepository.SaveAllAsync())
+            {
+                await _emailGeneratorService.GenerateEmailForDoctorCreation(lekar.IdPouzivatelNavigation); 
+                var requestToDelete = await RemoveFromRequest(createPatientAccount.IdUser);
 
+                if (requestToDelete == null) return BadRequest();
+
+                return Ok();
+            }
+
+            return BadRequest("Failed to activate doctor account.");
+        }
+
+        private async Task<ZiadankaLekarDto> RemoveFromRequest(decimal idUser)
+        {
+            var requestToDelete = await _ziadankaRepository.GetZiadankaByDoctorIdAsync(idUser);
+            if (requestToDelete == null) return null;
+
+            requestToDelete.AcceptedAt = DateTime.Now;
+            _ziadankaRepository.UpdateDoctorRequest(requestToDelete);
+
+            if (await _ziadankaRepository.SaveAllAsync()) return _mapper.Map<ZiadankaLekarDto>(requestToDelete);
+
+            return null;
+        }
     }
 }

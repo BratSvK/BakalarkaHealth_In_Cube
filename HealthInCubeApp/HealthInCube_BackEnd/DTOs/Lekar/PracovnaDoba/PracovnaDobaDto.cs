@@ -5,9 +5,9 @@ namespace HealthInCube_BackEnd.DTOs.Lekar.PracovnaDoba
     public class PracovnaDobaDto
     {
         public DayOfWeek IdDen { get; set; }
-        public string PracDobaOd { get; set; }
-        public string PracDobaDo { get; set; }
-        public string ObedOd { get; set; }
-        public string ObedDo { get; set; }
+        public DateTimeOffset PracDobaOd { get; set; }
+        public DateTimeOffset PracDobaDo { get; set; }
+        public DateTimeOffset ObedOd { get; set; }
+        public DateTimeOffset ObedDo => ObedOd.AddMinutes(30);
     }
 }

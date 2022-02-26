@@ -1,7 +1,7 @@
 import { Action } from "@ngrx/store";
 import { CreatePatient } from "src/app/models/createPatient";
 import { Lekar } from "src/app/models/lekar/lekar";
-import { Ziadanka } from "src/app/models/ziadanka";
+import { ZiadankaPacient } from "src/app/models/ziadanka/ziadankaPacient";
 
 export const FETCH_REQUESTS = '[Lekar] Fetch requests';                     // async
 export const SET_REQUESTS = '[Lekar] Set requests';                         // sync
@@ -20,7 +20,7 @@ export const RESET_PRACTITIONER = '[Lekar] Reset practitioner';
 export class DeleteRequest implements Action {
     readonly type = DELETE_REQUEST;
 
-    constructor(public payload: Ziadanka) {}
+    constructor(public payload: ZiadankaPacient) {}
 }
 
 export class ResetPractitioner implements Action {
@@ -50,7 +50,7 @@ export class FetchRequests implements Action {
 export class SetRequests implements Action {
     readonly type = SET_REQUESTS;
 
-    constructor(public payload: Ziadanka[]) {}
+    constructor(public payload: ZiadankaPacient[]) {}
 
 }
 
