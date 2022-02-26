@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import * as AuthActionBundle from '../auth/store/auth.actions';
+import { Pouzivatel } from '../models/pouzivatel';
+import { Role } from '../models/user';
 import { ForgotPassword } from '../models/zabudnuteHeslo/forgotPassword';
 import { ResetPassword } from '../models/zabudnuteHeslo/resetPassword';
 import { CLIENT_URI_RESET_PASSWORD, UCET_API } from '../_constants/endPointsApi';
@@ -57,6 +59,9 @@ export class AuthService {
     return this.http.post(url, resetUserData);
   }
 
+  chechIfUserIsAdmin(user: Pouzivatel): boolean {
+    return user.roleStoreBase.some(r => r === Role.Admin)
+  }
 
   // OLD WAY WITHOUT REDUX PATTERN
   // signup(signUpForm: SignUp) {

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Pouzivatel } from 'src/app/models/pouzivatel';
-import { Role } from 'src/app/models/user';
+import { AuthService } from 'src/app/_service/auth.service';
 import { AppState } from 'src/app/_store/models/AppState';
 
 import * as AuthActionsBundle from '../../auth/store/auth.actions';
@@ -17,7 +17,14 @@ export class NavUserToolboxComponent implements OnInit {
   @Input() user: Pouzivatel;
   @Output() clearAdminCache = new EventEmitter<boolean>();
 
-  constructor(private store: Store<AppState>) { }
+  constructor(
+    private store: Store<AppState>,
+    private authService: AuthService
+  ) { }
+
+  get isUserAsAdmin() {
+    return this.authService.chechIfUserIsAdmin(this.user);
+  }
 
   ngOnInit(): void {
   }
@@ -28,7 +35,7 @@ export class NavUserToolboxComponent implements OnInit {
   }
 
   private chechIfItAdminAndClearCache() {
-    if (this.user.roleStoreBase.some(r => r === Role.Admin)){
+    if (this.isUserAsAdmin){
       this.clearAdminCache.emit(true);
     }
   }
