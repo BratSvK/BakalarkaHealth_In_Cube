@@ -34,6 +34,7 @@ namespace HealthInCube_BackEnd.Extensions
 
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IEmailGeneratorService, EmailGeneratorService>();
+            services.AddSignalR();
 
             #region Repositories DI
             services.AddScoped<INemocnicaRepistory, NemocnicaRepository>();

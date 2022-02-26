@@ -8,7 +8,7 @@ import { SubSink } from 'subsink';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { BsDaterangepickerConfig } from 'ngx-bootstrap/datepicker';
 import { BID_LENGHT } from 'src/app/models/pacientCard';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import { PatientService } from 'src/app/_service/patient.service';
 import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';
 import { PatientSearch } from 'src/app/models/sprievodka/pacientSearch';
@@ -17,6 +17,9 @@ import { LekarService } from 'src/app/_service/lekar.service';
 import { LekarSprievodka } from 'src/app/models/lekar/lekarSprievodka';
 import { SprievodkaService } from 'src/app/_service/sprievodka.service';
 import { ToastrService } from 'ngx-toastr';
+import { UcetService } from 'src/app/_service/ucet.service';
+import { Pouzivatel } from 'src/app/models/pouzivatel';
+import { SprievodkaParams } from 'src/app/models/sprievodka/sprievodkaParams';
 
 @Component({
   selector: 'app-sprievodka-modal',
@@ -33,6 +36,7 @@ export class SprievodkaModalComponent implements OnInit, OnDestroy {
   typeOfDoctors$: Observable<LekarTyp[]>;
   doctorsBySelectedType: LekarSprievodka[];
   infoTypeDoctor: string  = 'Vyber si typ lekára';
+  user: Pouzivatel;
 
   notFound$ = new BehaviorSubject(false);
   isAvailable$ = new BehaviorSubject(true);
@@ -53,13 +57,20 @@ export class SprievodkaModalComponent implements OnInit, OnDestroy {
     private pacientService: PatientService,
     private lekarService: LekarService,
     private sprievodkaService: SprievodkaService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private ucetService: UcetService
   ) {
+    this.ucetService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
+    this.connectToSprievodkaHub();
     this.initSprievodkaForm(fb);
     this.listenToDoctorTypes();
   }
+ 
+
+ 
 
   ngOnDestroy(): void {
+    this.sprievodkaService.stopHubConnection();
     this.subs.unsubscribe();
   }
 
@@ -79,12 +90,16 @@ export class SprievodkaModalComponent implements OnInit, OnDestroy {
       return;
     }
     let sprievodkaModelForm = this.buildSprievodkaModalForm();
-   this.subs.sink = this.sprievodkaService.createSprievodka(sprievodkaModelForm).pipe(
-    tap(() => {
-      this.toastr.success("Sprievodka vytvorená a poslaná do kalendára.");
-      this.closeSprievodkaForm();
-    })
-   ).subscribe();
+  //  this.subs.sink = this.sprievodkaService.createSprievodka(sprievodkaModelForm).pipe(
+  //   tap(() => {
+  //     this.toastr.success("Sprievodka vytvorená a poslaná do kalendára.");
+  //     this.closeSprievodkaForm();
+  //   })
+  //  ).subscribe();
+  this.sprievodkaService.createSprievodka(sprievodkaModelForm).then(() => {
+    this.toastr.success("Sprievodka vytvorená a poslaná do kalendára.");
+    this.closeSprievodkaForm()
+  })
   }
 
   selectTypeInfo(doctorTypes: LekarTyp[]) {
@@ -95,6 +110,17 @@ export class SprievodkaModalComponent implements OnInit, OnDestroy {
       this.doctorsBySelectedType = lekari;
     });
   }
+
+
+  private connectToSprievodkaHub() {
+    let sprievodkaParams = new SprievodkaParams();
+    this.subs.sink = this.lekarService.getLoginDoctorId$().pipe(
+      tap(id => sprievodkaParams.idLekar = id)
+    ).subscribe()
+      
+     this.sprievodkaService.createHubConnection(this.user, sprievodkaParams);
+  }
+  
 
 
   private fixDate(d: Date): Date {

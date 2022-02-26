@@ -11,63 +11,66 @@ import { ModalPacientComponent } from './calendar-item-modal/modal-pacient/modal
   styleUrls: ['./calendar-item.component.css']
 })
 export class CalendarItemComponent implements OnInit {
-  @Input() sprievodkaItem: SprievodkaPacientModel | SprievodkaLekarModel; 
+  @Input() sprievodkaItems: SprievodkaPacientModel[] | SprievodkaLekarModel[]; 
   @Input() isPatient: boolean; 
 
   
   bsModalRef: BsModalRef;
-  colorOfSprievodka: string;
+  colorOfSprievodka: string [] = [];
 
   constructor(private modalService: BsModalService) { }
 
   ngOnInit(): void {
-    this.initColorToSprievodka();
+    this.initColorsToSprievodkas();
   }
 
-  getDurationInMinutes(): number {
-    var difference = Math.abs(new Date(this.sprievodkaItem?.terminOd).getTime() - new Date(this.sprievodkaItem?.terminDo).getTime());
+  getDurationInMinutes(i: number): number {
+    var difference = Math.abs(new Date(this.sprievodkaItems[i]?.terminOd).getTime() - 
+                              new Date(this.sprievodkaItems[i]?.terminDo).getTime());
     return Math.floor((difference/1000)/60);
   }
 
-  getPopisSprievodka() : string {
+  getPopisSprievodka(i: number) : string {
     return this.isPatient ? 
-           this.sprievodkaItem.idTypLekarNavigation?.popis.split(',')[0] :
-           (this.sprievodkaItem as SprievodkaLekarModel).idPacientNavigation?.idPouzivatelNavigation?.fullName;
+           this.sprievodkaItems[i].idTypLekarNavigation?.popis.split(',')[0] :
+           (this.sprievodkaItems[i] as SprievodkaLekarModel).idPacientNavigation?.idPouzivatelNavigation?.fullName;
   }
 
-  openSprievodkaItemModal() {
+  openSprievodkaItemModal(i: number) {
     this.isPatient ? 
-      this.openSprievodkaPacientItemModal() : 
-      this.openLekarSprievodkaModal();
+      this.openSprievodkaPacientItemModal(i) : 
+      this.openLekarSprievodkaModal(i);
   }
 
-  openSprievodkaPacientItemModal() {
+  openSprievodkaPacientItemModal(i: number) {
     const config = {
       class: 'modal-dialog-centered',
       initialState: {
         title: 'Plánované vyšetrenie',
         closeBtbName: 'Close',
-        sprievodka: this.sprievodkaItem as SprievodkaPacientModel,
+        sprievodka: this.sprievodkaItems[i] as SprievodkaPacientModel,
       }
     };
     this.bsModalRef = this.modalService.show(ModalPacientComponent, config);
     
   }
 
-  openLekarSprievodkaModal() {
+  openLekarSprievodkaModal(i: number) {
     const config = {
       class: 'modal-dialog-centered',
       initialState: {
         title: 'Plánované vyšetrenie',
         closeBtbName: 'Close',
-        sprievodka: this.sprievodkaItem as SprievodkaLekarModel,
+        sprievodka: this.sprievodkaItems[i] as SprievodkaLekarModel,
       }
     };
     this.bsModalRef = this.modalService.show(ModalLekarComponent, config);
   }
 
-  private initColorToSprievodka() {
-    this.colorOfSprievodka = colorsDictionarySprievodka[this.sprievodkaItem?.idTypLekarNavigation?.idTyp].color;
+  private initColorsToSprievodkas() {
+    for (let index = 0; index < this.sprievodkaItems.length; index++) {
+      this.colorOfSprievodka.push(colorsDictionarySprievodka[this.sprievodkaItems[index]?.idTypLekarNavigation?.idTyp].color);
+    }
   }
 
 }

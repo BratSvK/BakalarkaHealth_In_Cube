@@ -29,7 +29,7 @@
           <div style="overflow-x:auto;">
           <table class="table table-bordered" id="table" >
             <tbody>
-                <tr *ngFor="let day of weekArray ; index as iDen" >
+                <tr *ngFor="let day of dayList ; index as iDen" >
                     <th 
                      [ngStyle]="{'color':'black', 'padding-left': '5px', 'font-size': '18px'}"
                       class="nameColumn" 
@@ -43,9 +43,9 @@
                         (wheel)="onWheel($event)">
 
                     <app-calendar-item 
-                                      *ngIf="getCurrentSprievodka(iDen, hour) as sprievodka"
+                                      *ngIf="getCurrentSprievodka(iDen, hour) as sprievodkaList"
                                       class="example-box"
-                                      [sprievodkaItem]="sprievodka"
+                                      [sprievodkaItems]="sprievodkaList"
                                       [isPatient]="isPatient">
                     </app-calendar-item>
                     </td>

@@ -1,7 +1,7 @@
 export class SprievodkaParams {
     idLekar?: number;
     idPacient?: number;
-    startWeekBy: string;
+    startWeekBy?: string;
     
     constructor() {}
 }
