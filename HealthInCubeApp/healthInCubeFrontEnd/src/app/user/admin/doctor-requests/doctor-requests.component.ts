@@ -78,7 +78,7 @@ export class DoctorRequestsComponent implements OnInit, OnDestroy {
       })
     ).subscribe(() => {
       this.initSprievodky(this.nemocnicaForm.get('idNemocnica').value);
-      this.toastr.success("Pacient vytvorený");
+      this.toastr.success("Lekár úspešne aktivovaný");
     });
   }
 
