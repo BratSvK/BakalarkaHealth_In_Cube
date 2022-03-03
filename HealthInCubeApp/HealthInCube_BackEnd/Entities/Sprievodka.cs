@@ -29,6 +29,10 @@ namespace HealthInCube_BackEnd.Entities
         /// </summary>
         public DateTime TerminDo { get; set; }
 
+        public string ZrusenieDovod { get; set; }
+
+        public bool IsDeactivated { get; set; } = false;
+
         public virtual  Lekar IdLekarNavigation { get; set; }
 
         public virtual TypLekara IdTypLekarNavigation { get; set; }
