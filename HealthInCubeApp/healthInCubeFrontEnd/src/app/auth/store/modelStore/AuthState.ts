@@ -7,7 +7,6 @@ export interface AuthState {
     isLoading: boolean;
 }
 
-
 export const getPractitionerState = createFeatureSelector('auth');
 
 export const getCurrentUserState = createSelector(
