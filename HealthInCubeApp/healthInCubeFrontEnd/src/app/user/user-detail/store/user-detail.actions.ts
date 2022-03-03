@@ -10,6 +10,7 @@ export const RESET_USER_DETAIL = '[User-Detail] reset user detail';
 
 export const ADD_BYDLISKO = '[User-Detail]  Add bydlisko';
 export const UPDATE_BYDLISKO = '[User-Detail]  Update bydlisko';
+export const SET_ID_BYDLISKO= '[User-Detail] Set id bydlisko';
 export const START_EDIT = '[User-Detail]  Start Edit';
 export const STOP_EDIT = '[User-Detail]  Stop Edit';
 
@@ -45,6 +46,13 @@ export class SetMestaAll implements Action {
   readonly type = SET_ALL_MESTA;
 
   constructor(public payload: Mesto[]) {}
+
+}
+
+export class SetIdBydlisko implements Action {
+  readonly type = SET_ID_BYDLISKO;
+
+  constructor(public payload: Bydlisko) {}
 
 }
 
@@ -90,4 +98,5 @@ export type UserDetailActions =
   | StopEdit
   | FetchMestaAll
   | SetMestaAll
+  | SetIdBydlisko
   | Dummy;

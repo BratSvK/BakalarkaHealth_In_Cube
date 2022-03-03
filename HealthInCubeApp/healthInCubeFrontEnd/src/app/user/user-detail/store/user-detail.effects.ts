@@ -5,6 +5,7 @@ import { Store } from "@ngrx/store";
 import { ToastrService } from "ngx-toastr";
 import { of } from "rxjs";
 import { catchError, map, switchMap, take, withLatestFrom } from "rxjs/operators";
+import { Bydlisko } from "src/app/models/bydlisko";
 import { Mesto } from "src/app/models/mesto";
 import { PouzivatelDetail } from "src/app/models/pouzivatel-detail";
 import { AppState } from "src/app/_store/models/AppState";
@@ -80,7 +81,8 @@ export class UserDetailEffects {
             switchMap((bydliskoData: UserDetailActions.AddBydlisko) => {
                 return this.http.post(fetchUrl + `pouzivatel/address/create`, bydliskoData.payload)
             }),
-            map(() => {
+            map((bydlisko: Bydlisko) => {
+                this.store.dispatch(new UserDetailActions.SetIdBydlisko(bydlisko));
                 this.toastr.success("Adresa pridaná");
             }),
             catchError((error) => {
