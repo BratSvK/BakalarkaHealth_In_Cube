@@ -90,7 +90,7 @@ export class CalendarComponent implements OnInit,OnDestroy {
        )
        .subscribe();
       } else {
-        this.subs.sink = this.lekarService.getDoctorIdByUserId()
+        this.subs.sink = this.lekarService.getLoginDoctorId$()
         .pipe(
           tap(doctorId => sprievodkaParams.idLekar = doctorId)
         ).subscribe();

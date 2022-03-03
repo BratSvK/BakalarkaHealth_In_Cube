@@ -34,7 +34,6 @@ export class SprievodkaService {
   ) { }
 
   createHubConnection(user: Pouzivatel, sprievodkaParams: SprievodkaParams) {
-    console.log(sprievodkaParams);
     this.hubConnection = new HubConnectionBuilder()
       .withUrl(this.hubUrl + 'sprievodka?sprievodkaParams=' + JSON.stringify(sprievodkaParams), {
         accessTokenFactory: () => user.token,
@@ -67,7 +66,6 @@ export class SprievodkaService {
   // }
 
   async createSprievodka(sprievodkaForm: SprievodkaCreateModelApi) {
-    console.log(sprievodkaForm);
     return this.hubConnection.invoke('CreateAppointmentByDoctor', sprievodkaForm)
       .catch(error => this.toastr.error(error));
   }
