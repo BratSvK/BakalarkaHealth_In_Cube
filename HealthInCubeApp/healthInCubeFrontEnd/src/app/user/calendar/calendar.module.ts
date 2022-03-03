@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { ModalLekarComponent } from './calendar-item/calendar-item-modal/modal-lekar/modal-lekar.component';
 import { ModalPacientComponent } from './calendar-item/calendar-item-modal/modal-pacient/modal-pacient.component';
+import { CalendarChangedModalComponent } from './calendar-changed-modal/calendar-changed-modal.component';
+import { NgAnimatedBorderModule } from "ng-animated-border";
 
 
 @NgModule({
@@ -15,13 +17,15 @@ import { ModalPacientComponent } from './calendar-item/calendar-item-modal/modal
       CalendarComponent, 
       CalendarItemComponent, 
       ModalLekarComponent,
-      ModalPacientComponent 
+      ModalPacientComponent,
+      CalendarChangedModalComponent 
     ],
     imports: [
       SharedModule,
       MatIconModule,
       MatFormFieldModule,
-      MatInputModule
+      MatInputModule,
+      NgAnimatedBorderModule
     ],
     exports: [
       CalendarComponent 

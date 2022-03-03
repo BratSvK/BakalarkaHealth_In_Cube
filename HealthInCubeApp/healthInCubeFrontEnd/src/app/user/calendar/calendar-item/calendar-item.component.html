@@ -1,15 +1,15 @@
-<div 
+<div *ngFor="let sprievodka of sprievodkaItems; let i = index"
     class="sprievodkaItem" 
-    [ngStyle]="{'background-color': colorOfSprievodka}"
+    [ngStyle]="{'background-color': colorOfSprievodka[i]}"
     [tooltip]="scheduleTimeInfo"
-    (click)="openSprievodkaItemModal()">
+    (click)="openSprievodkaItemModal(i)">
     <p class="titleOfSprievodka">
-        {{getPopisSprievodka()}}
+        {{getPopisSprievodka(i)}}
     </p>
-</div>
 
 <ng-template #scheduleTimeInfo>
-    Začiatok o: {{sprievodkaItem?.terminOd | date:'shortTime'}}
+    Začiatok o: {{sprievodkaItems[i]?.terminOd | date:'shortTime'}}
     <br>
-    Trvanie: {{getDurationInMinutes()}} min.
+    Trvanie: {{getDurationInMinutes(i)}} min.
 </ng-template>
+</div>

@@ -1,5 +1,6 @@
 using HealthInCube_BackEnd.Extensions;
 using HealthInCube_BackEnd.Middleware;
+using HealthInCube_BackEnd.SignalR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -48,7 +49,10 @@ namespace HealthInCube_BackEnd
 
             // there is right place where to put corses 
             // we need set a policy to our app x=> policy 
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200"));
+            app.UseCors(x => x.AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()             // set up access token to signalR
+                .WithOrigins("https://localhost:4200"));
 
             // using middleware
             app.UseAuthentication();
@@ -59,6 +63,7 @@ namespace HealthInCube_BackEnd
             {
                 // map all controller with endPoints inside to our page 
                 endpoints.MapControllers();
+                endpoints.MapHub<SprievodkaHub>("hubs/sprievodka");
             });
         }
     }

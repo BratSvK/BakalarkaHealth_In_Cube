@@ -2,17 +2,22 @@ import { DatePipe } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 import { Store } from '@ngrx/store';
 import * as _moment from 'moment';
 import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
+import { Pouzivatel } from 'src/app/models/pouzivatel';
 import { SprievodkaLekarModel, SprievodkaModel, SprievodkaPacientModel } from 'src/app/models/sprievodka/sprievodkaModel';
 import { SprievodkaParams } from 'src/app/models/sprievodka/sprievodkaParams';
+import { User } from 'src/app/models/user';
 import { LekarService } from 'src/app/_service/lekar.service';
 import { PatientService } from 'src/app/_service/patient.service';
 import { SprievodkaService } from 'src/app/_service/sprievodka.service';
+import { UcetService } from 'src/app/_service/ucet.service';
 import { AppState } from 'src/app/_store/models/AppState';
 import { SubSink } from 'subsink';
+import { getPatientId } from '../patient/store/modelStore/PatientState';
 
 
 const moment = _moment;
@@ -27,12 +32,12 @@ export class CalendarComponent implements OnInit,OnDestroy {
   selectedDayInWeek = new FormControl();
   sprievodkyList: SprievodkaModel[];
   currentView: any;
-  weekArray: string[] = [];
   isActivated$: Observable<boolean>;
   lekarId$: Observable<number>;
   hours: Array<number>;
   isPatient: boolean = false;
   currentDate = new Date(moment().isoWeekday(1).startOf('isoWeek').toDate());
+  user: Pouzivatel;
 
   // Datepicker takes `Moment` objects instead of `Date` objects.
   date =  new FormControl([
@@ -49,18 +54,50 @@ export class CalendarComponent implements OnInit,OnDestroy {
     private lekarService: LekarService,
     private patientService: PatientService,
     private store: Store<AppState>,
-  ) { }
+    private ucetService: UcetService
+  ) { 
+    this.ucetService.currentUser$.pipe(take(1)).subscribe(user => this.user = user);
+  }
+
+
+  get dayList() {
+    return moment.weekdays(true);
+  }
 
   ngOnDestroy(): void {
     this.subs.unsubscribe();
+    this.sprievodkyService.stopHubConnection();
   }
 
   ngOnInit(): void {
     if (this.router.url.split('/')[1] === 'patient')
     this.isActivated$ = this.patientService.checkIsActiveted$();
     this.lekarId$ = this.lekarService.getLoginDoctorId$();
+    this.connectoToSprievodkaHub();
     this.getInitialInfo();
   }
+
+
+  private connectoToSprievodkaHub() {
+    let urlSegments = this.router.url.split('/');
+    let userId = +urlSegments[2];
+    let sprievodkaParams = new SprievodkaParams();
+
+    if (userId && sprievodkaParams) {
+      if (urlSegments[1] === 'patient') {
+       this.subs.sink = this.store.select(getPatientId).pipe(
+         tap(id => sprievodkaParams.idPacient = id)
+       )
+       .subscribe();
+      } else {
+        this.subs.sink = this.lekarService.getLoginDoctorId$()
+        .pipe(
+          tap(doctorId => sprievodkaParams.idLekar = doctorId)
+        ).subscribe();
+      }
+    this.sprievodkyService.createHubConnection(this.user, sprievodkaParams);
+  }
+}
 
   addWeek(): void {
     var nextDate = new FormControl([
@@ -84,7 +121,6 @@ export class CalendarComponent implements OnInit,OnDestroy {
 
   getInitialInfo() {
     moment.locale('sk'); 
-    this.getDays();
     this.createHoursTable();
     this.initSprievodky();
   }
@@ -124,11 +160,11 @@ export class CalendarComponent implements OnInit,OnDestroy {
   }
 }
 
-  getCurrentSprievodka(day: number, hour: number): SprievodkaPacientModel | SprievodkaLekarModel {
-    let sprievodka = this.sprievodkyList?.filter(
+  getCurrentSprievodka(day: number, hour: number): SprievodkaPacientModel[] | SprievodkaLekarModel[] {
+    let sprievodkaList = this.sprievodkyList?.filter(
       s => moment(new Date(s.terminOd)).weekday() === day 
-        && moment(new Date(s.terminOd)).hour() === hour)[0];
-    return this.isPatient ? sprievodka as SprievodkaPacientModel : sprievodka as SprievodkaLekarModel;
+        && moment(new Date(s.terminOd)).hour() === hour);
+    return this.isPatient ? sprievodkaList as SprievodkaPacientModel[] : sprievodkaList as SprievodkaLekarModel[];
   }
 
   onWheel(event: WheelEvent): void {
@@ -142,10 +178,6 @@ export class CalendarComponent implements OnInit,OnDestroy {
     for (let index = 6; index < 19; index++) {
       this.hours.push(index);
     }
-  }
-
-  private getDays() {
-    this.weekArray = moment.weekdays();
   }
 
   private buildSprievodkaParams() : SprievodkaParams {

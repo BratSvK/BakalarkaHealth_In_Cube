@@ -71,6 +71,7 @@ namespace HealthInCube_BackEnd.Controllers
         /// <summary>
         /// Get appointmens in current week
         /// </summary>
+        [Authorize(Roles = "Lekar")]
         [HttpPost("create")]
         public async Task<IActionResult> CreateAppointmentByDoctor([FromBody] SprievodkaCreate sprievodkaCreate)
         {

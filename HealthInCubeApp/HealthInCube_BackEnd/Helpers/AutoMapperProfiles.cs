@@ -78,6 +78,8 @@ namespace HealthInCube_BackEnd.Helpers
                 .ForMember(dest => dest.Pouzivatel, conf => conf.MapFrom(z => z.IdPouzivatelNavigation));
             CreateMap<AtestaciaLekarDto, AtestacieLekar>();
             CreateMap<ZoznamDen, ZoznamDenDto>();
+
+            //CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
         }
     }
 }

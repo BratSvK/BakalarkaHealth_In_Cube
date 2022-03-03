@@ -8,18 +8,66 @@ import { SprievodkaModel } from '../models/sprievodka/sprievodkaModel';
 import { SprievodkaParams } from '../models/sprievodka/sprievodkaParams';
 import { extractKeyFromParams } from '../shared/common';
 import { SPRIEVODKA_API } from '../_constants/endPointsApi';
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { Pouzivatel } from '../models/pouzivatel';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { CalendarChangedModalComponent } from '../user/calendar/calendar-changed-modal/calendar-changed-modal.component';
+import { ToastrService } from 'ngx-toastr';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class SprievodkaService {
   baseUrl = environment.apiUrl;
+  hubUrl = environment.hubUrl;
+
+  bsModalRef: BsModalRef;
   sprievodkaCache = new Map();
 
-  constructor(private http: HttpClient) { }
+  private hubConnection: HubConnection;
 
-  createSprievodka(sprievodkaForm: SprievodkaCreateModelApi) {
-    return this.http.post(this.baseUrl + `${SPRIEVODKA_API}/create`, sprievodkaForm);
+  constructor(
+    private http: HttpClient,
+    private modalService: BsModalService,
+    private toastr: ToastrService
+  ) { }
+
+  createHubConnection(user: Pouzivatel, sprievodkaParams: SprievodkaParams) {
+    this.hubConnection = new HubConnectionBuilder()
+      .withUrl(this.hubUrl + 'sprievodka?sprievodkaParams=' + JSON.stringify(sprievodkaParams), {
+        accessTokenFactory: () => user.token,
+      })
+      .withAutomaticReconnect()
+      .build();
+
+      this.hubConnection.start().catch(error => console.log(error));
+
+      this.hubConnection.on('ListenToSprievodkaCalendar', () => {});
+
+      this.hubConnection.on('NewSprievodka', (hlaska) => {
+         this.showCalendarChangeMessageModal().onHidden.subscribe(() => {
+           window.location.reload();
+         });
+      });
+
+  }
+
+  
+
+
+  stopHubConnection() {
+    if(this.hubConnection)
+    this.hubConnection.stop();
+  }
+
+  // createSprievodka(sprievodkaForm: SprievodkaCreateModelApi) {
+  //   return this.http.post(this.baseUrl + `${SPRIEVODKA_API}/create`, sprievodkaForm);
+  // }
+
+  async createSprievodka(sprievodkaForm: SprievodkaCreateModelApi) {
+    return this.hubConnection.invoke('CreateAppointmentByDoctor', sprievodkaForm)
+      .catch(error => this.toastr.error(error));
   }
 
   chechAvailabilityInDay(idLekar: number, termin: string): Observable<boolean> {
@@ -51,5 +99,20 @@ export class SprievodkaService {
         this.sprievodkaCache.set(keyFromParams, response);
         return response;
       }));
+    }
+
+
+    private showCalendarChangeMessageModal() {
+      const config = {
+        class: 'modal-dialog-centered',
+        initialState: {
+          caption: 'Váš kalendár bol zmenený',
+          message: 'Pre katualne údaje si obnovte stránku.',
+          acceptButton: 'Obnoviť'
+        },
+        keyboard: false
+      };
+  
+      return this.modalService.show(CalendarChangedModalComponent, config);
     }
 }

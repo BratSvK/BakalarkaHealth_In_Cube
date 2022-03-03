@@ -19,6 +19,7 @@ import { handleError } from "src/app/shared/auth-common";
 import { LekarIdService } from "src/app/_service/lekar-id.service";
 import { PatientService } from "src/app/_service/patient.service";
 import * as LekarActionsBundle from '../../user/lekar/store/lekar.actions';
+import { SprievodkaService } from "src/app/_service/sprievodka.service";
 
 const fetchUrl = environment.apiUrl; // ....../api/
 
@@ -78,6 +79,7 @@ export class AuthEffects {
           localStorage.removeItem('userData');
           this.lekarService.clearLekarId();
           this.patientService.clearPatientCache();
+          this.spriedkyService.stopHubConnection();
           this.router.navigate(['/auth']);
         }),
         switchMap(res => [
@@ -168,7 +170,8 @@ export class AuthEffects {
     private toastr: ToastrService,
     private sanitizer: DomSanitizer,
     private lekarService: LekarIdService,
-    private patientService: PatientService
+    private patientService: PatientService,
+    private spriedkyService: SprievodkaService
   ) {}
 
 
