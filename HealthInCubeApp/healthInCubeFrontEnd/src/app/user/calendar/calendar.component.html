@@ -46,6 +46,7 @@
                                       *ngIf="getCurrentSprievodka(iDen, hour) as sprievodkaList"
                                       class="example-box"
                                       [sprievodkaItems]="sprievodkaList"
+                                      [colorsSprievodka]="initColorsToSprievodkas(sprievodkaList)"
                                       [isPatient]="isPatient">
                     </app-calendar-item>
                     </td>

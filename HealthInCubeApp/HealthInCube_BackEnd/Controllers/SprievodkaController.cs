@@ -1,9 +1,11 @@
 ﻿using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.DTOs.Sprievodka.Termin;
 using HealthInCube_BackEnd.Entities;
+using HealthInCube_BackEnd.Extensions;
 using HealthInCube_BackEnd.Helpers;
 using HealthInCube_BackEnd.Helpers.Params;
 using HealthInCube_BackEnd.Interfaces;
+using HealthInCube_BackEnd.Services.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -18,17 +20,20 @@ namespace HealthInCube_BackEnd.Controllers
         private readonly ISprievodkaRepository _sprievodkaRepository;
         private readonly IPracovnaDobaRepository _pracovnaDobaRepository;
         private readonly ILekarRepository _lekarRepository;
+        private readonly IZdravotnaKartaRepository _zdravotnaKartaRepository;
         private readonly IAppointmentSchedulerService _appointmentSchedulerService;
 
         public SprievodkaController(
             ISprievodkaRepository sprievodkaRepository, 
             IPracovnaDobaRepository pracovnaDobaRepository,
             ILekarRepository lekarRepository,
+            IZdravotnaKartaRepository zdravotnaKartaRepository,
             IAppointmentSchedulerService appointmentSchedulerService)
         {
             _sprievodkaRepository = sprievodkaRepository;
             _pracovnaDobaRepository = pracovnaDobaRepository;
             _lekarRepository = lekarRepository;
+            _zdravotnaKartaRepository = zdravotnaKartaRepository;
             _appointmentSchedulerService = appointmentSchedulerService;
         }
 
@@ -109,6 +114,52 @@ namespace HealthInCube_BackEnd.Controllers
             }
 
             return BadRequest("Failed to create an appointment!");
+        }
+
+
+        /// <summary>
+        /// Delete sprievodka by patient.
+        /// Allowed to this action only 48 hours before.
+        /// </summary>
+        [Authorize(Roles = "Pacient")]
+        [HttpDelete("zrusenie")]
+        public async Task<IActionResult> DeleteSprievodkaByPatient(SprievodkaDeleteDto sprievodkaDelete)
+        {
+            if (!sprievodkaDelete.TerminOd.IsAllowedToDenyAppointment())
+            {
+                return BadRequest("Nemáš právo zmeniť stav sprievodky.");
+            }
+
+            await _sprievodkaRepository.DeleteFromVystavenyTermin(sprievodkaDelete);
+            await _zdravotnaKartaRepository.DeleteZdravotnaKartaPovolenieByPatient(sprievodkaDelete);
+            Sprievodka deletedSprievodka =  await _sprievodkaRepository.DeactivateSprievodkaAsync(sprievodkaDelete);
+
+            // recalculate old sprievodky list 
+            IList<Sprievodka> sprievodkaZoznam =  
+                await _sprievodkaRepository.GetListOfSprievodkaByDayAsync(sprievodkaDelete.IdLekar, sprievodkaDelete.TerminOd.DayOfYear);
+
+            foreach (Sprievodka sprievodka in sprievodkaZoznam)
+            {
+                if (!sprievodka.IsDeactivated)
+                {
+                    _sprievodkaRepository.DeleteItem(sprievodka);
+                }
+            }
+
+            IList<Sprievodka> spriedkaListNewAfterRecalculation =
+                _appointmentSchedulerService.RecaulculateOldListOfSprievodkaByDay(new AppointmentRecalculateModel
+                {
+                    SprievodkyZoznam = sprievodkaZoznam,
+                    IndexOfRemovedSprievodka = sprievodkaZoznam.IndexOf(deletedSprievodka)
+                });
+            foreach (Sprievodka sprievodka in spriedkaListNewAfterRecalculation)
+            {
+               _sprievodkaRepository.InsertItem(sprievodka);
+            }
+
+            if (await _sprievodkaRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest();
         }
     }
 }

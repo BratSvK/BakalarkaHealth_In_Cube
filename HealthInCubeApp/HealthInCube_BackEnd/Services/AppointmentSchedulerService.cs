@@ -2,8 +2,10 @@
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Helpers;
 using HealthInCube_BackEnd.Interfaces;
+using HealthInCube_BackEnd.Services.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HealthInCube_BackEnd.Services
 {
@@ -24,11 +26,7 @@ namespace HealthInCube_BackEnd.Services
             _lastMemberedDoctorCache = new Dictionary<decimal, int>();
         }
 
-        /// <summary>
-        /// Create appointment scheduler for day.
-        /// </summary>
-        /// <param name="schedulerModel">model composted of lekar and working info.</param>
-        /// <returns>Calendar of appointments.</returns>
+        /// <inheritdoc/>
         public IList<TerminSprievodkaDto> CreateAppointmentSchedulerByDay(SchedulerBuilderModel schedulerModel)
         {
             int dayFromCache;
@@ -51,10 +49,27 @@ namespace HealthInCube_BackEnd.Services
             }
         }
 
-        /// <summary>
-        /// Get maximum number per termins.
-        /// </summary>
-        /// <returns>total size</returns>
+        /// <inheritdoc/>
+        public IList<Sprievodka> RecaulculateOldListOfSprievodkaByDay(AppointmentRecalculateModel recalculateModel)
+        {
+
+            IList<Sprievodka> terminSprievodkasNew = recalculateModel.SprievodkyZoznam;
+            Sprievodka sprievodkaToDelete = terminSprievodkasNew[recalculateModel.IndexOfRemovedSprievodka];
+            terminSprievodkasNew.Remove(sprievodkaToDelete);
+
+            for (int i = recalculateModel.IndexOfRemovedSprievodka; i < terminSprievodkasNew.Count; i++)
+            {
+                Sprievodka sprievodkaToRecalculate = terminSprievodkasNew[i];
+                sprievodkaToRecalculate.TerminOd = sprievodkaToDelete.TerminOd;
+                sprievodkaToRecalculate.TerminDo = sprievodkaToDelete.TerminDo;
+
+                sprievodkaToDelete = sprievodkaToRecalculate;
+            }
+
+            return terminSprievodkasNew;
+        }
+
+        /// <inheritdoc/>
         public int GetMaxNumberOfAppointmentsPerDay()
         {
             return _terminy.Count;

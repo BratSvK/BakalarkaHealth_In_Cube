@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { colorsDictionarySprievodka } from 'src/app/models/sprievodka/sprievodkaFarby';
 import { SprievodkaLekarModel, SprievodkaPacientModel } from 'src/app/models/sprievodka/sprievodkaModel';
@@ -13,15 +14,14 @@ import { ModalPacientComponent } from './calendar-item-modal/modal-pacient/modal
 export class CalendarItemComponent implements OnInit {
   @Input() sprievodkaItems: SprievodkaPacientModel[] | SprievodkaLekarModel[]; 
   @Input() isPatient: boolean; 
+  @Input() colorsSprievodka: string [];
 
   
   bsModalRef: BsModalRef;
-  colorOfSprievodka: string [] = [];
 
   constructor(private modalService: BsModalService) { }
 
   ngOnInit(): void {
-    this.initColorsToSprievodkas();
   }
 
   getDurationInMinutes(i: number): number {
@@ -66,11 +66,4 @@ export class CalendarItemComponent implements OnInit {
     };
     this.bsModalRef = this.modalService.show(ModalLekarComponent, config);
   }
-
-  private initColorsToSprievodkas() {
-    for (let index = 0; index < this.sprievodkaItems.length; index++) {
-      this.colorOfSprievodka.push(colorsDictionarySprievodka[this.sprievodkaItems[index]?.idTypLekarNavigation?.idTyp].color);
-    }
-  }
-
 }

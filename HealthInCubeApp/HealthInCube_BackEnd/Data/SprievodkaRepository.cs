@@ -70,7 +70,7 @@ namespace HealthInCube_BackEnd.Data
 
         public void UpdateItem(Sprievodka item)
         {
-           // nothing to change only mark entity that has been modifity 
+            // nothing to change only mark entity that has been modifity 
             _context.Entry(item).State = EntityState.Modified;
         }
 
@@ -81,7 +81,7 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<Sprievodka> GetOriginItemAsync(decimal userId)
         {
-           return  await Task.FromResult<Sprievodka>(null);
+            return await Task.FromResult<Sprievodka>(null);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace HealthInCube_BackEnd.Data
                 .AsQueryable();
 
             var selectedWeekNumber = sprievodkaParams.StartWeekBy.Date.GetWeekNumber();
-            query = query.Where(s => _context.GetWeekNumberFromDb(s.TerminOd) == selectedWeekNumber);
+            query = query.Where(s => _context.GetWeekNumberFromDb(s.TerminOd) == selectedWeekNumber && s.IsDeactivated == false);
 
             if (sprievodkaParams.IdLekar > 0)
             {
@@ -112,7 +112,7 @@ namespace HealthInCube_BackEnd.Data
             }
             else
             {
-                
+
                 query = query
                     .Include(s => s.IdTypLekarNavigation)
                     .Include(s => s.IdLekarNavigation)
@@ -145,6 +145,42 @@ namespace HealthInCube_BackEnd.Data
             var maxPocet = _appointmentSchedulerService.GetMaxNumberOfAppointmentsPerDay();
             var pocetVDni = await GetLastTerminCountInDayPerDoctorAsync(idLekar, dayOfYear);
             return (maxPocet - pocetVDni) > 0;
+        }
+
+        public async Task DeleteFromVystavenyTermin(SprievodkaDeleteDto sprievodkaDelete)
+        {
+            VystavenyTermin vystavenyTerminToDelete = await _context.VystavenyTermins
+                .Where(v => v.IdPacient == sprievodkaDelete.IdPacient &&
+                        v.IdLekar == sprievodkaDelete.IdLekar &&
+                        v.DayOfYear == sprievodkaDelete.TerminOd.DayOfYear)
+                .FirstOrDefaultAsync();
+
+            _context.VystavenyTermins.Remove(vystavenyTerminToDelete);
+        }
+
+        /// <summary>
+        /// Composit PK order s.IdLekar, s.IdPacient, s.TerminOd
+        /// </summary>
+        public async Task<Sprievodka> DeactivateSprievodkaAsync(SprievodkaDeleteDto sprievodkaDelete)
+        {
+            var sprievodkaToDeactivate = await _context.Sprievodkas
+                .FindAsync(new object[] { sprievodkaDelete.IdLekar, sprievodkaDelete.IdPacient, sprievodkaDelete.TerminOd });
+            DeactivateAndSetDenyMessage(sprievodkaDelete, sprievodkaToDeactivate);
+            _context.Sprievodkas.Update(sprievodkaToDeactivate);
+            return sprievodkaToDeactivate;
+        }
+
+        /// <inheritdoc/>
+        public async Task<IList<Sprievodka>> GetListOfSprievodkaByDayAsync(decimal idLekar, int dayOfYear)
+        => await _context.Sprievodkas
+                .Where(s => s.IdLekar == idLekar && s.TerminOd.DayOfYear == dayOfYear)
+                .OrderBy(s => s.TerminOd)
+                .ToListAsync();
+
+        private static void DeactivateAndSetDenyMessage(SprievodkaDeleteDto sprievodkaDelete, Sprievodka sprievodkaToDeactivate)
+        {
+            sprievodkaToDeactivate.IsDeactivated = true;
+            sprievodkaToDeactivate.ZrusenieDovod = sprievodkaDelete.ZrusenieDovod;
         }
     }
 }

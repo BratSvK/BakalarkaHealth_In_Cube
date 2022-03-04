@@ -12,5 +12,13 @@ namespace HealthInCube_BackEnd.Extensions
             int weekNum = ci.Calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
             return weekNum;
         }
+
+        /// <summary>
+        /// Only 48 hours before is allowed to deny.
+        /// </summary>
+        /// <param name="dateToCompare">Date of appointment.</param>
+        /// <returns></returns>
+        public static bool IsAllowedToDenyAppointment(this DateTime dateToCompare)
+        => DateTime.Now <= dateToCompare.AddHours(-48);
     }
 }

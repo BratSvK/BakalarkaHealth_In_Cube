@@ -1204,17 +1204,14 @@ namespace HealthInCube_BackEnd.Data
                 entity.ToTable("SPRIEVODKA");
 
                 entity.HasOne(s => s.IdLekarNavigation)
-                    .WithMany(l => l.Sprievodkas)
-                    .OnDelete(DeleteBehavior.Cascade);
+                    .WithMany(l => l.Sprievodkas);
 
                 entity.HasOne(s => s.IdPacientNavigation)
-                    .WithMany(p => p.Sprievodkas)
-                    .OnDelete(DeleteBehavior.Cascade);
+                    .WithMany(p => p.Sprievodkas);
 
                 entity.HasOne(s => s.IdTypLekarNavigation)
                     .WithMany(p => p.Sprievodkas)
-                    .HasForeignKey(s => s.IdTypVysetrenia)
-                    .OnDelete(DeleteBehavior.Cascade);
+                    .HasForeignKey(s => s.IdTypVysetrenia);
             });
 
             modelBuilder.Entity<VystavenyTermin>()
