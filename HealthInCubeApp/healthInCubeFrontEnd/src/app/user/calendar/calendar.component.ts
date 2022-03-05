@@ -78,6 +78,22 @@ export class CalendarComponent implements OnInit,OnDestroy {
     this.getInitialInfo();
   }
 
+  /**
+ * @description
+ * Compare method which sort sprievodky by termin od asc.
+ * -1 returns -> sort ealier date before.
+ */
+   compareDates( a: SprievodkaModel, b: SprievodkaModel ) {
+     var dtTime1 = new Date(a.terminOd).getTime();
+     var dtTime2 = new Date(b.terminDo).getTime();
+    if ( dtTime1 < dtTime2){
+      return -1;
+    }
+    if ( dtTime1 > dtTime2 ){
+      return 1;
+    }
+    return 0;
+  }
 
   private connectoToSprievodkaHub() {
     let urlSegments = this.router.url.split('/');
@@ -180,6 +196,11 @@ export class CalendarComponent implements OnInit,OnDestroy {
       colorSprievodka.push(colorsDictionarySprievodka[sprievodkaItems[index]?.idTypLekarNavigation?.idTyp].color);
     }
     return colorSprievodka;
+  }
+
+  isDeletedSuccess(indexDeletedSprievodka: number) {
+      this.sprievodkyList.splice(indexDeletedSprievodka, 1);
+      this.sprievodkyList = [...this.sprievodkyList];
   }
 
   private createHoursTable(): void {

@@ -79,6 +79,7 @@ export class AuthEffects {
           localStorage.removeItem('userData');
           this.lekarService.clearLekarId();
           this.patientService.clearPatientCache();
+          this.spriedkyService.clearCacheOfRequestsSprievodka();
           this.spriedkyService.stopHubConnection();
           this.router.navigate(['/auth']);
         }),

@@ -24,7 +24,7 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
   declarations: [
     HasRoleDirective,
     HasFocusDirective,
-    NavUserToolboxComponent,
+    NavUserToolboxComponent
   ],
   imports: [
     CommonModule,

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Extensions;
 using HealthInCube_BackEnd.Helpers.Params;
 using HealthInCube_BackEnd.Interfaces;
+using HealthInCube_BackEnd.Services.Models;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -23,16 +25,22 @@ namespace HealthInCube_BackEnd.Data
         private readonly HealthInCubeContext _context;
         private readonly IMapper _mapper;
         private readonly IAppointmentSchedulerService _appointmentSchedulerService;
+        private readonly IZdravotnaKartaRepository _zdravotnaKartaRepository;
 
         /// <summary>
         /// Ctor.
         /// </summary>
         /// <param name="context"></param>
         /// <param name="mapper"></param>
-        public SprievodkaRepository(HealthInCubeContext context, IMapper mapper, IAppointmentSchedulerService appointmentSchedulerService)
+        public SprievodkaRepository(
+            HealthInCubeContext context, 
+            IMapper mapper, 
+            IAppointmentSchedulerService appointmentSchedulerService,
+            IZdravotnaKartaRepository zdravotnaKartaRepository)
         {
             _mapper = mapper;
             _appointmentSchedulerService = appointmentSchedulerService;
+            _zdravotnaKartaRepository = zdravotnaKartaRepository;
             _context = context;
         }
 
@@ -158,15 +166,18 @@ namespace HealthInCube_BackEnd.Data
             _context.VystavenyTermins.Remove(vystavenyTerminToDelete);
         }
 
-        /// <summary>
-        /// Composit PK order s.IdLekar, s.IdPacient, s.TerminOd
-        /// </summary>
+        /// <inheritdoc/>
         public async Task<Sprievodka> DeactivateSprievodkaAsync(SprievodkaDeleteDto sprievodkaDelete)
         {
             var sprievodkaToDeactivate = await _context.Sprievodkas
                 .FindAsync(new object[] { sprievodkaDelete.IdLekar, sprievodkaDelete.IdPacient, sprievodkaDelete.TerminOd });
+
             DeactivateAndSetDenyMessage(sprievodkaDelete, sprievodkaToDeactivate);
             _context.Sprievodkas.Update(sprievodkaToDeactivate);
+
+            await DeleteFromVystavenyTermin(sprievodkaDelete);
+            await _zdravotnaKartaRepository.DeleteZdravotnaKartaPovolenieByPatient(sprievodkaDelete);
+
             return sprievodkaToDeactivate;
         }
 
@@ -182,5 +193,61 @@ namespace HealthInCube_BackEnd.Data
             sprievodkaToDeactivate.IsDeactivated = true;
             sprievodkaToDeactivate.ZrusenieDovod = sprievodkaDelete.ZrusenieDovod;
         }
-    }
+
+        /// <inheritdoc/>
+        public void DeleteSprievodky(IEnumerable<Sprievodka> sprievodkas)
+        {
+           _context.Sprievodkas.RemoveRange(sprievodkas.Where(s => s.IsDeactivated != true));
+           _context.SaveChanges();
+        }
+
+        public async Task InsertSprievodkyAsync(IEnumerable<Sprievodka> sprievodkas)
+        {
+            await _context.Sprievodkas.AddRangeAsync(sprievodkas);
+        }
+
+        /// <inheritdoc/>
+        public async Task<IEnumerable<Sprievodka>> DeleteSprievodkaAsync(SprievodkaDeleteDto sprievodkaDelete)
+        {
+
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    IList<Sprievodka> sprievodkaZoznam =
+                        await GetListOfSprievodkaByDayAsync(sprievodkaDelete.IdLekar, sprievodkaDelete.TerminOd.DayOfYear);
+
+                    Sprievodka deletedSprievodka = await DeactivateSprievodkaAsync(sprievodkaDelete);
+
+                    if (sprievodkaZoznam.Count < 2)
+                    {
+                        _context.SaveChanges();
+                        transaction.Commit();
+                        return sprievodkaZoznam.Where(s => s.IsDeactivated);
+                    }
+
+                    DeleteSprievodky(sprievodkaZoznam);
+
+                    IList<Sprievodka> spriedkaListNewAfterRecalculation =
+                        _appointmentSchedulerService.RecaulculateOldListOfSprievodkaByDay(
+                            new AppointmentRecalculateModel
+                            {
+                                SprievodkyZoznam = sprievodkaZoznam,
+                                IndexOfRemovedSprievodka = sprievodkaZoznam.IndexOf(deletedSprievodka)
+                            });
+
+                    await InsertSprievodkyAsync(spriedkaListNewAfterRecalculation);
+
+                    _context.SaveChanges();
+                    transaction.Commit();
+                    return spriedkaListNewAfterRecalculation;
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    return null;
+                }
+            }
+        }
+     }
 }

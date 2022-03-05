@@ -10,6 +10,7 @@ import { ModalLekarComponent } from './calendar-item/calendar-item-modal/modal-l
 import { ModalPacientComponent } from './calendar-item/calendar-item-modal/modal-pacient/modal-pacient.component';
 import { CalendarChangedModalComponent } from './calendar-changed-modal/calendar-changed-modal.component';
 import { NgAnimatedBorderModule } from "ng-animated-border";
+import { IsAllowedDenyAppointment } from "src/app/_directives/is-allowed-deny-appointment.directive";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { NgAnimatedBorderModule } from "ng-animated-border";
       CalendarItemComponent, 
       ModalLekarComponent,
       ModalPacientComponent,
-      CalendarChangedModalComponent 
+      CalendarChangedModalComponent,
+      IsAllowedDenyAppointment
     ],
     imports: [
       SharedModule,
@@ -28,7 +30,7 @@ import { NgAnimatedBorderModule } from "ng-animated-border";
       NgAnimatedBorderModule
     ],
     exports: [
-      CalendarComponent 
+      CalendarComponent
     ],
     providers: [
       DatePipe

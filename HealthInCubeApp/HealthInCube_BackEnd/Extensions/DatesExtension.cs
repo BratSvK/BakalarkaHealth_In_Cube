@@ -20,5 +20,14 @@ namespace HealthInCube_BackEnd.Extensions
         /// <returns></returns>
         public static bool IsAllowedToDenyAppointment(this DateTime dateToCompare)
         => DateTime.Now <= dateToCompare.AddHours(-48);
+
+        /// <summary>
+        /// To get available due date to appointment.
+        /// Cannot be today or later.
+        /// </summary>
+        /// <param name="dateToCompare">Date of appointment.</param>
+        /// <returns>true if its today or later.</returns>
+        public static bool IsTodayOrLater(this DateTime dateToCompare)
+        => DateTime.Now.Date >= dateToCompare.Date;
     }
 }

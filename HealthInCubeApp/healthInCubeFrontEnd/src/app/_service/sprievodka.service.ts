@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -8,11 +8,12 @@ import { SprievodkaModel } from '../models/sprievodka/sprievodkaModel';
 import { SprievodkaParams } from '../models/sprievodka/sprievodkaParams';
 import { extractKeyFromParams } from '../shared/common';
 import { SPRIEVODKA_API } from '../_constants/endPointsApi';
-import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { HubConnection } from '@microsoft/signalr';
 import { Pouzivatel } from '../models/pouzivatel';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { CalendarChangedModalComponent } from '../user/calendar/calendar-changed-modal/calendar-changed-modal.component';
+import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
+import { SprievodkaHubService, SPRIEVODKA_HUB_ACTION_CREATE, SPRIEVODKA_HUB_ACTION_DELETE } from './signalRSprievodkaHub.service';
+import { SprievodkaDelete } from '../models/sprievodka/sprievodkaDelete';
 
 
 @Injectable({
@@ -20,54 +21,45 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class SprievodkaService {
   baseUrl = environment.apiUrl;
-  hubUrl = environment.hubUrl;
-
   bsModalRef: BsModalRef;
   sprievodkaCache = new Map();
+
+  private isDeletedEventSuccess: EventEmitter<number> = new EventEmitter<number>();
 
   private hubConnection: HubConnection;
 
   constructor(
     private http: HttpClient,
-    private modalService: BsModalService,
+    private signalRSprievodkaHubService: SprievodkaHubService,
     private toastr: ToastrService
   ) { }
 
+  get isDeletedListener$() {
+    return this.isDeletedEventSuccess.asObservable();
+  }
+
   createHubConnection(user: Pouzivatel, sprievodkaParams: SprievodkaParams) {
-    this.hubConnection = new HubConnectionBuilder()
-      .withUrl(this.hubUrl + 'sprievodka?sprievodkaParams=' + JSON.stringify(sprievodkaParams), {
-        accessTokenFactory: () => user.token,
-      })
-      .withAutomaticReconnect()
-      .build();
-
-      this.hubConnection.start().catch(error => console.log(error));
-
-      this.hubConnection.on('ListenToSprievodkaCalendar', () => {});
-
-      this.hubConnection.on('NewSprievodka', (hlaska) => {
-         this.showCalendarChangeMessageModal().onHidden.subscribe(() => {
-           window.location.reload();
-         });
-      });
-
+    this.hubConnection = this.signalRSprievodkaHubService.createAndBuildSignalRSprievodkaHubConnetion(sprievodkaParams, user);
+    this.signalRSprievodkaHubService.listenSignalRToEditCalendar(this.hubConnection);
   }
 
-  
-
-
-  stopHubConnection() {
-    if(this.hubConnection)
-    this.hubConnection.stop();
-  }
 
   // createSprievodka(sprievodkaForm: SprievodkaCreateModelApi) {
   //   return this.http.post(this.baseUrl + `${SPRIEVODKA_API}/create`, sprievodkaForm);
   // }
 
   async createSprievodka(sprievodkaForm: SprievodkaCreateModelApi) {
-    return this.hubConnection.invoke('CreateAppointmentByDoctor', sprievodkaForm)
+    return this.hubConnection.invoke(SPRIEVODKA_HUB_ACTION_CREATE, sprievodkaForm)
       .catch(error => this.toastr.error(error));
+  }
+
+  async deleteSprievodka(sprievodkaModel: SprievodkaDelete) {
+    return this.hubConnection.invoke(SPRIEVODKA_HUB_ACTION_DELETE, sprievodkaModel)
+      .catch(error => this.toastr.error(error));
+  }
+
+  stopHubConnection() {
+   this.signalRSprievodkaHubService.stopHubConnection(this.hubConnection);
   }
 
   chechAvailabilityInDay(idLekar: number, termin: string): Observable<boolean> {
@@ -101,18 +93,13 @@ export class SprievodkaService {
       }));
     }
 
+    clearCacheOfRequestsSprievodka() {
+      if (this.sprievodkaCache)
+      this.sprievodkaCache.clear();
+    }
 
-    private showCalendarChangeMessageModal() {
-      const config = {
-        class: 'modal-dialog-centered',
-        initialState: {
-          caption: 'Váš kalendár bol zmenený',
-          message: 'Pre katualne údaje si obnovte stránku.',
-          acceptButton: 'Obnoviť'
-        },
-        keyboard: false
-      };
-  
-      return this.modalService.show(CalendarChangedModalComponent, config);
+    isDeletedSuccess(i: number) {
+      console.log('deleted');
+      this.isDeletedEventSuccess.emit(i);
     }
 }
