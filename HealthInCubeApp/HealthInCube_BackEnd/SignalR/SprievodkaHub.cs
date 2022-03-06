@@ -7,7 +7,6 @@ using HealthInCube_BackEnd.Helpers;
 using HealthInCube_BackEnd.Helpers.Params;
 using HealthInCube_BackEnd.Interfaces;
 using HealthInCube_BackEnd.Properties;
-using HealthInCube_BackEnd.Services.Models;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using System;
@@ -29,6 +28,15 @@ namespace HealthInCube_BackEnd.SignalR
         private readonly IZdravotnaKartaRepository _zdravotnaKartaRepository;
         private readonly IAppointmentSchedulerService _appointmentSchedulerService;
 
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="mapper">Auto mapper.</param>
+        /// <param name="sprievodkaRepository">Sprievodka repository.</param>
+        /// <param name="pracovnaDobaRepository">Pracovna doba repository.</param>
+        /// <param name="lekarRepository">Lekar repository.</param>
+        /// <param name="zdravotnaKartaRepository">Zdravotna karta repository.</param>
+        /// <param name="appointmentSchedulerService">Appointment service scheduler.</param>
         public SprievodkaHub(
             IMapper mapper,
             ISprievodkaRepository sprievodkaRepository,
@@ -47,6 +55,7 @@ namespace HealthInCube_BackEnd.SignalR
 
         /// <summary>
         /// Listen to changes in calendar component to client.
+        /// Init hub connection and register to group of listeners.
         /// </summary>
         public override async Task OnConnectedAsync()
         {

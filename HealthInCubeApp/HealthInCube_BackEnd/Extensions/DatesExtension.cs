@@ -1,9 +1,11 @@
-using HealthInCube_BackEnd.Entities;
 using System;
 using System.Globalization;
 
 namespace HealthInCube_BackEnd.Extensions
 {
+    /// <summary>
+    /// Extension works with DateTime. 
+    /// </summary>
     public static class DatesExtension
     {
         public static int GetWeekNumber(this DateTime date)

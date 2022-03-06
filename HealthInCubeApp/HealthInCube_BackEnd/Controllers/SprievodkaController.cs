@@ -19,20 +19,17 @@ namespace HealthInCube_BackEnd.Controllers
         private readonly ISprievodkaRepository _sprievodkaRepository;
         private readonly IPracovnaDobaRepository _pracovnaDobaRepository;
         private readonly ILekarRepository _lekarRepository;
-        private readonly IZdravotnaKartaRepository _zdravotnaKartaRepository;
         private readonly IAppointmentSchedulerService _appointmentSchedulerService;
 
         public SprievodkaController(
             ISprievodkaRepository sprievodkaRepository, 
             IPracovnaDobaRepository pracovnaDobaRepository,
             ILekarRepository lekarRepository,
-            IZdravotnaKartaRepository zdravotnaKartaRepository,
             IAppointmentSchedulerService appointmentSchedulerService)
         {
             _sprievodkaRepository = sprievodkaRepository;
             _pracovnaDobaRepository = pracovnaDobaRepository;
             _lekarRepository = lekarRepository;
-            _zdravotnaKartaRepository = zdravotnaKartaRepository;
             _appointmentSchedulerService = appointmentSchedulerService;
         }
 

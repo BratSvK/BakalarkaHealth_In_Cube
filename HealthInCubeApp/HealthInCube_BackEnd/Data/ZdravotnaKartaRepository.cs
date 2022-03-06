@@ -6,7 +6,6 @@ using HealthInCube_BackEnd.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace HealthInCube_BackEnd.Data

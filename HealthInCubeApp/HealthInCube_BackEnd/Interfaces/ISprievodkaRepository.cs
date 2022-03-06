@@ -3,12 +3,16 @@ using System.Threading.Tasks;
 using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Helpers.Params;
-using Microsoft.AspNetCore.Mvc;
 
 namespace HealthInCube_BackEnd.Interfaces
 {
     public interface ISprievodkaRepository : IRepository<Sprievodka, SprievodkaDto>
     {
+        /// <summary>
+        /// Get sprievodka by week.
+        /// Client select in calendar current week.
+        /// </summary>
+        /// <param name="sprievodkaParams">Client params.</param>
         Task<IEnumerable<SprievodkaDto>> GetSprievodkyByWeek(SprievodkaParams sprievodkaParams);
 
         /// <summary>
@@ -19,8 +23,19 @@ namespace HealthInCube_BackEnd.Interfaces
         /// <returns></returns>
         Task<IList<Sprievodka>> GetListOfSprievodkaByDayAsync(decimal idLekar, int dayOfYear);
 
+        /// <summary>
+        /// Get number of last termin in paricular day.
+        /// </summary>
+        /// <param name="idLekar">Doctor id.</param>
+        /// <param name="dayOfYear">Day of year.</param>
         Task<int> GetLastTerminCountInDayPerDoctorAsync(decimal idLekar, int dayOfYear);
 
+        /// <summary>
+        /// Check for availability in particular day.
+        /// </summary>
+        /// <param name="idLekar">Doctor id.</param>
+        /// <param name="dayOfYear">Day of year.</param>
+        /// <returns>true/false</returns>
         Task<bool> CheckIsAvailableTerminInDayOfYear(decimal idLekar, int dayOfYear);
 
         /// <summary>
@@ -28,8 +43,17 @@ namespace HealthInCube_BackEnd.Interfaces
         /// </summary>
         /// <param name="sprievodkas">The original list of appointments to delete.</param>
         void DeleteSprievodky(IEnumerable<Sprievodka> sprievodkas);
+
+        /// <summary>
+        /// Insert sprievodky in range(bulk).
+        /// </summary>
+        /// <param name="sprievodkas">Appointments to insert.</param>
         Task InsertSprievodkyAsync(IEnumerable<Sprievodka> sprievodkas);
 
+        /// <summary>
+        /// Delete vystaveny termin from db.
+        /// </summary>
+        /// <param name="sprievodkaDelete">Selected appointment to delete.</param>
         Task DeleteFromVystavenyTermin(SprievodkaDeleteDto sprievodkaDelete);
 
         /// <summary>

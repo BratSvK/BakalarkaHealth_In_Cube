@@ -18,7 +18,7 @@ using Microsoft.EntityFrameworkCore;
 namespace HealthInCube_BackEnd.Data
 {
     /// <summary>
-    /// Repo for sprievodky.
+    /// Repository for sprievodky.
     /// </summary>
     public class SprievodkaRepository : ISprievodkaRepository
     {
@@ -30,8 +30,10 @@ namespace HealthInCube_BackEnd.Data
         /// <summary>
         /// Ctor.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="mapper"></param>
+        /// <param name="context">Database context.</param>
+        /// <param name="mapper">Auto mapper.</param>
+        /// <param name="appointmentSchedulerService">Appointment service.</param>
+        /// <param name="zdravotnaKartaRepository">Health record repository.</param>
         public SprievodkaRepository(
             HealthInCubeContext context, 
             IMapper mapper, 
@@ -92,13 +94,7 @@ namespace HealthInCube_BackEnd.Data
             return await Task.FromResult<Sprievodka>(null);
         }
 
-        /// <summary>
-        /// Get sprievodka by week.
-        /// Client select in calendar current week.
-        /// </summary>
-        /// <param name="sprievodkaParams">Client params.</param>
-        /// 
-        /// <returns></returns>
+        /// <inheritdoc/>
         public async Task<IEnumerable<SprievodkaDto>> GetSprievodkyByWeek(SprievodkaParams sprievodkaParams)
         {
             var query = _context.Sprievodkas
@@ -131,23 +127,13 @@ namespace HealthInCube_BackEnd.Data
             }
         }
 
-        /// <summary>
-        /// Get number of last termin in paricular day.
-        /// </summary>
-        /// <param name="idLekar">Doctor id.</param>
-        /// <param name="dayOfYear">Day of year.</param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public async Task<int> GetLastTerminCountInDayPerDoctorAsync(decimal idLekar, int dayOfYear)
         {
             return await _context.VystavenyTermins.CountAsync(t => t.IdLekar == idLekar && t.DayOfYear == dayOfYear);
         }
 
-        /// <summary>
-        /// Check for availability in particular day.
-        /// </summary>
-        /// <param name="idLekar">Doctor id.</param>
-        /// <param name="dayOfYear">Day of year.</param>
-        /// <returns>true/false</returns>
+        /// <inheritdoc/>
         public async Task<bool> CheckIsAvailableTerminInDayOfYear(decimal idLekar, int dayOfYear)
         {
             var maxPocet = _appointmentSchedulerService.GetMaxNumberOfAppointmentsPerDay();
@@ -155,6 +141,7 @@ namespace HealthInCube_BackEnd.Data
             return (maxPocet - pocetVDni) > 0;
         }
 
+        /// <inheritdoc/>
         public async Task DeleteFromVystavenyTermin(SprievodkaDeleteDto sprievodkaDelete)
         {
             VystavenyTermin vystavenyTerminToDelete = await _context.VystavenyTermins
@@ -187,13 +174,7 @@ namespace HealthInCube_BackEnd.Data
                 .Where(s => s.IdLekar == idLekar && s.TerminOd.DayOfYear == dayOfYear)
                 .OrderBy(s => s.TerminOd)
                 .ToListAsync();
-
-        private static void DeactivateAndSetDenyMessage(SprievodkaDeleteDto sprievodkaDelete, Sprievodka sprievodkaToDeactivate)
-        {
-            sprievodkaToDeactivate.IsDeactivated = true;
-            sprievodkaToDeactivate.ZrusenieDovod = sprievodkaDelete.ZrusenieDovod;
-        }
-
+        
         /// <inheritdoc/>
         public void DeleteSprievodky(IEnumerable<Sprievodka> sprievodkas)
         {
@@ -201,6 +182,7 @@ namespace HealthInCube_BackEnd.Data
            _context.SaveChanges();
         }
 
+        /// <inheritdoc/>
         public async Task InsertSprievodkyAsync(IEnumerable<Sprievodka> sprievodkas)
         {
             await _context.Sprievodkas.AddRangeAsync(sprievodkas);
@@ -249,5 +231,10 @@ namespace HealthInCube_BackEnd.Data
                 }
             }
         }
-     }
+        private static void DeactivateAndSetDenyMessage(SprievodkaDeleteDto sprievodkaDelete, Sprievodka sprievodkaToDeactivate)
+        {
+            sprievodkaToDeactivate.IsDeactivated = true;
+            sprievodkaToDeactivate.ZrusenieDovod = sprievodkaDelete.ZrusenieDovod;
+        }
+    }
 }

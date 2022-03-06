@@ -8,8 +8,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System.Net.Mail;
-using System.Net.Mime;
 using HealthInCube_BackEnd.DTOs.Lekar;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
@@ -20,8 +18,6 @@ using MimeKit;
 using HealthInCube_BackEnd.DTOs.ResetPassword;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Linq;
-using AutoMapper.QueryableExtensions;
-using HealthInCube_BackEnd.DTOs.Lekar.PracovnaDoba;
 
 namespace HealthInCube_BackEnd.Controllers
 {
