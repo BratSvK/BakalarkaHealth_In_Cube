@@ -1,0 +1,4 @@
+<ng-container *ngIf="(healthRecord$ | async) as healthRecord">
+    <p>health-record-shell works!</p>
+    <span>Pacient Id: <b>{{healthRecord.idPacient}}</b></span>
+</ng-container>

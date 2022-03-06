@@ -4,7 +4,7 @@ import { ZapChoroby } from "./zapChoroby/zapChoroby";
 
 export interface ZdravotnaKarta {
     idPacient: number;
-    krvSkupina: string;
+    krvSkupina?: string;
     miestoNarodenia: Mesto;
     vykVysetrenia: VykVysetrenia[];
     zapChorobies: ZapChoroby[];

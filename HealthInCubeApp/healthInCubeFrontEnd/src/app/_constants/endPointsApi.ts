@@ -12,5 +12,4 @@ export const PRACOVNA_DOBA_API = 'pracovnaDoba';
 
 export const NEMOCNICA_API = 'nemocnica';
 
-
 export const CLIENT_URI_RESET_PASSWORD = 'https://localhost:4200/auth/reset-heslo';

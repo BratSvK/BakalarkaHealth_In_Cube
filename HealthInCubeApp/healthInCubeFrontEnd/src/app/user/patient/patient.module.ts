@@ -5,12 +5,13 @@ import { PatientRouting } from "./patient-routing.module";
 import { PatientComponent } from "./patient.component";
 import { UserNotActivatedWarningComponent } from './user-not-activated-warning/user-not-activated-warning.component';
 import { UserDetailModule } from "../user-detail/user-detail.module";
+import { HealthRecordShellComponent } from './health-record-shell/health-record-shell.component';
 
 @NgModule({
     declarations: [
       NavPatientComponent, 
       PatientComponent, 
-      UserNotActivatedWarningComponent
+      UserNotActivatedWarningComponent, HealthRecordShellComponent
     ],
     imports: [
       SharedModule, 
