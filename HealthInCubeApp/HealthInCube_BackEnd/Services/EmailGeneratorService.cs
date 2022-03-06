@@ -6,9 +6,6 @@ using HealthInCube_BackEnd.Interfaces;
 using HealthInCube_BackEnd.Properties;
 using MimeKit;
 using MimeKit.Utils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace HealthInCube_BackEnd.Services

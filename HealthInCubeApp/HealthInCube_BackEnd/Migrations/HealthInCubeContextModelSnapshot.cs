@@ -83,7 +83,7 @@ namespace HealthInCube_BackEnd.Migrations
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.Bydlisko", b =>
                 {
-                    b.Property<decimal?>("IdBydliska")
+                    b.Property<decimal>("IdBydliska")
                         .HasColumnType("NUMBER(38)")
                         .HasColumnName("ID_BYDLISKA");
 
@@ -803,8 +803,14 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Property<decimal>("IdTypVysetrenia")
                         .HasColumnType("NUMBER(38)");
 
+                    b.Property<bool>("IsDeactivated")
+                        .HasColumnType("NUMBER(1)");
+
                     b.Property<DateTime>("TerminDo")
                         .HasColumnType("TIMESTAMP(7)");
+
+                    b.Property<string>("ZrusenieDovod")
+                        .HasColumnType("NVARCHAR2(2000)");
 
                     b.HasKey("IdLekar", "IdPacient", "TerminOd");
 

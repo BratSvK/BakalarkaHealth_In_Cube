@@ -32,32 +32,53 @@ export function userDetailReducer(
       const oldArrayOfBydlisko = [...state.bydliska];
       let changeTrvalaInBydliska: Bydlisko[] = cloneDeep(oldArrayOfBydlisko)
 
+      if (action.payload.trvale)
       changeTrvalaInBydliska.forEach(b => b.trvale = false);
+
       return {
         ...state, // copy old state ! always
         bydliska: [...changeTrvalaInBydliska, action.payload],
       };
+      case UserDetailActions.SET_ID_BYDLISKO:
+        const oldArrayOfBydliska = [...state.bydliska];
+        let oldBydlisko = oldArrayOfBydliska.filter(b => b.ulica === action.payload.ulica)[0];
+
+        const updatedBydliskoId = {
+          ...oldBydlisko, // copy old properties and
+          ...action.payload, // override the old properties
+        };
+      
+      const newArrayBydliska = [...oldArrayOfBydliska];
+      const indexInArrayList = newArrayBydliska.findIndex(b => b.ulica === action.payload.ulica);
+
+      newArrayBydliska[indexInArrayList] = updatedBydliskoId;
+
+      return {
+        ...state,
+        bydliska: newArrayBydliska
+      };
     case UserDetailActions.UPDATE_BYDLISKO:
       // IMUTABLE - logic
       const bydliskaListToEDit = [...state.bydliska]; // it's a new array
-
       const bydlisko = bydliskaListToEDit.filter(b => b.idBydliska === action.payload.idBydliska)[0]
-
-      // ingredient.amount =  !! incorect data store in old object
       const updatedBydlisko = {
         ...bydlisko, // copy old properties and
         ...action.payload, // override the old properties
       };
 
       const updatedBydliska = [...state.bydliska]; // it's a new array
-
       const indexInArray = updatedBydliska.findIndex(b => b.idBydliska === updatedBydlisko.idBydliska);
-
       updatedBydliska[indexInArray] = updatedBydlisko;
+
+      let changeTrvalaInBydliskaNew: Bydlisko[] = cloneDeep(updatedBydliska)
+
+      if (action.payload.trvale)
+      changeTrvalaInBydliskaNew.filter(b => b.idBydliska !== updatedBydlisko.idBydliska).forEach(b => b.trvale = false);
+
 
       return {
         ...state,
-        bydliska: updatedBydliska,
+        bydliska: changeTrvalaInBydliskaNew,
         editedBydlisko: null,
         editedBydliskoIndex: -1,
       };

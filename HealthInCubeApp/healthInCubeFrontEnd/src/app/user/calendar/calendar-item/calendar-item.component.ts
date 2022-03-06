@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { colorsDictionarySprievodka } from 'src/app/models/sprievodka/sprievodkaFarby';
 import { SprievodkaLekarModel, SprievodkaPacientModel } from 'src/app/models/sprievodka/sprievodkaModel';
+import { SprievodkaService } from 'src/app/_service/sprievodka.service';
+import { SubSink } from 'subsink';
 import { ModalLekarComponent } from './calendar-item-modal/modal-lekar/modal-lekar.component';
 import { ModalPacientComponent } from './calendar-item-modal/modal-pacient/modal-pacient.component';
 
@@ -10,18 +11,29 @@ import { ModalPacientComponent } from './calendar-item-modal/modal-pacient/modal
   templateUrl: './calendar-item.component.html',
   styleUrls: ['./calendar-item.component.css']
 })
-export class CalendarItemComponent implements OnInit {
+export class CalendarItemComponent implements OnInit, OnDestroy {
   @Input() sprievodkaItems: SprievodkaPacientModel[] | SprievodkaLekarModel[]; 
   @Input() isPatient: boolean; 
+  @Input() colorsSprievodka: string [];
+  @Output() isDenySuccess: EventEmitter<number> = new EventEmitter<number>();
 
   
   bsModalRef: BsModalRef;
-  colorOfSprievodka: string [] = [];
 
-  constructor(private modalService: BsModalService) { }
+  private subSink = new SubSink();
+
+  constructor(
+    private modalService: BsModalService,
+    private sprievodkaService: SprievodkaService
+  ) { }
+
+  ngOnDestroy(): void {
+    if (this.subSink)
+    this.subSink.unsubscribe();
+  }
 
   ngOnInit(): void {
-    this.initColorsToSprievodkas();
+    this.sprievodkaDeletedListener();
   }
 
   getDurationInMinutes(i: number): number {
@@ -48,11 +60,11 @@ export class CalendarItemComponent implements OnInit {
       initialState: {
         title: 'Plánované vyšetrenie',
         closeBtbName: 'Close',
+        deletedIndex: i,
         sprievodka: this.sprievodkaItems[i] as SprievodkaPacientModel,
       }
     };
     this.bsModalRef = this.modalService.show(ModalPacientComponent, config);
-    
   }
 
   openLekarSprievodkaModal(i: number) {
@@ -67,10 +79,11 @@ export class CalendarItemComponent implements OnInit {
     this.bsModalRef = this.modalService.show(ModalLekarComponent, config);
   }
 
-  private initColorsToSprievodkas() {
-    for (let index = 0; index < this.sprievodkaItems.length; index++) {
-      this.colorOfSprievodka.push(colorsDictionarySprievodka[this.sprievodkaItems[index]?.idTypLekarNavigation?.idTyp].color);
-    }
+  private sprievodkaDeletedListener()
+  {
+    this.subSink.sink = this.sprievodkaService.isDeletedListener$.subscribe((isDeleted) => {
+      this.isDenySuccess.emit(isDeleted);
+    });
   }
 
 }

@@ -45,8 +45,10 @@
                     <app-calendar-item 
                                       *ngIf="getCurrentSprievodka(iDen, hour) as sprievodkaList"
                                       class="example-box"
-                                      [sprievodkaItems]="sprievodkaList"
-                                      [isPatient]="isPatient">
+                                      [sprievodkaItems]="sprievodkaList.sort(compareDates)"
+                                      [colorsSprievodka]="initColorsToSprievodkas(sprievodkaList)"
+                                      [isPatient]="isPatient"
+                                      (isDenySuccess)="isDeletedSuccess($event)">
                     </app-calendar-item>
                     </td>
                 </tr>

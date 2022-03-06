@@ -2,9 +2,11 @@
 using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.DTOs.Sprievodka.Termin;
 using HealthInCube_BackEnd.Entities;
+using HealthInCube_BackEnd.Extensions;
 using HealthInCube_BackEnd.Helpers;
 using HealthInCube_BackEnd.Helpers.Params;
 using HealthInCube_BackEnd.Interfaces;
+using HealthInCube_BackEnd.Properties;
 using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using System;
@@ -23,24 +25,37 @@ namespace HealthInCube_BackEnd.SignalR
         private readonly ISprievodkaRepository _sprievodkaRepository;
         private readonly IPracovnaDobaRepository _pracovnaDobaRepository;
         private readonly ILekarRepository _lekarRepository;
+        private readonly IZdravotnaKartaRepository _zdravotnaKartaRepository;
         private readonly IAppointmentSchedulerService _appointmentSchedulerService;
 
+        /// <summary>
+        /// Ctor.
+        /// </summary>
+        /// <param name="mapper">Auto mapper.</param>
+        /// <param name="sprievodkaRepository">Sprievodka repository.</param>
+        /// <param name="pracovnaDobaRepository">Pracovna doba repository.</param>
+        /// <param name="lekarRepository">Lekar repository.</param>
+        /// <param name="zdravotnaKartaRepository">Zdravotna karta repository.</param>
+        /// <param name="appointmentSchedulerService">Appointment service scheduler.</param>
         public SprievodkaHub(
             IMapper mapper,
             ISprievodkaRepository sprievodkaRepository,
             IPracovnaDobaRepository pracovnaDobaRepository,
             ILekarRepository lekarRepository,
+            IZdravotnaKartaRepository zdravotnaKartaRepository,
             IAppointmentSchedulerService appointmentSchedulerService)
         {
             _mapper = mapper;
             _sprievodkaRepository = sprievodkaRepository;
             _pracovnaDobaRepository = pracovnaDobaRepository;
             _lekarRepository = lekarRepository;
+            _zdravotnaKartaRepository = zdravotnaKartaRepository;
             _appointmentSchedulerService = appointmentSchedulerService;
         }
 
         /// <summary>
         /// Listen to changes in calendar component to client.
+        /// Init hub connection and register to group of listeners.
         /// </summary>
         public override async Task OnConnectedAsync()
         {
@@ -62,6 +77,18 @@ namespace HealthInCube_BackEnd.SignalR
             await Clients.Group(groupName).SendAsync("ListenToSprievodkaCalendar", "Počúvam");
         }
 
+        /// <inheritdoc/>
+        public override Task OnDisconnectedAsync(Exception exception)
+        {
+            return base.OnDisconnectedAsync(exception);
+        }
+
+        #region Actions with sprievodka
+        /// <summary>
+        /// Create appointment by doctor.
+        /// Asycn resend to calendars in open mode.
+        /// </summary>
+        /// <param name="sprievodkaCreate">Model for creating appointment.</param>
         public async Task CreateAppointmentByDoctor(SprievodkaCreate sprievodkaCreate)
         {
             // enum from microsoft 0 -> Nedela
@@ -95,17 +122,46 @@ namespace HealthInCube_BackEnd.SignalR
                 {
                     var groupPatient = GetGroupNamePatient(sprievodka.IdPacient.ToString());
                     var groupLekar = GetGroupNameDoctor(sprievodka.IdLekar.ToString());
-                    await Clients.Group(groupPatient).SendAsync("NewSprievodka", "Sprievodka pre pacienta pridana"); 
-                    await Clients.Group(groupLekar).SendAsync("NewSprievodka", "Sprievodka pre lekara pridana");
+                    await Clients.Group(groupPatient).SendAsync("EditCalendar", Resource.SignalRSprievodkaHubCreatedSprievodka); 
+                    await Clients.Group(groupLekar).SendAsync("EditCalendar",  Resource.SignalRSprievodkaHubCreatedSprievodka);
                 }
             }
         }
 
-        /// <inheritdoc/>
-        public override Task OnDisconnectedAsync(Exception exception)
+        /// <summary>
+        /// Deleted planned appointment by patient.
+        /// Max 48 hours before start of appo.
+        /// </summary>
+        /// <param name="sprievodkaDelete">Model for deleting appo.</param>
+        public async Task DeleteSprievodkaByPatient(SprievodkaDeleteDto sprievodkaDelete)
         {
-            return base.OnDisconnectedAsync(exception);
+            if (!sprievodkaDelete.TerminOd.IsAllowedToDenyAppointment())
+            {
+                return;
+            }
+
+            IEnumerable<Sprievodka> sprievodkyAfterRecalculation = await _sprievodkaRepository.DeleteSprievodkaAsync(sprievodkaDelete);
+
+            if (sprievodkyAfterRecalculation.Count() > 0) 
+            {
+                IList<string> idsOfInterestedPersonsInDay = new List<string>();
+                idsOfInterestedPersonsInDay.Add(GetGroupNameDoctor(sprievodkaDelete.IdLekar.ToString()));
+
+                foreach (var sprievodkaUserToNotify in sprievodkyAfterRecalculation)
+                {
+                    idsOfInterestedPersonsInDay.Add(GetGroupNamePatient(sprievodkaUserToNotify.IdPacient.ToString()));
+                }
+
+                foreach (var personToNotify in idsOfInterestedPersonsInDay)
+                {
+                   await Clients.Group(personToNotify).SendAsync("EditCalendar", Resource.SignalRSprievodkaHubEditSprievodka);
+                }
+            }
+            return;
         }
+
+        #endregion
+
 
         private string GetGroupNamePatient(string patientId)
         => $"sprievodka-patient-{patientId}";

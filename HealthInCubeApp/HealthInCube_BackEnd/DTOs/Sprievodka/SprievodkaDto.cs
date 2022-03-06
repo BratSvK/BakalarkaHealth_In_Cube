@@ -18,5 +18,6 @@ namespace HealthInCube_BackEnd.DTOs.Sprievodka
         public DateTime TerminOd { get; set; }
         
         public DateTime TerminDo { get; set; }
+        public bool IsDeactivated { get; set; }
     }
 }

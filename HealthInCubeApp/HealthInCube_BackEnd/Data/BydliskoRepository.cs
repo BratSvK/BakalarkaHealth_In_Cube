@@ -61,7 +61,7 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<BydliskoDto> GetItemAsync(decimal bydliskoId)
         {
-            var bydlisko =  await _context.Bydlisko.FindAsync(bydliskoId);
+            var bydlisko = await _context.Bydlisko.FindAsync(bydliskoId);
 
             return _mapper.Map<BydliskoDto>(bydlisko);
         }
@@ -100,5 +100,10 @@ namespace HealthInCube_BackEnd.Data
                 .Include(b => b.IdMestoNavigation)
                 .SingleOrDefaultAsync(b => b.IdPouzivatel == pouzivatelId && b.Trvale.Equals("Y"));
         }
+
+        public async Task<Bydlisko> GetBydliskoByStreetNameAsync(string streetName, decimal pouzivatelId)
+        => await _context.Bydlisko
+                .Include(b => b.IdMestoNavigation)
+                .SingleOrDefaultAsync(b => b.IdPouzivatel == pouzivatelId && b.Ulica == streetName);
     }
 }

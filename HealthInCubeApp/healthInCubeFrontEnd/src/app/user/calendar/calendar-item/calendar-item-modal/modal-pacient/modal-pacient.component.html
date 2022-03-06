@@ -88,19 +88,42 @@
                           readonly>
                </div>
              </div>
+             <div *ngIf="!showTooltip"  
+                   class="form-row">
+              <div class="col-md mb-3">
+                <label for="dovodZrusenia">
+                  Dôvod zrušenia termínu(info pre lekára)
+                </label>
+                <input type="text" 
+                      class="form-control" 
+                      id="dovodZrusenia" 
+                      [(ngModel)]="dovodZrusenia"
+                      name="dovodZrusenia"
+                      minlength="2"
+                      maxlength="2000">
+                <span>(*Vyplnte v prípade zrušenia termínu.)</span>
+              </div>
+            </div>
            </form>
          </div>
          <div class="modal-footer">
-           <button type="button" 
-                   class="btn btn-default" 
-                   (click)="closeSprievodkaForm()">
-                   Zavrieť
-           </button>
-           <!-- <button type="button" 
-                   class="btn btn-primary" 
-                   (click)="createSprievodka()"
-                   [disabled]="sprievodkaForm.invalid">
-                   Vytvoriť
-           </button> -->
-         </div>
+          <button [isAllowedDenyAppointment]="sprievodka.terminOd"
+                  type="button"
+                  [tooltip]="showTooltip ? denyMessage : null"
+                  (showTooltip)="showValueFromEmit($event)" 
+                  triggers="pointerenter:pointerout"
+                  class="btn btn-danger denyApoint" 
+                  (click)="denyAppointment()">
+                  Zrušiť termín
+          </button>
+          <ng-template #denyMessage>
+            Nesmieš zrušiť sprievodku 48 hod. pred začiatkom vyšetrenia.
+          </ng-template>
+          <button 
+                  type="button" 
+                  class="btn btn-default" 
+                  (click)="closeSprievodkaForm()">
+                  Zavrieť
+          </button>
+        </div>
 </ng-container>

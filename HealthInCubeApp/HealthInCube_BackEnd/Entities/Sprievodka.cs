@@ -29,6 +29,16 @@ namespace HealthInCube_BackEnd.Entities
         /// </summary>
         public DateTime TerminDo { get; set; }
 
+        /// <summary>
+        /// Deny message from patient to doctor.
+        /// </summary>
+        public string ZrusenieDovod { get; set; }
+
+        /// <summary>
+        /// Is deactivated flag.
+        /// </summary>
+        public bool IsDeactivated { get; set; } = false;
+
         public virtual  Lekar IdLekarNavigation { get; set; }
 
         public virtual TypLekara IdTypLekarNavigation { get; set; }

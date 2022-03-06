@@ -61,6 +61,24 @@ namespace HealthInCube_BackEnd.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sprievodka bola pridaná.
+        /// </summary>
+        public static string SignalRSprievodkaHubCreatedSprievodka {
+            get {
+                return ResourceManager.GetString("SignalRSprievodkaHubCreatedSprievodka", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vašej sprievodke sa zmenil čas začiatku vyšetrenia. Niekto Vám uvoľnil miesto v čakárni.
+        /// </summary>
+        public static string SignalRSprievodkaHubEditSprievodka {
+            get {
+                return ResourceManager.GetString("SignalRSprievodkaHubEditSprievodka", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Účet lekára úspešne vytvorený.
         /// </summary>
         public static string SubjectDoctorAccountCreated {

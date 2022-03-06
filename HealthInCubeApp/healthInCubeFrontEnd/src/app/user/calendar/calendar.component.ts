@@ -8,6 +8,7 @@ import * as _moment from 'moment';
 import { Observable } from 'rxjs';
 import { map, switchMap, take, tap } from 'rxjs/operators';
 import { Pouzivatel } from 'src/app/models/pouzivatel';
+import { colorsDictionarySprievodka } from 'src/app/models/sprievodka/sprievodkaFarby';
 import { SprievodkaLekarModel, SprievodkaModel, SprievodkaPacientModel } from 'src/app/models/sprievodka/sprievodkaModel';
 import { SprievodkaParams } from 'src/app/models/sprievodka/sprievodkaParams';
 import { User } from 'src/app/models/user';
@@ -77,6 +78,22 @@ export class CalendarComponent implements OnInit,OnDestroy {
     this.getInitialInfo();
   }
 
+  /**
+ * @description
+ * Compare method which sort sprievodky by termin od asc.
+ * -1 returns -> sort ealier date before.
+ */
+   compareDates( a: SprievodkaModel, b: SprievodkaModel ) {
+     var dtTime1 = new Date(a.terminOd).getTime();
+     var dtTime2 = new Date(b.terminDo).getTime();
+    if ( dtTime1 < dtTime2){
+      return -1;
+    }
+    if ( dtTime1 > dtTime2 ){
+      return 1;
+    }
+    return 0;
+  }
 
   private connectoToSprievodkaHub() {
     let urlSegments = this.router.url.split('/');
@@ -171,6 +188,19 @@ export class CalendarComponent implements OnInit,OnDestroy {
     if (event.deltaY > 0) document.getElementById('table')!.scrollLeft += 55;
     else document.getElementById('table')!.scrollLeft -= 55;
     event.preventDefault();
+  }
+
+  initColorsToSprievodkas(sprievodkaItems: SprievodkaModel []) {
+    let colorSprievodka = [];
+    for (let index = 0; index < sprievodkaItems.length; index++) {
+      colorSprievodka.push(colorsDictionarySprievodka[sprievodkaItems[index]?.idTypLekarNavigation?.idTyp].color);
+    }
+    return colorSprievodka;
+  }
+
+  isDeletedSuccess(indexDeletedSprievodka: number) {
+      this.sprievodkyList.splice(indexDeletedSprievodka, 1);
+      this.sprievodkyList = [...this.sprievodkyList];
   }
 
   private createHoursTable(): void {

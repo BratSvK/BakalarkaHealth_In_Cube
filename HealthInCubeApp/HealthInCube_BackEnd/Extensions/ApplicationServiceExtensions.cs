@@ -47,6 +47,7 @@ namespace HealthInCube_BackEnd.Extensions
             services.AddScoped<IBydliskoRepository, BydliskoRepository>();
             services.AddScoped<ISprievodkaRepository, SprievodkaRepository>();
             services.AddScoped<IPracovnaDobaRepository, PracovnaDobaRepository>();
+            services.AddScoped<IZdravotnaKartaRepository, ZdravotnaKartaRepository>();
             #endregion
 
             services.AddSingleton<IAppointmentSchedulerService, AppointmentSchedulerService>();

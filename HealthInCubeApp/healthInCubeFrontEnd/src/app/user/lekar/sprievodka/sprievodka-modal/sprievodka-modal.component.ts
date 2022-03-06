@@ -137,7 +137,6 @@ export class SprievodkaModalComponent implements OnInit, OnDestroy {
 
   private subscribeToDisabledTermin() {
     if (this.sprievodkaForm.controls.idLekar.value !== '' && this.sprievodkaForm.controls.idLekar.value !== undefined) {
-      console.log('som nastavený')
     }
     this.subs.sink = this.sprievodkaForm.controls.idLekar.valueChanges
       .pipe(

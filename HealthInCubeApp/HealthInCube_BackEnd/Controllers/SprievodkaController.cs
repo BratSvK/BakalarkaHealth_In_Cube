@@ -1,6 +1,7 @@
 ﻿using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.DTOs.Sprievodka.Termin;
 using HealthInCube_BackEnd.Entities;
+using HealthInCube_BackEnd.Extensions;
 using HealthInCube_BackEnd.Helpers;
 using HealthInCube_BackEnd.Helpers.Params;
 using HealthInCube_BackEnd.Interfaces;
@@ -49,6 +50,11 @@ namespace HealthInCube_BackEnd.Controllers
         [HttpGet("availability")]
         public async Task<ActionResult<bool>> ChceckAvailability([FromQuery] SprievodkaCreate sprievodkaCreate)
         {
+            if (sprievodkaCreate.TerminDatum.IsTodayOrLater())
+            {
+                return Ok(false);
+            }
+
             PracovnaDoba pracovnaDoba =
                await _pracovnaDobaRepository.GetPracovnaDobaToDateAsync(sprievodkaCreate.IdLekar, sprievodkaCreate.TerminDatum.DayOfWeek);
             if (pracovnaDoba == null)
@@ -109,6 +115,25 @@ namespace HealthInCube_BackEnd.Controllers
             }
 
             return BadRequest("Failed to create an appointment!");
+        }
+
+
+        /// <summary>
+        /// Delete sprievodka by patient.
+        /// Allowed to this action only 48 hours before.
+        /// </summary>
+        [Authorize(Roles = "Pacient")]
+        [HttpDelete("zrusenie")]
+        public async Task<IActionResult> DeleteSprievodkaByPatient(SprievodkaDeleteDto sprievodkaDelete)
+        {
+            if (!sprievodkaDelete.TerminOd.IsAllowedToDenyAppointment())
+            {
+                return BadRequest("Nemožes meniť stav sprievodky");
+            }
+            
+            if (await _sprievodkaRepository.DeleteSprievodkaAsync(sprievodkaDelete) != null) return Ok();
+
+            return BadRequest("Nastala chyba pri mazaní sprievodky");
         }
     }
 }

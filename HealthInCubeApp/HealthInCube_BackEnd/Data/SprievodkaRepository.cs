@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,29 +11,38 @@ using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Extensions;
 using HealthInCube_BackEnd.Helpers.Params;
 using HealthInCube_BackEnd.Interfaces;
+using HealthInCube_BackEnd.Services.Models;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace HealthInCube_BackEnd.Data
 {
     /// <summary>
-    /// Repo for sprievodky.
+    /// Repository for sprievodky.
     /// </summary>
     public class SprievodkaRepository : ISprievodkaRepository
     {
         private readonly HealthInCubeContext _context;
         private readonly IMapper _mapper;
         private readonly IAppointmentSchedulerService _appointmentSchedulerService;
+        private readonly IZdravotnaKartaRepository _zdravotnaKartaRepository;
 
         /// <summary>
         /// Ctor.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="mapper"></param>
-        public SprievodkaRepository(HealthInCubeContext context, IMapper mapper, IAppointmentSchedulerService appointmentSchedulerService)
+        /// <param name="context">Database context.</param>
+        /// <param name="mapper">Auto mapper.</param>
+        /// <param name="appointmentSchedulerService">Appointment service.</param>
+        /// <param name="zdravotnaKartaRepository">Health record repository.</param>
+        public SprievodkaRepository(
+            HealthInCubeContext context, 
+            IMapper mapper, 
+            IAppointmentSchedulerService appointmentSchedulerService,
+            IZdravotnaKartaRepository zdravotnaKartaRepository)
         {
             _mapper = mapper;
             _appointmentSchedulerService = appointmentSchedulerService;
+            _zdravotnaKartaRepository = zdravotnaKartaRepository;
             _context = context;
         }
 
@@ -70,7 +80,7 @@ namespace HealthInCube_BackEnd.Data
 
         public void UpdateItem(Sprievodka item)
         {
-           // nothing to change only mark entity that has been modifity 
+            // nothing to change only mark entity that has been modifity 
             _context.Entry(item).State = EntityState.Modified;
         }
 
@@ -81,23 +91,17 @@ namespace HealthInCube_BackEnd.Data
 
         public async Task<Sprievodka> GetOriginItemAsync(decimal userId)
         {
-           return  await Task.FromResult<Sprievodka>(null);
+            return await Task.FromResult<Sprievodka>(null);
         }
 
-        /// <summary>
-        /// Get sprievodka by week.
-        /// Client select in calendar current week.
-        /// </summary>
-        /// <param name="sprievodkaParams">Client params.</param>
-        /// 
-        /// <returns></returns>
+        /// <inheritdoc/>
         public async Task<IEnumerable<SprievodkaDto>> GetSprievodkyByWeek(SprievodkaParams sprievodkaParams)
         {
             var query = _context.Sprievodkas
                 .AsQueryable();
 
             var selectedWeekNumber = sprievodkaParams.StartWeekBy.Date.GetWeekNumber();
-            query = query.Where(s => _context.GetWeekNumberFromDb(s.TerminOd) == selectedWeekNumber);
+            query = query.Where(s => _context.GetWeekNumberFromDb(s.TerminOd) == selectedWeekNumber && s.IsDeactivated == false);
 
             if (sprievodkaParams.IdLekar > 0)
             {
@@ -112,7 +116,7 @@ namespace HealthInCube_BackEnd.Data
             }
             else
             {
-                
+
                 query = query
                     .Include(s => s.IdTypLekarNavigation)
                     .Include(s => s.IdLekarNavigation)
@@ -123,28 +127,114 @@ namespace HealthInCube_BackEnd.Data
             }
         }
 
-        /// <summary>
-        /// Get number of last termin in paricular day.
-        /// </summary>
-        /// <param name="idLekar">Doctor id.</param>
-        /// <param name="dayOfYear">Day of year.</param>
-        /// <returns></returns>
+        /// <inheritdoc/>
         public async Task<int> GetLastTerminCountInDayPerDoctorAsync(decimal idLekar, int dayOfYear)
         {
             return await _context.VystavenyTermins.CountAsync(t => t.IdLekar == idLekar && t.DayOfYear == dayOfYear);
         }
 
-        /// <summary>
-        /// Check for availability in particular day.
-        /// </summary>
-        /// <param name="idLekar">Doctor id.</param>
-        /// <param name="dayOfYear">Day of year.</param>
-        /// <returns>true/false</returns>
+        /// <inheritdoc/>
         public async Task<bool> CheckIsAvailableTerminInDayOfYear(decimal idLekar, int dayOfYear)
         {
             var maxPocet = _appointmentSchedulerService.GetMaxNumberOfAppointmentsPerDay();
             var pocetVDni = await GetLastTerminCountInDayPerDoctorAsync(idLekar, dayOfYear);
             return (maxPocet - pocetVDni) > 0;
+        }
+
+        /// <inheritdoc/>
+        public async Task DeleteFromVystavenyTermin(SprievodkaDeleteDto sprievodkaDelete)
+        {
+            VystavenyTermin vystavenyTerminToDelete = await _context.VystavenyTermins
+                .Where(v => v.IdPacient == sprievodkaDelete.IdPacient &&
+                        v.IdLekar == sprievodkaDelete.IdLekar &&
+                        v.DayOfYear == sprievodkaDelete.TerminOd.DayOfYear)
+                .FirstOrDefaultAsync();
+
+            _context.VystavenyTermins.Remove(vystavenyTerminToDelete);
+        }
+
+        /// <inheritdoc/>
+        public async Task<Sprievodka> DeactivateSprievodkaAsync(SprievodkaDeleteDto sprievodkaDelete)
+        {
+            var sprievodkaToDeactivate = await _context.Sprievodkas
+                .FindAsync(new object[] { sprievodkaDelete.IdLekar, sprievodkaDelete.IdPacient, sprievodkaDelete.TerminOd });
+
+            DeactivateAndSetDenyMessage(sprievodkaDelete, sprievodkaToDeactivate);
+            _context.Sprievodkas.Update(sprievodkaToDeactivate);
+
+            await DeleteFromVystavenyTermin(sprievodkaDelete);
+            await _zdravotnaKartaRepository.DeleteZdravotnaKartaPovolenieByPatient(sprievodkaDelete);
+
+            return sprievodkaToDeactivate;
+        }
+
+        /// <inheritdoc/>
+        public async Task<IList<Sprievodka>> GetListOfSprievodkaByDayAsync(decimal idLekar, int dayOfYear)
+        => await _context.Sprievodkas
+                .Where(s => s.IdLekar == idLekar && s.TerminOd.DayOfYear == dayOfYear)
+                .OrderBy(s => s.TerminOd)
+                .ToListAsync();
+        
+        /// <inheritdoc/>
+        public void DeleteSprievodky(IEnumerable<Sprievodka> sprievodkas)
+        {
+           _context.Sprievodkas.RemoveRange(sprievodkas.Where(s => s.IsDeactivated != true));
+           _context.SaveChanges();
+        }
+
+        /// <inheritdoc/>
+        public async Task InsertSprievodkyAsync(IEnumerable<Sprievodka> sprievodkas)
+        {
+            await _context.Sprievodkas.AddRangeAsync(sprievodkas);
+        }
+
+        /// <inheritdoc/>
+        public async Task<IEnumerable<Sprievodka>> DeleteSprievodkaAsync(SprievodkaDeleteDto sprievodkaDelete)
+        {
+
+            using (var transaction = _context.Database.BeginTransaction())
+            {
+                try
+                {
+                    IList<Sprievodka> sprievodkaZoznam =
+                        await GetListOfSprievodkaByDayAsync(sprievodkaDelete.IdLekar, sprievodkaDelete.TerminOd.DayOfYear);
+
+                    Sprievodka deletedSprievodka = await DeactivateSprievodkaAsync(sprievodkaDelete);
+
+                    if (sprievodkaZoznam.Count < 2)
+                    {
+                        _context.SaveChanges();
+                        transaction.Commit();
+                        return sprievodkaZoznam.Where(s => s.IsDeactivated);
+                    }
+
+                    DeleteSprievodky(sprievodkaZoznam);
+
+                    IList<Sprievodka> spriedkaListNewAfterRecalculation =
+                        _appointmentSchedulerService.RecaulculateOldListOfSprievodkaByDay(
+                            new AppointmentRecalculateModel
+                            {
+                                SprievodkyZoznam = sprievodkaZoznam,
+                                IndexOfRemovedSprievodka = sprievodkaZoznam.IndexOf(deletedSprievodka)
+                            });
+
+                    await InsertSprievodkyAsync(spriedkaListNewAfterRecalculation);
+
+                    _context.SaveChanges();
+                    transaction.Commit();
+                    return spriedkaListNewAfterRecalculation;
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    return null;
+                }
+            }
+        }
+        private static void DeactivateAndSetDenyMessage(SprievodkaDeleteDto sprievodkaDelete, Sprievodka sprievodkaToDeactivate)
+        {
+            sprievodkaToDeactivate.IsDeactivated = true;
+            sprievodkaToDeactivate.ZrusenieDovod = sprievodkaDelete.ZrusenieDovod;
         }
     }
 }

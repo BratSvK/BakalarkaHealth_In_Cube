@@ -51,21 +51,32 @@ namespace HealthInCube_BackEnd.Controllers
 
             if (!bydliska.Any()) return NotFound("User don't have any adressess");
 
-            return Ok(bydliska); 
+            return Ok(bydliska);
         }
 
         [HttpPut("address/{idAddress}/update")]
         public async Task<ActionResult> UpdateUserAddress([FromBody] UserUpdateBydliskoDto updateBydliskoDto, decimal idAddress)
         {
-            var originBydlisko =  await _bydliskoRepository.GetOriginItemAsync(idAddress);
+            var originBydlisko = await _bydliskoRepository.GetOriginItemAsync(idAddress);
 
             _mapper.Map(updateBydliskoDto, originBydlisko);
+            if (updateBydliskoDto.Trvale)
+            {
+                originBydlisko.AdresaDo = null;
+                var actualLivingAddress = await _bydliskoRepository.GetTrvaleBydliskoAsync(User.GetUserId());
+                if (actualLivingAddress != null)
+                {
+                    actualLivingAddress.AdresaDo = DateTime.Now;
+                    actualLivingAddress.Trvale = "N";
+                    _bydliskoRepository.UpdateItem(actualLivingAddress);
+                }
+            }
 
             _bydliskoRepository.UpdateItem(originBydlisko);
 
             if (await _bydliskoRepository.SaveAllAsync()) return NoContent();
 
-            return BadRequest("Failed to update your address"); 
+            return BadRequest("Failed to update your address");
         }
 
 
@@ -82,8 +93,9 @@ namespace HealthInCube_BackEnd.Controllers
             };
 
             _bydliskoRepository.InsertItem(bydlisko);
-            
-            if (createBydlisko.Trvale) {
+
+            if (createBydlisko.Trvale)
+            {
                 var actualLivingAddress = await _bydliskoRepository.GetTrvaleBydliskoAsync(userId);
                 if (actualLivingAddress != null)
                 {
@@ -92,7 +104,11 @@ namespace HealthInCube_BackEnd.Controllers
                     _bydliskoRepository.UpdateItem(actualLivingAddress);
                 }
             }
-            if (await _bydliskoRepository.SaveAllAsync()) return Ok(_mapper.Map<BydliskoDto>(bydlisko));
+            if (await _bydliskoRepository.SaveAllAsync())
+            {
+                Bydlisko bydliskoToReturn =  await _bydliskoRepository.GetBydliskoByStreetNameAsync(bydlisko.Ulica, bydlisko.IdPouzivatel.Value);
+                return Ok(_mapper.Map<BydliskoDto>(bydliskoToReturn));
+            }
 
             return BadRequest("Failed to create a address");
         }
@@ -105,7 +121,7 @@ namespace HealthInCube_BackEnd.Controllers
 
         [HttpGet("main-photo")]
         public async Task<ActionResult<FotkaDto>> GetMainUserPhoto() => await _fotoRepository.GetItemAsync(User.GetUserId());
-        
+
 
         [HttpPost("add-photo")]
         public async Task<ActionResult> AddPhoto(IFormFile file)
@@ -130,7 +146,7 @@ namespace HealthInCube_BackEnd.Controllers
             {
                 _fotoRepository.UpdateItem(fotka);
 
-            } 
+            }
             else
             {
                 _fotoRepository.InsertItem(fotka);

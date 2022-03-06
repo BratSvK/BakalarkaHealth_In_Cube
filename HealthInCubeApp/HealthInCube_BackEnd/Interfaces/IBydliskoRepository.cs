@@ -14,5 +14,6 @@ namespace HealthInCube_BackEnd.Interfaces
 
         Task<Bydlisko> GetTrvaleBydliskoAsync(decimal pouizivatelId);
 
+        Task<Bydlisko> GetBydliskoByStreetNameAsync(string streetName, decimal pouzivatelId);
     }
 }

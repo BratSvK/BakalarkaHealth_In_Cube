@@ -6,7 +6,6 @@ using HealthInCube_BackEnd.Errors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Serialization;
 
 
 namespace HealthInCube_BackEnd.Middleware
