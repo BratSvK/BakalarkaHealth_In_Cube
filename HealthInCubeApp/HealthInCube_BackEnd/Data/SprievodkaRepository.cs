@@ -171,7 +171,7 @@ namespace HealthInCube_BackEnd.Data
         /// <inheritdoc/>
         public async Task<IList<Sprievodka>> GetListOfSprievodkaByDayAsync(decimal idLekar, int dayOfYear)
         => await _context.Sprievodkas
-                .Where(s => s.IdLekar == idLekar && s.TerminOd.DayOfYear == dayOfYear)
+                .Where(s => s.IdLekar == idLekar && s.TerminOd.DayOfYear == dayOfYear && s.IsDeactivated != true)
                 .OrderBy(s => s.TerminOd)
                 .ToListAsync();
         
