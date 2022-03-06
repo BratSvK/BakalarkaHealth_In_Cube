@@ -149,7 +149,10 @@ namespace HealthInCube_BackEnd.SignalR
 
                 foreach (var sprievodkaUserToNotify in sprievodkyAfterRecalculation)
                 {
-                    idsOfInterestedPersonsInDay.Add(GetGroupNamePatient(sprievodkaUserToNotify.IdPacient.ToString()));
+                    if (sprievodkaUserToNotify.IdPacient != sprievodkaDelete.IdPacient)
+                    {
+                        idsOfInterestedPersonsInDay.Add(GetGroupNamePatient(sprievodkaUserToNotify.IdPacient.ToString()));
+                    }
                 }
 
                 foreach (var personToNotify in idsOfInterestedPersonsInDay)

@@ -43,10 +43,18 @@ namespace HealthInCube_BackEnd.Helpers
                 .ForMember(dest => dest.DatNarodenia, opt => opt.MapFrom(src => src.IdPouzivatelNavigation.DatNarodenia.Value.Date))
                 .ForMember(dest => dest.MestoNarodenia, opt => opt.MapFrom(src => src.ZdravotnaKartum.IdMestoNarodeniaNavigation.Nazov))
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(p => $"{p.IdPouzivatelNavigation.Meno} {p.IdPouzivatelNavigation.Priezvisko}"));
-            CreateMap<ZdravotnaKartum, ZdratovnaKartaDto>()
+            CreateMap<Lekar, GeneralPractitionerDto>()
+                .ForMember(dest => dest.Fotka, opt => opt.MapFrom(src => src.IdPouzivatelNavigation.FotkaPouzivatel.Fotka))
+                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.IdPouzivatelNavigation.Email))
+                .ForMember(dest => dest.Mobil, opt => opt.MapFrom(src => src.IdPouzivatelNavigation.Mobil))
+                .ForMember(dest => dest.Meno, opt => opt.MapFrom(p => $"{p.IdPouzivatelNavigation.Meno} {p.IdPouzivatelNavigation.Priezvisko}")); ;
+            CreateMap<ZdravotnaKartum, ZdravotnaKartaDto>()
                 .ForMember(
                     dest => dest.MiestoNarodenia,
-                    opt => opt.MapFrom(src => src.IdMestoNarodeniaNavigation));
+                    opt => opt.MapFrom(src => src.IdMestoNarodeniaNavigation))
+                .ForMember(
+                    dest => dest.VseobecnyLekar,
+                    opt => opt.MapFrom(src => src.IdPacientNavigation.IdVseobecnyLekarNavigation));
             CreateMap<ZdravPoistenie, ZdravotnePoistenieDto>();
             CreateMap<Pouzivatel, PouzivatelDto>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(p => $"{p.Meno} {p.Priezvisko}"));

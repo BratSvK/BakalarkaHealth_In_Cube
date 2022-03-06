@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.Entities;
@@ -54,12 +55,23 @@ namespace HealthInCube_BackEnd.Data
             throw new NotImplementedException();
         }
 
-        public Task<ZdratovnaKartaDto> GetItemAsync(decimal itemId)
-        {
-            throw new NotImplementedException();
-        }
+        /// <summary>
+        /// Get health record per patient.
+        /// </summary>
+        /// <param name="patientId">The patient id.</param>
+        /// <returns>The health record.</returns>
+        public async Task<ZdravotnaKartaDto> GetItemAsync(decimal patientId)
+        => await _context.ZdravotnaKarta
+                .Include(z => z.VykVysetrenia)
+                .Include(z => z.ZapChorobies)
+                .Include(z => z.IdMestoNarodeniaNavigation)
+                .Include(z => z.IdPacientNavigation)
+                .ThenInclude(p => p.IdVseobecnyLekarNavigation)
+                .ThenInclude(l => l.IdPouzivatelNavigation)
+                .ProjectTo<ZdravotnaKartaDto>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync(z => z.IdPacient == patientId);
 
-        public Task<IEnumerable<ZdratovnaKartaDto>> GetItemsAsync()
+        public Task<IEnumerable<ZdravotnaKartaDto>> GetItemsAsync()
         {
             throw new NotImplementedException();
         }

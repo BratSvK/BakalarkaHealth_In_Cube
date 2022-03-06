@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
 using Castle.Core.Internal;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Pacient.Activated;
@@ -18,15 +17,19 @@ namespace HealthInCube_BackEnd.Controllers
     public class PacientController : BaseApiController
     {
         private readonly IPacientRepository _pacientRepository;
-        private readonly IMapper _mapper;
+        private readonly IZdravotnaKartaRepository _zdravotnaKartaRepository;
 
         /// <summary>
         /// Ctor.
         /// </summary>
-        public PacientController(IPacientRepository pacientRepository, IMapper mapper)
+        /// <param name="pacientRepository">Patient repository.</param>
+        /// <param name="zdravotnaKartaRepository">Health record repository.</param>
+        public PacientController(
+            IPacientRepository pacientRepository,
+            IZdravotnaKartaRepository zdravotnaKartaRepository)
         {
             _pacientRepository = pacientRepository;
-            _mapper = mapper;
+            _zdravotnaKartaRepository = zdravotnaKartaRepository;
         }
 
         [HttpGet("{idPacient}")]
@@ -64,6 +67,14 @@ namespace HealthInCube_BackEnd.Controllers
                 });
             }
             return Ok(isActivated);
+        }
+
+        [HttpGet("{patientId}/zdravotnaKarta")]
+        public async Task<ActionResult<ZdravotnaKartaDto>> GetZdravotnaKarta(decimal patientId)
+        {
+            ZdravotnaKartaDto zdravotnaKarta = await _zdravotnaKartaRepository.GetItemAsync(patientId);
+            if (zdravotnaKarta == null) return NotFound("Zdravotná karta sa nenašla");
+            return Ok(zdravotnaKarta);
         }
     }
 }

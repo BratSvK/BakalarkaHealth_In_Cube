@@ -1046,7 +1046,6 @@ namespace HealthInCube_BackEnd.Migrations
                         .HasColumnName("ID_MESTO_NARODENIA");
 
                     b.Property<string>("KrvSkupina")
-                        .IsRequired()
                         .HasMaxLength(3)
                         .IsUnicode(false)
                         .HasColumnType("VARCHAR2(3)")

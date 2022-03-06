@@ -1,25 +1,36 @@
-﻿using HealthInCube_BackEnd.Entities;
+﻿using HealthInCube_BackEnd.DTOs.Lekar;
+using HealthInCube_BackEnd.Entities;
 using System.Collections.Generic;
+
 
 namespace HealthInCube_BackEnd.DTOs
 {
     /// <summary>
     /// Health record DTO.
     /// </summary>
-    public class ZdratovnaKartaDto
+    public class ZdravotnaKartaDto
     {
         /// <summary>
         /// Patient of health records
         /// </summary>
         public decimal IdPacient { get; set; }
+
+        #nullable enable
         /// <summary>
         /// Blood group.
         /// </summary>
-        public string KrvSkupina { get; set; }
+        public string? KrvSkupina { get; set; }
+        #nullable disable
+
         /// <summary>
         /// Place of birth.
         /// </summary>
         public MestoDto MiestoNarodenia { get; set; }
+
+        /// <summary>
+        /// General practitioner by patient.
+        /// </summary>
+        public GeneralPractitionerDto VseobecnyLekar { get; set; }
 
         /// <summary>
         /// All treatments.

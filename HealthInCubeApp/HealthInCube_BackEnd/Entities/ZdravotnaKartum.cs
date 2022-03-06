@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 #nullable disable
 
@@ -15,9 +14,12 @@ namespace HealthInCube_BackEnd.Entities
         }
 
         public decimal IdPacient { get; set; }
-        public string KrvSkupina { get; set; }
-        public decimal IdMestoNarodenia { get; set; }
 
+#nullable enable
+        public string? KrvSkupina { get; set; }
+#nullable disable
+
+        public decimal IdMestoNarodenia { get; set; }
         public virtual Mesto IdMestoNarodeniaNavigation { get; set; }
         public virtual Pacient IdPacientNavigation { get; set; }
         public virtual ICollection<VykVysetrenium> VykVysetrenia { get; set; }
