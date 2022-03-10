@@ -1,0 +1,36 @@
+.detail-footer {
+    box-sizing: content-box;
+    position: sticky;
+    margin-top: auto;
+    bottom: 0;
+    z-index: 100;
+}
+
+.top-gradient {
+    height: 2.4rem;
+    background: linear-gradient(180deg, rgba(#f2f2f2,0),rgba(#f2f2f2));
+}
+
+.save-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.save-text {
+    margin-left: 0.5rem;
+}
+
+.form-section {
+    margin: 1.6rem 0rem 0rem 1.2rem;
+}
+
+.form-section h4 {
+    font-size: 1.2rem;
+    font-weight: 900;
+}
+
+.section-content {
+    margin-left: 33.33333333%;
+}
+

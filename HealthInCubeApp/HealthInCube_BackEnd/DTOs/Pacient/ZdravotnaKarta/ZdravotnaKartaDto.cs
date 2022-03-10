@@ -1,4 +1,5 @@
 ﻿using HealthInCube_BackEnd.DTOs.Lekar;
+using HealthInCube_BackEnd.DTOs.Pouzivatel;
 using HealthInCube_BackEnd.Entities;
 using System.Collections.Generic;
 
@@ -20,7 +21,10 @@ namespace HealthInCube_BackEnd.DTOs
         /// Blood group.
         /// </summary>
         public string? KrvSkupina { get; set; }
-        #nullable disable
+#nullable disable
+
+        /// <inheritdoc/>
+        public PouzivatelZdravotnaKartaDto Pouzivatel { get; set; }
 
         /// <summary>
         /// Place of birth.

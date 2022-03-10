@@ -76,5 +76,5 @@ namespace HealthInCube_BackEnd.Controllers
             if (zdravotnaKarta == null) return NotFound("Zdravotná karta sa nenašla");
             return Ok(zdravotnaKarta);
         }
-    }
+    } 
 }

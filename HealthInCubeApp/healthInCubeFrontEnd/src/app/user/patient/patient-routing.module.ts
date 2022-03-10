@@ -3,8 +3,6 @@ import { RouterModule, Routes } from "@angular/router";
 import { CalendarComponent } from "../calendar/calendar.component";
 import { UserDetailResolver } from "../user-detail/user-detail-resolver.service";
 import { UserDetailComponent } from "../user-detail/user-detail.component";
-import { HealthRecordResolver } from "./health-record-shell/health-record-resolver.service";
-import { HealthRecordShellComponent } from "./health-record-shell/health-record-shell.component";
 import { PatientComponent } from "./patient.component";
 
 const patientRoutes: Routes = [
@@ -12,14 +10,10 @@ const patientRoutes: Routes = [
     path: '',
     component: PatientComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'calendar' },
+      { path: '', pathMatch: 'full', redirectTo: 'zdravotnaKarta' },
       { path: 'edit', resolve: [UserDetailResolver], component: UserDetailComponent },
-      { path: 'calendar',  component: CalendarComponent}, 
-      { path: 'zdravotnaKarta',
-      resolve: {
-        healthRecord: HealthRecordResolver
-      },  
-      component: HealthRecordShellComponent}
+      { path: 'calendar',  component: CalendarComponent},
+      { path: 'zdravotnaKarta', loadChildren: () => import('./health-record/health-record.module').then((m)=>m.HealthRecordModule)}
     ],
   },
 ];

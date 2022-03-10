@@ -1,0 +1,32 @@
+<form>
+    <h1>Pacient</h1>
+    <div class="detail-section">
+      <div class="card">
+        <div class="form-section">
+            <div class="section-description">
+                <h4>Základné údaje</h4>
+            </div>
+            <div class="section-content">
+               <app-health-record-patient-info 
+                    [patientBaseData]="patientDetail">
+
+               </app-health-record-patient-info>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="detail-footer">
+        <div class="top-gradient"></div>
+        <div class="form-confirmation">
+            <button class="btn btn-primary btn-save"
+                    type="button">
+                <div class="save-btn">
+                    <div class="save-btn-portal">
+                        <fa-icon [icon]="pen"></fa-icon>
+                    </div>
+                    <div class="save-text">Ulož</div>
+                </div>
+            </button>
+        </div>
+    </div>
+</form>

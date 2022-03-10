@@ -1,0 +1,55 @@
+.shell-container {
+    height: 100%;
+    margin-left: 0%;
+    background-color: lightblue;
+}
+
+.shell-container-center {
+    height: 100%;
+}
+
+.health-record-grid {
+    background-color: lightblue;
+    padding-top: 0;
+}
+
+.menu-item {
+    display: block;
+    height: 4rem;
+    line-height: 4rem;
+    width: 100%;
+    padding-left: 1.6rem;
+    margin-bottom: 1.2rem;
+    color: black;
+    background-color: lightblue;
+    border-radius: 0.3rem;
+}
+
+.selected-item {
+    background-color: grey;
+    color: white;
+    box-shadow: 0px 0.3px 1px rgba(0, 0, 0, 0.08), 0px 2px 4px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+
+.sidebar-wrapper {
+    position: sticky;
+    top: 6rem;
+    margin-top: 3.6rem;
+    padding-top: 0;
+    width: 100%;
+}
+
+aside {
+    width: 100%;
+}
+
+aside a:hover:not(.selected-item) {
+    background-color: #EFFFFD;
+    color: black;
+    text-decoration: none;
+}
+
+h1 {
+    margin-bottom: 3.2rem;
+}

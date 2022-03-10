@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ConsoleLogger } from '@microsoft/signalr/dist/esm/Utils';
 import { Observable } from 'rxjs';
-import { map, take, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { ZdravotnaKarta } from 'src/app/models/pacient/zdravotnaKarta/zdravotnaKarta';
 
 @Component({

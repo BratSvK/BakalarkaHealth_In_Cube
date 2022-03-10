@@ -5,6 +5,7 @@ using HealthInCube_BackEnd.DTOs.Lekar.LekarTyp;
 using HealthInCube_BackEnd.DTOs.Lekar.PracovnaDoba;
 using HealthInCube_BackEnd.DTOs.Nemocnica;
 using HealthInCube_BackEnd.DTOs.Pacient;
+using HealthInCube_BackEnd.DTOs.Pouzivatel;
 using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.DTOs.Ziadanka;
 using HealthInCube_BackEnd.Entities;
@@ -49,13 +50,15 @@ namespace HealthInCube_BackEnd.Helpers
                 .ForMember(dest => dest.Mobil, opt => opt.MapFrom(src => src.IdPouzivatelNavigation.Mobil))
                 .ForMember(dest => dest.Meno, opt => opt.MapFrom(p => $"{p.IdPouzivatelNavigation.Meno} {p.IdPouzivatelNavigation.Priezvisko}")); ;
             CreateMap<ZdravotnaKartum, ZdravotnaKartaDto>()
-                .ForMember(
-                    dest => dest.MiestoNarodenia,
-                    opt => opt.MapFrom(src => src.IdMestoNarodeniaNavigation))
+                .ForMember(dest => dest.Pouzivatel, opt => opt.MapFrom(src => src.IdPacientNavigation.IdPouzivatelNavigation))
+                .ForMember(dest => dest.MiestoNarodenia, opt => opt.MapFrom(src => src.IdMestoNarodeniaNavigation))
                 .ForMember(
                     dest => dest.VseobecnyLekar,
                     opt => opt.MapFrom(src => src.IdPacientNavigation.IdVseobecnyLekarNavigation));
             CreateMap<ZdravPoistenie, ZdravotnePoistenieDto>();
+            CreateMap<Pouzivatel, PouzivatelZdravotnaKartaDto>()
+                .ForMember(dest => dest.Fotka, opt => opt.MapFrom(src => src.FotkaPouzivatel.Fotka))
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(p => $"{p.Meno} {p.Priezvisko}"));
             CreateMap<Pouzivatel, PouzivatelDto>()
                 .ForMember(dest => dest.FullName, opt => opt.MapFrom(p => $"{p.Meno} {p.Priezvisko}"));
             CreateMap<Ziadanka, ZiadankaBaseDto>()
