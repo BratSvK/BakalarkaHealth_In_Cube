@@ -44,6 +44,10 @@ aside {
     width: 100%;
 }
 
+aside a {
+    animation: menuSparkling 1s;
+}
+
 aside a:hover:not(.selected-item) {
     background-color: #EFFFFD;
     color: black;
@@ -53,3 +57,9 @@ aside a:hover:not(.selected-item) {
 h1 {
     margin-bottom: 3.2rem;
 }
+
+
+@keyframes menuSparkling {
+    from {background-color: #EFFFFD;}
+    to {background-color: lightblue;}
+  }

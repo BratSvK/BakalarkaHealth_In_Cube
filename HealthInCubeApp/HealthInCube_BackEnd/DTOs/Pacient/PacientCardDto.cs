@@ -33,6 +33,11 @@ namespace HealthInCube_BackEnd.DTOs
         public string FullName { get; set; }
 
         /// <summary>
+        /// Email of the patient.
+        /// </summary>
+        public string Email { get; set; }
+
+        /// <summary>
         /// City of birth.
         /// </summary>
         public string MestoNarodenia { get; set; }

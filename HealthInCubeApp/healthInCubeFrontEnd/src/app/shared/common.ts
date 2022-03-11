@@ -1,3 +1,4 @@
+import { Router } from "@angular/router";
 import { TimepickerConfig } from "ngx-bootstrap/timepicker";
 import { DEFAULT_TIME_PER_PATIENT } from "./defaults";
 
@@ -30,6 +31,10 @@ export function getTimepickerConfig(): TimepickerConfig {
     const newDate = new Date(date);
     newDate.setHours(newDate.getHours() + hours);
     return newDate;
+  }
+
+  export function getTypeOfAccount(router: Router): string {
+    return router.parseUrl(router.url).root.children?.primary.segments[0].path;
   }
 
  

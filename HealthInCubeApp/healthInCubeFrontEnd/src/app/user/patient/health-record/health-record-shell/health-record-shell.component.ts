@@ -12,7 +12,8 @@ import { ZdravotnaKarta } from 'src/app/models/pacient/zdravotnaKarta/zdravotnaK
 export class HealthRecordShellComponent implements OnInit {
   healthRecord$: Observable<ZdravotnaKarta>;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(
+    private route: ActivatedRoute) {
     this.loadCurrentHealthRecordFromResolver();
    }
  

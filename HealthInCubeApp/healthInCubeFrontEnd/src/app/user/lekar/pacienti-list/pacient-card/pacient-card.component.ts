@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { PacientCard } from 'src/app/models/pacientCard';
+import { PacientCard } from 'src/app/models/pacient/pacientCard';
 import { extractFotoFromApi } from 'src/app/shared/foto-extract';
 import { faNotesMedical, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { SprievodkaModalComponent } from '../../sprievodka/sprievodka-modal/sprievodka-modal.component';

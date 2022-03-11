@@ -1,7 +1,7 @@
 <div class="container">
-    <form [formGroup]="patientBaseData" autocomplete="off" bg-light>
+    <form [formGroup]="patientDataForm" autocomplete="off" bg-light>
         <div class="form-row">
-            <div class="col-md mb-3">
+            <div class="col-md-6 mb-3 pt-4">
                 <label for="patientName">
                   Meno pacienta
                 </label>
@@ -10,6 +10,45 @@
                       id="patientName" 
                       formControlName="patientName">
               </div>
+              <div class="col-md mb-3 ml-4 fotoWrapper">
+                <img [src]=" photo || 'assets/user.png'" alt="{{patientBaseData.fullName}}" class="foto text-light mr-2" />
+              </div>
             </div>
+
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <div *ifAuthorizedTo="'patient'">
+                        <label for="krv">
+                            Krvná skupina
+                        </label>
+                        <select class="custom-select d-block w-100"
+                                id="krv"
+                                formControlName="krvSkupina">
+                        <option *ngFor="let krvaSkupina of bloothGroupsOptions"
+                                    [value]="krvaSkupina.value">
+                                {{krvaSkupina.label}}
+                        </option>
+                        </select>
+                     </div>
+                     <div *ifAuthorizedTo="'practitioner'">
+                        <label for="krv">
+                            Krvná skupina
+                        </label>
+                          <input type="text" 
+                                class="form-control" 
+                                id="krv" 
+                                readonly>
+                     </div>
+                 </div>
+                <div class="col-md-8 mb-3">
+                    <label for="email">
+                        Email pacienta
+                      </label>
+                      <input type="email" 
+                            class="form-control" 
+                            id="email" 
+                            formControlName="email">
+                    </div>
+                </div>
     </form>
 </div>

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { ZdravotnaKarta } from '../models/pacient/zdravotnaKarta/zdravotnaKarta';
+import { ZdravotnaKarta, ZdravotnaKartaPatchModel } from '../models/pacient/zdravotnaKarta/zdravotnaKarta';
 import { PACIENT_API } from '../_constants/endPointsApi';
 
 @Injectable({
@@ -31,5 +31,11 @@ export class HealthRecordService {
         return response;
       }));
     }
+
+    updateHealthRecord(idPacient: number, patch: ZdravotnaKartaPatchModel) {
+      console.log(patch);
+      // return this.http.patch(this.baseUrl + `${PACIENT_API}/${idPacient}/zdravotnaKarta`, {...patch})
+    }
   }
 
+  

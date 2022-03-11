@@ -6,13 +6,15 @@ import { HealthRecordRoutingModule } from "./health-record-routing.module";
 import { HealthRecordPatientInfoComponent } from './health-record-patient-detail/health-record-patient-info/health-record-patient-info.component';
 import { HealthRecordPatientVysetreniaComponent } from './health-record-patient-vysetrenia/health-record-patient-vysetrenia.component';
 import { HealthRecordPatientWelcomeComponent } from './health-record-patient-welcome/health-record-patient-welcome.component';
+import { IfAuthorizedToDirective } from "src/app/_directives/if-authorized-to.directive";
 
 @NgModule({
     declarations: [
       HealthRecordPatientDetailComponent,
       HealthRecordPatientInfoComponent,
       HealthRecordPatientVysetreniaComponent,
-      HealthRecordPatientWelcomeComponent
+      HealthRecordPatientWelcomeComponent,
+      IfAuthorizedToDirective
     ],
     imports: [
       SharedModule, 

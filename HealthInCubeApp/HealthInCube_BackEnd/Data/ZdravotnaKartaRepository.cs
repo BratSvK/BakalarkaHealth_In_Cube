@@ -7,6 +7,7 @@ using HealthInCube_BackEnd.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace HealthInCube_BackEnd.Data
@@ -68,18 +69,17 @@ namespace HealthInCube_BackEnd.Data
                 .Include(z => z.IdPacientNavigation)
                 .ThenInclude(p => p.IdVseobecnyLekarNavigation)
                 .ThenInclude(l => l.IdPouzivatelNavigation)
+                .Where(z => z.IdPacient == patientId)
                 .ProjectTo<ZdravotnaKartaDto>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync(z => z.IdPacient == patientId);
+                .FirstOrDefaultAsync();
 
         public Task<IEnumerable<ZdravotnaKartaDto>> GetItemsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<ZdravotnaKartum> GetOriginItemAsync(decimal itemId)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<ZdravotnaKartum> GetOriginItemAsync(decimal itemId)
+        => await _context.ZdravotnaKarta.FindAsync(itemId);
 
         public void InsertItem(ZdravotnaKartum item)
         {

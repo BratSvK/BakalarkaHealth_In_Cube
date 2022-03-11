@@ -1,0 +1,8 @@
+.foto {
+        max-height: 10rem;
+        border: 2px solid black;
+}
+
+.fotoWrapper {
+    text-align: center;
+}

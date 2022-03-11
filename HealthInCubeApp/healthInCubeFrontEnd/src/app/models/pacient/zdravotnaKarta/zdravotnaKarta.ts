@@ -1,13 +1,15 @@
-import { Mesto } from "../../mesto";
-import { PouzivatelZdravotnaKarta } from "../../pouzivatel/pouzivatelZdravotnaKarta";
+import { Operation } from "fast-json-patch";
+import { PacientZdravotnaKartaDetail } from "../pacientZdravotnaKartaDetail";
 import { VykVysetrenia } from "./vykovaneVysetrenia/vykonaneVysetrenia";
 import { ZapChoroby } from "./zapChoroby/zapChoroby";
 
 export interface ZdravotnaKarta {
-    idPacient: number;
-    krvSkupina?: string;
-    pouzivatel: PouzivatelZdravotnaKarta
-    miestoNarodenia: Mesto;
+    pacientDetail: PacientZdravotnaKartaDetail
     vykVysetrenia: VykVysetrenia[];
     zapChorobies: ZapChoroby[];
+}
+
+
+export interface ZdravotnaKartaPatchModel {
+    replace: Operation[];
 }

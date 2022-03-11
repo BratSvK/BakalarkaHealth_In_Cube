@@ -5,6 +5,7 @@ export interface PacientCard {
     fotka: string;
     fullName: string;
     mestoNarodenia: string;
+    email: string;
 }
 
 export const BID_LENGHT = 10;
