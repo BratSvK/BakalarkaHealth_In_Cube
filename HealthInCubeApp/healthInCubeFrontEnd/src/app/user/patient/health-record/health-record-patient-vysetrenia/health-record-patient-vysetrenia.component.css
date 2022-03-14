@@ -1,0 +1,14 @@
+.header-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.empty {
+    color: gray;
+    padding-top: 0.6rem;
+}
+
+.btn-link {
+    box-shadow: none;
+    text-decoration: none;
+}

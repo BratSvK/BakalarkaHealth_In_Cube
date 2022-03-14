@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { EMPTY, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ZdravotnaKarta, ZdravotnaKartaPatchModel } from '../models/pacient/zdravotnaKarta/zdravotnaKarta';
-import { PACIENT_API } from '../_constants/endPointsApi';
+import { ZDRAVOTNA_KARTA_API } from '../_constants/endPointsApi';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +18,12 @@ export class HealthRecordService {
   }
 
   getHealthRecord$(idPacient: number): Observable<ZdravotnaKarta> {
-
     var response = this.zdravotnaKartaCache.get('zdravotnaKarta');
     if (response) {
       return of(response);
     }
     
-    return this.http.get<ZdravotnaKarta>(this.baseUrl + `${PACIENT_API}/${idPacient}/zdravotnaKarta`)
+    return this.http.get<ZdravotnaKarta>(this.baseUrl + `${ZDRAVOTNA_KARTA_API}/${idPacient}`)
     .pipe(
       map(response => {
         this.zdravotnaKartaCache.set('zdravotnaKarta', response);
@@ -32,9 +31,14 @@ export class HealthRecordService {
       }));
     }
 
+
+    clearHealthRecordCache() {
+      if (this.zdravotnaKartaCache)
+      this.zdravotnaKartaCache.clear();
+    }
+
     updateHealthRecord(idPacient: number, patch: ZdravotnaKartaPatchModel) {
-      console.log(patch);
-      // return this.http.patch(this.baseUrl + `${PACIENT_API}/${idPacient}/zdravotnaKarta`, {...patch})
+      return this.http.patch(this.baseUrl + `${ZDRAVOTNA_KARTA_API}/${idPacient}/update`, patch.patchModel);
     }
   }
 

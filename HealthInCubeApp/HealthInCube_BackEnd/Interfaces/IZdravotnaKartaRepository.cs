@@ -15,5 +15,19 @@ namespace HealthInCube_BackEnd.Interfaces
         /// </summary>
         /// <returns></returns>
         public Task DeleteZdravotnaKartaPovolenieByPatient(SprievodkaDeleteDto sprievodkaDelete);
+
+        /// <summary>
+        /// Check the access to health record.
+        /// </summary>
+        /// <param name="idDoctor">Doctor id.</param>
+        /// <param name="idZdravotnaKarta">Id of the health record of patient.</param>
+        /// <returns></returns>
+        public Task<bool> IsAllowed(decimal idDoctor, decimal idZdravotnaKarta);
+
+        /// <summary>
+        /// Get the id of general practitioner of patient.
+        /// <param name="idZdravotnaKarta">Id of the health record of patient.</param>
+        /// </summary>
+        public Task<decimal> GetGeneralPractitionerId(decimal idZdravotnaKarta);
     }
 }

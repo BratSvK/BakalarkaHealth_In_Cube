@@ -3,12 +3,6 @@ import { Router } from '@angular/router';
 import { getTypeOfAccount } from '../shared/common';
 
 
-declare enum TypeOfAccountToActions {
-  doctor = 'practitioner',
-  patient = 'patient'
-}
-
-
 
 @Directive({
   selector: '[ifAuthorizedTo]'
@@ -21,10 +15,6 @@ export class IfAuthorizedToDirective {
     private viewContianerRef: ViewContainerRef,
     private router: Router
     ) {}
-
-
-
-
 
   ngOnInit(): void {
     if (this.hasMissingParams()) {

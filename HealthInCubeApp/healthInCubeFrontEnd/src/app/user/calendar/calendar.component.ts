@@ -47,7 +47,7 @@ export class CalendarComponent implements OnInit,OnDestroy {
   ]);
 
   private subs = new SubSink();
-  
+
   constructor(
     private sprievodkyService: SprievodkaService,
     private router: Router,

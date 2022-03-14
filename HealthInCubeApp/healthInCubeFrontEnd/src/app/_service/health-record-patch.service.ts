@@ -12,11 +12,11 @@ export class HealthRecordPatchService {
 
   createPatch(
     originalDocumnent: PacientZdravotnaKartaDetail,
-    changedModel: PacientZdravotnaKartaDetail
+    changedModel: Partial<PacientZdravotnaKartaDetail>
     ) : Operation[]
     {
       const documentChanges = compare(originalDocumnent, changedModel);
-      return documentChanges;
+      return documentChanges.filter(op => op.op === 'replace');
     }
   }
 

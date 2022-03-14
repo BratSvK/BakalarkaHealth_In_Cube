@@ -10,7 +10,7 @@ const patientRoutes: Routes = [
     path: '',
     component: PatientComponent,
     children: [
-      { path: '', pathMatch: 'full', redirectTo: 'zdravotnaKarta' },
+      // { path: '', pathMatch: 'full', redirectTo: 'zdravotnaKarta' },
       { path: 'edit', resolve: [UserDetailResolver], component: UserDetailComponent },
       { path: 'calendar',  component: CalendarComponent},
       { path: 'zdravotnaKarta', loadChildren: () => import('./health-record/health-record.module').then((m)=>m.HealthRecordModule)}

@@ -1,7 +1,6 @@
 .shell-container {
     height: 100%;
     margin-left: 0%;
-    background-color: lightblue;
 }
 
 .shell-container-center {
@@ -9,7 +8,6 @@
 }
 
 .health-record-grid {
-    background-color: lightblue;
     padding-top: 0;
 }
 
@@ -21,7 +19,6 @@
     padding-left: 1.6rem;
     margin-bottom: 1.2rem;
     color: black;
-    background-color: lightblue;
     border-radius: 0.3rem;
 }
 

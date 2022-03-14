@@ -1,8 +1,11 @@
-.foto {
-        max-height: 10rem;
-        border: 2px solid black;
+label {
+    font-size: 0.9rem;
+    color: #6c757d!important;
 }
 
-.fotoWrapper {
-    text-align: center;
+.copyEmailBtn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-right: 0.2rem;
 }

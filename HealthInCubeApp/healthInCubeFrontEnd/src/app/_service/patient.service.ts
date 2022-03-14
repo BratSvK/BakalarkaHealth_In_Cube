@@ -2,13 +2,14 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { LekarParams } from '../models/lekar/lekarParams';
 import { PacientCard } from '../models/pacient/pacientCard';
 import { PaginatedResult, PAGINATION_HEADER_NAME } from '../models/pagination';
 import { PatientSearch } from '../models/sprievodka/pacientSearch';
-import { extractKeyFromParams } from '../shared/common';
+import { extractKeyFromParams, notUndefined } from '../shared/common';
+import { getIsActivated } from '../user/patient/store/modelStore/PatientState';
 import { AppState } from '../_store/models/AppState';
 
 @Injectable({
@@ -70,6 +71,7 @@ export class PatientService {
       return patientData.activatedPatient.isActivated
     }));
   } 
+
   /*
       Generic method for getting paginated result from api.
   */

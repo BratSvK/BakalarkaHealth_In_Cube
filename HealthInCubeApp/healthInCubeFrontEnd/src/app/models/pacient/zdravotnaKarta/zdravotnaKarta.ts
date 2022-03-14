@@ -11,5 +11,5 @@ export interface ZdravotnaKarta {
 
 
 export interface ZdravotnaKartaPatchModel {
-    replace: Operation[];
+    patchModel: Operation[];
 }

@@ -56,6 +56,15 @@ namespace HealthInCube_BackEnd.Data
             throw new NotImplementedException();
         }
 
+        public async Task<decimal> GetGeneralPractitionerId(decimal idZdravotnaKarta)
+        => await _context.ZdravotnaKarta
+            .Include(z => z.IdPacientNavigation)
+            .ThenInclude(p => p.IdVseobecnyLekarNavigation)
+            .Where(z => z.IdPacient == idZdravotnaKarta)
+            .Select(z => z.IdPacientNavigation.IdVseobecnyLekarNavigation.IdLekar)
+            .FirstOrDefaultAsync();
+            
+
         /// <summary>
         /// Get health record per patient.
         /// </summary>
@@ -86,6 +95,18 @@ namespace HealthInCube_BackEnd.Data
             _context.ZdravotnaKarta.Add(item);
         }
 
+        /// <inheritdoc/>
+        public async Task<bool> IsAllowed(decimal idDoctor, decimal idZdravotnaKarta)
+        {
+            var generalPractitionerId = await GetGeneralPractitionerId(idZdravotnaKarta);
+            if (generalPractitionerId == idDoctor)
+            {
+                return true;
+            }
+
+            return CheckValidDateWithSharedHealthRecordOfAppointment(idDoctor, idZdravotnaKarta);
+        }
+
         public async Task<bool> SaveAllAsync()
         {
             return await _context.SaveChangesAsync() > 0;
@@ -95,5 +116,12 @@ namespace HealthInCube_BackEnd.Data
         {
             _context.Entry(item).State = EntityState.Modified;
         }
+
+        private bool CheckValidDateWithSharedHealthRecordOfAppointment(decimal idDoctor, decimal idZdravotnaKarta)
+        =>  _context.ZdravKartaPovolenia.Any(
+            z => z.IdLekar == idDoctor && 
+                 z.IdPacient == idZdravotnaKarta &&
+                 (z.Od <= DateTime.Now && z.Do >= DateTime.Now));
+        
     }
 }

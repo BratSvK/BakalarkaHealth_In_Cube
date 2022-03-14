@@ -19,7 +19,10 @@ export class PacientCardComponent implements OnInit {
   medicamentRecord = faNotesMedical;
   sprievodkaCreate = faEdit;
 
-  constructor(private sanitizer: DomSanitizer, private modalService: BsModalService) {}
+  constructor(
+    private sanitizer: DomSanitizer, 
+    private modalService: BsModalService
+    ) {}
 
   ngOnInit(): void {}
 

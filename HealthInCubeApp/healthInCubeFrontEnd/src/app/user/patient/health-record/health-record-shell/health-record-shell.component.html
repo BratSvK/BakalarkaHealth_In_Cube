@@ -9,15 +9,22 @@
                     <div class="sidebar-wrapper ">
                         <aside>
                             <a class="menu-item"
-                            [routerLink]="['patient-detail']"
-                            [routerLinkActive]="['selected-item']"
-                            [state]="{pacientDetail: healthRecord.pacientDetail}">
+                               [routerLink]="['patient-detail']"
+                               [routerLinkActive]="['selected-item']"
+                               [state]="{ pacientDetail: healthRecord.pacientDetail}">
                             Pacient
                             </a>
                             <a class="menu-item"
-                            [routerLink]="['patient-vysetrenia']"
-                            [routerLinkActive]="['selected-item']">
+                               [routerLink]="['patient-vysetrenia']"
+                               [routerLinkActive]="['selected-item']"
+                               [state]="{ pacientVysetrenia: healthRecord.vykVysetrenia}">
                             Vyšetrenia
+                            </a>
+                            <a class="menu-item"
+                               [routerLink]="['patient-choroby']"
+                               [routerLinkActive]="['selected-item']"
+                               [state]="{ choroby: healthRecord.zapChorobies}">
+                            Choroby
                             </a>
                         </aside>
                  </div>

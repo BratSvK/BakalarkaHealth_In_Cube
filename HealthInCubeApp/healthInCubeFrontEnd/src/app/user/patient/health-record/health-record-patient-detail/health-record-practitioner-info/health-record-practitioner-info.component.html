@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="form-row">
+        <div class="col-md-6 mb-3 pt-4">
+            <label for="doctorName">
+              Meno lekára
+            </label>
+            <input type="text" 
+                   class="form-control" 
+                   id="doctorName" 
+                   [ngModel]="practitioner.meno"
+                   disabled>
+          </div>
+          <div class="col-md-6 mb-3 pt-4">
+            <label for="doctorName">
+                Email lekára
+              </label>
+            <div class="email-wrapper">
+                <div class="icon-before">
+                  <input type="email" 
+                         class="form-control" 
+                         id="email" 
+                         [ngModel]="practitioner.email"
+                         disabled>
+                </div>
+              <span class="copyEmailBtn">
+                  <button type="button"
+                          class="btn"
+                          (click)="copyEmialToClipboard(this.practitioner.email)">
+                      <fa-icon [icon]="imgCopy"></fa-icon>
+                  </button>
+              </span>      
+            </div>
+          </div>
+        </div>
+</div>

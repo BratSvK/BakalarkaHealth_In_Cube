@@ -7,6 +7,9 @@ import { HealthRecordPatientInfoComponent } from './health-record-patient-detail
 import { HealthRecordPatientVysetreniaComponent } from './health-record-patient-vysetrenia/health-record-patient-vysetrenia.component';
 import { HealthRecordPatientWelcomeComponent } from './health-record-patient-welcome/health-record-patient-welcome.component';
 import { IfAuthorizedToDirective } from "src/app/_directives/if-authorized-to.directive";
+import { ClipboardModule } from 'ngx-clipboard';
+import { HealthRecordPractitionerInfoComponent } from './health-record-patient-detail/health-record-practitioner-info/health-record-practitioner-info.component';
+import { HealthRecordPatientChorobyComponent } from './health-record-patient-choroby/health-record-patient-choroby.component';
 
 @NgModule({
     declarations: [
@@ -14,12 +17,15 @@ import { IfAuthorizedToDirective } from "src/app/_directives/if-authorized-to.di
       HealthRecordPatientInfoComponent,
       HealthRecordPatientVysetreniaComponent,
       HealthRecordPatientWelcomeComponent,
-      IfAuthorizedToDirective
+      IfAuthorizedToDirective,
+      HealthRecordPractitionerInfoComponent,
+      HealthRecordPatientChorobyComponent
     ],
     imports: [
       SharedModule, 
       ScrollingModule,
-      HealthRecordRoutingModule
+      HealthRecordRoutingModule,
+      ClipboardModule
     ]
   })
   export class HealthRecordModule {}

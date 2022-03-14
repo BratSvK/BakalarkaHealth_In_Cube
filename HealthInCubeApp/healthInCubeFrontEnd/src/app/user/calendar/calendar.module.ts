@@ -11,6 +11,7 @@ import { ModalPacientComponent } from './calendar-item/calendar-item-modal/modal
 import { CalendarChangedModalComponent } from './calendar-changed-modal/calendar-changed-modal.component';
 import { NgAnimatedBorderModule } from "ng-animated-border";
 import { IsAllowedDenyAppointment } from "src/app/_directives/is-allowed-deny-appointment.directive";
+import { LekarRoutingModule } from "../lekar/lekar-routing.module";
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { IsAllowedDenyAppointment } from "src/app/_directives/is-allowed-deny-ap
       MatIconModule,
       MatFormFieldModule,
       MatInputModule,
-      NgAnimatedBorderModule
+      NgAnimatedBorderModule,
+      LekarRoutingModule
     ],
     exports: [
       CalendarComponent
