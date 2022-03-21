@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, RouterStateSnapshot } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { SprievodkaLekarModel } from 'src/app/models/sprievodka/sprievodkaModel';
 import { CalendarItemModalBaseComponent } from '../modal-base/calendar-item-modal.component';
@@ -19,6 +19,17 @@ export class ModalLekarComponent extends CalendarItemModalBaseComponent {
    }
 
    goToZdravotnaKartaPatient() {
-     this.router.navigate(['patient',this.sprievodka.idPacientNavigation.idPacient]);
+    const rootLekarSegment = this.getPatientZdravotnaKartaRoute(this.router.url.split('/'));
+    this.router.navigate([
+      rootLekarSegment[1], 
+      rootLekarSegment[2],
+      'patient', 
+      this.sprievodka.idPacientNavigation.idPacient, 
+      'zdravKarta']);
+    this.bsModalRef.hide();
    }
+
+   private getPatientZdravotnaKartaRoute(urlSegmentsArray: string[]): string[] {
+    return urlSegmentsArray.slice(0, urlSegmentsArray.length - 1);
+  }
 }

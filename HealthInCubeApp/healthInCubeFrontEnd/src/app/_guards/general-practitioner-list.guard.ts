@@ -20,7 +20,7 @@ export class GeneralPractitionerListGuard implements CanActivate {
         if (this.isGeneralPractitioner(atestacie)){
           return true;
         } else {
-          const nextLinkToRedirect = state.url.replace('pacienti-list','vysetrenia');
+          const nextLinkToRedirect = state.url.replace('pacienti-list','calendar');
           this.router.navigate([nextLinkToRedirect]);
           return false;
         }

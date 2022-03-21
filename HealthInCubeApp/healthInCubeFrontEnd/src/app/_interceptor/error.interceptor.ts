@@ -35,6 +35,7 @@ export class ErrorInterceptor implements HttpInterceptor {
               }
               break;
             case 401:
+              this.toastr.error('Zlé prihlasovanie údaje!');
               this.router.navigateByUrl('/auth');
               break;
               case 404:

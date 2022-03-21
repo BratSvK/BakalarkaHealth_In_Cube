@@ -80,11 +80,14 @@ export class CalendarItemComponent implements OnInit, OnDestroy {
     this.bsModalRef = this.modalService.show(ModalLekarComponent, config);
   }
 
+  getAppointmentDurationWidth(i: number): string {
+    return `${((this.getDurationInMinutes(i)/60) * 100)}%`;
+  }
+
   private sprievodkaDeletedListener()
   {
     this.subSink.sink = this.sprievodkaService.isDeletedListener$.subscribe((isDeleted) => {
       this.isDenySuccess.emit(isDeleted);
     });
   }
-
 }

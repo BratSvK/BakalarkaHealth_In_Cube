@@ -117,11 +117,14 @@ namespace HealthInCube_BackEnd.Data
             _context.Entry(item).State = EntityState.Modified;
         }
 
+        /// <summary>
+        /// Add validation in one hour before to check health record by patient.
+        /// </summary>
         private bool CheckValidDateWithSharedHealthRecordOfAppointment(decimal idDoctor, decimal idZdravotnaKarta)
         =>  _context.ZdravKartaPovolenia.Any(
             z => z.IdLekar == idDoctor && 
                  z.IdPacient == idZdravotnaKarta &&
-                 (z.Od <= DateTime.Now && z.Do >= DateTime.Now));
+                 (DateTime.Now.AddHours(1) >= z.Od && DateTime.Now <= z.Do));
         
     }
 }

@@ -1,6 +1,6 @@
 <div *ngFor="let sprievodka of sprievodkaItems; let i = index"
     class="sprievodkaItem" 
-    [ngStyle]="{'background-color': colorsSprievodka[i]}"
+    [ngStyle]="{'background-color': colorsSprievodka[i], 'width': getAppointmentDurationWidth(i)}"
     [tooltip]="scheduleTimeInfo"
     (click)="openSprievodkaItemModal(i)">
     <p class="titleOfSprievodka">
