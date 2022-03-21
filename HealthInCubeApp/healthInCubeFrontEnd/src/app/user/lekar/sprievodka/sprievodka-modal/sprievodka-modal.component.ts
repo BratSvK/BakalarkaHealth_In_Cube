@@ -7,7 +7,7 @@ import { SubSink } from 'subsink';
 
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { BsDaterangepickerConfig } from 'ngx-bootstrap/datepicker';
-import { BID_LENGHT } from 'src/app/models/pacientCard';
+import { BID_LENGHT } from 'src/app/models/pacient/pacientCard';
 import { catchError, map, switchMap, take, tap } from 'rxjs/operators';
 import { PatientService } from 'src/app/_service/patient.service';
 import { BehaviorSubject, EMPTY, Observable, of } from 'rxjs';

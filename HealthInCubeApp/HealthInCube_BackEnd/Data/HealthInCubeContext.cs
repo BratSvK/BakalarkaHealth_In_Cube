@@ -1150,7 +1150,6 @@ namespace HealthInCube_BackEnd.Data
                     .HasColumnName("ID_MESTO_NARODENIA");
 
                 entity.Property(e => e.KrvSkupina)
-                    .IsRequired()
                     .HasMaxLength(3)
                     .IsUnicode(false)
                     .HasColumnName("KRV_SKUPINA");

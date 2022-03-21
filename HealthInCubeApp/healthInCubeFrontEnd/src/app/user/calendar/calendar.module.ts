@@ -29,9 +29,6 @@ import { IsAllowedDenyAppointment } from "src/app/_directives/is-allowed-deny-ap
       MatInputModule,
       NgAnimatedBorderModule
     ],
-    exports: [
-      CalendarComponent
-    ],
     providers: [
       DatePipe
     ]

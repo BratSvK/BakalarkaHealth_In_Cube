@@ -1,0 +1,67 @@
+<form>
+    <h1>Pacient</h1>
+    <div class="detail-section">
+      <div class="card mb-3">
+        <div class="form-section">
+            <div class="section-description">
+                <h4>Základné údaje</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <img 
+                        [src]="photoPatient || 'assets/user.png'" 
+                        alt="{{patientDetail.fullName}}" 
+                        class="foto text-light mr-2" />
+                </div>
+                <div class="col-md-8">
+                    <div class="section-content">
+                        <app-health-record-patient-info 
+                             [patientBaseData]="patientDetail"
+                             (listenToChanges)="setDetailPatientFormValues($event)">
+                        </app-health-record-patient-info>
+                     </div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <br>
+      <div class="card">
+        <div class="form-section">
+            <div class="section-description">
+                <h4>Všeobecný lekár</h4>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <img 
+                        [src]="photoPractitioner || 'assets/user.png'" 
+                        alt="{{patientDetail.vseobecnyLekar?.meno}}" 
+                        class="foto text-light mr-2" />
+                </div>
+                <div class="col-md-8">
+                    <div class="section-content">
+                        <app-health-record-practitioner-info [practitioner]="patientDetail.vseobecnyLekar">
+                        </app-health-record-practitioner-info>
+                     </div>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="detail-footer">
+        <div class="top-gradient"></div>
+        <div class="form-confirmation">
+            <button *ifAuthorizedTo="'patient'"
+                    class="btn btn-primary btn-save"
+                    type="button"
+                    [disabled]="!saveAvailable"
+                    (click)="saveToPacient()">
+                <div class="save-btn">
+                    <div class="save-btn-portal">
+                        <fa-icon [icon]="pen"></fa-icon>
+                    </div>
+                    <div class="save-text">Ulož</div>
+                </div>
+            </button>
+        </div>
+    </div>
+</form>

@@ -47,10 +47,6 @@ a:hover:not(.dropdown-item) {
     color:white; 
 }
 
-.dropdown-menu {
-    background-color: white;
-    transform: translate(40%,-20%) !important;
-}
 
 fa-icon.arrow {
     font-size: 0.7rem;

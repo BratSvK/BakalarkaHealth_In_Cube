@@ -11,4 +11,9 @@ export const getPatientId = createSelector(
     getPatientState,
     (state: PatientState) => state.activatedPatient?.idPacient
   );
+
+  export const getIsActivated = createSelector(
+    getPatientState,
+    (state: PatientState) => state.activatedPatient?.isActivated
+  );
   

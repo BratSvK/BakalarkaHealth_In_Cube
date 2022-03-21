@@ -16,7 +16,7 @@ export const getPractitionorIdState = createSelector(
 
   export const getPractitionerAtestationsId = createSelector(
     getPractitionerState,
-    (state: LekarState) => state.practitioner.atestacieId
+    (state: LekarState) => state.practitioner?.atestacieId
   );
 
   export const getPractitionerIsActivatedAccount= createSelector(

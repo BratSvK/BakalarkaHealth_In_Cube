@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SprievodkaLekarModel, SprievodkaPacientModel } from 'src/app/models/sprievodka/sprievodkaModel';
 import { SprievodkaService } from 'src/app/_service/sprievodka.service';
@@ -79,11 +80,14 @@ export class CalendarItemComponent implements OnInit, OnDestroy {
     this.bsModalRef = this.modalService.show(ModalLekarComponent, config);
   }
 
+  getAppointmentDurationWidth(i: number): string {
+    return `${((this.getDurationInMinutes(i)/60) * 100)}%`;
+  }
+
   private sprievodkaDeletedListener()
   {
     this.subSink.sink = this.sprievodkaService.isDeletedListener$.subscribe((isDeleted) => {
       this.isDenySuccess.emit(isDeleted);
     });
   }
-
 }

@@ -1,0 +1,95 @@
+<div class="container">
+    <form 
+        [formGroup]="patientDataForm" 
+        autocomplete="off"
+        bg-light>
+        <div class="form-row">
+            <div class="col-md-6 mb-3 pt-4">
+                <label for="patientName">
+                  Meno pacienta
+                </label>
+                <input type="text" 
+                       class="form-control" 
+                       id="patientName" 
+                       formControlName="patientName">
+              </div>
+              <div class="col-md-6 mb-3 pt-4">
+                <label for="miestoNarodenia">
+                  Miesto narodenia
+                </label>
+                <input type="text" 
+                       class="form-control" 
+                       id="miestoNarodenia" 
+                       formControlName="miestoNarodenia">
+              </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="rodne">
+                        Rodné číslo
+                      </label>
+                      <input type="text" 
+                             class="form-control" 
+                             id="rodne"
+                             formControlName="rodne" 
+                            >
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="datumNarodenia">
+                        Dátum narodenia
+                      </label>
+                      <input type="text" 
+                             class="form-control" 
+                             id="datumNarodenia"
+                             formControlName="datumNarodenia">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <div *ifAuthorizedTo="'patient'">
+                        <label for="krv">
+                            Krvná skupina
+                        </label>
+                        <select class="custom-select d-block w-100"
+                                id="krv"
+                                formControlName="krvSkupina">
+                        <option *ngFor="let krvaSkupina of bloothGroupsOptions"
+                                    [value]="krvaSkupina.value">
+                                {{krvaSkupina.label}}
+                        </option>
+                        </select>
+                     </div>
+                     <div *ifAuthorizedTo="'practitioner'">
+                        <label for="krv">
+                            Krvná skupina
+                        </label>
+                          <input type="text" 
+                                 class="form-control" 
+                                 id="krv"
+                                 formControlName="krvSkupina" 
+                                 readonly>
+                     </div>
+                 </div>
+                <div class="col-md-8 mb-3">
+                    <label for="email">
+                        Email pacienta
+                      </label>
+                      <div class="email-wrapper">
+                          <div class="icon-before">
+                            <input type="email" 
+                                   class="form-control" 
+                                   id="email" 
+                                   formControlName="email">
+                          </div>
+                        <span class="copyEmailBtn">
+                            <button type="button"
+                                    class="btn"
+                                    (click)="copyEmialToClipboard(this.patientBaseData.email)">
+                                <fa-icon [icon]="imgCopy"></fa-icon>
+                            </button>
+                        </span>      
+                      </div>
+                    </div>
+                </div>
+    </form>
+</div>

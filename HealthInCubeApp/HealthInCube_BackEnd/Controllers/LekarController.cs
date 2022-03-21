@@ -1,12 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Mail;
-using System.Net.Mime;
 using System.Threading.Tasks;
 using AutoMapper;
-using EmailService.Models;
-using EmailService.Services;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Lekar;
 using HealthInCube_BackEnd.DTOs.Lekar.LekarTyp;
@@ -16,12 +12,9 @@ using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Extensions;
 using HealthInCube_BackEnd.Helpers.Params;
 using HealthInCube_BackEnd.Interfaces;
-using HealthInCube_BackEnd.Properties;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using MimeKit;
-using MimeKit.Utils;
 
 namespace HealthInCube_BackEnd.Controllers
 {

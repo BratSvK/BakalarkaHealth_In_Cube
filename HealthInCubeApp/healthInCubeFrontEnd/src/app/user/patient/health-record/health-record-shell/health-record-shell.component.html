@@ -1,0 +1,41 @@
+<ng-container *ngIf="(healthRecord$ | async) as healthRecord">
+    <div class="shell-container"
+         cdkScrollable>
+      <div class="shell-container-center"
+           cdkScrollable>
+           <div class="health-record-grid">
+               <div class="row">
+                 <div class="col-md-4">
+                    <div class="sidebar-wrapper ">
+                        <aside>
+                            <a class="menu-item"
+                               [routerLink]="['patient-detail']"
+                               [routerLinkActive]="['selected-item']"
+                               [state]="{ pacientDetail: healthRecord.pacientDetail}">
+                            Pacient
+                            </a>
+                            <a class="menu-item"
+                               [routerLink]="['patient-vysetrenia']"
+                               [routerLinkActive]="['selected-item']"
+                               [state]="{ pacientVysetrenia: healthRecord.vykVysetrenia}">
+                            Vyšetrenia
+                            </a>
+                            <a class="menu-item"
+                               [routerLink]="['patient-choroby']"
+                               [routerLinkActive]="['selected-item']"
+                               [state]="{ choroby: healthRecord.zapChorobies}">
+                            Choroby
+                            </a>
+                        </aside>
+                 </div>
+               </div>
+           <div class="col-md-8">
+               <div class="content-wrapper">
+                   <router-outlet></router-outlet>
+               </div>
+           </div>
+        </div>
+      </div>
+     </div>
+    </div>
+</ng-container>

@@ -1,0 +1,19 @@
+<div class="container mt-4">
+    <div class="header-container">
+        <h1>Vyšetrenia</h1>
+        <button *ifAuthorizedTo="'practitioner'"
+                class="btn btn-link"
+                type="button">
+         <fa-icon [icon]="addIcon"></fa-icon>
+         Pridať vyšetrenie
+        </button>
+    </div>
+
+    <div class="vystrenia-content">
+        <div *ngIf="!vysetreniaZoznam.length">
+            <div class="empty">
+                Nemáte vykonané žiadne vyšetrenie
+            </div>
+        </div>
+    </div>
+</div>

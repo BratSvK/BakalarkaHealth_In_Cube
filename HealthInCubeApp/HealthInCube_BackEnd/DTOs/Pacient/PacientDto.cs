@@ -36,7 +36,7 @@ namespace HealthInCube_BackEnd.DTOs
         /// <summary>
         /// Health record of patient.
         /// </summary>
-        public ZdratovnaKartaDto ZdravotnaKartum { get; set; }
+        public ZdravotnaKartaDto ZdravotnaKartum { get; set; }
 
         /// <summary>
         /// All insurance of patient

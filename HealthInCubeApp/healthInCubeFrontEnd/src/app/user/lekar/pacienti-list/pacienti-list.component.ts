@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { LekarParams } from 'src/app/models/lekar/lekarParams';
-import { PacientCard } from 'src/app/models/pacientCard';
+import { PacientCard } from 'src/app/models/pacient/pacientCard';
 import {
   Pagination
 } from 'src/app/models/pagination';

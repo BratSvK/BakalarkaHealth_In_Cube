@@ -1,0 +1,12 @@
+label {
+    font-size: 0.9rem;
+    color: #6c757d!important;
+}
+
+.copyEmailBtn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-right: 0.2rem;
+    margin-top: 0.5rem;
+}

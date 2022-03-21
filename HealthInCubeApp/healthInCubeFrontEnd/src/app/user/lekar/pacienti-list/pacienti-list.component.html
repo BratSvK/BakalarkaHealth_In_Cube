@@ -1,3 +1,4 @@
+<div class="container">
 <div class="text-center mt-3">
     <h3>Počet pacientov - {{pagination?.totalItems}} nájdení</h3>
 </div>
@@ -49,4 +50,5 @@
         [(ngModel)]="pagination.currentPage" (pageChanged)="pageChanged($event)" previousText="&lsaquo;"
         nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;">
     </pagination>
+</div>
 </div>

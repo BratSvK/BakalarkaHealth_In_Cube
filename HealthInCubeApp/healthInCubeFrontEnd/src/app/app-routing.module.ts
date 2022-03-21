@@ -19,7 +19,6 @@ const appRoutes: Routes = [
     {   
         path:'practitioner/:id',
         canActivate: [AuthGuard],
-       
         loadChildren: () => import('./user/lekar/lekar.module').then((m)=>m.LekarModule)
     },
     {

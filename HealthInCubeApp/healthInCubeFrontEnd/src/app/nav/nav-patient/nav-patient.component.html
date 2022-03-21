@@ -15,17 +15,19 @@
   
           <ng-container *ngIf="(isActivatedPatientFlag$ | async)">
             <li class="nav-item mr-2">
-              <a class="nav-link" routerLink='/zdravotnaKarta' routerLinkActive='active'>Zdravotná karta</a>
-            </li>
-            <li class="nav-item mr-2">
-              <a class="nav-link" routerLink='/vysetrenia' routerLinkActive='active'>Vyšetrenia</a>
+              <a 
+                class="nav-link" 
+                [routerLink]="['zdravotnaKarta']" 
+                routerLinkActive='active'>
+                <fa-icon [icon]="healthRecordIcon"></fa-icon>
+                Zdravotná karta
+              </a>
             </li>
             <li class="nav-item mr-2">
               <a class="nav-link" 
                  [routerLink]="['calendar']" 
-                routerLinkActive='active'>
-                <fa-icon [icon]="calendar">
-                </fa-icon>
+                 routerLinkActive='active'>
+                <fa-icon [icon]="calendar"></fa-icon>
                 Kalendár
               </a>
             </li>

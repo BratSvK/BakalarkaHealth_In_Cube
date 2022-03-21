@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using AutoMapper;
 using Castle.Core.Internal;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Pacient.Activated;
@@ -18,15 +17,15 @@ namespace HealthInCube_BackEnd.Controllers
     public class PacientController : BaseApiController
     {
         private readonly IPacientRepository _pacientRepository;
-        private readonly IMapper _mapper;
 
         /// <summary>
         /// Ctor.
         /// </summary>
-        public PacientController(IPacientRepository pacientRepository, IMapper mapper)
+        /// <param name="pacientRepository">Patient repository.</param>
+        public PacientController(
+            IPacientRepository pacientRepository)
         {
             _pacientRepository = pacientRepository;
-            _mapper = mapper;
         }
 
         [HttpGet("{idPacient}")]
@@ -65,5 +64,5 @@ namespace HealthInCube_BackEnd.Controllers
             }
             return Ok(isActivated);
         }
-    }
+    } 
 }

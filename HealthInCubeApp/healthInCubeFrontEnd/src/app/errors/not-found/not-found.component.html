@@ -27,14 +27,18 @@
     <div class="box__description">
       <div class="box__description-container">
         <div class="box__description-title">Whoops!</div>
-        <div class="box__description-text">It seems like we couldn't find the page you were looking for</div>
+        <div class="box__description-text">Stránka sa nenašla, skúste ešte raz a skontrolujte si URL cestu.</div>
       </div>
 
       <ng-container *ngIf="(currentUser$ | async); else home">
-        <button class="btn btn-info btn-lg" routerLink='/'>Return to home</button>
+        <button 
+                class="btn btn-info btn-lg" 
+                [routerLink]="['/auth']">Vrátiť sa domov</button>
       </ng-container>
       <ng-template #home>
-        <button class="btn btn-info btn-lg" routerLink='/'>Return to home</button>
+        <button 
+               class="btn btn-info btn-lg" 
+               [routerLink]="['/auth']">Vrátiť sa domov</button>
       </ng-template>
     </div>
 

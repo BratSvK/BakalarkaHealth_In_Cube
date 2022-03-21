@@ -20,6 +20,7 @@ import { LekarIdService } from "src/app/_service/lekar-id.service";
 import { PatientService } from "src/app/_service/patient.service";
 import * as LekarActionsBundle from '../../user/lekar/store/lekar.actions';
 import { SprievodkaService } from "src/app/_service/sprievodka.service";
+import { HealthRecordService } from "src/app/_service/health-record.service";
 
 const fetchUrl = environment.apiUrl; // ....../api/
 
@@ -80,6 +81,7 @@ export class AuthEffects {
           this.lekarService.clearLekarId();
           this.patientService.clearPatientCache();
           this.spriedkyService.clearCacheOfRequestsSprievodka();
+          this.healthRecordService.clearHealthRecordCache();
           this.spriedkyService.stopHubConnection();
           this.router.navigate(['/auth']);
         }),
@@ -172,7 +174,8 @@ export class AuthEffects {
     private sanitizer: DomSanitizer,
     private lekarService: LekarIdService,
     private patientService: PatientService,
-    private spriedkyService: SprievodkaService
+    private spriedkyService: SprievodkaService,
+    private healthRecordService: HealthRecordService
   ) {}
 
 

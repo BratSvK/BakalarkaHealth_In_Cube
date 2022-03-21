@@ -8,7 +8,7 @@ import { LekarSprievodka } from '../models/lekar/lekarSprievodka';
 import { LekarTyp } from '../models/lekar/typLekar';
 import { notNull, notUndefined } from '../shared/common';
 import { getPractitionerAtestationsId, getPractitionerIsActivatedAccount, getPractitionorIdState } from '../user/lekar/store/modelStore/LekarState';
-import { LEKAR_API } from '../_constants/endPointsApi';
+import { LEKAR_API, ZDRAVOTNA_KARTA_API } from '../_constants/endPointsApi';
 import { AppState } from '../_store/models/AppState';
 
 
@@ -58,6 +58,12 @@ export class LekarService {
 
   checkIsActivetedDoctorAccountApi$(): Observable<boolean> {
     return this.http.get<boolean>(this.baseUrl + `${LEKAR_API}/activated`);
+  }
+
+  checkIfDoctorIsAllowedToHealthRecord$(idPacient: number): Observable<boolean>  {
+    return this.http.get<boolean>(this.baseUrl + `${ZDRAVOTNA_KARTA_API}/${idPacient}/isAllowed`).pipe(
+      take(1)
+    ); 
   }
 
   checkIsActivetedDoctorAccount$() : Observable<boolean> {

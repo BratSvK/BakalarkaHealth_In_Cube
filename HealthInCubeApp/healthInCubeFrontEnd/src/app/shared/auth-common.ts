@@ -30,3 +30,10 @@ export function matchValues(matchTo: string): ValidatorFn {
       : { isMatching: true }; // return null ak prejde validacia
   };
 }
+
+
+export const enum AccountType {
+  admin = 'admin',
+  doctor ='practitioner',
+  patient = 'patient'
+}

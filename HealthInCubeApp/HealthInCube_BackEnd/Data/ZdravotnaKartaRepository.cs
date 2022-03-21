@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.Entities;
@@ -6,6 +7,7 @@ using HealthInCube_BackEnd.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace HealthInCube_BackEnd.Data
@@ -54,24 +56,55 @@ namespace HealthInCube_BackEnd.Data
             throw new NotImplementedException();
         }
 
-        public Task<ZdratovnaKartaDto> GetItemAsync(decimal itemId)
+        public async Task<decimal> GetGeneralPractitionerId(decimal idZdravotnaKarta)
+        => await _context.ZdravotnaKarta
+            .Include(z => z.IdPacientNavigation)
+            .ThenInclude(p => p.IdVseobecnyLekarNavigation)
+            .Where(z => z.IdPacient == idZdravotnaKarta)
+            .Select(z => z.IdPacientNavigation.IdVseobecnyLekarNavigation.IdLekar)
+            .FirstOrDefaultAsync();
+            
+
+        /// <summary>
+        /// Get health record per patient.
+        /// </summary>
+        /// <param name="patientId">The patient id.</param>
+        /// <returns>The health record.</returns>
+        public async Task<ZdravotnaKartaDto> GetItemAsync(decimal patientId)
+        => await _context.ZdravotnaKarta
+                .Include(z => z.VykVysetrenia)
+                .Include(z => z.ZapChorobies)
+                .Include(z => z.IdMestoNarodeniaNavigation)
+                .Include(z => z.IdPacientNavigation)
+                .ThenInclude(p => p.IdVseobecnyLekarNavigation)
+                .ThenInclude(l => l.IdPouzivatelNavigation)
+                .Where(z => z.IdPacient == patientId)
+                .ProjectTo<ZdravotnaKartaDto>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync();
+
+        public Task<IEnumerable<ZdravotnaKartaDto>> GetItemsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ZdratovnaKartaDto>> GetItemsAsync()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ZdravotnaKartum> GetOriginItemAsync(decimal itemId)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<ZdravotnaKartum> GetOriginItemAsync(decimal itemId)
+        => await _context.ZdravotnaKarta.FindAsync(itemId);
 
         public void InsertItem(ZdravotnaKartum item)
         {
             _context.ZdravotnaKarta.Add(item);
+        }
+
+        /// <inheritdoc/>
+        public async Task<bool> IsAllowed(decimal idDoctor, decimal idZdravotnaKarta)
+        {
+            var generalPractitionerId = await GetGeneralPractitionerId(idZdravotnaKarta);
+            if (generalPractitionerId == idDoctor)
+            {
+                return true;
+            }
+
+            return CheckValidDateWithSharedHealthRecordOfAppointment(idDoctor, idZdravotnaKarta);
         }
 
         public async Task<bool> SaveAllAsync()
@@ -83,5 +116,15 @@ namespace HealthInCube_BackEnd.Data
         {
             _context.Entry(item).State = EntityState.Modified;
         }
+
+        /// <summary>
+        /// Add validation in one hour before to check health record by patient.
+        /// </summary>
+        private bool CheckValidDateWithSharedHealthRecordOfAppointment(decimal idDoctor, decimal idZdravotnaKarta)
+        =>  _context.ZdravKartaPovolenia.Any(
+            z => z.IdLekar == idDoctor && 
+                 z.IdPacient == idZdravotnaKarta &&
+                 (DateTime.Now.AddHours(1) >= z.Od && DateTime.Now <= z.Do));
+        
     }
 }
