@@ -5,7 +5,6 @@
     "extensions.autoUpdate": false,
     "angular.view-engine": true,
     "files.exclude": {
-        "**/dist": true,
-        "**/node_modules": true
+        "**/dist": true
     }
 }
