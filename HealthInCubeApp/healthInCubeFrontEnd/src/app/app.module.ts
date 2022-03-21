@@ -22,7 +22,6 @@ import { ServerErrorComponent } from './errors/server-error/server-error.compone
 import { AlertModule } from 'ngx-bootstrap/alert';
 import { UserDetailEffects } from './user/user-detail/store/user-detail.effects';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
-import { CalendarModule } from './user/calendar/calendar.module';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 
@@ -35,7 +34,6 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    CalendarModule,
     AppRoutingModule,
     HttpClientModule,
     NgxSpinnerModule,

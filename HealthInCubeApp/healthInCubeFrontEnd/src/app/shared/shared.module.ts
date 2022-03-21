@@ -19,6 +19,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { HasFocusDirective } from '../_directives/has-focus.directive';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { CalendarModule } from '../user/calendar/calendar.module';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
     PaginationModule,
     ModalModule,
     ReactiveFormsModule,
-    TimepickerModule
+    TimepickerModule,
+    CalendarModule
   ]
 })
 export class SharedModule {}
