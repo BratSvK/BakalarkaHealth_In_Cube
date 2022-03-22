@@ -102,7 +102,11 @@ namespace HealthInCube_BackEnd.Helpers
             CreateMap<AtestaciaLekarDto, AtestacieLekar>();
             CreateMap<ZoznamDen, ZoznamDenDto>();
 
-            CreateMap<VykVysetrenium, VysetrenieDto>();
+            CreateMap<VykVysetrenium, VysetrenieDto>()
+                .ForMember(dest => dest.TypVysetreniaNazov, src => src.MapFrom(vys => vys.IdTypLekarNavigation.Nazov))
+                .ForMember(dest => dest.MenoVysetrujuciLekar, 
+                           conf => conf.MapFrom(vys => 
+                              $"{vys.IdLekarNavigation.IdPouzivatelNavigation.Meno} {vys.IdLekarNavigation.IdPouzivatelNavigation.Priezvisko}"));
             CreateMap<VysetrenieDto, VykVysetrenium>();
 
             CreateMap<VykVysetrenium, VysetrenieVysledokDto>();

@@ -119,7 +119,7 @@ namespace HealthInCube_BackEnd.Data
         }
 
         /// <inheritdoc/>
-        public async Task<bool> WriteResultToHealthRecord(ZdravotnaKartum zdravotnaKarta, VysetrenieVysledokDto vysetrenieVysledok)
+        public async Task<bool> WriteResultToHealthRecord(VysetrenieVysledokDto vysetrenieVysledok)
         {
             using var transaction = _context.Database.BeginTransaction();
             try

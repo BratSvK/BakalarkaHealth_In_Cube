@@ -3,16 +3,47 @@
         <h1>Vyšetrenia</h1>
         <button *ifAuthorizedTo="'practitioner'"
                 class="btn btn-link"
-                type="button">
+                type="button"
+                (click)="setCreatedMode()">
          <fa-icon [icon]="addIcon"></fa-icon>
          Pridať vyšetrenie
         </button>
     </div>
 
-    <div class="vystrenia-content">
+    <div class="vysetrenia-scrollable-content">
+
+        <ng-container *ngIf="isCreateMode">
+            <app-health-record-vysetrenia-edit>
+            </app-health-record-vysetrenia-edit>
+        </ng-container>
+
         <div *ngIf="!vysetreniaZoznam.length">
             <div class="empty">
                 Nemáte vykonané žiadne vyšetrenie
+            </div>
+        </div>
+
+        <ng-container *ngFor="let vysetrenie of vysetreniaZoznam">
+            <app-health-record-vysetrenia-item
+                *ngIf="vysetrenie.idVysetrenie !== isViewModeVysetrenieId; else viewTpl" 
+                [vysetrenieData]="{ isHeaderClicked: false, vysetrenie: vysetrenie }"
+                (isClicked)="isViewModeVysetrenieId = $event">
+            </app-health-record-vysetrenia-item>
+
+            <ng-template #viewTpl>
+                <app-health-record-vysetrenia-edit
+                [vysetrenie]="vysetrenie"
+                (isClicked)="isViewModeVysetrenieId = $event">
+                </app-health-record-vysetrenia-edit>
+            </ng-template>
+        </ng-container>
+    </div>
+
+    <div class="detail-footer">
+        <div class="top-gradient"></div>
+        <div class="form-confirmation">
+            <div class="save-btn">
+                <div class="save-btn-portal"></div>
             </div>
         </div>
     </div>

@@ -12,3 +12,7 @@
     box-shadow: none;
     text-decoration: none;
 }
+
+.vysetrenia-scrollable-content {
+    padding-bottom: 1rem;
+}

@@ -896,8 +896,8 @@ namespace HealthInCube_BackEnd.Migrations
                         .HasColumnType("NUMBER(38)")
                         .HasColumnName("ID_VYSETRENIE");
 
-                    b.Property<DateTime>("DatumVys")
-                        .HasColumnType("DATE")
+                    b.Property<DateTimeOffset>("DatumVys")
+                        .HasColumnType("TIMESTAMP WITH TIME ZONE")
                         .HasColumnName("DATUM_VYS");
 
                     b.Property<decimal?>("IdLekar")
@@ -907,6 +907,10 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Property<decimal?>("IdPacient")
                         .HasColumnType("NUMBER(38)")
                         .HasColumnName("ID_PACIENT");
+
+                    b.Property<decimal>("IdTypVysetrenia")
+                        .HasColumnType("NUMBER(38)")
+                        .HasColumnName("ID_TYP");
 
                     b.Property<byte[]>("Priloha")
                         .HasColumnType("BLOB")
@@ -924,6 +928,8 @@ namespace HealthInCube_BackEnd.Migrations
                     b.HasIndex(new[] { "IdLekar" }, "IX_RELATIONSHIP23");
 
                     b.HasIndex(new[] { "IdPacient" }, "IX_RELATIONSHIP36");
+
+                    b.HasIndex(new[] { "IdTypVysetrenia" }, "IX_RELATIONSHIP_IdTypVysetrenie");
 
                     b.ToTable("VYK_VYSETRENIA");
                 });
@@ -1517,9 +1523,17 @@ namespace HealthInCube_BackEnd.Migrations
                         .HasForeignKey("IdPacient")
                         .HasConstraintName("RELATIONSHIP36");
 
+                    b.HasOne("HealthInCube_BackEnd.Entities.TypLekara", "IdTypLekarNavigation")
+                        .WithMany("VykVysetrenia")
+                        .HasForeignKey("IdTypVysetrenia")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("IdLekarNavigation");
 
                     b.Navigation("IdPacientNavigation");
+
+                    b.Navigation("IdTypLekarNavigation");
                 });
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.ZapChoroby", b =>
@@ -1744,6 +1758,8 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Navigation("AtestacieLekars");
 
                     b.Navigation("Sprievodkas");
+
+                    b.Navigation("VykVysetrenia");
                 });
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.TypSymptom", b =>

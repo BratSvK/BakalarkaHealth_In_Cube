@@ -1,0 +1,20 @@
+<div class="card list-item mt-4">
+    <div class="container">
+        <div 
+            class="header"
+            (click)="openVysetrenieView()">
+            <div class="header-info">
+                <div class="arrow-wrapper">
+                    <fa-icon 
+                        class="material-icons arrow" 
+                        [icon]="arrowIcon"
+                        [ngClass]="{'expanded': vysetrenieData.isHeaderClicked}">
+                    </fa-icon>
+                </div>
+                <div class="header-caption">
+                    <div class="header-name">{{vysetrenieCaption}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

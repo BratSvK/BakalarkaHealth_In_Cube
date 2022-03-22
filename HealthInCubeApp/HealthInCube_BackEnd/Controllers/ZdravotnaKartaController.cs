@@ -90,7 +90,7 @@ namespace HealthInCube_BackEnd.Controllers
         {
             ZdravotnaKartum zdravotnaKarta = await _zdravotnaKartaRepository.GetOriginItemAsync(patientId);
             if (zdravotnaKarta == null) return NotFound();
-            if (await _zdravotnaKartaRepository.WriteResultToHealthRecord(zdravotnaKarta, vysetrenieVysledok)) 
+            if (await _zdravotnaKartaRepository.WriteResultToHealthRecord(vysetrenieVysledok)) 
                 return CreatedAtAction(nameof(WriteResultToHealthRecord), string.Empty);
             return BadRequest("Nastala chyba pri aktualizovaní dát na karta");
         }

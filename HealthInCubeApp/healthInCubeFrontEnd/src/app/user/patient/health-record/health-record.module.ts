@@ -10,6 +10,8 @@ import { IfAuthorizedToDirective } from "src/app/_directives/if-authorized-to.di
 import { ClipboardModule } from 'ngx-clipboard';
 import { HealthRecordPractitionerInfoComponent } from './health-record-patient-detail/health-record-practitioner-info/health-record-practitioner-info.component';
 import { HealthRecordPatientChorobyComponent } from './health-record-patient-choroby/health-record-patient-choroby.component';
+import { HealthRecordVysetreniaEditComponent } from './health-record-patient-vysetrenia/health-record-vysetrenia-edit/health-record-vysetrenia-edit.component';
+import { HealthRecordVysetreniaItemComponent } from './health-record-patient-vysetrenia/health-record-vysetrenia-item/health-record-vysetrenia-item.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +21,9 @@ import { HealthRecordPatientChorobyComponent } from './health-record-patient-cho
       HealthRecordPatientWelcomeComponent,
       IfAuthorizedToDirective,
       HealthRecordPractitionerInfoComponent,
-      HealthRecordPatientChorobyComponent
+      HealthRecordPatientChorobyComponent,
+      HealthRecordVysetreniaEditComponent,
+      HealthRecordVysetreniaItemComponent
     ],
     imports: [
       SharedModule, 

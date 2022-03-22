@@ -1,14 +1,10 @@
-import { VykVysetrenia } from "../vykovaneVysetrenia/vykonaneVysetrenia";
-import { ZdravotnaKarta } from "../zdravotnaKarta";
+import { Priznak } from "./priznakChoroba";
 
-export interface ZapChoroby {
+export interface ZapChoroba {
     idZdravotnaKarta: number;
     cisChoroba: string;
-    od: string;
     idVysetrenie: number;
+    od: string;
     do: string | null;
-    // cisChorobaNavigation: Choroba;
-    idVysetrenieNavigation: VykVysetrenia;
-    idZdravotnaKartaNavigation: ZdravotnaKarta;
-    // priznakies: Priznaky[];
+    priznakies: Priznak[];
 }

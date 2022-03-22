@@ -975,6 +975,8 @@ namespace HealthInCube_BackEnd.Data
 
                 entity.HasIndex(e => e.IdLekar, "IX_RELATIONSHIP23");
 
+                entity.HasIndex(e => e.IdTypVysetrenia, "IX_RELATIONSHIP_IdTypVysetrenie");
+
                 entity.HasIndex(e => e.IdPacient, "IX_RELATIONSHIP36");
 
                 entity.Property(e => e.IdVysetrenie)
@@ -982,7 +984,7 @@ namespace HealthInCube_BackEnd.Data
                     .HasColumnName("ID_VYSETRENIE");
 
                 entity.Property(e => e.DatumVys)
-                    .HasColumnType("DATE")
+                    .HasColumnType("TIMESTAMP WITH TIME ZONE")
                     .HasColumnName("DATUM_VYS");
 
                 entity.Property(e => e.IdLekar)
@@ -992,6 +994,10 @@ namespace HealthInCube_BackEnd.Data
                 entity.Property(e => e.IdPacient)
                     .HasColumnType("NUMBER(38)")
                     .HasColumnName("ID_PACIENT");
+
+                entity.Property(e => e.IdTypVysetrenia)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("ID_TYP");
 
                 entity.Property(e => e.Priloha)
                     .HasColumnType("BLOB")
@@ -1012,6 +1018,10 @@ namespace HealthInCube_BackEnd.Data
                     .WithMany(p => p.VykVysetrenia)
                     .HasForeignKey(d => d.IdPacient)
                     .HasConstraintName("RELATIONSHIP36");
+
+                entity.HasOne(s => s.IdTypLekarNavigation)
+                    .WithMany(p => p.VykVysetrenia)
+                    .HasForeignKey(s => s.IdTypVysetrenia);
             });
 
             modelBuilder.Entity<ZapChoroby>(entity =>

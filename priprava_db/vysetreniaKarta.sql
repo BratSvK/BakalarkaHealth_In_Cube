@@ -13,6 +13,8 @@ BEGIN
 END;
 /
 commit;
+desc typ_lekara;
+select * from typ_lekara;
 
 select * from zdravotna_karta;
 desc vyk_vysetrenia;
@@ -29,6 +31,7 @@ desc predp_liecba;
 select * from predp_liecba;
 select * from recept;
 
+select * from sprievodka;
 -- ciselniky
 select * from liek;
 select * from typ_symptom;

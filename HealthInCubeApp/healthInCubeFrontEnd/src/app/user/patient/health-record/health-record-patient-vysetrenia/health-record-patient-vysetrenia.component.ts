@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { VykVysetrenia } from 'src/app/models/pacient/zdravotnaKarta/vykovaneVysetrenia/vykonaneVysetrenia';
+import { VykVysetrenie } from 'src/app/models/pacient/zdravotnaKarta/vykovaneVysetrenia/vykonaneVysetrenia';
 
 
 @Component({
@@ -9,13 +10,18 @@ import { VykVysetrenia } from 'src/app/models/pacient/zdravotnaKarta/vykovaneVys
   styleUrls: ['./health-record-patient-vysetrenia.component.css']
 })
 export class HealthRecordPatientVysetreniaComponent implements OnInit {
-  vysetreniaZoznam: VykVysetrenia[] = [];
+  vysetreniaZoznam: VykVysetrenie[] = [];
   addIcon = faPlus;
-  
-  constructor() { }
+  isCreateMode = false;
+  isViewModeVysetrenieId = -1;
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
     this.vysetreniaZoznam = history.state.pacientVysetrenia;
+  }
+
+  setCreatedMode() {
+    this.isCreateMode = true;
   }
 
 }

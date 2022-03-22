@@ -80,6 +80,7 @@ namespace HealthInCube_BackEnd.Entities
         {
             AtestacieLekars = new HashSet<AtestacieLekar>();
             Sprievodkas = new HashSet<Sprievodka>();
+            VykVysetrenia = new HashSet<VykVysetrenium>();
         }
 
         public decimal IdTyp { get; set; }
@@ -88,6 +89,6 @@ namespace HealthInCube_BackEnd.Entities
 
         public virtual ICollection<AtestacieLekar> AtestacieLekars { get; set; }
         public virtual ICollection<Sprievodka> Sprievodkas { get; set; }
-
+        public virtual ICollection<VykVysetrenium> VykVysetrenia { get; set; }
     }
 }

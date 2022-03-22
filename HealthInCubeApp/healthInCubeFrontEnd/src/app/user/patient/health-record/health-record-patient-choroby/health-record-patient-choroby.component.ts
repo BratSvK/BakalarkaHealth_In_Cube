@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ZapChoroby } from 'src/app/models/pacient/zdravotnaKarta/zapChoroby/zapChoroby';
+import { ZapChoroba } from 'src/app/models/pacient/zdravotnaKarta/zapChoroby/zapChoroby';
 
 @Component({
   selector: 'app-health-record-patient-choroby',
@@ -7,7 +7,7 @@ import { ZapChoroby } from 'src/app/models/pacient/zdravotnaKarta/zapChoroby/zap
   styleUrls: ['./health-record-patient-choroby.component.css']
 })
 export class HealthRecordPatientChorobyComponent implements OnInit {
-  chorobyZoznam: ZapChoroby[] = [];
+  chorobyZoznam: ZapChoroba[] = [];
 
   constructor() { }
 

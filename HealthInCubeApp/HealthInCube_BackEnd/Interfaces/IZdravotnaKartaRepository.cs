@@ -34,8 +34,7 @@ namespace HealthInCube_BackEnd.Interfaces
         /// <summary>
         /// Write result of examination in the health record.
         /// </summary>
-        /// <param name="zdravotnaKarta">Health record.</param>
         /// <param name="vysetrenieVysledok">Model for set result to record.</param>
-        public Task<bool> WriteResultToHealthRecord(ZdravotnaKartum zdravotnaKarta, VysetrenieVysledokDto vysetrenieVysledok);
+        public Task<bool> WriteResultToHealthRecord(VysetrenieVysledokDto vysetrenieVysledok);
     }
 }
