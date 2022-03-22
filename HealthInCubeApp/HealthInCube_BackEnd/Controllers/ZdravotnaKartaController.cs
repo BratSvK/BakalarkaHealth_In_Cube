@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.Vysetrenie;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Extensions;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -79,5 +81,19 @@ namespace HealthInCube_BackEnd.Controllers
 
             return BadRequest("Nastala chyba pri aktualizovaní dát na karte");
         }
+
+        #region Vysetrenia
+
+        
+        [HttpPost("{patientId}/vysetrenie")]
+        public async Task<IActionResult> WriteResultToHealthRecord(decimal patientId, VysetrenieVysledokDto vysetrenieVysledok)
+        {
+            ZdravotnaKartum zdravotnaKarta = await _zdravotnaKartaRepository.GetOriginItemAsync(patientId);
+            if (zdravotnaKarta == null) return NotFound();
+            if (await _zdravotnaKartaRepository.WriteResultToHealthRecord(zdravotnaKarta, vysetrenieVysledok)) 
+                return CreatedAtAction(nameof(WriteResultToHealthRecord), string.Empty);
+            return BadRequest("Nastala chyba pri aktualizovaní dát na karta");
+        }
+        #endregion
     }
 }
