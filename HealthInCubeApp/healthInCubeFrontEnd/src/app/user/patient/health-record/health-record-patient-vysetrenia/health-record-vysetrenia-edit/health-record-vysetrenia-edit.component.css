@@ -5,6 +5,7 @@ label {
 
 .view-container {
     background-color:#fff;
+    border-radius: 0.6rem;
 }
 
 .formular {
