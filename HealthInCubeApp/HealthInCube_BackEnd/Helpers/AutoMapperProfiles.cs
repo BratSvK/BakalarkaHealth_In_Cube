@@ -10,6 +10,8 @@ using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.Vysetrenie;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek.Balenie;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek.UcinnaLatka;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Priznak;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Recept;
 using HealthInCube_BackEnd.DTOs.Sprievodka;
@@ -109,20 +111,30 @@ namespace HealthInCube_BackEnd.Helpers
                            conf => conf.MapFrom(vys => 
                               $"{vys.IdLekarNavigation.IdPouzivatelNavigation.Meno} {vys.IdLekarNavigation.IdPouzivatelNavigation.Priezvisko}"));
             CreateMap<VysetrenieDto, VykVysetrenium>();
-
             CreateMap<Liek, LiekDto>();
             CreateMap<LiekDto, Liek>();
+            CreateMap<Liek, LiekReceptDto>();
+            CreateMap<LiekReceptDto, LiekDto>();
+            CreateMap<UcinnaLatka, UcinnaLatkaDto>();
+            CreateMap<UcinnaLatkaDto, UcinnaLatka>();
+            CreateMap<LiekUcinnaLatka, LiekUcinnaLatkaDto>();
+            CreateMap<LiekUcinnaLatkaDto, LiekUcinnaLatka>();
+            CreateMap<LBalenie, BalenieDto>();
+            CreateMap<BalenieDto, LBalenie>();
 
             CreateMap<VykVysetrenium, VysetrenieVysledokDto>();
             CreateMap<VysetrenieVysledokDto, VykVysetrenium>();
-
             CreateMap<ZapChoroby, ZapChorobaDto>();
             CreateMap<ZapChorobaDto, ZapChoroby>();
             CreateMap<Priznaky, PriznakDto>();
             CreateMap<PriznakDto, Priznaky>();
             CreateMap<PredpLiecba, PredpisanaLiecbaDto>();
             CreateMap<PredpisanaLiecbaDto, PredpLiecba>();
-            CreateMap<Recept, ReceptDto>();
+            CreateMap<Recept, ReceptDto>()
+                .ForMember(
+                dest => dest.OsetrujuciLekar,
+                src => src.MapFrom(src =>
+                    $"{ src.IdVysetrenieNavigation.IdLekarNavigation.IdPouzivatelNavigation.Meno } { src.IdVysetrenieNavigation.IdLekarNavigation.IdPouzivatelNavigation.Priezvisko }"));
             CreateMap<ReceptDto, Recept>();
 
 

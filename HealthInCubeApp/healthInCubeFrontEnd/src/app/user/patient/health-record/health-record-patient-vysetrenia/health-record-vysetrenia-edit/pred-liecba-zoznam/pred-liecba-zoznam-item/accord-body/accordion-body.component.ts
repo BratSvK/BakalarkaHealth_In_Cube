@@ -24,7 +24,6 @@ export class ZoznamItemAccordionBodyComponent implements OnInit {
   constructor(private modalService: BsModalService,) { }
 
   ngOnInit(): void {
-    console.log(this.recept);
     this.setDavkovanie();
   }
 

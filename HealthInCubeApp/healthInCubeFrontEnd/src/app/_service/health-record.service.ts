@@ -13,7 +13,6 @@ export class HealthRecordService {
   baseUrl = environment.apiUrl;
   zdravotnaKartaCache = new Map();
 
-
   constructor(private http: HttpClient) {
   }
 

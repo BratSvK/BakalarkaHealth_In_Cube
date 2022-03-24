@@ -1,6 +1,7 @@
+<div *ngIf="pacientDetail">
 <div class="modal-header">
     <h4 class="modal-title pull-left">
-      {{recept.idLiek}}
+      <b>Lekársky predpis</b>
     </h4>
     <button type="button" 
             class="btn-close close pull-right" 
@@ -12,54 +13,105 @@
   </div>
    <div class="modal-body">
     <form autocomplete="off" 
-          bg-light >
+          bg-light>
       <div class="form-row">
         <div class="col-md-6 mb-3">
-          <label for="BID">
-            Pacient rodné číslo
+          <label for="fullName">
+            Priezvisko a meno
           </label>
           <input hasFocus="true"
                  type="text" 
                  class="form-control" 
-                 id="BID" 
-                 placeholder="etc. 9811244168">
+                 id="fullName"
+                 [value]="pacientDetail.fullName"
+                 disabled>
         </div>
         <div class="col-md-6 mb-3">
-          <label for="patientName">
-            Pacient
+          <label for="BID">
+            Rodné číslo
           </label>
           <input type="text" 
                 class="form-control" 
-                id="patientName" >
+                id="BID"
+                [value]="pacientDetail.bid"
+                disabled>
         </div>
       </div>
-      <div class="form-row">
-        <div class="col-md-10 mb-3">
-          <label for="idTypVysetrenia">
-            Typ vyšetrenia
-          </label>
-        </div>
-        <div class="col-md-2 mb-3">
-          <button type="button" 
-                  class="btn info" 
-                  placement="right">
-          </button>
-        </div>
-      </div>
-     <div class="form-row">
-        <div class="col-md-12 mb-3">
-            <label for="lekarId">
-              Lekár
-            </label>
-         </div>
-      </div>
+      
        <div class="form-row">
-         <div class="col-md-12 mb-3">
-            <label for="terminDatum">
-              Termín
+         <div class="col-md mb-3">
+            <label for="vystavil">
+              Vystavil
             </label>
+            <input type="text" 
+            class="form-control" 
+            id="vystavil"
+            [value]="recept?.osetrujuciLekar"
+            disabled>
           </div>
         </div>
+       
+        <div class="form-row">
+          <div class="col-md mb-3">
+             <label for="vystavil">
+               Predpisaný liek
+             </label>
+             <app-vysetrenia-recept-liek-item [balenie]="recept.idBalenenieNavigation">
+             </app-vysetrenia-recept-liek-item>
+           </div>
+         </div>
+         <hr class="summary">
+         <div class="form-row">
+          <div class="col-md-6 mb-3">
+            <label for="vystavilDatum">
+              Vystavený
+            </label>
+               <input type="text" 
+               class="form-control" 
+               id="vystavilDatum"
+               [value]="vystavenieDate"
+               disabled>
+          </div>
+          <div class="col-md-6 mb-3">
+             <label for="vybral">
+               Vybratý v lekárni
+             </label>
+                <input type="text" 
+                class="form-control" 
+                id="vystavil"
+                [value]="vybranieDate"
+                disabled>
+              </div>
+         </div>
+
+         <div class="form-row">
+          <div class="col-md-6 mb-3">
+            <label for="vystavil">
+              Balenie(ks)
+            </label>
+               <input type="number" 
+               class="form-control" 
+               id="vystavil"
+               [value]="recept?.balenieKs"
+               disabled>
+          </div>
+          <div class="col-md-6 mb-3">
+             <label for="vystavil">
+               Cena
+             </label>
+             <div class="cena-wrapper right">
+                <input type="number" 
+                class="form-control" 
+                id="vystavil"
+                [value]="recept?.cena"
+                disabled>
+                <fa-icon 
+                        [icon]="euroIcon"
+                        class="euroIcon">
+                </fa-icon>
+              </div>
+           </div>
+         </div>
       </form>
     </div>
     <div class="modal-footer">
@@ -69,3 +121,4 @@
               Zavrieť
       </button>
     </div>
+  </div>

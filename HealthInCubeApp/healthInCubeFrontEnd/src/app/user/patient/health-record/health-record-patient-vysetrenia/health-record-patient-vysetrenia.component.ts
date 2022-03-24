@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { VykVysetrenie } from 'src/app/models/pacient/zdravotnaKarta/vykovaneVysetrenia/vykonaneVysetrenia';
-import { HealthRecordVysetrenieService } from 'src/app/_service/health-record-vysetrenie.service';
-import { SubSink } from 'subsink';
 
 
 @Component({

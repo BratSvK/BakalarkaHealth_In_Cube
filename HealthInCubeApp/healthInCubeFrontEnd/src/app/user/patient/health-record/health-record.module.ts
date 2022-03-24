@@ -19,6 +19,7 @@ import { PredLiecbaZoznamItemComponent } from './health-record-patient-vysetreni
 import { AccordionModule } from "ngx-bootstrap/accordion";
 import { ZoznamItemAccordionBodyComponent } from './health-record-patient-vysetrenia/health-record-vysetrenia-edit/pred-liecba-zoznam/pred-liecba-zoznam-item/accord-body/accordion-body.component';
 import { ZoznamItemReceptModalComponent } from './health-record-patient-vysetrenia/health-record-vysetrenia-edit/pred-liecba-zoznam/pred-liecba-zoznam-item/recept-modal/recept-modal.component';
+import { VysetreniaReceptLiekItemComponent } from './health-record-patient-vysetrenia/vysetrenia-recept-liek-item/vysetrenia-recept-liek-item.component';
 
 @NgModule({
     declarations: [
@@ -36,7 +37,8 @@ import { ZoznamItemReceptModalComponent } from './health-record-patient-vysetren
       PredLiecbaZoznamComponent,
       PredLiecbaZoznamItemComponent,
       ZoznamItemAccordionBodyComponent,
-      ZoznamItemReceptModalComponent
+      ZoznamItemReceptModalComponent,
+      VysetreniaReceptLiekItemComponent
     ],
     imports: [
       SharedModule, 

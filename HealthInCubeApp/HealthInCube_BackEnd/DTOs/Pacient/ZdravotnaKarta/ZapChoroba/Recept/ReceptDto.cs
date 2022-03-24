@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek.Balenie;
+using System;
 
 namespace HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Recept
 {
@@ -14,10 +15,14 @@ namespace HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Recept
         public decimal IdVysetrenie { get; set; }
 
         /// <summary>
-        /// The id of the medimacament.
+        /// Id of the medicament.
         /// </summary>
         public decimal IdLiek { get; set; }
 
+        /// <summary>
+        /// Id of the medicament in package.
+        /// </summary>
+        public string IdBalenie { get; set; }
         /// <summary>
         /// Package(ks.).
         /// </summary>
@@ -33,5 +38,15 @@ namespace HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Recept
         /// Date of the taken.
         /// </summary>
         public DateTime? Vybranie { get; set; }
+
+        /// <summary>
+        /// The doctor of examination.
+        /// </summary>
+        public string OsetrujuciLekar { get; set; }
+
+        /// <summary>
+        /// Package with medicaments of examinations result.
+        /// </summary>
+        public BalenieDto IdBalenenieNavigation { get; set; }
     }
 }

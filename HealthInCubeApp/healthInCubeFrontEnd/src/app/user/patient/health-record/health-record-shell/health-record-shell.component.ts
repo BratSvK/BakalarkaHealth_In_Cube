@@ -34,6 +34,7 @@ export class HealthRecordShellComponent implements OnInit, OnDestroy {
     if (getTypeOfAccount(this.router) === AccountType.doctor) {
       this.healthRecordService.clearHealthRecordCache();
     }
+    this.healthRecordVysetrenieService.clearPacientDetail();
   }
  
   ngOnInit(): void {
@@ -44,6 +45,7 @@ export class HealthRecordShellComponent implements OnInit, OnDestroy {
   private loadCurrentHealthRecordFromResolver() {
     this.healthRecord$ = this.route.data.pipe(
       map((data) => {
+        this.healthRecordVysetrenieService.setPacientDetail(((data.healthRecord) as ZdravotnaKarta)?.pacientDetail);
         return data.healthRecord;
       })
     );

@@ -14,6 +14,11 @@ namespace HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Predpisana
         public decimal IdVysetrenie { get; set; }
 
         /// <summary>
+        /// Id of the medicament.
+        /// </summary>
+        public decimal IdLiek { get; set; }
+
+        /// <summary>
         /// Start of the threatment.
         /// </summary>
         public DateTime Od { get; set; } = DateTime.UtcNow;

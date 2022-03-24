@@ -1,0 +1,46 @@
+.modal-title {
+    font-weight: bold;
+}
+
+.modal-header {
+    border-bottom: none;
+}
+
+.modal-footer {
+    border-top: none;
+}
+
+.modal-body label {
+    color: #666;
+    line-height: 0.2;
+    font-size: 0.88rem;
+}
+.modal-body {
+    padding: 1rem 2rem;
+}
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.summary {
+    border-top: 4px dashed rgba(0,0,0,.3)
+}
+
+.cena-wrapper {
+    position: absolute;
+}
+
+.cena-wrapper .euroIcon {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+}
+
+.right .euroIcon {
+    right: 0px;
+    top: 0px;
+}
+
