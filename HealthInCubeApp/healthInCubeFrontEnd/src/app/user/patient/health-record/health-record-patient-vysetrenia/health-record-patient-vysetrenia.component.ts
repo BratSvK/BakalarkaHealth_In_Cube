@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { VykVysetrenia } from 'src/app/models/pacient/zdravotnaKarta/vykovaneVysetrenia/vykonaneVysetrenia';
+import { VykVysetrenie } from 'src/app/models/pacient/zdravotnaKarta/vykovaneVysetrenia/vykonaneVysetrenia';
 
 
 @Component({
@@ -8,14 +8,26 @@ import { VykVysetrenia } from 'src/app/models/pacient/zdravotnaKarta/vykovaneVys
   templateUrl: './health-record-patient-vysetrenia.component.html',
   styleUrls: ['./health-record-patient-vysetrenia.component.css']
 })
-export class HealthRecordPatientVysetreniaComponent implements OnInit {
-  vysetreniaZoznam: VykVysetrenia[] = [];
+export class HealthRecordPatientVysetreniaComponent implements OnInit, OnDestroy {
+  vysetreniaZoznam: VykVysetrenie[] = [];
   addIcon = faPlus;
+  isCreateMode = false;
+  isViewModeVysetrenieId = -1;
   
   constructor() { }
+
+  ngOnDestroy(): void {
+  }
 
   ngOnInit(): void {
     this.vysetreniaZoznam = history.state.pacientVysetrenia;
   }
 
+  setCreatedMode() {
+    this.isCreateMode = true;
+  }
+
+  fromEditView($event) {
+    this.isViewModeVysetrenieId = $event
+  }
 }

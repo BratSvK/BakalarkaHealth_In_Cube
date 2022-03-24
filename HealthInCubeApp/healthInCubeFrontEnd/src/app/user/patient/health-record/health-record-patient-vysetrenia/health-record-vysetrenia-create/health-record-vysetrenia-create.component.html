@@ -1,0 +1,51 @@
+<div class="view-container">
+    <div class="formular">
+        <form 
+             [formGroup]="vysetrenieCreateForm" 
+             autocomplete="off"
+             bg-light>
+        <div class="form-row">
+            <div class="col-md-6 mb-3 pt-4">
+                <label for="doctorExamination">
+                  Meno doktora
+                </label>
+                <input type="text" 
+                       class="form-control" 
+                       id="doctorExamination" 
+                       formControlName="doctorExamination">
+              </div>
+              <div class="col-md-6 mb-3 pt-4">
+                <label for="dateExamination">
+                  Dátum vyšetrenia
+                </label>
+                <input type="text" 
+                       class="form-control" 
+                       id="dateExamination" 
+                       formControlName="dateExamination">
+              </div>
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label for="typVysetrenia">
+                        Typ vyšetrenia
+                      </label>
+                      <input
+                             type="text" 
+                             class="form-control" 
+                             id="typVysetrenia"
+                             formControlName="typVysetrenia">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label for="vysledok">
+                        Výsledok
+                      </label>
+                      <textarea 
+                             class="form-control" 
+                             id="vysledok"
+                             formControlName="vysledok">
+                      </textarea>
+                </div>
+            </div>
+    </form>
+    </div>
+</div>

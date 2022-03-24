@@ -1,4 +1,5 @@
 ﻿using HealthInCube_BackEnd.DTOs;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.Vysetrenie;
 using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.Entities;
 using System.Threading.Tasks;
@@ -29,5 +30,11 @@ namespace HealthInCube_BackEnd.Interfaces
         /// <param name="idZdravotnaKarta">Id of the health record of patient.</param>
         /// </summary>
         public Task<decimal> GetGeneralPractitionerId(decimal idZdravotnaKarta);
+
+        /// <summary>
+        /// Write result of examination in the health record.
+        /// </summary>
+        /// <param name="vysetrenieVysledok">Model for set result to record.</param>
+        public Task<bool> WriteResultToHealthRecord(VysetrenieVysledokDto vysetrenieVysledok);
     }
 }

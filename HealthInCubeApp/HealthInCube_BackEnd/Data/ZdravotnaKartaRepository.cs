@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using HealthInCube_BackEnd.DTOs;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.Vysetrenie;
 using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Interfaces;
@@ -115,6 +116,37 @@ namespace HealthInCube_BackEnd.Data
         public void UpdateItem(ZdravotnaKartum item)
         {
             _context.Entry(item).State = EntityState.Modified;
+        }
+
+        /// <inheritdoc/>
+        public async Task<bool> WriteResultToHealthRecord(VysetrenieVysledokDto vysetrenieVysledok)
+        {
+            using var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                // 1. vytvorenie vysetrenia
+                VykVysetrenium vysetrenieToAdd = _mapper.Map<VykVysetrenium>(vysetrenieVysledok);
+                _context.VykVysetrenia.Add(vysetrenieToAdd);
+                _context.SaveChanges();
+                // 2. zapisat chorobu a priznaky 
+                VykVysetrenium vysetrenie = await _context.VykVysetrenia
+                    .OrderByDescending(vys => vys.IdVysetrenie)
+                    .FirstOrDefaultAsync();
+                vysetrenie.ZapChorobies.Add(_mapper.Map<ZapChoroby>(vysetrenieVysledok.ZapChoroba));
+                _context.SaveChanges();
+                // 3. predpisat liecbu a recept
+                vysetrenie.PredpLiecbas.Add(_mapper.Map<PredpLiecba>(vysetrenieVysledok.PredpisanaLiecba));
+                _context.SaveChanges();
+                vysetrenie.Recepts.Add(_mapper.Map<Recept>(vysetrenieVysledok.Recept));
+                _context.SaveChanges();
+
+                transaction.Commit();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         /// <summary>

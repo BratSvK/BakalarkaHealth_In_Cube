@@ -1,0 +1,25 @@
+<ng-container *ngIf="balenie.idLiekNavigation as liek">
+    <ul class="liek-panel mt-3">
+        <span class="liek-header-nadpis">
+            <fa-icon [icon]="liekIcon" size="2x"></fa-icon>
+            <p class="liek-nadpis ml-2">{{liek.nazov}}</p>
+        </span>
+    </ul>
+    <div class="container-fluid mt-2">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+            <tr>
+            <th scope="col">Liečivo</th>
+            <th scope="col">Gramáž(mg)</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let ucinnaLatka of liek.liekUcinnaLatkas">
+            <td>{{ ucinnaLatka.idLatkaNavigation.ucinnaLatka1}}</td>
+            <td>{{ ucinnaLatka.idLatkaNavigation.ucinnaLatkaGramaz | number }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</ng-container>
+

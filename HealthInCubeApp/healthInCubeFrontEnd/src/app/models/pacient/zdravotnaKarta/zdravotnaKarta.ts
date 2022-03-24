@@ -1,14 +1,13 @@
 import { Operation } from "fast-json-patch";
 import { PacientZdravotnaKartaDetail } from "../pacientZdravotnaKartaDetail";
-import { VykVysetrenia } from "./vykovaneVysetrenia/vykonaneVysetrenia";
-import { ZapChoroby } from "./zapChoroby/zapChoroby";
+import { VykVysetrenie } from "./vykovaneVysetrenia/vykonaneVysetrenia";
+import { ZapChoroba } from "./zapChoroby/zapChoroby";
 
 export interface ZdravotnaKarta {
     pacientDetail: PacientZdravotnaKartaDetail
-    vykVysetrenia: VykVysetrenia[];
-    zapChorobies: ZapChoroby[];
+    vykVysetrenia: VykVysetrenie[];
+    zapChorobies: ZapChoroba[];
 }
-
 
 export interface ZdravotnaKartaPatchModel {
     patchModel: Operation[];

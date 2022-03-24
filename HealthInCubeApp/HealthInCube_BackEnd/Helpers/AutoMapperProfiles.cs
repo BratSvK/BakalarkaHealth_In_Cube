@@ -6,6 +6,14 @@ using HealthInCube_BackEnd.DTOs.Lekar.PracovnaDoba;
 using HealthInCube_BackEnd.DTOs.Nemocnica;
 using HealthInCube_BackEnd.DTOs.Pacient;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.Vysetrenie;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek.Balenie;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek.UcinnaLatka;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Priznak;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Recept;
 using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.DTOs.Ziadanka;
 using HealthInCube_BackEnd.Entities;
@@ -51,6 +59,8 @@ namespace HealthInCube_BackEnd.Helpers
                 .ForMember(dest => dest.Meno, opt => opt.MapFrom(p => $"{p.IdPouzivatelNavigation.Meno} {p.IdPouzivatelNavigation.Priezvisko}")); ;
             CreateMap<ZdravotnaKartum, ZdravotnaKartaDto>()
                 .ForMember(dest => dest.PacientDetail, opt => opt.MapFrom(src => src.IdPacientNavigation));
+
+            CreateMap<ZdravotnaKartaDto, ZdravotnaKartum>();
             CreateMap<Pacient, PacientZdravotnaKartaDetailDto>()
                 .ForMember(dest => dest.Fotka, opt => opt.MapFrom(src => src.IdPouzivatelNavigation.FotkaPouzivatel.Fotka))
                 .ForMember(dest => dest.BID, opt => opt.MapFrom(src => src.IdPouzivatelNavigation.RodCislo))
@@ -94,6 +104,39 @@ namespace HealthInCube_BackEnd.Helpers
                 .ForMember(dest => dest.Pouzivatel, conf => conf.MapFrom(z => z.IdPouzivatelNavigation));
             CreateMap<AtestaciaLekarDto, AtestacieLekar>();
             CreateMap<ZoznamDen, ZoznamDenDto>();
+
+            CreateMap<VykVysetrenium, VysetrenieDto>()
+                .ForMember(dest => dest.TypVysetreniaNazov, src => src.MapFrom(vys => vys.IdTypLekarNavigation.Nazov))
+                .ForMember(dest => dest.MenoVysetrujuciLekar, 
+                           conf => conf.MapFrom(vys => 
+                              $"{vys.IdLekarNavigation.IdPouzivatelNavigation.Meno} {vys.IdLekarNavigation.IdPouzivatelNavigation.Priezvisko}"));
+            CreateMap<VysetrenieDto, VykVysetrenium>();
+            CreateMap<Liek, LiekDto>();
+            CreateMap<LiekDto, Liek>();
+            CreateMap<Liek, LiekReceptDto>();
+            CreateMap<LiekReceptDto, LiekDto>();
+            CreateMap<UcinnaLatka, UcinnaLatkaDto>();
+            CreateMap<UcinnaLatkaDto, UcinnaLatka>();
+            CreateMap<LiekUcinnaLatka, LiekUcinnaLatkaDto>();
+            CreateMap<LiekUcinnaLatkaDto, LiekUcinnaLatka>();
+            CreateMap<LBalenie, BalenieDto>();
+            CreateMap<BalenieDto, LBalenie>();
+
+            CreateMap<VykVysetrenium, VysetrenieVysledokDto>();
+            CreateMap<VysetrenieVysledokDto, VykVysetrenium>();
+            CreateMap<ZapChoroby, ZapChorobaDto>();
+            CreateMap<ZapChorobaDto, ZapChoroby>();
+            CreateMap<Priznaky, PriznakDto>();
+            CreateMap<PriznakDto, Priznaky>();
+            CreateMap<PredpLiecba, PredpisanaLiecbaDto>();
+            CreateMap<PredpisanaLiecbaDto, PredpLiecba>();
+            CreateMap<Recept, ReceptDto>()
+                .ForMember(
+                dest => dest.OsetrujuciLekar,
+                src => src.MapFrom(src =>
+                    $"{ src.IdVysetrenieNavigation.IdLekarNavigation.IdPouzivatelNavigation.Meno } { src.IdVysetrenieNavigation.IdLekarNavigation.IdPouzivatelNavigation.Priezvisko }"));
+            CreateMap<ReceptDto, Recept>();
+
 
             //CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
         }

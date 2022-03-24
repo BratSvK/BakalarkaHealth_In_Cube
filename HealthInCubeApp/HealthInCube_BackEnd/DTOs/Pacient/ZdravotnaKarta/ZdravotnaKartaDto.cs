@@ -1,5 +1,6 @@
 ﻿using HealthInCube_BackEnd.DTOs.Pacient;
-using HealthInCube_BackEnd.Entities;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.Vysetrenie;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba;
 using System.Collections.Generic;
 
 
@@ -17,11 +18,11 @@ namespace HealthInCube_BackEnd.DTOs
         /// <summary>
         /// All treatments.
         /// </summary>
-        public ICollection<VykVysetrenium> VykVysetrenia { get; set; }
+        public ICollection<VysetrenieDto> VykVysetrenia { get; set; }
 
         /// <summary>
         /// All illnesses.
         /// </summary>
-        public ICollection<ZapChoroby> ZapChorobies { get; set; }
+        public ICollection<ZapChorobaDto> ZapChorobies { get; set; }
     }
 }

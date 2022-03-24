@@ -15,5 +15,7 @@ namespace HealthInCube_BackEnd.Entities
         public byte PocetKs { get; set; }
 
         public virtual Liek IdLiekNavigation { get; set; }
+
+        public virtual ICollection<Recept> Recepts { get; set; }
     }
 }

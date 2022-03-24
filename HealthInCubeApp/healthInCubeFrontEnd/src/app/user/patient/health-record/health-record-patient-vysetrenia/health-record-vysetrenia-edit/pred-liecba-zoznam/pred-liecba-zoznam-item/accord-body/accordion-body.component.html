@@ -1,0 +1,67 @@
+<div class="formular">
+    <form bg-light>
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+                <label for="doctorExamination">
+                  Liečivo
+                </label>
+                <input type="text" 
+                       class="form-control" 
+                       id="doctorExamination" 
+                       [value]="liecba.idLiekNavigation.nazov"
+                       disabled>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="formaPodavanie">
+                 Forma podávania
+                </label>
+                <input type="text" 
+                       class="form-control" 
+                       id="formaPodavanie" 
+                       [value]="liecba.idLiekNavigation.liekForma"
+                       disabled>
+              </div>
+            </div> 
+            <div class="form-row mt-2">
+                <label for="formaPodavanie">
+                    Dávkovanie
+                   </label>
+                <table class="table table-borderless">
+                    <thead>
+                    <tr>
+                      <th scope="col" class="rano">Ráno</th>
+                      <th scope="col" class="poobede">Poobede</th>
+                      <th scope="col" class="vecer">Večer</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                      <td  class="rano">{{ davkovanie[dayPart[0]] | number }}</td>
+                      <td  class="poobede">{{ davkovanie[dayPart[1]] | number }}</td>
+                      <td  class="vecer">{{ davkovanie[dayPart[2]] | number }}</td>
+                    </tr>
+                    </tbody>
+                  </table>
+            </div>
+            <ng-container *ngIf="!!recept">
+            <div class="form-row mt-2">
+                <label  class="mr-4"
+                        for="formaPodavanie">
+                    Recept
+                </label>
+                <fa-icon 
+                        id="formaPodavanie"
+                        [icon]="receptIcon"
+                        [tooltip]="infoRecept"
+                        placement="right"
+                        size="3x"
+                        (click)="openReceptModal()">
+                </fa-icon>
+            </div>
+        </ng-container>
+    </form>
+</div>
+
+<ng-template #infoRecept>
+    Náhľad receptu.
+  </ng-template>

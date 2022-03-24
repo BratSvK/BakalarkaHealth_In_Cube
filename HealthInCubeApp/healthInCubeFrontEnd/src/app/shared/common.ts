@@ -1,5 +1,6 @@
 import { Router } from "@angular/router";
 import { TimepickerConfig } from "ngx-bootstrap/timepicker";
+import { VykVysetrenie } from "../models/pacient/zdravotnaKarta/vykovaneVysetrenia/vykonaneVysetrenia";
 import { DEFAULT_TIME_PER_PATIENT } from "./defaults";
 
 export function extractKeyFromParams(params: any): string {
@@ -35,6 +36,13 @@ export function getTimepickerConfig(): TimepickerConfig {
 
   export function getTypeOfAccount(router: Router): string {
     return router.parseUrl(router.url).root.children?.primary.segments[0].path;
+  }
+
+
+  export interface HealthRecordVysetrenieAttachmentZip {
+    vysetrenie: VykVysetrenie,
+    hesloPacient: string;
+    menoPacient: string;
   }
 
  

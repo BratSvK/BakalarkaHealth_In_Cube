@@ -1,0 +1,24 @@
+<div class="liecba-wrapper">
+    <accordion>
+        <accordion-group 
+                        [heading]="title" 
+                        #liecbaGroup
+                        panelClass="liecbaAccordion">
+            <span 
+                 accordion-heading 
+                 class="float-right mt-2"
+                 [ngClass]="{'expanded': liecbaGroup?.isOpen}">
+                <fa-icon 
+                        [icon]="caretIcon"
+                        size="2x">
+                </fa-icon>
+              </span>
+    
+       <app-zoznam-item-accordion-body 
+                *ngIf="liecbaGroup?.isOpen"
+                [liecba]="liecba"
+                [recept]="recept">
+       </app-zoznam-item-accordion-body>
+        </accordion-group>
+    </accordion>
+</div>

@@ -888,6 +888,12 @@ namespace HealthInCube_BackEnd.Data
                     .HasColumnType("DATE")
                     .HasColumnName("VYSTAVENIE");
 
+                entity.Property(e => e.IdBalenie)
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .HasColumnName("KOD_BALENIA")
+                    .IsFixedLength(true);
+
                 entity.HasOne(d => d.IdLiekNavigation)
                     .WithMany(p => p.Recepts)
                     .HasForeignKey(d => d.IdLiek)
@@ -899,6 +905,12 @@ namespace HealthInCube_BackEnd.Data
                     .HasForeignKey(d => d.IdVysetrenie)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("RELATIONSHIP35");
+
+                entity.HasOne(d => d.IdBalenenieNavigation)
+                    .WithMany(p => p.Recepts)
+                    .HasForeignKey(d => d.IdBalenie)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("RELATIONSHIPBALENIEFK");
             });
 
 
@@ -975,6 +987,8 @@ namespace HealthInCube_BackEnd.Data
 
                 entity.HasIndex(e => e.IdLekar, "IX_RELATIONSHIP23");
 
+                entity.HasIndex(e => e.IdTypVysetrenia, "IX_RELATIONSHIP_IdTypVysetrenie");
+
                 entity.HasIndex(e => e.IdPacient, "IX_RELATIONSHIP36");
 
                 entity.Property(e => e.IdVysetrenie)
@@ -982,7 +996,7 @@ namespace HealthInCube_BackEnd.Data
                     .HasColumnName("ID_VYSETRENIE");
 
                 entity.Property(e => e.DatumVys)
-                    .HasColumnType("DATE")
+                    .HasColumnType("TIMESTAMP WITH TIME ZONE")
                     .HasColumnName("DATUM_VYS");
 
                 entity.Property(e => e.IdLekar)
@@ -992,6 +1006,10 @@ namespace HealthInCube_BackEnd.Data
                 entity.Property(e => e.IdPacient)
                     .HasColumnType("NUMBER(38)")
                     .HasColumnName("ID_PACIENT");
+
+                entity.Property(e => e.IdTypVysetrenia)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("ID_TYP");
 
                 entity.Property(e => e.Priloha)
                     .HasColumnType("BLOB")
@@ -1012,6 +1030,10 @@ namespace HealthInCube_BackEnd.Data
                     .WithMany(p => p.VykVysetrenia)
                     .HasForeignKey(d => d.IdPacient)
                     .HasConstraintName("RELATIONSHIP36");
+
+                entity.HasOne(s => s.IdTypLekarNavigation)
+                    .WithMany(p => p.VykVysetrenia)
+                    .HasForeignKey(s => s.IdTypVysetrenia);
             });
 
             modelBuilder.Entity<ZapChoroby>(entity =>

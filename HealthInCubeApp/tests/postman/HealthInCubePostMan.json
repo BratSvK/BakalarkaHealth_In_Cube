@@ -36,7 +36,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"motivationgajdy@gmail.com\",\r\n    \"password\": \"Peter1\"\r\n}",
+									"raw": "{\r\n    \"email\": \"martingajdos.zs+05@gmail.com\",\r\n    \"password\": \"Mariana1\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -150,6 +150,37 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "RegisterLekar",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"meno\": \"MUDr. Petra\",\r\n  \"priezvisko\": \"Piesecká\",\r\n  \"rodPriezvisko\": \"Piesecká\",\r\n  \"rodCislo\": \"625421/4162\",\r\n  \"datNarodenia\": \"1962-04-21T00:00:00\",\r\n  \"email\": \"martingajdos.zs+06@gmail.com\",\r\n  \"mobil\": \"0903623805\",\r\n  \"poslednePrihlasenie\": null,\r\n  \"pohlavie\": \"F\",\r\n  \"idMestoNarodenia\": 2889,\r\n  \"adresa\": {\r\n      \"ulica\": \"ČSA 1035/30\",\r\n      \"trvale\": true,\r\n      \"idMesto\": 1328\r\n  },\r\n  \"pracovnaDobas\": [\r\n      {\r\n          \"idDen\":1,\r\n          \"pracDobaOd\": \"08:30:00\",\r\n          \"pracDobaDo\": \"16:00:00\",\r\n          \"obedOd\": \"11:00:00\",\r\n          \"obedDo\": \"11:30:00\"\r\n      },\r\n       {\r\n          \"idDen\":2,\r\n          \"pracDobaOd\": \"07:00:00\",\r\n          \"pracDobaDo\": \"15:00:00\",\r\n          \"obedOd\": \"11:00:00\",\r\n          \"obedDo\": \"11:30:00\"\r\n      },\r\n      {\r\n          \"idDen\":3,\r\n          \"pracDobaOd\": \"08:30:00\",\r\n          \"pracDobaDo\": \"16:00:00\",\r\n          \"obedOd\": \"11:00:00\",\r\n          \"obedDo\": \"11:30:00\"\r\n      },\r\n      {\r\n          \"idDen\":4,\r\n          \"pracDobaOd\": \"07:00:00\",\r\n          \"pracDobaDo\": \"15:00:00\",\r\n          \"obedOd\": \"11:00:00\",\r\n          \"obedDo\": \"11:30:00\"\r\n      },\r\n      {\r\n          \"idDen\":5,\r\n          \"pracDobaOd\": \"08:30:00\",\r\n          \"pracDobaDo\": \"16:00:00\",\r\n          \"obedOd\": \"11:00:00\",\r\n          \"obedDo\": \"11:30:00\"\r\n      }\r\n  ],\r\n   \"atestacieLekars\": [\r\n      {\r\n        \"idTyp\":44\r\n      }\r\n   ],\r\n  \"IdNemocnica\": 1,\r\n  \"IdOddelenie\": 4,\r\n  \"dlzkaVysetrenia\": 30,\r\n  \"password\": \"Mariana1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:5001/api/ucet/register/lekar",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"ucet",
+										"register",
+										"lekar"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -222,36 +253,144 @@
 			"name": "Admin",
 			"item": [
 				{
-					"name": "GetUsersAndRoles",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:5001/api/admin/nemocnice",
-							"protocol": "https",
-							"host": [
-								"localhost"
+					"name": "Login",
+					"item": [
+						{
+							"name": "LoginAsAdmin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Login user should return 200.\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"\r",
+											"    var jsonData = pm.response.json();\r",
+											"\r",
+											"    pm.environment.set(\"Temp.Admin.Token\", jsonData.token);\r",
+											"    pm.environment.set(\"Temp.User.Id\", jsonData.id);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
 							],
-							"port": "5001",
-							"path": [
-								"api",
-								"admin",
-								"nemocnice"
-							]
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"martingajdos.zs+05@gmail.com\",\r\n    \"password\": \"Mariana1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{GateWayApi}}/ucet/login",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"ucet",
+										"login"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "GetNemocnice",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": ""
+					"name": "Doctor request",
+					"item": [
+						{
+							"name": "GetAllRequestsBHospitalId",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{Temp.Admin.Token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPointSpravca}}/request/list?IdNemocnica=2",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPointSpravca}}",
+										"request",
+										"list"
+									],
+									"query": [
+										{
+											"key": "IdNemocnica",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
+				},
+				{
+					"name": "Nemocnica",
+					"item": [
+						{
+							"name": "GetNemocnice",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": ""
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "UserRoles",
+					"item": [
+						{
+							"name": "GetUsersAndRoles",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "https://localhost:5001/api/admin/nemocnice",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"admin",
+										"nemocnice"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
 		},
@@ -338,12 +477,12 @@
 									}
 								],
 								"url": {
-									"raw": "{{GateWayApi}}/{{EndPoint}}/id",
+									"raw": "{{GateWayApi}}/{{EndPointLekar}}/id",
 									"host": [
 										"{{GateWayApi}}"
 									],
 									"path": [
-										"{{EndPoint}}",
+										"{{EndPointLekar}}",
 										"id"
 									]
 								}
@@ -373,12 +512,12 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{GateWayApi}}/{{EndPoint}}/{{Temp.Lekar.Id}}",
+									"raw": "{{GateWayApi}}/{{EndPointLekar}}/{{Temp.Lekar.Id}}",
 									"host": [
 										"{{GateWayApi}}"
 									],
 									"path": [
-										"{{EndPoint}}",
+										"{{EndPointLekar}}",
 										"{{Temp.Lekar.Id}}"
 									]
 								}
@@ -716,8 +855,11 @@
 					"item": [
 						{
 							"name": "GetAllPatientsByLekarId",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
 							"request": {
-								"method": "POST",
+								"method": "GET",
 								"header": [
 									{
 										"key": "Authorization",
@@ -735,13 +877,15 @@
 									}
 								},
 								"url": {
-									"raw": "{{GateWayApi}}/{{EndPoint}}/createPatientAccount",
+									"raw": "{{GateWayApi}}/{{EndPointLekar}}/1/request/all",
 									"host": [
 										"{{GateWayApi}}"
 									],
 									"path": [
-										"{{EndPoint}}",
-										"createPatientAccount"
+										"{{EndPointLekar}}",
+										"1",
+										"request",
+										"all"
 									]
 								}
 							},
@@ -759,10 +903,16 @@
 									"name": "createSprievodka",
 									"request": {
 										"method": "POST",
-										"header": [],
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{Temp.Lekar.Token}}",
+												"type": "text"
+											}
+										],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"id_sprievodka\": 1,\r\n    \"id_pacient\": 1,\r\n    \"id_lekar\": 2,\r\n    \"id_typ\": 1,\r\n    \"termin_datum\": \"2022-01-14T00:00:00\"\r\n}",
+											"raw": "{\r\n    \"idPacient\": 1,\r\n    \"idLekar\": 2,\r\n    \"idTypVysetrenia\": 44,\r\n    \"terminDatum\": \"2022-01-14T00:00:00\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -770,32 +920,13 @@
 											}
 										},
 										"url": {
-											"raw": "{{GateWayApi}}/{{EndPoint}}/sprievodka",
+											"raw": "{{GateWayApi}}/{{EndPoint}}/create",
 											"host": [
 												"{{GateWayApi}}"
 											],
 											"path": [
 												"{{EndPoint}}",
-												"sprievodka"
-											]
-										}
-									},
-									"response": []
-								},
-								{
-									"name": "getSprievodka",
-									"request": {
-										"method": "GET",
-										"header": [],
-										"url": {
-											"raw": "{{GateWayApi}}/{{EndPoint}}/sprievodka/1",
-											"host": [
-												"{{GateWayApi}}"
-											],
-											"path": [
-												"{{EndPoint}}",
-												"sprievodka",
-												"1"
+												"create"
 											]
 										}
 									},
@@ -804,60 +935,134 @@
 							]
 						},
 						{
-							"name": "Termin",
-							"item": [
-								{
-									"name": "create",
-									"item": [
+							"name": "getSprievodkyByWeek",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{Temp.Lekar.Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/byWeek?IdLekar=2&StartWeekBy=2022-02-07",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"byWeek"
+									],
+									"query": [
 										{
-											"name": "createTermin",
-											"request": {
-												"method": "POST",
-												"header": [],
-												"body": {
-													"mode": "raw",
-													"raw": "{\r\n    \"id_termin\": 1,\r\n    \"id_lekar\": 2,\r\n    \"id_sprievodka\": 1,\r\n    \"dayOfYear\": 14\r\n}",
-													"options": {
-														"raw": {
-															"language": "json"
-														}
-													}
-												},
-												"url": {
-													"raw": "{{GateWayApi}}/{{EndPoint}}/termin",
-													"host": [
-														"{{GateWayApi}}"
-													],
-													"path": [
-														"{{EndPoint}}",
-														"termin"
-													]
-												}
-											},
-											"response": []
+											"key": "IdLekar",
+											"value": "2"
+										},
+										{
+											"key": "IdPacient",
+											"value": "1",
+											"disabled": true
+										},
+										{
+											"key": "StartWeekBy",
+											"value": "2022-02-07"
 										}
 									]
-								},
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "checkVolnyTerminVDanomDni",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{Temp.Lekar.Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/availability/?terminDatum=2022-01-27T00:00:00&idLekar=2",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"availability",
+										""
+									],
+									"query": [
+										{
+											"key": "terminDatum",
+											"value": "2022-01-27T00:00:00"
+										},
+										{
+											"key": "idLekar",
+											"value": "2"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Termin",
+					"item": [
+						{
+							"name": "create",
+							"item": [
 								{
-									"name": "getAllTermin",
+									"name": "createTermin",
 									"request": {
-										"method": "GET",
+										"method": "POST",
 										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id_termin\": 1,\r\n    \"id_lekar\": 2,\r\n    \"id_sprievodka\": 1,\r\n    \"dayOfYear\": 14\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
 										"url": {
-											"raw": "{{GateWayApi}}/{{EndPoint}}/termin/all",
+											"raw": "{{GateWayApi}}/{{EndPoint}}/termin",
 											"host": [
 												"{{GateWayApi}}"
 											],
 											"path": [
 												"{{EndPoint}}",
-												"termin",
-												"all"
+												"termin"
 											]
 										}
 									},
 									"response": []
 								}
 							]
+						},
+						{
+							"name": "getAllTermin",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/termin/all",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"termin",
+										"all"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -874,7 +1079,7 @@
 										"header": [],
 										"body": {
 											"mode": "raw",
-											"raw": "{\r\n    \"id_lekar\": 1,\r\n    \"id_den\": 1,\r\n    \"prac_od\": 420,\r\n    \"prac_do\": 900,\r\n    \"obed_od\": 660\r\n}",
+											"raw": "{\r\n    \"id_lekar\": 1,\r\n    \"id_den\": 1,\r\n    \"prac_od\": \"07:30:00\",\r\n    \"prac_do\": \"16:00:00\",\r\n    \"obed_od\": \"11:00:00\"\r\n}",
 											"options": {
 												"raw": {
 													"language": "json"
@@ -935,6 +1140,165 @@
 							"response": []
 						}
 					]
+				},
+				{
+					"name": "Get lekar by",
+					"item": [
+						{
+							"name": "Get types of doctors",
+							"item": [
+								{
+									"name": "GetDoctorsTypes",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"type": "text",
+												"value": "Bearer {{Temp.Lekar.Token}}"
+											}
+										],
+										"url": {
+											"raw": "{{GateWayApi}}/{{EndPoint}}/types",
+											"host": [
+												"{{GateWayApi}}"
+											],
+											"path": [
+												"{{EndPoint}}",
+												"types"
+											],
+											"query": [
+												{
+													"key": "idType",
+													"value": "44",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "GetDoctorByPlaceAndType",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{Temp.Lekar.Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/all/44",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"all",
+										"44"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ZdravotnaKarta",
+					"item": [
+						{
+							"name": "Vysetrenia",
+							"item": [
+								{
+									"name": "ZapisVysetrenie",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{Temp.Lekar.Token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"idPacient\": 2,\r\n    \"idLekar\": 2,\r\n    \"idTypVysetrenia\": 44,\r\n    \"vysledok\": \"Dotatočné vyšetrenie podľa zápalu spojiviek\",\r\n    \"priloha\": \"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cGF0aGV0aWMtb3BodGhhbG1pYS1zaW5nbGUtY2VudHJlLWxvbmctdGVybS1zdHVkeS00MC1wYXRpZW50cy1mcm9tLW5vcnRoLWluZGlhXzE8L2RjOnRpdGxlPgogICAgICAgICA8cGhvdG9zaG9wOkhlYWRsaW5lPnBvc3Rlcmlvci1zeW1wYXRoZXRpYy1vcGh0aGFsbWlhLXNpbmdsZS1jZW50cmUtbG9uZy10ZXJtLXN0dWR5LTQwLXBhdGllbnRzLWZyb20tbm9ydGgtaW5kaWFfMTwvcGhvdG9zaG9wOkhlYWRsaW5lPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgIAo8P3hwYWNrZXQgZW5kPSJ3Ij8+/9sAQwAKBwcIBwYKCAgICwoKCw4YEA4NDQ4dFRYRGCMfJSQiHyIhJis3LyYpNCkhIjBBMTQ5Oz4+PiUuRElDPEg3PT47/9sAQwEKCwsODQ4cEBAcOygiKDs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7/8IAEQgBDQFnAwEiAAIRAQMRAf/EABoAAAMBAQEBAAAAAAAAAAAAAAECAwAEBQb/xAAZAQADAQEBAAAAAAAAAAAAAAAAAQIDBAX/2gAMAwEAAhADEAAAAfjSCDbADQdsVqM3Nsr4ywSUxmCoFgPBlAAlsbEAGAKlM1FLrZzjoFLmXqFTyL1pU8o6UqYL0TqZ455gMA9Nbhks2DySChiOuXWq25ejNmilJKYJKah8hSQ2rMEwGITLhiq+GmZWgp1Cq4BA4qZrRaU1olKaVW5g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\",\r\n    \"zapChoroba\": {\r\n        \"idZdravotnaKarta\": 2,\r\n        \"cisChoroba\": \"B300\",\r\n        \"priznakies\": [\r\n            {\r\n                \"cisChoroba\": \"B300\",\r\n                \"idZdravotnaKarta\": 2,\r\n                \"idSymptom\": 104\r\n            }\r\n        ]\r\n    },\r\n    \"predpisanaLiecba\": {\r\n        \"idLiek\": 1,\r\n        \"davkovaniePocet\":\"111\"\r\n    },\r\n    \"recept\": {\r\n        \"idLiek\": 1,\r\n        \"balenieKs\":1,\r\n        \"cena\": \"9.50\"\r\n    }\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{GateWayApi}}/{{EndPointZdravotnaKarta}}/2/vysetrenie",
+											"host": [
+												"{{GateWayApi}}"
+											],
+											"path": [
+												"{{EndPointZdravotnaKarta}}",
+												"2",
+												"vysetrenie"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "AllowedToRead",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{Temp.Lekar.Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPointZdravotnaKarta}}/2/isAllowed",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPointZdravotnaKarta}}",
+										"2",
+										"isAllowed"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "CheckActivationAccount",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{Temp.Lekar.Token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{GateWayApi}}/{{EndPointLekar}}/activated",
+							"host": [
+								"{{GateWayApi}}"
+							],
+							"path": [
+								"{{EndPointLekar}}",
+								"activated"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -1270,56 +1634,411 @@
 			"name": "Pacient",
 			"item": [
 				{
-					"name": "isActivated",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "https://localhost:5001/api/pacient/3/activated",
-							"protocol": "https",
-							"host": [
-								"localhost"
+					"name": "LoginPatient",
+					"item": [
+						{
+							"name": "LoginPacient",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Login user should return 200.\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"\r",
+											"    var jsonData = pm.response.json();\r",
+											"\r",
+											"    pm.environment.set(\"Temp.User.Token\", jsonData.token);\r",
+											"    pm.environment.set(\"Temp.User.Id\", jsonData.id);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
 							],
-							"port": "5001",
-							"path": [
-								"api",
-								"pacient",
-								"3",
-								"activated"
-							]
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"martingajdos.zs+02@gmail.com\",\r\n    \"password\": \"Katka1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://localhost:5001/api/ucet/login",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"ucet",
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "isActivated",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"User has activated patient account should return 200.\", function() {\r",
+											"    pm.response.to.have.status(200);\r",
+											"\r",
+											"    var jsonData = pm.response.json();\r",
+											"\r",
+											"    pm.environment.set(\"Temp.Pacient.Id\", jsonData.idPacient);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{Temp.User.Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "https://localhost:5001/api/pacient/{{Temp.User.Id}}/activated",
+									"protocol": "https",
+									"host": [
+										"localhost"
+									],
+									"port": "5001",
+									"path": [
+										"api",
+										"pacient",
+										"{{Temp.User.Id}}",
+										"activated"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "GetPacient",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzIiwiZW1haWwiOiJtYXJ0aW5nYWpkb3MuenNAZ21haWwuY29tIiwicm9sZSI6IlBhY2llbnQiLCJuYmYiOjE2MzY4OTU0NDQsImV4cCI6MTYzNzUwMDI0NCwiaWF0IjoxNjM2ODk1NDQ0fQ.FUZcGSKQHhdeDRN-gRFqn4FqxwrtWSMerOstmPSurGAqf_zDLBXej-Cb-DtM1Zp60DTBqitjbGe38kfSBGXMcg",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{GateWayApi}}/{{EndPoint}}/3",
-							"host": [
-								"{{GateWayApi}}"
-							],
-							"path": [
-								"{{EndPoint}}",
-								"3"
+					"name": "Get pacient",
+					"item": [
+						{
+							"name": "Get pacient by id",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiIzIiwiZW1haWwiOiJtYXJ0aW5nYWpkb3MuenNAZ21haWwuY29tIiwicm9sZSI6IlBhY2llbnQiLCJuYmYiOjE2MzY4OTU0NDQsImV4cCI6MTYzNzUwMDI0NCwiaWF0IjoxNjM2ODk1NDQ0fQ.FUZcGSKQHhdeDRN-gRFqn4FqxwrtWSMerOstmPSurGAqf_zDLBXej-Cb-DtM1Zp60DTBqitjbGe38kfSBGXMcg",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/3",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"3"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get pacient by bid",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"type": "text",
+										"value": "Bearer {{Temp.Lekar.Token}}"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/search/patientByBid/6211247336",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"search",
+										"patientByBid",
+										"6211247336"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get patientId by userId",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{Temp.User.Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPoint}}/4/patientId",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPoint}}",
+										"4",
+										"patientId"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Sprievodka",
+					"item": [
+						{
+							"name": "akcie",
+							"item": [
+								{
+									"name": "zrusenieSprievodky",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{Temp.User.Token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"IdPacient\":1,\r\n    \"IdLekar\":2,\r\n    \"TerminOd\": \"2022-03-11T07:00:00\",\r\n    \"ZrusenieDovod\": \"rodinné záležitosti\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{GateWayApi}}/{{EndPointSprievodka}}/zrusenie",
+											"host": [
+												"{{GateWayApi}}"
+											],
+											"path": [
+												"{{EndPointSprievodka}}",
+												"zrusenie"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "zmenaSprievodky",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"IdPacient\":1,\r\n    \"IdLekar\":2,\r\n    \"TerminOd\": \"2022-03-11T07:00:00\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{GateWayApi}}/{{EndPointSprievodka}}/preplavovanie",
+											"host": [
+												"{{GateWayApi}}"
+											],
+											"path": [
+												"{{EndPointSprievodka}}",
+												"preplavovanie"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "getSprievodkyByWeek",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{Temp.User.Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPointSprievodka}}/byWeek?IdPacient={{Temp.Pacient.Id}}&StartWeekBy=2022-02-07",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPointSprievodka}}",
+										"byWeek"
+									],
+									"query": [
+										{
+											"key": "IdPacient",
+											"value": "{{Temp.Pacient.Id}}"
+										},
+										{
+											"key": "StartWeekBy",
+											"value": "2022-02-07"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ZdravotnaKarta",
+					"item": [
+						{
+							"name": "Get",
+							"item": [
+								{
+									"name": "getZdravotnaKarta",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Zdravotna karta for patient should return 200.\", function() {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{Temp.User.Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{GateWayApi}}/{{EndPointZdravotnaKarta}}/{{Temp.Pacient.Id}}",
+											"host": [
+												"{{GateWayApi}}"
+											],
+											"path": [
+												"{{EndPointZdravotnaKarta}}",
+												"{{Temp.Pacient.Id}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Update",
+							"item": [
+								{
+									"name": "UpdateKarta",
+									"request": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{Temp.User.Token}}",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "[\r\n\t{\"op\" : \"replace\", \"path\" : \"krvSkupina\", \"value\" : \"A+\"}\r\n]",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{GateWayApi}}/{{EndPointPacient}}/{{Temp.Pacient.Id}}/update",
+											"host": [
+												"{{GateWayApi}}"
+											],
+											"path": [
+												"{{EndPointPacient}}",
+												"{{Temp.Pacient.Id}}",
+												"update"
+											]
+										}
+									},
+									"response": []
+								}
 							]
 						}
-					},
-					"response": []
+					]
 				}
 			]
 		},
 		{
 			"name": "Nemocnica",
 			"item": [
+				{
+					"name": "Oddelenie",
+					"item": [
+						{
+							"name": "GetOddelenia",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{GateWayApi}}/{idNemocnica}/oddelenie/all",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{idNemocnica}",
+										"oddelenie",
+										"all"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
 				{
 					"name": "GetVseobecnyLekary",
 					"protocolProfileBehavior": {
@@ -1338,7 +2057,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{GateWayApi}}/nemocnica/vseobecnyLekary?idCity=2083&age=30",
+							"raw": "{{GateWayApi}}/nemocnica/vseobecnyLekary?idCity=1328&age=23",
 							"host": [
 								"{{GateWayApi}}"
 							],
@@ -1349,12 +2068,30 @@
 							"query": [
 								{
 									"key": "idCity",
-									"value": "2083"
+									"value": "1328"
 								},
 								{
 									"key": "age",
-									"value": "30"
+									"value": "23"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetNemocnice",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{GateWayApi}}/{{EndPointNemonica}}/all",
+							"host": [
+								"{{GateWayApi}}"
+							],
+							"path": [
+								"{{EndPointNemonica}}",
+								"all"
 							]
 						}
 					},
@@ -1378,6 +2115,37 @@
 							"path": [
 								"{{EndPoint}}",
 								"server-error"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "PracovnaDoba",
+			"item": [
+				{
+					"name": "GetCiselnikDni",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{Temp.User.Token}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{GateWayApi}}/{{EndPointPracovnaDoba}}/list/days",
+							"host": [
+								"{{GateWayApi}}"
+							],
+							"path": [
+								"{{EndPointPracovnaDoba}}",
+								"list",
+								"days"
 							]
 						}
 					},
