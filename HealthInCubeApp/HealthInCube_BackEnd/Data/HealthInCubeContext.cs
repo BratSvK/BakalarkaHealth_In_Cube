@@ -888,6 +888,12 @@ namespace HealthInCube_BackEnd.Data
                     .HasColumnType("DATE")
                     .HasColumnName("VYSTAVENIE");
 
+                entity.Property(e => e.IdBalenie)
+                    .HasMaxLength(5)
+                    .IsUnicode(false)
+                    .HasColumnName("KOD_BALENIA")
+                    .IsFixedLength(true);
+
                 entity.HasOne(d => d.IdLiekNavigation)
                     .WithMany(p => p.Recepts)
                     .HasForeignKey(d => d.IdLiek)
@@ -899,6 +905,12 @@ namespace HealthInCube_BackEnd.Data
                     .HasForeignKey(d => d.IdVysetrenie)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("RELATIONSHIP35");
+
+                entity.HasOne(d => d.IdBalenenieNavigation)
+                    .WithMany(p => p.Recepts)
+                    .HasForeignKey(d => d.IdBalenie)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("RELATIONSHIPBALENIEFK");
             });
 
 

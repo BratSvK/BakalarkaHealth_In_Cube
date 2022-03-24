@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 #nullable disable
 
@@ -10,6 +9,8 @@ namespace HealthInCube_BackEnd.Entities
         public decimal IdRecept { get; set; }
         public decimal IdVysetrenie { get; set; }
         public decimal IdLiek { get; set; }
+        public string IdBalenie { get; set; }
+
         public byte BalenieKs { get; set; }
         public DateTime Vystavenie { get; set; }
         public decimal? Cena { get; set; }
@@ -17,5 +18,6 @@ namespace HealthInCube_BackEnd.Entities
 
         public virtual Liek IdLiekNavigation { get; set; }
         public virtual VykVysetrenium IdVysetrenieNavigation { get; set; }
+        public virtual LBalenie IdBalenenieNavigation { get; set; }
     }
 }

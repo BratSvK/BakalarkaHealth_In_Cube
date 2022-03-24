@@ -764,6 +764,13 @@ namespace HealthInCube_BackEnd.Migrations
                         .HasColumnType("NUMBER(10,2)")
                         .HasColumnName("CENA");
 
+                    b.Property<string>("IdBalenie")
+                        .HasMaxLength(5)
+                        .IsUnicode(false)
+                        .HasColumnType("CHAR(5)")
+                        .HasColumnName("KOD_BALENIA")
+                        .IsFixedLength(true);
+
                     b.Property<decimal>("IdLiek")
                         .HasColumnType("NUMBER(38)")
                         .HasColumnName("ID_LIEK");
@@ -781,6 +788,8 @@ namespace HealthInCube_BackEnd.Migrations
                         .HasColumnName("VYSTAVENIE");
 
                     b.HasKey("IdRecept");
+
+                    b.HasIndex("IdBalenie");
 
                     b.HasIndex(new[] { "IdVysetrenie" }, "IX_RELATIONSHIP35");
 
@@ -1467,6 +1476,11 @@ namespace HealthInCube_BackEnd.Migrations
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.Recept", b =>
                 {
+                    b.HasOne("HealthInCube_BackEnd.Entities.LBalenie", "IdBalenenieNavigation")
+                        .WithMany("Recepts")
+                        .HasForeignKey("IdBalenie")
+                        .HasConstraintName("RELATIONSHIPBALENIEFK");
+
                     b.HasOne("HealthInCube_BackEnd.Entities.Liek", "IdLiekNavigation")
                         .WithMany("Recepts")
                         .HasForeignKey("IdLiek")
@@ -1478,6 +1492,8 @@ namespace HealthInCube_BackEnd.Migrations
                         .HasForeignKey("IdVysetrenie")
                         .HasConstraintName("RELATIONSHIP35")
                         .IsRequired();
+
+                    b.Navigation("IdBalenenieNavigation");
 
                     b.Navigation("IdLiekNavigation");
 
@@ -1659,6 +1675,11 @@ namespace HealthInCube_BackEnd.Migrations
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.Choroba", b =>
                 {
                     b.Navigation("ZapChorobies");
+                });
+
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.LBalenie", b =>
+                {
+                    b.Navigation("Recepts");
                 });
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.Lekar", b =>
