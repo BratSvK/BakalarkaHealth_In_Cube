@@ -90,6 +90,7 @@ namespace HealthInCube_BackEnd.Data
                 .Include(l => l.IdPouzivatelNavigation)
                 .ThenInclude(us => us.FotkaPouzivatel)
                 .Include(l => l.AtestacieLekars)
+                .ThenInclude(l => l.IdTypNavigation)
                 .Include(l => l.Oddelenies)
                 .ThenInclude(od => od.IdNemNavigation)
                 .Where(l => l.IdPouzivatel == userId)
@@ -103,6 +104,7 @@ namespace HealthInCube_BackEnd.Data
                     Nemocnica = l.IdOddelNavigation.IdNemNavigation.Nazov,
                     OddelenieNazov = l.IdOddelNavigation.NazovOdd,
                     AtestacieId = l.AtestacieLekars.Select(a => a.IdTyp).ToList(),
+                    AtestacieLekars = _mapper.Map<ICollection<LekarTypAtestacieDto>>(l.AtestacieLekars),
                     Fotka = l.IdPouzivatelNavigation.FotkaPouzivatel.Fotka,
                     IsActivated = l.IsActivated
                 })

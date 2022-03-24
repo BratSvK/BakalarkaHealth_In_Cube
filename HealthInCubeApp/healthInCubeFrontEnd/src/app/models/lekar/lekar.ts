@@ -1,3 +1,4 @@
+import { LekarTypAtestacie } from "./atestacia/atestaciaLekarType";
 
 export interface Lekar {
     idLekar: number;
@@ -10,7 +11,13 @@ export interface Lekar {
     oddelenieNazov: string;
     fotka: any;
     atestacieId: number[];
+    atestacieLekars: LekarTypAtestacie[];
     isActivated: boolean;
+}
+
+export enum TypVseobecnyLekar {
+    Detsky = 65,
+    Dospely = 66
 }
 
 export const AtestacieVseobecnyIds  = [65, 66];

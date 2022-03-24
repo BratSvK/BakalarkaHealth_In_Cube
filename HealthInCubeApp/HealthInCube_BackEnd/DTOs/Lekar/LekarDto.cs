@@ -1,3 +1,4 @@
+using HealthInCube_BackEnd.DTOs.Lekar;
 using System.Collections.Generic;
 
 namespace HealthInCube_BackEnd.DTOs
@@ -30,6 +31,7 @@ namespace HealthInCube_BackEnd.DTOs
         public string Nemocnica { get; set; }
         public string OddelenieNazov { get; set; }
         public bool IsActivated { get; set; } = false;
-        public ICollection<decimal> AtestacieId { get; set; }   
+        public ICollection<decimal> AtestacieId { get; set; }
+        public ICollection<LekarTypAtestacieDto> AtestacieLekars { get; set; }
     }
 }

@@ -121,7 +121,9 @@ namespace HealthInCube_BackEnd.Helpers
             CreateMap<LiekUcinnaLatkaDto, LiekUcinnaLatka>();
             CreateMap<LBalenie, BalenieDto>();
             CreateMap<BalenieDto, LBalenie>();
-
+            CreateMap<AtestacieLekar, LekarTypAtestacieDto>();
+            CreateMap<LekarTypAtestacieDto, AtestacieLekar>();
+            CreateMap<TypLekara, LekarTypVysetrenieDto>();
             CreateMap<VykVysetrenium, VysetrenieVysledokDto>();
             CreateMap<VysetrenieVysledokDto, VykVysetrenium>();
             CreateMap<ZapChoroby, ZapChorobaDto>();
@@ -136,7 +138,6 @@ namespace HealthInCube_BackEnd.Helpers
                 src => src.MapFrom(src =>
                     $"{ src.IdVysetrenieNavigation.IdLekarNavigation.IdPouzivatelNavigation.Meno } { src.IdVysetrenieNavigation.IdLekarNavigation.IdPouzivatelNavigation.Priezvisko }"));
             CreateMap<ReceptDto, Recept>();
-
 
             //CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
         }
