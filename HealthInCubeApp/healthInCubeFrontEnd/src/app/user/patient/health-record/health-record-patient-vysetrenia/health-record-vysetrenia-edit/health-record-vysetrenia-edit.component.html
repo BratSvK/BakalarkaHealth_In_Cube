@@ -1,10 +1,10 @@
 <div class="view-container">
     <app-health-record-vysetrenia-item
-        [vysetrenieData]="{ isHeaderClicked: false, vysetrenie: vysetrenie }"
+        [vysetrenieData]="{ isHeaderClicked: true, vysetrenie: vysetrenie }"
         (isClicked)="isClicked.emit(-1)">
     </app-health-record-vysetrenia-item>
     <div class="formular">
-        <form 
+    <form 
         [formGroup]="vysetrenieForm" 
         autocomplete="off"
         bg-light>
@@ -39,18 +39,59 @@
                              id="typVysetrenia"
                              formControlName="typVysetrenia">
                 </div>
-                <div class="col-md-6 mb-3">
-                    <label for="vysledok">
-                        Výsledok
-                      </label>
-                      <textarea 
-                             class="form-control" 
-                             id="vysledok"
-                             formControlName="vysledok">
-                            </textarea>
+                <div *ngIf="vysetrenie.priloha === null; else downloadAttachemnt" 
+                     class="col-md-6 mb-3">
+                    <label for="typVysetrenia">
+                      Príloha(Röntgenový snimok)
+                    </label>
+                    <input
+                            type="text" 
+                            class="form-control" 
+                            id="typVysetrenia"
+                            [value]="'Žianda príloha'"
+                            disabled>
                 </div>
+                <ng-template #downloadAttachemnt>
+                 <app-vysetrenie-download-attachment 
+                      class="col-md-6 mb-3"
+                      (downloadStarted)="downloadAttachemntZip()">
+                 </app-vysetrenie-download-attachment>
+                </ng-template>
             </div>
+            <div class="form-row">
+              <div class="col-md mb-3">
+                <label for="vysledok">
+                  Výsledok
+                </label>
+                <textarea 
+                       class="form-control vysledok" 
+                       id="vysledok"
+                       formControlName="vysledok">
+                      </textarea>
+              </div>
+          </div>
     </form>
     </div>
+    <ng-container *ngIf="vysetrenie.predpLiecbas.length > 0">
+      <hr>
+      <div class="subMenu">
+        <h4>
+          <fa-icon 
+                  id="predLiecba"
+                  [icon]="prescriptionIcon"
+                  size="2x">
+          </fa-icon>
+          Predpísaná liečba:
+        </h4>
+      </div>
+     <app-vysetrenie-pred-liecba-zoznam 
+            [predLiecbaZoznam]="vysetrenie.predpLiecbas"
+            [receptZoznam]="vysetrenie.recepts">
+      </app-vysetrenie-pred-liecba-zoznam>
+    </ng-container>
+
+    <ng-container *ngIf="vysetrenie.recepts.length > 0">
+     
+    </ng-container>
 </div>
 

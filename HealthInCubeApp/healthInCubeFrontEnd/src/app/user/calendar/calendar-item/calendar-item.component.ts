@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { SprievodkaLekarModel, SprievodkaPacientModel } from 'src/app/models/sprievodka/sprievodkaModel';
@@ -10,7 +10,8 @@ import { ModalPacientComponent } from './calendar-item-modal/modal-pacient/modal
 @Component({
   selector: 'app-calendar-item',
   templateUrl: './calendar-item.component.html',
-  styleUrls: ['./calendar-item.component.css']
+  styleUrls: ['./calendar-item.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarItemComponent implements OnInit, OnDestroy {
   @Input() sprievodkaItems: SprievodkaPacientModel[] | SprievodkaLekarModel[]; 

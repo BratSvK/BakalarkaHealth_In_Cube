@@ -2,6 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { VykVysetrenie } from 'src/app/models/pacient/zdravotnaKarta/vykovaneVysetrenia/vykonaneVysetrenia';
 
+export interface VysetrenieData {
+  isHeaderClicked: boolean;
+  vysetrenie: VykVysetrenie;
+}
 
 @Component({
   selector: 'app-health-record-vysetrenia-item',
@@ -27,11 +31,4 @@ export class HealthRecordVysetreniaItemComponent implements OnInit {
   openVysetrenieView() {
     this.isClicked.emit(this.vysetrenieData.vysetrenie.idVysetrenie);
   }
-
-}
-
-
-export interface VysetrenieData {
-  isHeaderClicked: boolean;
-  vysetrenie: VykVysetrenie;
 }

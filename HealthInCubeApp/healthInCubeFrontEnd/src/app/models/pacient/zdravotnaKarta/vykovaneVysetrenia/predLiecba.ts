@@ -1,7 +1,9 @@
+import { Liek } from "../zapChoroby/liek/liek";
+
 export interface PredpisanaLiecba {
-    idLiek: number;
     idVysetrenie: number;
     od: string;
     davkovaniePocet: number;
     do: string | null;
+    idLiekNavigation: Liek;
 }

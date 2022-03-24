@@ -13,8 +13,8 @@
     <div class="vysetrenia-scrollable-content">
 
         <ng-container *ngIf="isCreateMode">
-            <app-health-record-vysetrenia-edit>
-            </app-health-record-vysetrenia-edit>
+            <app-health-record-vysetrenia-create>
+            </app-health-record-vysetrenia-create>
         </ng-container>
 
         <div *ngIf="!vysetreniaZoznam.length">
@@ -27,13 +27,13 @@
             <app-health-record-vysetrenia-item
                 *ngIf="vysetrenie.idVysetrenie !== isViewModeVysetrenieId; else viewTpl" 
                 [vysetrenieData]="{ isHeaderClicked: false, vysetrenie: vysetrenie }"
-                (isClicked)="isViewModeVysetrenieId = $event">
+                (isClicked)="fromEditView($event)">
             </app-health-record-vysetrenia-item>
 
             <ng-template #viewTpl>
                 <app-health-record-vysetrenia-edit
                 [vysetrenie]="vysetrenie"
-                (isClicked)="isViewModeVysetrenieId = $event">
+                (isClicked)="fromEditView($event)">
                 </app-health-record-vysetrenia-edit>
             </ng-template>
         </ng-container>

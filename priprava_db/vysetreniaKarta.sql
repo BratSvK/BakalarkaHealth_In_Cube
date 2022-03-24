@@ -36,6 +36,10 @@ select * from sprievodka;
 select * from liek;
 select * from typ_symptom;
 
+select l.nazov from predp_liecba p
+join liek l on (l.id_liek = p.id_liek)
+where p.id_vysetrenie = 1;
+
 
 -- DELETE VYSETRENIE 
 
@@ -71,3 +75,8 @@ BEGIN
     select recept_seq.nextval into :new.ID_RECEPT from dual;  
 END;
 /
+
+
+Insert into SYSTEM.SPRIEVODKA ("IdPacient","IdLekar","TerminOd","IdTypVysetrenia","TerminDo","IsDeactivated","ZrusenieDovod") 
+values ('2','2',to_date('23-MAR-22 7:30:00','DD-MON-RR HH24:MI:SS'),'44',to_date('23-MAR-22 8:00:00','DD-MON-RR HH24:MI:SS'),'0',null);
+commit;

@@ -12,6 +12,13 @@ import { HealthRecordPractitionerInfoComponent } from './health-record-patient-d
 import { HealthRecordPatientChorobyComponent } from './health-record-patient-choroby/health-record-patient-choroby.component';
 import { HealthRecordVysetreniaEditComponent } from './health-record-patient-vysetrenia/health-record-vysetrenia-edit/health-record-vysetrenia-edit.component';
 import { HealthRecordVysetreniaItemComponent } from './health-record-patient-vysetrenia/health-record-vysetrenia-item/health-record-vysetrenia-item.component';
+import { HealthRecordVysetreniaCreateComponent } from './health-record-patient-vysetrenia/health-record-vysetrenia-create/health-record-vysetrenia-create.component';
+import { VysetrenieDownloadAttachmentComponent } from './health-record-patient-vysetrenia/health-record-vysetrenia-edit/vysetrenie-download-attachment/vysetrenie-download-attachment.component';
+import { PredLiecbaZoznamComponent } from './health-record-patient-vysetrenia/health-record-vysetrenia-edit/pred-liecba-zoznam/pred-liecba-zoznam.component';
+import { PredLiecbaZoznamItemComponent } from './health-record-patient-vysetrenia/health-record-vysetrenia-edit/pred-liecba-zoznam/pred-liecba-zoznam-item/zoznam-item.component';
+import { AccordionModule } from "ngx-bootstrap/accordion";
+import { ZoznamItemAccordionBodyComponent } from './health-record-patient-vysetrenia/health-record-vysetrenia-edit/pred-liecba-zoznam/pred-liecba-zoznam-item/accord-body/accordion-body.component';
+import { ZoznamItemReceptModalComponent } from './health-record-patient-vysetrenia/health-record-vysetrenia-edit/pred-liecba-zoznam/pred-liecba-zoznam-item/recept-modal/recept-modal.component';
 
 @NgModule({
     declarations: [
@@ -23,13 +30,20 @@ import { HealthRecordVysetreniaItemComponent } from './health-record-patient-vys
       HealthRecordPractitionerInfoComponent,
       HealthRecordPatientChorobyComponent,
       HealthRecordVysetreniaEditComponent,
-      HealthRecordVysetreniaItemComponent
+      HealthRecordVysetreniaItemComponent,
+      HealthRecordVysetreniaCreateComponent,
+      VysetrenieDownloadAttachmentComponent,
+      PredLiecbaZoznamComponent,
+      PredLiecbaZoznamItemComponent,
+      ZoznamItemAccordionBodyComponent,
+      ZoznamItemReceptModalComponent
     ],
     imports: [
       SharedModule, 
       ScrollingModule,
       HealthRecordRoutingModule,
-      ClipboardModule
+      ClipboardModule,
+      AccordionModule.forRoot(),
     ]
   })
   export class HealthRecordModule {}

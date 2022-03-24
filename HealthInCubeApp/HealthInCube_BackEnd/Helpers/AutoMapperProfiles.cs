@@ -9,6 +9,7 @@ using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.Vysetrenie;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Priznak;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Recept;
 using HealthInCube_BackEnd.DTOs.Sprievodka;
@@ -108,6 +109,9 @@ namespace HealthInCube_BackEnd.Helpers
                            conf => conf.MapFrom(vys => 
                               $"{vys.IdLekarNavigation.IdPouzivatelNavigation.Meno} {vys.IdLekarNavigation.IdPouzivatelNavigation.Priezvisko}"));
             CreateMap<VysetrenieDto, VykVysetrenium>();
+
+            CreateMap<Liek, LiekDto>();
+            CreateMap<LiekDto, Liek>();
 
             CreateMap<VykVysetrenium, VysetrenieVysledokDto>();
             CreateMap<VysetrenieVysledokDto, VykVysetrenium>();

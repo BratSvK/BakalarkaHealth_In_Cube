@@ -1,0 +1,10 @@
+<div class="container">
+    <div class="liecbaZoznam">
+        <ng-container *ngFor="let liecba of predLiecbaZoznam">
+            <app-vysetrenie-pred-liecba-zoznam-item 
+                [liecba]="liecba"
+                [recept]="getReceptForLiecba(liecba.idLiekNavigation.idLiek)">
+            </app-vysetrenie-pred-liecba-zoznam-item>
+        </ng-container>
+    </div>
+</div>

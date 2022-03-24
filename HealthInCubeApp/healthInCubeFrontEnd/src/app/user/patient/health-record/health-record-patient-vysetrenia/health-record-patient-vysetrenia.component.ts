@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { VykVysetrenie } from 'src/app/models/pacient/zdravotnaKarta/vykovaneVysetrenia/vykonaneVysetrenia';
+import { HealthRecordVysetrenieService } from 'src/app/_service/health-record-vysetrenie.service';
+import { SubSink } from 'subsink';
 
 
 @Component({
@@ -9,12 +10,16 @@ import { VykVysetrenie } from 'src/app/models/pacient/zdravotnaKarta/vykovaneVys
   templateUrl: './health-record-patient-vysetrenia.component.html',
   styleUrls: ['./health-record-patient-vysetrenia.component.css']
 })
-export class HealthRecordPatientVysetreniaComponent implements OnInit {
+export class HealthRecordPatientVysetreniaComponent implements OnInit, OnDestroy {
   vysetreniaZoznam: VykVysetrenie[] = [];
   addIcon = faPlus;
   isCreateMode = false;
   isViewModeVysetrenieId = -1;
-  constructor(private router: Router) { }
+  
+  constructor() { }
+
+  ngOnDestroy(): void {
+  }
 
   ngOnInit(): void {
     this.vysetreniaZoznam = history.state.pacientVysetrenia;
@@ -24,4 +29,7 @@ export class HealthRecordPatientVysetreniaComponent implements OnInit {
     this.isCreateMode = true;
   }
 
+  fromEditView($event) {
+    this.isViewModeVysetrenieId = $event
+  }
 }

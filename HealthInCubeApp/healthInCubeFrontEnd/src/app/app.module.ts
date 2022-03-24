@@ -24,6 +24,7 @@ import { UserDetailEffects } from './user/user-detail/store/user-detail.effects'
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { CalendarModule } from './user/calendar/calendar.module';
+import { AccordionModule } from 'ngx-bootstrap/accordion';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { CalendarModule } from './user/calendar/calendar.module';
     AlertModule.forRoot(),
     PaginationModule.forRoot(),
     TimepickerModule.forRoot(),
-    CalendarModule
+    CalendarModule,
+    AccordionModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

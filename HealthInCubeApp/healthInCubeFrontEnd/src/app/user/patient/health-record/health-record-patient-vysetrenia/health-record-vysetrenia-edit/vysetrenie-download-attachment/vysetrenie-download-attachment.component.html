@@ -1,0 +1,21 @@
+<div class="download-wrapper">
+    <label for="typVysetrenia">
+        Príloha(Röntgenový snimok)
+      </label>
+      <div class="form-control download">
+        <div class="btn-wrapper">
+            <fa-icon 
+                    [icon]="downloadIcon"
+                    [@dowloadFade]
+                    [tooltip]="infoDownloadZip"
+                    placement="right"
+                    size="2x"
+                    (click)="downloadAttachemnt()">
+            </fa-icon>
+      </div>
+    </div>
+ </div>
+
+ <ng-template #infoDownloadZip>
+  Stiahnuť v ZIP formáte.
+</ng-template>

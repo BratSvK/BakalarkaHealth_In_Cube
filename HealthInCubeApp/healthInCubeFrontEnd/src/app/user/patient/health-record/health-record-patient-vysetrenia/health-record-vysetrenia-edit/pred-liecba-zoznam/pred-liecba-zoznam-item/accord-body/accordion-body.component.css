@@ -1,0 +1,29 @@
+.formular {
+    padding: 1.6rem;
+}
+
+label {
+    font-size: 0.9rem;
+    color: #6c757d!important;
+}
+
+th {
+    text-align: center;
+    border-bottom: none;
+}
+
+td {
+    text-align: center;
+}
+
+.rano {
+    background-color: #A6D0E4;
+}
+
+.poobede {
+    background-color: #F9FFEA;
+}
+
+.vecer {
+    background-color: #FF865E;
+}

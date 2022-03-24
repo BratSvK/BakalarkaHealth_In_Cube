@@ -1,0 +1,15 @@
+label {
+    font-size: 0.9rem;
+    color: #6c757d!important;
+}
+
+.form-control.download {
+    border: none;
+}
+
+.btn-wrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    cursor: pointer;
+}

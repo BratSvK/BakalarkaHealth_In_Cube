@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek;
+using System;
 
 namespace HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba
 {
@@ -7,11 +8,6 @@ namespace HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Predpisana
     /// </summary>
     public class PredpisanaLiecbaDto
     {
-        /// <summary>
-        /// Id of the medicament.
-        /// </summary>
-        public decimal IdLiek { get; set; }
-
         /// <summary>
         /// Id of the examination.
         /// </summary>
@@ -31,5 +27,8 @@ namespace HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Predpisana
         /// End of the threatment.
         /// </summary>
         public DateTime? Do { get; set; }
+
+        /// <inheritdoc/>
+        public LiekDto IdLiekNavigation { get; set; }
     }
 }

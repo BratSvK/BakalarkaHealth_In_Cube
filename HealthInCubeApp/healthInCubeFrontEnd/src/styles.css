@@ -2,7 +2,7 @@
 
 body,html {
     height: 100%;
-    background-color: lightblue;
+    background-color: #9ADCFF;
 }
 
 
@@ -12,5 +12,12 @@ body,html {
 html, body { height: 100%; }
 body { margin: 0; font-family: "Lucida Console", "Helvetica Neue", sans-serif; }
 
+.panel.card.liecbaAccordion .btn-link {
+  text-decoration: none;
+  box-shadow: none;
+  color: #6c757d;
+}
 
-
+.panel.card.liecbaAccordion .btn-link:hover {
+  color: red;
+}

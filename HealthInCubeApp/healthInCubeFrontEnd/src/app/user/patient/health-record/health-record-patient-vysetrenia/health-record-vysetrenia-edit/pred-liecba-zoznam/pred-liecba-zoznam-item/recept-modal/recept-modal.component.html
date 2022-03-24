@@ -1,0 +1,71 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">
+      {{recept.idLiek}}
+    </h4>
+    <button type="button" 
+            class="btn-close close pull-right" 
+            aria-label="Close" 
+            (click)="bsModalRef.hide()">
+      <span aria-hidden="true" 
+            class="visually-hidden">&times;</span>
+    </button>
+  </div>
+   <div class="modal-body">
+    <form autocomplete="off" 
+          bg-light >
+      <div class="form-row">
+        <div class="col-md-6 mb-3">
+          <label for="BID">
+            Pacient rodné číslo
+          </label>
+          <input hasFocus="true"
+                 type="text" 
+                 class="form-control" 
+                 id="BID" 
+                 placeholder="etc. 9811244168">
+        </div>
+        <div class="col-md-6 mb-3">
+          <label for="patientName">
+            Pacient
+          </label>
+          <input type="text" 
+                class="form-control" 
+                id="patientName" >
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="col-md-10 mb-3">
+          <label for="idTypVysetrenia">
+            Typ vyšetrenia
+          </label>
+        </div>
+        <div class="col-md-2 mb-3">
+          <button type="button" 
+                  class="btn info" 
+                  placement="right">
+          </button>
+        </div>
+      </div>
+     <div class="form-row">
+        <div class="col-md-12 mb-3">
+            <label for="lekarId">
+              Lekár
+            </label>
+         </div>
+      </div>
+       <div class="form-row">
+         <div class="col-md-12 mb-3">
+            <label for="terminDatum">
+              Termín
+            </label>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" 
+              class="btn btn-default" 
+              (click)="closeSprievodkaForm()">
+              Zavrieť
+      </button>
+    </div>
