@@ -132,6 +132,10 @@ namespace HealthInCube_BackEnd.Helpers
             CreateMap<ZapChorobaDto, ZapChoroby>();
             CreateMap<Priznaky, PriznakDto>();
             CreateMap<PriznakDto, Priznaky>();
+            CreateMap<TypSymptom, TypPriznakDto>();
+            CreateMap<TypPriznakDto, TypSymptom>();
+            CreateMap<LBalenie, BalenieLiekDto>();
+            CreateMap<BalenieLiekDto, LBalenie>();
             CreateMap<PredpLiecba, PredpisanaLiecbaDto>();
             CreateMap<PredpisanaLiecbaDto, PredpLiecba>();
             CreateMap<Recept, ReceptDto>()

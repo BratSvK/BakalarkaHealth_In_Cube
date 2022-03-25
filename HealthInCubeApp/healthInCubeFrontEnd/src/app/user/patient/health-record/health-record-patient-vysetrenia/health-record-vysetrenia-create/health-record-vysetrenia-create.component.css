@@ -74,11 +74,12 @@ h4 {
     background-color: aliceblue;
 }
 
-virtual-scroller {
-    width: 350px;
-    height: 200px;
-  }
-   
+.unselectChorobaBtn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-right: 0.2rem;
+}
 
 
 .ellipsis {

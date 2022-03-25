@@ -4,3 +4,15 @@ export interface Priznak {
     idSymptom: number;
     od: string;
 }
+
+export interface TypPriznak {
+    idSymptom: number;
+    nazov: string;
+}
+
+export class PriznakBuilder implements TypPriznak {
+    
+    constructor(public idSymptom: number, public nazov: string) {
+    }
+
+}

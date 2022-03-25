@@ -35,6 +35,7 @@ export class HealthRecordShellComponent implements OnInit, OnDestroy {
       this.healthRecordService.clearHealthRecordCache();
     }
     this.healthRecordVysetrenieService.clearPacientDetail();
+    this.healthRecordVysetrenieService.clearPriznakyCache();
   }
  
   ngOnInit(): void {

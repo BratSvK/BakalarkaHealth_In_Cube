@@ -1,6 +1,8 @@
 ﻿using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.Vysetrenie;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek.Balenie;
 using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Interfaces.CiselnikHelper;
@@ -11,7 +13,11 @@ namespace HealthInCube_BackEnd.Interfaces
     /// <summary>
     /// Interface for health record for patient.
     /// </summary>
-    public interface IZdravotnaKartaRepository :  IRepository<ZdravotnaKartum, ZdravotnaKartaDto>, IChorobaService<ChorobaDto>
+    public interface IZdravotnaKartaRepository :  
+        IRepository<ZdravotnaKartum, ZdravotnaKartaDto>, 
+        IChorobaService<ChorobaDto>,
+        ITypSymptomService,
+        ILiekService<LiekDto,BalenieLiekDto>
     {
         /// <summary>
         /// Delete from health records time allowment.

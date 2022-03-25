@@ -63,6 +63,9 @@ namespace HealthInCube_BackEnd.Data
             modelBuilder.HasDbFunction(typeof(HealthInCubeContext).GetMethod(nameof(GetWeekNumberFromDb), new[] { typeof(DateTime) }))
                 .HasName("GETWEEKNUMBER");
 
+            modelBuilder.HasDbFunction(typeof(HealthInCubeContext).GetMethod(nameof(GetColumnNameToLower), new[] { typeof(string) }))
+               .HasName("LOWER");
+
             #region Entities mapping
 
             modelBuilder.HasAnnotation("Relational:Collation", "USING_NLS_COMP");
@@ -1305,5 +1308,12 @@ namespace HealthInCube_BackEnd.Data
         /// <param name="date">YYYY-MM-DD format.</param>
         /// <returns></returns>
         public int GetWeekNumberFromDb(DateTime p_start_week_of) => throw new NotSupportedException("Mapping issue for GetWeekNumber function");
+
+        /// <summary>
+        /// Method inside sql.
+        /// For mapping purpose.
+        /// get string to lower case for search.
+        /// </summary>
+        public string GetColumnNameToLower(string columnName) => throw new NotSupportedException("Mapping issue for GetColumnNameToLower function");
     }
 }

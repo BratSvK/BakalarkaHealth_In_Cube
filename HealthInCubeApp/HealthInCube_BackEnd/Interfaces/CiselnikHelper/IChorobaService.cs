@@ -8,6 +8,10 @@ namespace HealthInCube_BackEnd.Interfaces.CiselnikHelper
     /// </summary>
     public interface IChorobaService<T>
     {
-        Task<IEnumerable<T>> SearchChorobaTableByName(string name);
+        /// <summary>
+        /// Search illnes by name.
+        /// </summary>
+        /// <param name="name">Key word in name of illness.</param>
+        Task<IEnumerable<T>> SearchChorobaByNameAsync(string name);
     }
 }

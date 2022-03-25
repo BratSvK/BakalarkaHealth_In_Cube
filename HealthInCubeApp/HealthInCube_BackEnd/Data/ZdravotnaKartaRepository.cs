@@ -3,6 +3,9 @@ using AutoMapper.QueryableExtensions;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.Vysetrenie;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek.Balenie;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Priznak;
 using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Interfaces;
@@ -52,6 +55,21 @@ namespace HealthInCube_BackEnd.Data
         {
             throw new NotImplementedException();
         }
+
+        /// <inheritdoc/>
+        public async Task<IEnumerable<TypPriznakDto>> GetAllSymptomsAsync()
+        => await _context.TypSymptom
+            .ProjectTo<TypPriznakDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .ToArrayAsync();
+
+        /// <inheritdoc/>
+        public async Task<IEnumerable<BalenieLiekDto>> GetBaleniaForLiekAsync(decimal idLiek)
+        => await _context.LBalenie
+            .Where(b => b.IdLiek == idLiek)
+            .ProjectTo<BalenieLiekDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .ToArrayAsync();
 
         public Task<int> GetCountAsync()
         {
@@ -115,10 +133,18 @@ namespace HealthInCube_BackEnd.Data
         }
 
         /// <inheritdoc/>
-        public async Task<IEnumerable<ChorobaDto>> SearchChorobaTableByName(string name)
+        public async Task<IEnumerable<ChorobaDto>> SearchChorobaByNameAsync(string name)
         => await _context.Choroba
-            .Where(ch => ch.Nazov.Contains(name.ToLowerInvariant()))
+            .Where(ch => _context.GetColumnNameToLower(ch.Nazov).Contains(name.ToLower()))
             .ProjectTo<ChorobaDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .ToListAsync();
+
+        public async Task<IEnumerable<LiekDto>> SearchLiekByNameAsync(string name)
+        => await _context.Liek
+            .Where(l => _context.GetColumnNameToLower(l.Nazov).Contains(name.ToLower()))
+            .ProjectTo<LiekDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
             .ToListAsync();
 
         public void UpdateItem(ZdravotnaKartum item)

@@ -117,3 +117,8 @@ select * from l_balenie;
 
 select * from l_balenie bal
 where bal.id_liek = 1;
+
+
+
+---zap chorob
+

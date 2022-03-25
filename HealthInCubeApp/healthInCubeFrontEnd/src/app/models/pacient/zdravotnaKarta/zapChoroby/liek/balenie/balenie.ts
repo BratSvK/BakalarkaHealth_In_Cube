@@ -8,3 +8,16 @@ export interface Balenie {
     pocetKs: number;
     idLiekNavigation: LiekRecep;
 }
+
+
+export interface BalenieCacheModel {
+    kodBalenia: string;
+    pocetKs: string;
+}
+
+export class BalenieBuilder implements BalenieCacheModel {
+    
+    constructor(public kodBalenia: string, public pocetKs: string) {
+    }
+
+}

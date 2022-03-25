@@ -1204,6 +1204,31 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "GetDoctorByUserId",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{Temp.Lekar.Token}}",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{GateWayApi}}/{{EndPointLekar}}/user/2",
+									"host": [
+										"{{GateWayApi}}"
+									],
+									"path": [
+										"{{EndPointLekar}}",
+										"user",
+										"2"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -1242,6 +1267,139 @@
 												"{{EndPointZdravotnaKarta}}",
 												"2",
 												"vysetrenie"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Choroba",
+							"item": [
+								{
+									"name": "Symptom",
+									"item": [
+										{
+											"name": "GetAllSymptoms",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"type": "text",
+														"value": "Bearer {{Temp.Lekar.Token}}"
+													}
+												],
+												"url": {
+													"raw": "{{GateWayApi}}/{{EndPointZdravotnaKarta}}/choroba/symptomy",
+													"host": [
+														"{{GateWayApi}}"
+													],
+													"path": [
+														"{{EndPointZdravotnaKarta}}",
+														"choroba",
+														"symptomy"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "GetChorobyByName",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"value": "Bearer {{Temp.Lekar.Token}}",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{GateWayApi}}/{{EndPointZdravotnaKarta}}/choroba/find?name=syndróm",
+											"host": [
+												"{{GateWayApi}}"
+											],
+											"path": [
+												"{{EndPointZdravotnaKarta}}",
+												"choroba",
+												"find"
+											],
+											"query": [
+												{
+													"key": "name",
+													"value": "syndróm"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Liek",
+							"item": [
+								{
+									"name": "Balenie",
+									"item": [
+										{
+											"name": "GetBalenieByMedicamentId",
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Authorization",
+														"type": "text",
+														"value": "Bearer {{Temp.Lekar.Token}}"
+													}
+												],
+												"url": {
+													"raw": "{{GateWayApi}}/{{EndPointZdravotnaKarta}}/liek/1/balenia",
+													"host": [
+														"{{GateWayApi}}"
+													],
+													"path": [
+														"{{EndPointZdravotnaKarta}}",
+														"liek",
+														"1",
+														"balenia"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "GetMedicamentsByName",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Authorization",
+												"type": "text",
+												"value": "Bearer {{Temp.Lekar.Token}}"
+											}
+										],
+										"url": {
+											"raw": "{{GateWayApi}}/{{EndPointZdravotnaKarta}}/lieky/find?name=paralen",
+											"host": [
+												"{{GateWayApi}}"
+											],
+											"path": [
+												"{{EndPointZdravotnaKarta}}",
+												"lieky",
+												"find"
+											],
+											"query": [
+												{
+													"key": "name",
+													"value": "paralen"
+												}
 											]
 										}
 									},

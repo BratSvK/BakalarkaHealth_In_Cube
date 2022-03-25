@@ -3,11 +3,13 @@ using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.Vysetrenie;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek.Balenie;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Priznak;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Extensions;
 using HealthInCube_BackEnd.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -102,7 +104,24 @@ namespace HealthInCube_BackEnd.Controllers
 
         [HttpGet("choroba/find")]
         public async Task<ActionResult<IEnumerable<ChorobaDto>>> SearchChorobyByName([FromQuery] string name)
-        => Ok(await _zdravotnaKartaRepository.SearchChorobaTableByName(name));
+        => Ok(await _zdravotnaKartaRepository.SearchChorobaByNameAsync(name));
+
+        [HttpGet("choroba/symptomy")]
+        public async Task<ActionResult<IEnumerable<TypPriznakDto>>> GetSymptomsAll()
+        => Ok(await _zdravotnaKartaRepository.GetAllSymptomsAsync());
+
+        #endregion
+
+        #region PredLiecba_Lieky
+
+        [HttpGet("lieky/find")]
+        public async Task<ActionResult<IEnumerable<LiekDto>>> SearchMedicamentsByName([FromQuery] string name)
+        => Ok(await _zdravotnaKartaRepository.SearchLiekByNameAsync(name));
+
+        [HttpGet("liek/{idLiek}/balenia")]
+        public async Task<ActionResult<IEnumerable<BalenieLiekDto>>> GetBaleniaForLiekById(decimal idLiek)
+        => Ok(await _zdravotnaKartaRepository.GetBaleniaForLiekAsync(idLiek));
+
 
         #endregion
     }
