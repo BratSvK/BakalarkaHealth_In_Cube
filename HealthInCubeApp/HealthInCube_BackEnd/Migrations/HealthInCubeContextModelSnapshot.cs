@@ -349,6 +349,22 @@ namespace HealthInCube_BackEnd.Migrations
                     b.ToTable("LIEK_APLIKACIA");
                 });
 
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.LiekDavkovanie", b =>
+                {
+                    b.Property<decimal>("IdLiek")
+                        .HasColumnType("NUMBER(38)")
+                        .HasColumnName("ID_LIEK");
+
+                    b.Property<byte>("DavkovaniePocet")
+                        .HasPrecision(3)
+                        .HasColumnType("NUMBER(3)")
+                        .HasColumnName("DAVKOVANIE_POCET");
+
+                    b.HasKey("IdLiek");
+
+                    b.ToTable("LIEK_DAVKOVANIE");
+                });
+
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.LiekUcinnaLatka", b =>
                 {
                     b.Property<decimal>("IdLiek")
@@ -1332,6 +1348,17 @@ namespace HealthInCube_BackEnd.Migrations
                     b.Navigation("IdOblastNavigation");
                 });
 
+            modelBuilder.Entity("HealthInCube_BackEnd.Entities.LiekDavkovanie", b =>
+                {
+                    b.HasOne("HealthInCube_BackEnd.Entities.Liek", "IdLiekNavigation")
+                        .WithOne("IdLiekDavkovanieNavigation")
+                        .HasForeignKey("HealthInCube_BackEnd.Entities.LiekDavkovanie", "IdLiek")
+                        .HasConstraintName("RELATIONSHIP_PKFID_LIEK")
+                        .IsRequired();
+
+                    b.Navigation("IdLiekNavigation");
+                });
+
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.LiekUcinnaLatka", b =>
                 {
                     b.HasOne("HealthInCube_BackEnd.Entities.UcinnaLatka", "IdLatkaNavigation")
@@ -1703,6 +1730,8 @@ namespace HealthInCube_BackEnd.Migrations
 
             modelBuilder.Entity("HealthInCube_BackEnd.Entities.Liek", b =>
                 {
+                    b.Navigation("IdLiekDavkovanieNavigation");
+
                     b.Navigation("LBalenies");
 
                     b.Navigation("LiekAplikacia");

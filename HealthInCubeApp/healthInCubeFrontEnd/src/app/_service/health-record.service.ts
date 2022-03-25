@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { EMPTY, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { Choroba } from '../models/pacient/zdravotnaKarta/zapChoroby/choroba';
 import { ZdravotnaKarta, ZdravotnaKartaPatchModel } from '../models/pacient/zdravotnaKarta/zdravotnaKarta';
 import { ZDRAVOTNA_KARTA_API } from '../_constants/endPointsApi';
 
@@ -28,6 +29,12 @@ export class HealthRecordService {
         this.zdravotnaKartaCache.set('zdravotnaKarta', response);
         return response;
       }));
+    }
+
+    searchChorobyByName$(name: string): Observable<Choroba[]> {
+      let params = new HttpParams();
+      params = params.append('name', name);
+      return this.http.get<Choroba[]>(this.baseUrl + `${ZDRAVOTNA_KARTA_API}/choroba/find`, {params: params});
     }
 
 

@@ -2,6 +2,7 @@
 using AutoMapper.QueryableExtensions;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.Vysetrenie;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba;
 using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Interfaces;
@@ -112,6 +113,13 @@ namespace HealthInCube_BackEnd.Data
         {
             return await _context.SaveChangesAsync() > 0;
         }
+
+        /// <inheritdoc/>
+        public async Task<IEnumerable<ChorobaDto>> SearchChorobaTableByName(string name)
+        => await _context.Choroba
+            .Where(ch => ch.Nazov.Contains(name.ToLowerInvariant()))
+            .ProjectTo<ChorobaDto>(_mapper.ConfigurationProvider)
+            .ToListAsync();
 
         public void UpdateItem(ZdravotnaKartum item)
         {

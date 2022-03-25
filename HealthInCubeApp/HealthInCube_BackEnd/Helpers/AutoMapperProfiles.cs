@@ -119,6 +119,8 @@ namespace HealthInCube_BackEnd.Helpers
             CreateMap<UcinnaLatkaDto, UcinnaLatka>();
             CreateMap<LiekUcinnaLatka, LiekUcinnaLatkaDto>();
             CreateMap<LiekUcinnaLatkaDto, LiekUcinnaLatka>();
+            CreateMap<Choroba, ChorobaDto>();
+            CreateMap<ChorobaDto, Choroba>();
             CreateMap<LBalenie, BalenieDto>();
             CreateMap<BalenieDto, LBalenie>();
             CreateMap<AtestacieLekar, LekarTypAtestacieDto>();

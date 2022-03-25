@@ -52,6 +52,8 @@ namespace HealthInCube_BackEnd.Data
         public virtual DbSet<Sprievodka> Sprievodkas { get; set; }
         public virtual DbSet<PracovnaDoba> PracovnaDobas { get; set; }
         public virtual DbSet<ZiadankaLekar> ZiadankaLekars { get; set; }
+        public virtual DbSet<LiekDavkovanie> LiekDavkovanie { get; set; }
+
         #endregion
 
 
@@ -474,6 +476,27 @@ namespace HealthInCube_BackEnd.Data
                     .HasForeignKey(d => d.IdLiek)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("RELATIONSHIP73");
+            });
+
+            modelBuilder.Entity<LiekDavkovanie>(entity =>
+            {
+                entity.HasKey(e => e.IdLiek);
+
+                entity.ToTable("LIEK_DAVKOVANIE");
+
+                entity.Property(e => e.IdLiek)
+                    .HasColumnType("NUMBER(38)")
+                    .HasColumnName("ID_LIEK");
+
+                entity.Property(e => e.DavkovaniePocet)
+                    .HasPrecision(3)
+                    .HasColumnName("DAVKOVANIE_POCET");
+
+                entity.HasOne(d => d.IdLiekNavigation)
+                    .WithOne(p => p.IdLiekDavkovanieNavigation)
+                    .HasForeignKey<LiekDavkovanie>(d => d.IdLiek)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("RELATIONSHIP_PKFID_LIEK");
             });
 
             modelBuilder.Entity<Mesto>(entity =>

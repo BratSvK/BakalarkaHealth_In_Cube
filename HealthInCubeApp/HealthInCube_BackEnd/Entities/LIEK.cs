@@ -21,6 +21,8 @@ namespace HealthInCube_BackEnd.Entities
         public string RezimVydaja { get; set; }
         public string LiekForma { get; set; }
 
+        public virtual LiekDavkovanie IdLiekDavkovanieNavigation { get; set; }
+
         public virtual ICollection<LBalenie> LBalenies { get; set; }
         public virtual ICollection<LiekAplikacium> LiekAplikacia { get; set; }
         public virtual ICollection<LiekUcinnaLatka> LiekUcinnaLatkas { get; set; }

@@ -53,3 +53,36 @@ h4 {
 .save-text {
     margin-left: 0.5rem;
 }
+
+.example-viewport {
+    height: 200px;
+  }
+
+.choroba-item {
+    height: 50px;
+}
+
+.choroba-item:hover {
+    cursor: pointer;
+    background-color: aliceblue;
+}
+.selectedChoroba {
+    padding-top: 2rem
+}
+
+.choroba-item:focus {
+    background-color: aliceblue;
+}
+
+virtual-scroller {
+    width: 350px;
+    height: 200px;
+  }
+   
+
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

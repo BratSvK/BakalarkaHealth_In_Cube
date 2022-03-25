@@ -76,7 +76,7 @@
                       id="scanAttachment"
                       (change)="onFileChange($event)">
               </div>
-              <div class="zap-choroba-sub-menu">
+              <div class="zap-choroba-sub-menu mt-3">
               <accordion>
                 <accordion-group 
                                 [heading]="chorobaTitle" 
@@ -100,25 +100,55 @@
                              size="2x">
                      </fa-icon>
                    </span>
-
-                      <div class="choroba-menu" formGroupName="zapChoroba">
-                        
-                        <label for="typVysetrenia">
-                          Diagnostikovaná choroba
-                        </label>
-                        <select class="custom-select d-block w-100" 
-                          id="idTypVysetrenia" 
-                          formControlName="cisChoroba">
-                  <option [disabled]="true" 
-                          [selected]="true" 
-                          value="">Vyber...
-                  </option>
-                  <option [ngValue]="'a'" 
-                          *ngFor="let typeDoc of []">
-                          {{"aaa"}}
-                  </option>
-                </select>
+                      <div
+                          formGroupName="zapChoroba" 
+                          class="choroba-menu">
+                          <div class="form-row">
+                            <div class="col-md-4">
+                              <label for="choroba">
+                                Diagnostikovaná choroba
+                              </label>
+                              <div class="search">
+                                <input 
+                                      type="text"
+                                      class="form-control"
+                                      id="choroba"
+                                      placeholder="vyhľadaj chorobu" 
+                                      formControlName="chorobaSearch">
+                              </div>
+                            </div>
+                            <div class="col-md-8">
+                              <div 
+                                  *ngIf="(chorobaZoznamBySearch$ | async) as choroby" 
+                                  class="zoznam-search">
+                                  <cdk-virtual-scroll-viewport 
+                                        itemSize="50" 
+                                        class="example-viewport form-control">
+                                        <div 
+                                            *cdkVirtualFor="let choroba of choroby" 
+                                            class="choroba-item"
+                                            (click)="onSelected(choroba)">{{choroba.nazov}}
+                                        </div>
+                                  </cdk-virtual-scroll-viewport>
+                              </div>
+                            </div>
+                          </div>
                       </div>
+                      <div class="form-row">
+                        <div class="col-md">
+                        <label for="chorobaSelected">
+                          Vybraná choroba
+                        </label>
+                        <div class="search">
+                          <input 
+                                type="text"
+                                class="form-control"
+                                id="choroba"
+                                placeholder="vyhľadaj chorobu" 
+                                [value]="selectedChoroba">
+                      </div>
+                      </div>
+                    </div>
                 </accordion-group>
             </accordion>
           </div>
