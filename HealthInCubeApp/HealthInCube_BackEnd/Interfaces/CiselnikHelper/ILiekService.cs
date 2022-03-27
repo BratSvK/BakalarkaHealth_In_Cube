@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek.Davkovanie;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace HealthInCube_BackEnd.Interfaces.CiselnikHelper
@@ -19,5 +20,11 @@ namespace HealthInCube_BackEnd.Interfaces.CiselnikHelper
         /// </summary>
         /// <param name="idLiek">The medicament id.</param>
         Task<IEnumerable<B>> GetBaleniaForLiekAsync(decimal idLiek);
+
+        /// <summary>
+        /// Number of dosages per day of medicament.
+        /// </summary>
+        /// <param name="idLiek">The medicament id.<</param>
+        Task<LiekDavkovanieDto> GetDavkovanieForMedicament(decimal idLiek);
     }
 }

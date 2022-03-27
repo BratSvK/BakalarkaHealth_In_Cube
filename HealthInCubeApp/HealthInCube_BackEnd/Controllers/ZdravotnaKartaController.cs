@@ -9,6 +9,7 @@ using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Priznak;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Extensions;
 using HealthInCube_BackEnd.Interfaces;
+using HealthInCube_BackEnd.Properties;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -90,13 +91,18 @@ namespace HealthInCube_BackEnd.Controllers
 
         
         [HttpPost("{patientId}/vysetrenie")]
-        public async Task<IActionResult> WriteResultToHealthRecord(decimal patientId, VysetrenieVysledokDto vysetrenieVysledok)
+        public async Task<ActionResult<VysetrenieDto>> WriteResultToHealthRecord(decimal patientId, VysetrenieVysledokDto vysetrenieVysledok)
         {
             ZdravotnaKartum zdravotnaKarta = await _zdravotnaKartaRepository.GetOriginItemAsync(patientId);
             if (zdravotnaKarta == null) return NotFound();
-            if (await _zdravotnaKartaRepository.WriteResultToHealthRecord(vysetrenieVysledok)) 
-                return CreatedAtAction(nameof(WriteResultToHealthRecord), string.Empty);
-            return BadRequest("Nastala chyba pri aktualizovaní dát na karta");
+            decimal idVysetrenieToReturn = await _zdravotnaKartaRepository.WriteResultToHealthRecord(vysetrenieVysledok);
+            if (idVysetrenieToReturn != -1)
+            {
+                VysetrenieDto vysetrenieToReturn = await _zdravotnaKartaRepository.GetExaminationResultAsync(idVysetrenieToReturn);
+                return CreatedAtAction(nameof(WriteResultToHealthRecord), vysetrenieToReturn);
+            }
+                
+            return BadRequest(Resource.PatientExaminationResultFailed);
         }
         #endregion
 

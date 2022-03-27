@@ -39,7 +39,7 @@
                              id="typVysetrenia"
                              formControlName="typVysetrenia">
                 </div>
-                <div *ngIf="vysetrenie.priloha === null; else downloadAttachemnt" 
+                <div *ngIf="vysetrenie.priloha?.length < 2; else downloadAttachemnt" 
                      class="col-md-6 mb-3">
                     <label for="typVysetrenia">
                       Príloha(Röntgenový snimok)

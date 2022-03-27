@@ -12,12 +12,12 @@ export interface Balenie {
 
 export interface BalenieCacheModel {
     kodBalenia: string;
-    pocetKs: string;
+    pocetKs: number;
 }
 
 export class BalenieBuilder implements BalenieCacheModel {
     
-    constructor(public kodBalenia: string, public pocetKs: string) {
+    constructor(public kodBalenia: string, public pocetKs: number) {
     }
 
 }

@@ -235,8 +235,8 @@
                </span>
 
                <div
-               formGroupName="predpisanaLiecba" 
-               class="choroba-menu">
+                    formGroupName="predpisanaLiecba" 
+                    class="choroba-menu">
                <div class="form-row">
                  <div class="col-md-4">
                    <label for="choroba">
@@ -268,7 +268,7 @@
                  </div>
                </div>
            <div class="form-row">
-             <div class="col-md">
+             <div class="col-md mb-3">
               <label for="chorobaSelected">
                 Vybraný liek
               </label>
@@ -289,11 +289,27 @@
               </span>  
             </div>
            </div>
+          </div>
 
 <!-- balenie vyber -->
            <div 
+                formGroupName="recept"
                 class="form-row" 
-                *ngIf="selectedLiek !== 'žiaden'">
+                *ngIf="(zoznamLiekBalenia$ | async) as baleniaLiek">
+                <ng-container *ngIf="this.selectedLiek !== 'žiaden'">
+                <div class="col-md-2 mb-3">
+                  <label for="balenieKs">
+                    Balenie(ks)
+                  </label>
+                    <div class="search">
+                      <input 
+                            type="number"
+                            class="form-control"
+                            id="balenieKs"
+                            formControlName="balenieKs"
+                            min="1">
+                  </div>
+                 </div>
             <div class="col-md-10 mb-3">
               <label for="typBalenie">
                 Typ balenia lieku
@@ -306,26 +322,13 @@
                         value="">Vyber balenie...
                 </option>
                 <option [ngValue]="balenie.kodBalenia" 
-                        *ngFor="let balenie of zoznamLiekBalenia">
+                        *ngFor="let balenie of baleniaLiek">
                         {{getBaleniePopis(balenie)}}
                 </option>
               </select>
             </div>
-             <div class="col-md-4">
-              <label for="chorobaSelected">
-                Balenie(ks)
-              </label>
-                <div class="search">
-                  <input 
-                        type="text"
-                        class="form-control"
-                        id="choroba"
-                        placeholder="vyhľadaj chorobu" 
-                        [value]="selectedLiek">
-             </div>
+          </ng-container>
            </div>
-         </div>
-        </div>
       </accordion-group>
     </accordion>
   </div>

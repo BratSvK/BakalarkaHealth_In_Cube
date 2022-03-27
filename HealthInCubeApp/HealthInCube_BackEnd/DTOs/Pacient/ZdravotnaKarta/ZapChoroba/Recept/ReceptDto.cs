@@ -17,7 +17,7 @@ namespace HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Recept
         /// <summary>
         /// Id of the medicament.
         /// </summary>
-        public decimal IdLiek { get; set; }
+        public decimal? IdLiek { get; set; }
 
         /// <summary>
         /// Id of the medicament in package.

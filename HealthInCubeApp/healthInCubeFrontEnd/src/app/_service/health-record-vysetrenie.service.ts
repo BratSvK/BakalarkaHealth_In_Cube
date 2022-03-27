@@ -1,10 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { catchError, map, take, tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { PacientCard } from '../models/pacient/pacientCard';
-import { Balenie } from '../models/pacient/zdravotnaKarta/zapChoroby/liek/balenie/balenie';
+import { VykVysetrenie } from '../models/pacient/zdravotnaKarta/vykovaneVysetrenia/vykonaneVysetrenia';
+import { VysetrenieVysledok } from '../models/pacient/zdravotnaKarta/vykovaneVysetrenia/vysetrenieCreate';
+import { Balenie, BalenieBuilder } from '../models/pacient/zdravotnaKarta/zapChoroby/liek/balenie/balenie';
 import { PriznakBuilder, TypPriznak } from '../models/pacient/zdravotnaKarta/zapChoroby/priznakChoroba';
 import { extractKeyFromParams } from '../shared/common';
 import { ZDRAVOTNA_KARTA_API } from '../_constants/endPointsApi';
@@ -20,7 +23,12 @@ export class HealthRecordVysetrenieService {
   priznakyCache = new Map();
 
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient) {
+  }
+
+  createVysetrenie$(vysetrenieCreate: VysetrenieVysledok) {
+    return this.http.post<VykVysetrenie>(this.baseUrl + `${ZDRAVOTNA_KARTA_API}/${vysetrenieCreate.idPacient}/vysetrenie`, vysetrenieCreate);
   }
 
   getPacientDetail(): PacientCard {
@@ -49,8 +57,8 @@ export class HealthRecordVysetrenieService {
   }
 
   getBaleniaToMedicament$(idLiek: number): Observable<Balenie[]> {
-    var defaultPriznak = new PriznakBuilder(-1,'');
-    const keyFromParams = extractKeyFromParams(defaultPriznak);
+    var defaultBalenie = new BalenieBuilder('FFFFF',-1);
+    const keyFromParams = extractKeyFromParams(defaultBalenie);
     var response = this.priznakyCache.get(keyFromParams);
     if (response) {
       return of(response);

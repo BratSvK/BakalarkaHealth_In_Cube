@@ -20,6 +20,10 @@ select * from zdravotna_karta;
 desc vyk_vysetrenia;
 -- 1, vykona sa vysetrenie a zapise 
 select * from vyk_vysetrenia;
+
+select * from vyk_vysetrenia vyk
+order by vyk.datum_vys desc;
+
 -- 2.podla vysetrenia sa zapise choroba a urcia priznaky
 desc zap_choroby;
 select * from zap_choroby;
@@ -40,6 +44,34 @@ select * from typ_symptom;
 select l.nazov from predp_liecba p
 join liek l on (l.id_liek = p.id_liek)
 where p.id_vysetrenie = 1;
+
+--- deleting vysetrenie trigger 
+create or replace TRIGGER delete_vyseternie
+before delete on vyk_vysetrenia
+FOR EACH ROW
+BEGIN
+-- 1. delete from recept
+   delete from recept rec
+    where rec.id_vysetrenie = :old.ID_VYSETRENIE;
+-- 2. delete from predpisana liecba
+    delete from predp_liecba liecba 
+     where liecba.id_vysetrenie = :old.ID_VYSETRENIE;
+-- 3. ziskaj cis choroby a vymaz vsetky prizanaky a chorobu
+     
+         delete from priznaky pr 
+          where exists (select 'x'
+                        from zap_choroby zap
+                         where zap.id_vysetrenie = :old.ID_VYSETRENIE);
+          delete from zap_choroby zap
+           where zap.id_vysetrenie = :old.ID_VYSETRENIE;
+END;
+/
+
+commit;
+delete from vyk_vysetrenia vyk
+where vyk.id_pacient = 3;
+
+select * from vyk_vysetrenia;
 
 
 
@@ -118,7 +150,15 @@ select * from l_balenie;
 select * from l_balenie bal
 where bal.id_liek = 1;
 
-
-
 ---zap chorob
 
+
+
+select * from liek l
+where lower(l.nazov) like '%paralen%';
+
+-- create function to lower in db
+
+desc liek;
+
+select LOWER('AHOJ') from dual;

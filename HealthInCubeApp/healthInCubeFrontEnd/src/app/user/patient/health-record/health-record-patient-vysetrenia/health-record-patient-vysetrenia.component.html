@@ -13,7 +13,10 @@
     <div class="vysetrenia-scrollable-content">
 
         <ng-container *ngIf="isCreateMode">
-            <app-health-record-vysetrenia-create (leaveCreateMode)="isCreateMode = $event">
+            <app-health-record-vysetrenia-create 
+                (leaveCreateMode)="isCreateMode = $event"
+                (isCreateVysetrenie)="addToVysetreniList($event)"
+                >
             </app-health-record-vysetrenia-create>
         </ng-container>
 

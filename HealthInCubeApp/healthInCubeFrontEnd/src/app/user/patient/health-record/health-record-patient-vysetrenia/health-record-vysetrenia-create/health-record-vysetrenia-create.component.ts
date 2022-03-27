@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { 
   faCaretRight, 
@@ -9,15 +9,18 @@ import {
   faTimes, 
   faFilePrescription} from '@fortawesome/free-solid-svg-icons';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, switchMap, tap } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
+import { Observable, of } from 'rxjs';
+import { catchError, debounceTime, distinctUntilChanged, filter, switchMap, take, tap } from 'rxjs/operators';
 import { LekarTypAtestacie } from 'src/app/models/lekar/atestacia/atestaciaLekarType';
 import { PacientCard } from 'src/app/models/pacient/pacientCard';
+import { VykVysetrenie } from 'src/app/models/pacient/zdravotnaKarta/vykovaneVysetrenia/vykonaneVysetrenia';
+import { VysetrenieVysledok } from 'src/app/models/pacient/zdravotnaKarta/vykovaneVysetrenia/vysetrenieCreate';
 import { Choroba, CHOROBA_UNSELECTED_VALUE, LIEK_UNSELECTED_VALUE } from 'src/app/models/pacient/zdravotnaKarta/zapChoroby/choroba';
 import { Balenie } from 'src/app/models/pacient/zdravotnaKarta/zapChoroby/liek/balenie/balenie';
 import { Liek } from 'src/app/models/pacient/zdravotnaKarta/zapChoroby/liek/liek';
-import { Priznak, TypPriznak } from 'src/app/models/pacient/zdravotnaKarta/zapChoroby/priznakChoroba';
-import { DEFAULT_CIS_CHOROBY_NOT_SELECTED } from 'src/app/shared/defaults';
+import { TypPriznak } from 'src/app/models/pacient/zdravotnaKarta/zapChoroby/priznakChoroba';
+import { DEFAULT_BALENIE_KS, DEFAULT_CIS_CHOROBY_NOT_SELECTED } from 'src/app/shared/defaults';
 import { getPractitionerAtestationsTypes, getPractitionorIdState } from 'src/app/user/lekar/store/modelStore/LekarState';
 import { HealthRecordVysetrenieService } from 'src/app/_service/health-record-vysetrenie.service';
 import { HealthRecordService } from 'src/app/_service/health-record.service';
@@ -27,10 +30,13 @@ import { SubSink } from 'subsink';
 @Component({
   selector: 'app-health-record-vysetrenia-create',
   templateUrl: './health-record-vysetrenia-create.component.html',
-  styleUrls: ['./health-record-vysetrenia-create.component.css']
+  styleUrls: ['./health-record-vysetrenia-create.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HealthRecordVysetreniaCreateComponent implements OnInit, OnDestroy {
   @Output() leaveCreateMode: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() isCreateVysetrenie: EventEmitter<VykVysetrenie> = new EventEmitter<VykVysetrenie>();
+
 
   vysetrenieCreateForm: FormGroup;
   deleteIcon = faTrash;
@@ -44,7 +50,7 @@ export class HealthRecordVysetreniaCreateComponent implements OnInit, OnDestroy 
   practitionerTypes$: Observable<LekarTypAtestacie[]>;
   chorobaZoznamBySearch$: Observable<Choroba[]>;
   liekZoznamBySearch$: Observable<Liek[]>;
-  zoznamLiekBalenia: Balenie[];
+  zoznamLiekBalenia$: Observable<Balenie[]>;
   chorobaTitle = "Zapísať chorobu";
   liecbaTitle = "Predpísať liečbu";
   receptTitle = "Predpísať recept";
@@ -57,9 +63,11 @@ export class HealthRecordVysetreniaCreateComponent implements OnInit, OnDestroy 
 
   constructor(
     private fb: FormBuilder,
+    private cdRef: ChangeDetectorRef,
     private healthRecordVysetrenieService: HealthRecordVysetrenieService,
     private healthRecordService: HealthRecordService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private toaster: ToastrService
   ) {
       this.loadPatientDetial();
       this.listenToPractitionerIdFromStore();
@@ -89,20 +97,25 @@ export class HealthRecordVysetreniaCreateComponent implements OnInit, OnDestroy 
     return this.vysetrenieCreateForm.get('zapChoroba.cisChoroba').value;
   }
 
+  get cisChorobyFormControl() {
+    return this.vysetrenieCreateForm.get('zapChoroba.cisChoroba');
+  }
+
 
   getBaleniePopis(balenie: Balenie) {
-    return `${balenie.kodBalenia}: ${balenie.pocetKs}-${balenie.cena}`
+    return `Kód balenia:${balenie.kodBalenia}: ${balenie.pocetKs}ks - ${balenie.cena}€`
   }
   onSelected(choroba: Choroba) {
     this.selectedChoroba = choroba.nazov;
-    this.vysetrenieCreateForm.get('zapChoroba.cisChoroba').setValue(choroba.cisChoroba);
+    this.vysetrenieCreateForm.get('zapChoroba.cisChoroba').patchValue(choroba.cisChoroba);
     this.priznakyArray[0].patchValue({cisChoroba: this.cisChorobyFormValue});
   }
 
   onSelectedLiek(liek: Liek) {
-    this.selectedLiek = liek.nazov;
-    this.vysetrenieCreateForm.get('predpisanaLiecba.idLiek').setValue(liek.idLiek);
-    this.idLiekRecept.setValue(this.idLiek);
+    const selectedLiek: Liek = {...liek};
+    this.selectedLiek = selectedLiek.nazov;
+    this.vysetrenieCreateForm.get('predpisanaLiecba.idLiek').setValue(selectedLiek.idLiek);
+    this.idLiekRecept.setValue(selectedLiek.idLiek);
   }
 
   onAddPriznak() {
@@ -129,10 +142,25 @@ export class HealthRecordVysetreniaCreateComponent implements OnInit, OnDestroy 
 
   onLeaveCrateMode() {
     this.leaveCreateMode.emit(false);
+    this.vysetrenieCreateForm.reset();
   }
 
   createVystrenie() {
-    console.log(this.vysetrenieCreateForm.value);
+    const createVysetrenieModel = this.vysetrenieCreateForm.getRawValue() as VysetrenieVysledok;
+    if (!!createVysetrenieModel)
+     this.healthRecordVysetrenieService.createVysetrenie$(createVysetrenieModel)
+     .pipe(
+      take(1),
+      catchError((error) => {
+        this.toaster.error(error?.error);
+        return of(undefined);
+      })).subscribe((vykVystrenie: VykVysetrenie) => {
+        if (vykVystrenie != undefined) {
+          this.toaster.success('Vyšetrenie bolo zapísané do zdravotnej karty pacienta.')
+          this.isCreateVysetrenie.emit(vykVystrenie);
+          this.onLeaveCrateMode();
+        }
+      });
   }
 
   selectTypeInfo() {
@@ -140,10 +168,13 @@ export class HealthRecordVysetreniaCreateComponent implements OnInit, OnDestroy 
   }
   unselectChoroba() {
     this.selectedChoroba = CHOROBA_UNSELECTED_VALUE;
+    this.cisChorobyFormControl.setValue(-1);
   }
 
   unselectLiek() {
     this.selectedLiek = LIEK_UNSELECTED_VALUE;
+    this.vysetrenieCreateForm.get('predpisanaLiecba.idLiek').patchValue(-1);
+    this.idLiekRecept.patchValue(-1);
   }
 
   onFileChange(event) {
@@ -199,15 +230,15 @@ export class HealthRecordVysetreniaCreateComponent implements OnInit, OnDestroy 
   private initCreateForm() {
     this.vysetrenieCreateForm = this.fb.group({
       idPacient: [this.pacientDetail.idPacient, [Validators.required]],
-      patientName: [{value: this.pacientDetail.fullName, disabled: true}, [Validators.required]],
-      idTypVysetrenia: ['' , [Validators.required]],
       idLekar: [this.practitionerId, [Validators.required]],
-      rodneCislo: [{value: this.pacientDetail.bid, disabled: true}],
+      idTypVysetrenia: ['' , [Validators.required]],
       vysledok: ['', [Validators.required]],
-      priloha: [null, [Validators.required]],
+      priloha: [null],
+      patientName: [{value: this.pacientDetail.fullName, disabled: true}],
+      rodneCislo: [{value: this.pacientDetail.bid, disabled: true}],
       zapChoroba: this.fb.group({
         idZdravotnaKarta: [this.pacientDetail.idPacient, [Validators.required]],
-        cisChoroba: ['' , [Validators.required]],
+        cisChoroba: [DEFAULT_CIS_CHOROBY_NOT_SELECTED , [Validators.required]],
         chorobaSearch: [''],
         priznakies: this.fb.array([
           this.fb.group({
@@ -223,8 +254,8 @@ export class HealthRecordVysetreniaCreateComponent implements OnInit, OnDestroy 
       }),
       recept: this.fb.group({
         idLiek: ['', [Validators.required]],
-        balenieKs: ['', [Validators.required]],
-        idBalenie: ['', [Validators.required]]
+        idBalenie: ['', [Validators.required]],
+        balenieKs: [DEFAULT_BALENIE_KS, [Validators.required]]
       })
     });
 
@@ -235,12 +266,10 @@ export class HealthRecordVysetreniaCreateComponent implements OnInit, OnDestroy 
   }
 
   private listenToBaleniaZoznam() {
-    this.subs.sink = this.vysetrenieCreateForm.get('predpisanaLiecba.idLiek').valueChanges.pipe(
+    this.zoznamLiekBalenia$ = this.vysetrenieCreateForm.get('recept.idLiek').valueChanges
+    .pipe(
       switchMap((idLiek: number) => {
         return this.healthRecordVysetrenieService.getBaleniaToMedicament$(idLiek);
-      })
-    ).subscribe(items => {
-      this.zoznamLiekBalenia = [...items];
-    });
+      }));
   }
 }

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 import { ZdravotnaKarta } from 'src/app/models/pacient/zdravotnaKarta/zdravotnaKarta';
 import { AccountType } from 'src/app/shared/auth-common';
 import { getTypeOfAccount, HealthRecordVysetrenieAttachmentZip } from 'src/app/shared/common';
@@ -12,6 +12,7 @@ import { SubSink } from 'subsink';
 import * as FileSaver from 'file-saver';
 import * as moment from 'moment';
 import * as JSZip from 'jszip';
+import { VykVysetrenie } from 'src/app/models/pacient/zdravotnaKarta/vykovaneVysetrenia/vykonaneVysetrenia';
 
 @Component({
   selector: 'app-health-record-shell',
@@ -31,6 +32,8 @@ export class HealthRecordShellComponent implements OnInit, OnDestroy {
   ) {
    }
   ngOnDestroy(): void {
+    if (this.subs)
+      this.subs.unsubscribe();
     if (getTypeOfAccount(this.router) === AccountType.doctor) {
       this.healthRecordService.clearHealthRecordCache();
     }
@@ -40,7 +43,21 @@ export class HealthRecordShellComponent implements OnInit, OnDestroy {
  
   ngOnInit(): void {
     this.loadCurrentHealthRecordFromResolver();
-    this.downloadAttachemtByVysetrenie();
+    this.listenToDownloadAttachemtByVysetrenie();
+    this.listenToVysetrenieAddedToHealthRecord();
+  }
+
+  private listenToVysetrenieAddedToHealthRecord() {
+    this.subs.sink = this.healthRecordService.vysetreniaAfterCreate$.pipe(
+      switchMap((vysetreniaAfterEdit: VykVysetrenie []) => {
+        return this.healthRecord$.pipe(
+          take(1),
+          map((karta: ZdravotnaKarta) => {
+            return karta.vykVysetrenia = [...vysetreniaAfterEdit];
+          })
+        )
+      })
+    ).subscribe();
   }
 
   private loadCurrentHealthRecordFromResolver() {
@@ -52,7 +69,7 @@ export class HealthRecordShellComponent implements OnInit, OnDestroy {
     );
   }
 
-  private downloadAttachemtByVysetrenie() {
+  private listenToDownloadAttachemtByVysetrenie() {
     this.subs.sink = this.healthRecordVysetrenieService.downloadAttacmentStarted$.pipe(
       switchMap((idVysetrenie: number) => {
         return this.healthRecord$.pipe(
@@ -81,7 +98,7 @@ export class HealthRecordShellComponent implements OnInit, OnDestroy {
       var imgFolder = zip.folder(`${attachementData.vysetrenie.typVysetreniaNazov}`);
         imgFolder.file(
           `${attachementData.menoPacient}-${(moment(vysetrenieDate)).format('DD-MMMM-YYYY(HH:mm:ss)')}.jpg`,
-          attachementData.vysetrenie.priloha,
+          attachementData.vysetrenie?.priloha,
           { base64: true}
         );
 

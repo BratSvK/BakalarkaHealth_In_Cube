@@ -11,12 +11,14 @@ using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek.Balenie;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek.Davkovanie;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek.UcinnaLatka;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Priznak;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Recept;
 using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.DTOs.Ziadanka;
 using HealthInCube_BackEnd.Entities;
+using System.Linq;
 
 namespace HealthInCube_BackEnd.Helpers
 {
@@ -58,6 +60,7 @@ namespace HealthInCube_BackEnd.Helpers
                 .ForMember(dest => dest.Mobil, opt => opt.MapFrom(src => src.IdPouzivatelNavigation.Mobil))
                 .ForMember(dest => dest.Meno, opt => opt.MapFrom(p => $"{p.IdPouzivatelNavigation.Meno} {p.IdPouzivatelNavigation.Priezvisko}")); ;
             CreateMap<ZdravotnaKartum, ZdravotnaKartaDto>()
+                .ForMember(dest => dest.VykVysetrenia, opt => opt.MapFrom(src => src.VykVysetrenia.OrderByDescending(v => v.DatumVys)))
                 .ForMember(dest => dest.PacientDetail, opt => opt.MapFrom(src => src.IdPacientNavigation));
 
             CreateMap<ZdravotnaKartaDto, ZdravotnaKartum>();
@@ -126,6 +129,7 @@ namespace HealthInCube_BackEnd.Helpers
             CreateMap<AtestacieLekar, LekarTypAtestacieDto>();
             CreateMap<LekarTypAtestacieDto, AtestacieLekar>();
             CreateMap<TypLekara, LekarTypVysetrenieDto>();
+            CreateMap<LiekDavkovanie, LiekDavkovanieDto>();
             CreateMap<VykVysetrenium, VysetrenieVysledokDto>();
             CreateMap<VysetrenieVysledokDto, VykVysetrenium>();
             CreateMap<ZapChoroby, ZapChorobaDto>();

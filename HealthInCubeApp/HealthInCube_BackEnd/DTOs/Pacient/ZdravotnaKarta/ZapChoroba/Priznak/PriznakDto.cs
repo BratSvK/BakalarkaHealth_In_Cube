@@ -20,7 +20,7 @@ namespace HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Priznak
         /// <summary>
         /// The id of symptom from symptoms records.
         /// </summary>
-        public decimal IdSymptom { get; set; }
+        public decimal? IdSymptom { get; set; }
 
         /// <summary>
         /// Start by symptom.

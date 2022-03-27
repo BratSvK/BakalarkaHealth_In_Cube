@@ -1,8 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { VykVysetrenie } from '../models/pacient/zdravotnaKarta/vykovaneVysetrenia/vykonaneVysetrenia';
 import { Choroba } from '../models/pacient/zdravotnaKarta/zapChoroby/choroba';
 import { Liek } from '../models/pacient/zdravotnaKarta/zapChoroby/liek/liek';
 import { ZdravotnaKarta, ZdravotnaKartaPatchModel } from '../models/pacient/zdravotnaKarta/zdravotnaKarta';
@@ -14,6 +15,7 @@ import { ZDRAVOTNA_KARTA_API } from '../_constants/endPointsApi';
 export class HealthRecordService {
   baseUrl = environment.apiUrl;
   zdravotnaKartaCache = new Map();
+  vysetreniaAfterCreate$: EventEmitter<VykVysetrenie[]> = new EventEmitter<VykVysetrenie[]>();
 
   constructor(private http: HttpClient) {
   }

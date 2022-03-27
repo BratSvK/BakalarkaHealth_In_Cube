@@ -19,6 +19,5 @@
         /// Price the package.
         /// </summary>
         public decimal Cena { get; set; }
-
     }
 }

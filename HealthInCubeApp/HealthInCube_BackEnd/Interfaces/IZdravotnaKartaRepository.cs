@@ -43,6 +43,11 @@ namespace HealthInCube_BackEnd.Interfaces
         /// Write result of examination in the health record.
         /// </summary>
         /// <param name="vysetrenieVysledok">Model for set result to record.</param>
-        public Task<bool> WriteResultToHealthRecord(VysetrenieVysledokDto vysetrenieVysledok);
+        public Task<decimal> WriteResultToHealthRecord(VysetrenieVysledokDto vysetrenieVysledok);
+
+        /// <summary>
+        /// Get examination result from health record.
+        /// </summary>
+        public Task<VysetrenieDto> GetExaminationResultAsync(decimal vysetrenieId);
     }
 }
