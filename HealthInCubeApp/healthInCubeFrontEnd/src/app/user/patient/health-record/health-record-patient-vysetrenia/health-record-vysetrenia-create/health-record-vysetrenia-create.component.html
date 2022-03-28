@@ -1,39 +1,61 @@
 <div class="view-container">
+  <div class="delete-icon">
+    <div class="form-row">
+      <div class="col-md">
+        <h4>Zapísať vyšetrenie</h4>
+      </div>
+      <div class="col-md">
+        <fa-icon 
+          [icon]="deleteIcon"
+          size="2x"
+          class="delete float-right"
+          (click)="onLeaveCrateMode()">
+      </fa-icon>
+      </div>
+    </div>
+  </div>
     <div class="formular">
         <form 
              [formGroup]="vysetrenieCreateForm" 
              autocomplete="off"
              bg-light>
         <div class="form-row">
-            <div class="col-md-6 mb-3 pt-4">
-                <label for="doctorExamination">
-                  Meno doktora
+            <div class="col-md-6 mb-3">
+                <label for="patientName">
+                  Meno pacienta
                 </label>
                 <input type="text" 
                        class="form-control" 
-                       id="doctorExamination" 
-                       formControlName="doctorExamination">
+                       id="patientName" 
+                       formControlName="patientName">
               </div>
-              <div class="col-md-6 mb-3 pt-4">
-                <label for="dateExamination">
-                  Dátum vyšetrenia
+              <div class="col-md-6 mb-3">
+                <label for="rodneCislo">
+                  Rodné číslo
                 </label>
                 <input type="text" 
                        class="form-control" 
-                       id="dateExamination" 
-                       formControlName="dateExamination">
+                       id="rodneCislo" 
+                       formControlName="rodneCislo">
               </div>
             </div>
-            <div class="form-row">
+            <div class="form-row" *ngIf="(practitionerTypes$ | async) as typesVysetrenia">
                 <div class="col-md-6 mb-3">
                     <label for="typVysetrenia">
                         Typ vyšetrenia
                       </label>
-                      <input
-                             type="text" 
-                             class="form-control" 
-                             id="typVysetrenia"
-                             formControlName="typVysetrenia">
+                      <select class="custom-select d-block w-100" 
+                        id="idTypVysetrenia" 
+                        formControlName="idTypVysetrenia">
+                <option [disabled]="true" 
+                        [selected]="true" 
+                        value="">Vyber...
+                </option>
+                <option [ngValue]="typeDoc.idTypNavigation.idTyp" 
+                        *ngFor="let typeDoc of typesVysetrenia">
+                        {{typeDoc.idTypNavigation.nazov}}
+                </option>
+              </select>
                 </div>
                 <div class="col-md-6 mb-3">
                     <label for="vysledok">
@@ -44,6 +66,288 @@
                              id="vysledok"
                              formControlName="vysledok">
                       </textarea>
+                </div>
+            </div>
+              <div class="form-group">
+                <label for="scanAttachment">Priložiť prílohu(scan)</label>
+                <input 
+                      type="file" 
+                      class="form-control-file" 
+                      id="scanAttachment"
+                      (change)="onFileChange($event)">
+              </div>
+<!-- zapisať chorobu select -->
+              <div class="zap-choroba-sub-menu mt-3">
+              <accordion>
+                <accordion-group 
+                                [heading]="chorobaTitle" 
+                                #chorobaGroup
+                                panelClass="liecbaAccordion">
+                    <span 
+                         accordion-heading 
+                         class="float-right mt-2"
+                         [ngClass]="{'expanded': chorobaGroup?.isOpen}">
+                        <fa-icon 
+                                [icon]="caretIcon"
+                                size="2x">
+                        </fa-icon>
+                      </span>
+
+                      <span 
+                        accordion-heading 
+                        class="float-left">
+                     <fa-icon 
+                             [icon]="diagnoseIcon"
+                             size="2x">
+                     </fa-icon>
+                   </span>
+                    <div
+                          formGroupName="zapChoroba" 
+                          class="choroba-menu">
+                          <div class="form-row">
+                            <div class="col-md-4">
+                              <label for="choroba">
+                                Diagnostikovaná choroba
+                              </label>
+                              <div class="search">
+                                <input 
+                                      type="text"
+                                      class="form-control"
+                                      id="choroba"
+                                      placeholder="vyhľadaj chorobu" 
+                                      formControlName="chorobaSearch">
+                              </div>   
+                            </div>
+                            <div class="col-md-8">
+                              <div 
+                                  *ngIf="(chorobaZoznamBySearch$ | async) as choroby" 
+                                  class="zoznam-search">
+                                  <cdk-virtual-scroll-viewport 
+                                        itemSize="50" 
+                                        class="example-viewport form-control">
+                                        <div 
+                                            *cdkVirtualFor="let choroba of choroby" 
+                                            class="choroba-item"
+                                            (click)="onSelected(choroba)">{{choroba.nazov}}
+                                        </div>
+                                  </cdk-virtual-scroll-viewport>
+                              </div>
+                            </div>
+                          </div>
+                      <div class="form-row">
+                        <div class="col-md">
+                        <label for="chorobaSelected">
+                          Vybraná choroba
+                        </label>
+                        <div class="search">
+                          <input 
+                                type="text"
+                                class="form-control"
+                                id="choroba"
+                                placeholder="vyhľadaj chorobu" 
+                                [value]="selectedChoroba">
+                      </div>
+                      <span class="unselectChorobaBtn">
+                        <button type="button"
+                                class="btn"
+                                (click)="unselectChoroba()">
+                                <fa-icon [icon]="eraseIcon"></fa-icon>
+                        </button>
+                    </span>  
+                      </div>
+                    </div>
+                    <ng-container *ngIf="isSelectedChoroba && (priznakyZoznam$ | async) as priznakyList">
+                      <h5 class="mt-4">Príznaky</h5>
+                    <div class="form-row mt-4">
+                        <div class="col-md">
+                            <div class="form-row mr-2">
+                                <div class="col-md-6">
+                                    <label for="priznak">Príznak</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                      <div class="col-md"
+                           formArrayName="priznakies">
+                          <div 
+                              class="form-row workingday mr-2 mt-2"
+                              *ngFor="let priznak of priznakyArray; let i = index"
+                              [formGroupName]="i"
+                              >
+                              <div class="col-md-6">
+                                  <select class="custom-select d-block w-100" 
+                                        id="idSymptomSelected" 
+                                        formControlName="idSymptom"
+                                        (ngModelChange)="onAddPriznak(i)">
+                                  <option [disabled]="true" 
+                                          [selected]="true" 
+                                          value="">Vyber symptom...
+                                  </option>
+                                  <option [ngValue]="priznak.idSymptom" 
+                                          *ngFor="let priznak of priznakyList">
+                                          {{priznak.nazov}}
+                                  </option>
+                                </select>
+                              </div>
+                              
+                              <div class="col-md">
+                                  <button 
+                                      type="button" 
+                                      class="btn btn-danger float-right"
+                                      (click)="onDeletePriznak(i)">
+                                      X
+                              </button>
+                              </div>
+                          </div>
+                       </div>
+                      </div>
+                    </ng-container>
+                  </div>
+                </accordion-group>
+            </accordion>
+              </div>
+<!-- zapisať liečbu -->
+        <ng-container *ngIf="isSelectedChoroba">
+          <div class="zap-liebcu-sub-menu">
+            <accordion>
+              <accordion-group 
+                              [heading]="liecbaTitle" 
+                              #liecbaGroup
+                              panelClass="liecbaAccordion">
+                  <span 
+                       accordion-heading 
+                       class="float-right mt-2"
+                       [ngClass]="{'expanded': liecbaGroup?.isOpen}">
+                      <fa-icon 
+                              [icon]="caretIcon"
+                              size="2x">
+                      </fa-icon>
+                    </span>
+                  <span 
+                    accordion-heading 
+                    class="float-left">
+                 <fa-icon 
+                         [icon]="proceduresIcon"
+                         size="2x">
+                 </fa-icon>
+               </span>
+
+               <div
+                    formGroupName="predpisanaLiecba" 
+                    class="choroba-menu">
+               <div class="form-row">
+                 <div class="col-md-4">
+                   <label for="choroba">
+                     Predpis lieku
+                   </label>
+                   <div class="search">
+                     <input 
+                           type="text"
+                           class="form-control"
+                           id="liek"
+                           placeholder="vyhľadaj liek" 
+                           formControlName="liekSearch">
+                   </div>   
+                 </div>
+                 <div class="col-md-8">
+                   <div 
+                       *ngIf="(liekZoznamBySearch$ | async) as lieky" 
+                       class="zoznam-search">
+                       <cdk-virtual-scroll-viewport 
+                             itemSize="50" 
+                             class="example-viewport form-control">
+                             <div 
+                                 *cdkVirtualFor="let liek of lieky" 
+                                 class="choroba-item"
+                                 (click)="onSelectedLiek(liek)">{{liek.nazov}}
+                             </div>
+                       </cdk-virtual-scroll-viewport>
+                   </div>
+                 </div>
+               </div>
+           <div class="form-row">
+             <div class="col-md mb-3">
+              <label for="chorobaSelected">
+                Vybraný liek
+              </label>
+                <div class="search">
+                  <input 
+                        type="text"
+                        class="form-control"
+                        id="choroba"
+                        placeholder="vyhľadaj chorobu" 
+                        [value]="selectedLiek">
+              </div>
+              <span class="unselectChorobaBtn">
+                <button type="button"
+                        class="btn"
+                        (click)="unselectLiek()">
+                        <fa-icon [icon]="eraseIcon"></fa-icon>
+                </button>
+              </span>  
+            </div>
+           </div>
+          </div>
+
+<!-- balenie vyber -->
+           <div 
+                formGroupName="recept"
+                class="form-row" 
+                *ngIf="(zoznamLiekBalenia$ | async) as baleniaLiek">
+                <ng-container *ngIf="this.selectedLiek !== 'žiaden'">
+                <div class="col-md-2 mb-3">
+                  <label for="balenieKs">
+                    Balenie(ks)
+                  </label>
+                    <div class="search">
+                      <input 
+                            type="number"
+                            class="form-control"
+                            id="balenieKs"
+                            formControlName="balenieKs"
+                            min="1">
+                  </div>
+                 </div>
+            <div class="col-md-10 mb-3">
+              <label for="typBalenie">
+                Typ balenia lieku
+              </label>
+              <select class="custom-select d-block w-100" 
+                      id="typBalenie" 
+                      formControlName="idBalenie">
+                <option [disabled]="true" 
+                        [selected]="true" 
+                        value="">Vyber balenie...
+                </option>
+                <option [ngValue]="balenie.kodBalenia" 
+                        *ngFor="let balenie of baleniaLiek">
+                        {{getBaleniePopis(balenie)}}
+                </option>
+              </select>
+            </div>
+          </ng-container>
+           </div>
+      </accordion-group>
+    </accordion>
+  </div>
+</ng-container>
+              <div class="detail-footer">
+                <div class="top-gradient"></div>
+                <div class="form-confirmation">
+                    <button *ifAuthorizedTo="'practitioner'"
+                            class="btn btn-primary btn-save"
+                            type="button"
+                            [disabled]="vysetrenieCreateForm.disabled"
+                            (click)="createVystrenie()">
+                        <div class="save-btn">
+                            <div class="save-btn-portal">
+                                <fa-icon [icon]="pen"></fa-icon>
+                            </div>
+                            <div class="save-text">Ulož</div>
+                        </div>
+                    </button>
                 </div>
             </div>
     </form>

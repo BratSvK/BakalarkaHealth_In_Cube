@@ -3,6 +3,7 @@ import { Recept } from "./recept";
 
 export interface VykVysetrenie {
     idVysetrenie: number;
+    idPacient: number;
     datumVys: string;
     vysledok: string;
     priloha: string;

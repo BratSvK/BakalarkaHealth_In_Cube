@@ -1,8 +1,11 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { EMPTY, Observable, of } from 'rxjs';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { EventEmitter, Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { VykVysetrenie } from '../models/pacient/zdravotnaKarta/vykovaneVysetrenia/vykonaneVysetrenia';
+import { Choroba } from '../models/pacient/zdravotnaKarta/zapChoroby/choroba';
+import { Liek } from '../models/pacient/zdravotnaKarta/zapChoroby/liek/liek';
 import { ZdravotnaKarta, ZdravotnaKartaPatchModel } from '../models/pacient/zdravotnaKarta/zdravotnaKarta';
 import { ZDRAVOTNA_KARTA_API } from '../_constants/endPointsApi';
 
@@ -12,6 +15,7 @@ import { ZDRAVOTNA_KARTA_API } from '../_constants/endPointsApi';
 export class HealthRecordService {
   baseUrl = environment.apiUrl;
   zdravotnaKartaCache = new Map();
+  vysetreniaAfterCreate$: EventEmitter<VykVysetrenie[]> = new EventEmitter<VykVysetrenie[]>();
 
   constructor(private http: HttpClient) {
   }
@@ -28,6 +32,18 @@ export class HealthRecordService {
         this.zdravotnaKartaCache.set('zdravotnaKarta', response);
         return response;
       }));
+    }
+
+    searchChorobyByName$(name: string): Observable<Choroba[]> {
+      let params = new HttpParams();
+      params = params.append('name', name);
+      return this.http.get<Choroba[]>(this.baseUrl + `${ZDRAVOTNA_KARTA_API}/choroba/find`, {params: params});
+    }
+
+    searchLiekyByName$(name: string): Observable<Liek[]> {
+      let params = new HttpParams();
+      params = params.append('name', name);
+      return this.http.get<Liek[]>(this.baseUrl + `${ZDRAVOTNA_KARTA_API}/lieky/find`, {params: params});
     }
 
 

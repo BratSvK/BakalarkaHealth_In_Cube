@@ -2,6 +2,11 @@
 using AutoMapper.QueryableExtensions;
 using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.Vysetrenie;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek.Balenie;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek.Davkovanie;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Priznak;
 using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.Entities;
 using HealthInCube_BackEnd.Interfaces;
@@ -52,10 +57,41 @@ namespace HealthInCube_BackEnd.Data
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc/>
+        public async Task<IEnumerable<TypPriznakDto>> GetAllSymptomsAsync()
+        => await _context.TypSymptom
+            .ProjectTo<TypPriznakDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .ToArrayAsync();
+
+        /// <inheritdoc/>
+        public async Task<IEnumerable<BalenieLiekDto>> GetBaleniaForLiekAsync(decimal idLiek)
+        => await _context.LBalenie
+            .Where(b => b.IdLiek == idLiek)
+            .ProjectTo<BalenieLiekDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .ToArrayAsync();
+
         public Task<int> GetCountAsync()
         {
             throw new NotImplementedException();
         }
+
+        /// <inheritdoc/>
+        public async Task<LiekDavkovanieDto> GetDavkovanieForMedicament(decimal idLiek)
+        => await _context.LiekDavkovanie
+            .Where(dav => dav.IdLiek == idLiek)
+            .ProjectTo<LiekDavkovanieDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .FirstOrDefaultAsync();
+
+        /// <inheritdoc/>
+        public async Task<VysetrenieDto> GetExaminationResultAsync(decimal vysetrenieId)
+        => await _context.VykVysetrenia
+            .Where(v => v.IdVysetrenie == vysetrenieId)
+            .ProjectTo<VysetrenieDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .FirstOrDefaultAsync();
 
         public async Task<decimal> GetGeneralPractitionerId(decimal idZdravotnaKarta)
         => await _context.ZdravotnaKarta
@@ -81,6 +117,7 @@ namespace HealthInCube_BackEnd.Data
                 .ThenInclude(l => l.IdPouzivatelNavigation)
                 .Where(z => z.IdPacient == patientId)
                 .ProjectTo<ZdravotnaKartaDto>(_mapper.ConfigurationProvider)
+                .AsNoTracking()
                 .FirstOrDefaultAsync();
 
         public Task<IEnumerable<ZdravotnaKartaDto>> GetItemsAsync()
@@ -113,13 +150,28 @@ namespace HealthInCube_BackEnd.Data
             return await _context.SaveChangesAsync() > 0;
         }
 
+        /// <inheritdoc/>
+        public async Task<IEnumerable<ChorobaDto>> SearchChorobaByNameAsync(string name)
+        => await _context.Choroba
+            .Where(ch => _context.GetColumnNameToLower(ch.Nazov).Contains(name.ToLower()))
+            .ProjectTo<ChorobaDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .ToListAsync();
+
+        public async Task<IEnumerable<LiekDto>> SearchLiekByNameAsync(string name)
+        => await _context.Liek
+            .Where(l => _context.GetColumnNameToLower(l.Nazov).Contains(name.ToLower()))
+            .ProjectTo<LiekDto>(_mapper.ConfigurationProvider)
+            .AsNoTracking()
+            .ToListAsync();
+
         public void UpdateItem(ZdravotnaKartum item)
         {
             _context.Entry(item).State = EntityState.Modified;
         }
 
         /// <inheritdoc/>
-        public async Task<bool> WriteResultToHealthRecord(VysetrenieVysledokDto vysetrenieVysledok)
+        public async Task<decimal> WriteResultToHealthRecord(VysetrenieVysledokDto vysetrenieVysledok)
         {
             using var transaction = _context.Database.BeginTransaction();
             try
@@ -128,24 +180,34 @@ namespace HealthInCube_BackEnd.Data
                 VykVysetrenium vysetrenieToAdd = _mapper.Map<VykVysetrenium>(vysetrenieVysledok);
                 _context.VykVysetrenia.Add(vysetrenieToAdd);
                 _context.SaveChanges();
-                // 2. zapisat chorobu a priznaky 
+                
+                // 2. zapisat chorobu a priznaky
                 VykVysetrenium vysetrenie = await _context.VykVysetrenia
                     .OrderByDescending(vys => vys.IdVysetrenie)
                     .FirstOrDefaultAsync();
+
+                if (vysetrenieVysledok.ZapChoroba.CisChoroba.Equals("-1"))
+                {
+                    transaction.Commit();
+                    return vysetrenie.IdVysetrenie;
+                }
+
                 vysetrenie.ZapChorobies.Add(_mapper.Map<ZapChoroby>(vysetrenieVysledok.ZapChoroba));
                 _context.SaveChanges();
                 // 3. predpisat liecbu a recept
+                LiekDavkovanieDto liekDavkovanie = await GetDavkovanieForMedicament(vysetrenieVysledok.PredpisanaLiecba.IdLiek.Value);
+                vysetrenieVysledok.PredpisanaLiecba.DavkovaniePocet = liekDavkovanie.DavkovaniePocet;
                 vysetrenie.PredpLiecbas.Add(_mapper.Map<PredpLiecba>(vysetrenieVysledok.PredpisanaLiecba));
                 _context.SaveChanges();
                 vysetrenie.Recepts.Add(_mapper.Map<Recept>(vysetrenieVysledok.Recept));
                 _context.SaveChanges();
 
                 transaction.Commit();
-                return true;
+                return vysetrenie.IdVysetrenie;
             }
             catch (Exception)
             {
-                return false;
+                return -1;
             }
         }
 

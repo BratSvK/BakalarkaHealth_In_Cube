@@ -1,7 +1,11 @@
 ﻿using HealthInCube_BackEnd.DTOs;
 using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.Vysetrenie;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek;
+using HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.PredpisanaLiecba.Liek.Balenie;
 using HealthInCube_BackEnd.DTOs.Sprievodka;
 using HealthInCube_BackEnd.Entities;
+using HealthInCube_BackEnd.Interfaces.CiselnikHelper;
 using System.Threading.Tasks;
 
 namespace HealthInCube_BackEnd.Interfaces
@@ -9,7 +13,11 @@ namespace HealthInCube_BackEnd.Interfaces
     /// <summary>
     /// Interface for health record for patient.
     /// </summary>
-    public interface IZdravotnaKartaRepository :  IRepository<ZdravotnaKartum, ZdravotnaKartaDto>
+    public interface IZdravotnaKartaRepository :  
+        IRepository<ZdravotnaKartum, ZdravotnaKartaDto>, 
+        IChorobaService<ChorobaDto>,
+        ITypSymptomService,
+        ILiekService<LiekDto,BalenieLiekDto>
     {
         /// <summary>
         /// Delete from health records time allowment.
@@ -35,6 +43,11 @@ namespace HealthInCube_BackEnd.Interfaces
         /// Write result of examination in the health record.
         /// </summary>
         /// <param name="vysetrenieVysledok">Model for set result to record.</param>
-        public Task<bool> WriteResultToHealthRecord(VysetrenieVysledokDto vysetrenieVysledok);
+        public Task<decimal> WriteResultToHealthRecord(VysetrenieVysledokDto vysetrenieVysledok);
+
+        /// <summary>
+        /// Get examination result from health record.
+        /// </summary>
+        public Task<VysetrenieDto> GetExaminationResultAsync(decimal vysetrenieId);
     }
 }

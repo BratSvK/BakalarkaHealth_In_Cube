@@ -34,6 +34,9 @@ export class ZoznamItemReceptModalComponent implements OnInit {
     this.bsModalRef.hide();
   }
 
+  ngOnInit(): void {
+  }
+
 get vystavenieDate() {
   return moment(new Date(this.recept.vystavenie)).format('DD-MMMM-YYYY HH:MM');
 }
@@ -42,8 +45,5 @@ get vybranieDate() {
   return this.recept.vybranie !== null ? moment(new Date(this.recept.vybranie)).format('DD-MMMM-YYYY HH:MM') : 'nevybratý';
 }
 
-  ngOnInit(): void {
-    console.log(this.recept);
-  }
-
+ 
 }

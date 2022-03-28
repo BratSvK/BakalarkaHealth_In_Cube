@@ -12,3 +12,78 @@ label {
 .formular {
     padding: 1.6rem;
 }
+
+.expanded {
+    transform: rotate(90deg);
+}
+
+.delete:hover {
+    color: #F8485E;
+    cursor: pointer;
+}
+
+.delete-icon {
+    padding-right: 1rem;
+    padding-top: 1rem;
+}
+
+accordion {
+    margin-bottom: 1rem;
+}
+
+h4 {
+    margin-left: 2rem;
+    text-decoration: underline;
+}
+
+.detail-footer {
+    box-sizing: content-box;
+    position: sticky;
+    margin-top: 2rem;
+    bottom: 0;
+    z-index: 100;
+}
+
+.save-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.save-text {
+    margin-left: 0.5rem;
+}
+
+.example-viewport {
+    height: 200px;
+  }
+
+.choroba-item {
+    height: 50px;
+}
+
+.choroba-item:hover {
+    cursor: pointer;
+    background-color: aliceblue;
+}
+.selectedChoroba {
+    padding-top: 2rem
+}
+
+.choroba-item:focus {
+    background-color: aliceblue;
+}
+
+.unselectChorobaBtn {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    margin-right: 0.2rem;
+}
+
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
