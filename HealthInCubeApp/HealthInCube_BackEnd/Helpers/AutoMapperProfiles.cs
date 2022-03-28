@@ -132,9 +132,11 @@ namespace HealthInCube_BackEnd.Helpers
             CreateMap<LiekDavkovanie, LiekDavkovanieDto>();
             CreateMap<VykVysetrenium, VysetrenieVysledokDto>();
             CreateMap<VysetrenieVysledokDto, VykVysetrenium>();
-            CreateMap<ZapChoroby, ZapChorobaDto>();
+            CreateMap<ZapChoroby, ZapChorobaDto>()
+               .ForMember(dest => dest.Nazov, src => src.MapFrom(choroba => choroba.CisChorobaNavigation.Nazov));
             CreateMap<ZapChorobaDto, ZapChoroby>();
-            CreateMap<Priznaky, PriznakDto>();
+            CreateMap<Priznaky, PriznakDto>()
+               .ForMember(dest => dest.Nazov, src => src.MapFrom(pr => pr.IdSymptomNavigation.Nazov));
             CreateMap<PriznakDto, Priznaky>();
             CreateMap<TypSymptom, TypPriznakDto>();
             CreateMap<TypPriznakDto, TypSymptom>();

@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,7 +12,7 @@ import { environment } from 'src/environments/environment';
 import { RegisterEffects } from './auth/register/store/register.effects';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthEffects } from './auth/store/auth.effects';
-import {ToastrModule} from 'ngx-toastr';
+import { ToastrModule } from 'ngx-toastr';
 import { PatientEffects } from './user/patient/store/patient.effects';
 import { LekarEffects } from './user/lekar/store/lekar.effects';
 import { NgxSpinnerModule } from 'ngx-spinner';
@@ -25,7 +24,10 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { CalendarModule } from './user/calendar/calendar.module';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { registerLocaleData } from '@angular/common';
+import localeSk from '@angular/common/locales/sk';
 
+registerLocaleData(localeSk);
 
 @NgModule({
   declarations: [
@@ -53,6 +55,7 @@ import { AccordionModule } from 'ngx-bootstrap/accordion';
     AccordionModule.forRoot()
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  
 })
 export class AppModule { }

@@ -132,7 +132,20 @@ commit;
 
 
 Insert into SYSTEM.SPRIEVODKA ("IdPacient","IdLekar","TerminOd","IdTypVysetrenia","TerminDo","IsDeactivated","ZrusenieDovod") 
-values ('2','2',to_date('23-MAR-22 7:30:00','DD-MON-RR HH24:MI:SS'),'44',to_date('23-MAR-22 8:00:00','DD-MON-RR HH24:MI:SS'),'0',null);
+values ('2','2',to_date('27-MAR-22 20:30:00','DD-MON-RR HH24:MI:SS'),'44',to_date('27-MAR-22 21:00:00','DD-MON-RR HH24:MI:SS'),'0',null);
+commit;
+
+delete from sprievodka s 
+where s."TerminOd" = to_date('27-MAR-22 20:30:00');
+
+delete from zdrav_karta_povolenia zd
+where zd.od = to_date('27-MAR-22 20:30:00');
+delete from vystaveny_termin v 
+where v."Id" = 221;
+select * from vystaveny_termin;
+select * from zdrav_karta_povolenia;
+select * from sprievodka;
+
 commit;
 
 

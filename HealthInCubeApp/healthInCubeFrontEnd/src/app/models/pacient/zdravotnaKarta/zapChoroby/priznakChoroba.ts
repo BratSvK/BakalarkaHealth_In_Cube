@@ -2,6 +2,7 @@ export interface Priznak {
     cisChoroba: string;
     idZdravotnaKarta: number;
     idSymptom: number;
+    nazov: string;
     od: string;
 }
 

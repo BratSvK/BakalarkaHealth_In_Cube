@@ -6,5 +6,6 @@ export interface ZapChoroba {
     idVysetrenie: number;
     od: string;
     do: string | null;
+    nazov: string;
     priznakies: Priznak[];
 }

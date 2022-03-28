@@ -2,3 +2,29 @@
     color: gray;
     padding-top: 0.6rem;
 }
+
+.header-caption {
+    margin-left: 1.6rem;
+    overflow: hidden;
+}
+
+.list-item {
+    padding: 0 1.6rem;
+}
+
+.header-info {
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+}
+
+.card {
+    padding: 1.2rem;
+    border-radius: 0.6rem;
+    box-shadow: 0 1px 2px #00000014, 0 3px 7px #0000001a;
+    background-color: #fff;
+}
+
+list-group-item-warning {
+    cursor: none;
+}

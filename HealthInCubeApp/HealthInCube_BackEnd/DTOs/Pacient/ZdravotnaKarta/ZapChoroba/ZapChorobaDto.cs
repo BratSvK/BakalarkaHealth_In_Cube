@@ -20,6 +20,11 @@ namespace HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba
         public string CisChoroba { get; set; }
 
         /// <summary>
+        /// Name of the illness.
+        /// </summary>
+        public string Nazov { get; set; }
+
+        /// <summary>
         /// Appointment result reference id.
         /// </summary>
         public decimal IdVysetrenie { get; set; }

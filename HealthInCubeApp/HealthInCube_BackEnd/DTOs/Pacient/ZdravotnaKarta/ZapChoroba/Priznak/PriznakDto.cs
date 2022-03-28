@@ -23,6 +23,11 @@ namespace HealthInCube_BackEnd.DTOs.Pacient.ZdravotnaKarta.ZapChoroba.Priznak
         public decimal? IdSymptom { get; set; }
 
         /// <summary>
+        /// Name of the symptom.
+        /// </summary>
+        public string Nazov { get; set; }
+
+        /// <summary>
         /// Start by symptom.
         /// </summary>
         public DateTime Od { get; set; } = DateTime.UtcNow;

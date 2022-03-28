@@ -9,5 +9,44 @@
                 Nemáte zapísanú žiadnu chorobu
             </div>
         </div>
+
+        <div class="choroby-zoznam">
+            <accordion class="card list-item mt-4">
+                <accordion-group
+                    class="header-info"
+                    *ngFor="let choroba of chorobyZoznam" 
+                    [heading]="choroba.nazov"
+                    panelClass="liecbaAccordion">
+                    <span 
+                        *ngIf="choroba.priznakies.length > 0; else bezPriznakov"
+                        accordion-heading 
+                        class="badge badge-danger mt-2">
+                       {{choroba.priznakies.length === 1 ? 'Priznak' : 'Príznaky'}}
+                    </span>
+                    <ng-template #bezPriznakov>
+                        <span 
+                            accordion-heading 
+                            class="badge badge-success mt-2">
+                             Bez príznakov
+                        </span>
+                    </ng-template>
+                    
+                  <ul class="list-group">
+                      <ng-container *ngIf="choroba.priznakies.length > 0; else noPriznak">
+                        <li 
+                            *ngFor="let priznak of choroba.priznakies"
+                            class="list-group-item list-group-item-warning">
+                            {{priznak.nazov}} - od: {{priznak.od | date:'fullDate'}}
+                        </li>
+                    </ng-container>
+                </ul>
+                    <ng-template #noPriznak>
+                        <div class="empty">
+                            Nemáte zapísaný žiadny príznak
+                        </div>
+                    </ng-template>
+                </accordion-group>
+              </accordion>
+        </div>
     </div>
 </div>
